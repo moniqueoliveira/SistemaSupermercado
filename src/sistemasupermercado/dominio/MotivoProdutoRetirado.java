@@ -2,14 +2,14 @@
 package sistemasupermercado.dominio;
 
 public class MotivoProdutoRetirado {
-    private int idMotivo;
+    private Integer idMotivo;
     private String descricao;
 
-    public int getIdMotivo() {
+    public Integer getIdMotivo() {
         return idMotivo;
     }
 
-    public void setIdMotivo(int idMotivo) {
+    public void setIdMotivo(Integer idMotivo) {
         this.idMotivo = idMotivo;
     }
 

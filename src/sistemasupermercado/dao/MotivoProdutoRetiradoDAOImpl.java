@@ -20,6 +20,21 @@ public class MotivoProdutoRetiradoDAOImpl implements MotivoProdutoRetiradoDAO {
     
     @Override
     public boolean inserir(MotivoProdutoRetirado obj) throws SQLException {
+        if (obj.getIdMotivo() == null) return inserirSemID(obj);
+        else return inserirComId(obj);
+    }
+    
+    private boolean inserirComId(MotivoProdutoRetirado obj) throws SQLException {
+        String sql = "insert into motivos_produtos_retirados values (?, ?)";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        pstm.setInt(1, obj.getIdMotivo());
+        pstm.setString(2, obj.getDescricao());
+        int result = pstm.executeUpdate();
+        pstm.close();
+        return result == 1;
+    }
+    
+    private boolean inserirSemID(MotivoProdutoRetirado obj) throws SQLException {
         String sql = "insert into motivos_produtos_retirados (descricao) values (?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setString(1, obj.getDescricao());
@@ -64,9 +79,22 @@ public class MotivoProdutoRetiradoDAOImpl implements MotivoProdutoRetiradoDAO {
         pstm.close();
         return motivoProdutoRetirado;
     }
-
+    
     @Override
-    public List<MotivoProdutoRetirado> listar(String filtro) throws SQLException {
+    public List<MotivoProdutoRetirado> listar(String pesquisaPor, String texto) throws SQLException {
+        if (pesquisaPor.equals("ID")){
+            return listar("where id_motivo like '%" + texto + "%'");
+        } else { 
+            if (pesquisaPor.equals("Descrição")) {
+                return listar("where descricao like '%" + texto + "%'");
+            } else {
+                return listar("");
+            }
+        }
+    }
+
+    
+    private List<MotivoProdutoRetirado> listar(String filtro) throws SQLException {
         List<MotivoProdutoRetirado> motivos = new ArrayList<>();
         String sql = "select * from motivos_produtos_retirados " + filtro;
         PreparedStatement pstm = conexao.prepareStatement(sql);
@@ -75,6 +103,7 @@ public class MotivoProdutoRetiradoDAOImpl implements MotivoProdutoRetiradoDAO {
             MotivoProdutoRetirado motivoProdutoRetirado = new MotivoProdutoRetirado();
             motivoProdutoRetirado.setIdMotivo(rs.getInt("id_motivo"));
             motivoProdutoRetirado.setDescricao(rs.getString("descricao"));
+            motivos.add(motivoProdutoRetirado);
         }
         pstm.close();
         return motivos;

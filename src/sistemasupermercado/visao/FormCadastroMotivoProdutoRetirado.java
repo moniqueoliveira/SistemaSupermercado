@@ -16,7 +16,7 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     public FormCadastroMotivoProdutoRetirado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(parent);
+        this.setLocationRelativeTo(null);
         redefinir();
     }
 
@@ -46,7 +46,7 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         setIconImages(null);
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro de Motivos de Retirada de Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(51, 153, 255))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro de Motivos de Retirada de Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(51, 153, 255))); // NOI18N
 
         jLabel2.setText("Descrição:");
 
@@ -176,6 +176,8 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         motivoProdutoRetirado = new MotivoProdutoRetirado();
         motivoProdutoRetiradoServico = new MotivoProdutoRetiradoServico();
         
+        if (txtId.getText().equals("")) motivoProdutoRetirado.setIdMotivo(null);
+        else motivoProdutoRetirado.setIdMotivo(Integer.parseInt(txtId.getText()));
         motivoProdutoRetirado.setDescricao(txtDescricao.getText());
         
         try {
@@ -198,10 +200,10 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        if (!idInserido()) return;
+        
         motivoProdutoRetirado = new MotivoProdutoRetirado();
         motivoProdutoRetiradoServico = new MotivoProdutoRetiradoServico();
-        
-        if (txtId.getText().equals("")) return; // <<< Código provisório 
         
         motivoProdutoRetirado.setIdMotivo(Integer.parseInt(txtId.getText()));
         try {
@@ -225,10 +227,6 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        //motivoProdutoRetirado = new MotivoProdutoRetirado();
-        //motivoProdutoRetiradoServico = new MotivoProdutoRetiradoServico();
-        
-        //motivoProdutoRetirado.setIdMotivo(Integer.parseInt(txtId.getText()));
         motivoProdutoRetirado.setDescricao(txtDescricao.getText());
         
         try {
@@ -251,10 +249,7 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        //motivoProdutoRetirado = new MotivoProdutoRetirado();
-        //motivoProdutoRetiradoServico = new MotivoProdutoRetiradoServico();
-        
-        //motivoProdutoRetirado.setIdMotivo(Integer.parseInt(txtId.getText()));
+        if (!confirmaExclusao()) return;
         
         try {
             if (motivoProdutoRetiradoServico.excluir(motivoProdutoRetirado)) {
@@ -353,4 +348,20 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
+
+    private boolean confirmaExclusao() {
+        int resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Atenção", 
+                JOptionPane.YES_NO_OPTION);
+        return resposta == JOptionPane.YES_OPTION;
+    }
+
+    private boolean idInserido() {
+        if (txtId.getText().equals("")) {
+            FormConsultaMotivoProdutoRetirado formConsultaMotivoProdutoRetirado;
+            formConsultaMotivoProdutoRetirado = new FormConsultaMotivoProdutoRetirado(null, true);
+            formConsultaMotivoProdutoRetirado.setVisible(true);
+            return false;
+        }
+        return true;
+    }
 }

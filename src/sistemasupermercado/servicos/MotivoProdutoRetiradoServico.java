@@ -4,6 +4,8 @@ package sistemasupermercado.servicos;
 import sistemasupermercado.exceptions.PesquisaNulaException;
 import sistemasupermercado.exceptions.CampoRequeridoVazioException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import sistemasupermercado.dao.MotivoProdutoRetiradoDAOImpl;
 import sistemasupermercado.dominio.MotivoProdutoRetirado;
 import sistemasupermercado.interfaces.dao.MotivoProdutoRetiradoDAO;
@@ -49,6 +51,17 @@ public class MotivoProdutoRetiradoServico {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+    }
+        
+    public List<MotivoProdutoRetirado> listar(String pesquisaPor, String texto) {
+        
+        motivoProdutoRetiradoDAO = new MotivoProdutoRetiradoDAOImpl();
+        try {
+            return motivoProdutoRetiradoDAO.listar(pesquisaPor, texto);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        
     }
     
     private void validarDescricao(MotivoProdutoRetirado motivoProdutoRetirado) {
