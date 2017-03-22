@@ -1,7 +1,15 @@
 
 package sistemasupermercado.visao;
 
+import java.awt.event.ActionEvent;
+import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
 import sistemasupermercado.dominio.MotivoProdutoRetirado;
 import sistemasupermercado.exceptions.CampoRequeridoVazioException;
 import sistemasupermercado.exceptions.PesquisaNulaException;
@@ -10,6 +18,8 @@ import sistemasupermercado.servicos.MotivoProdutoRetiradoServico;
 public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     MotivoProdutoRetirado motivoProdutoRetirado;
     MotivoProdutoRetiradoServico motivoProdutoRetiradoServico;
+    
+    AtalhoAction acaoF2 = new AtalhoAction("F2");
     /**
      * Creates new form FormCadastroMotivoProdutoRetirado
      */
@@ -18,6 +28,8 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         redefinir();
+        registrarAcoesDosAtalhos();
+        
     }
 
     /**
@@ -39,12 +51,33 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         btnNovo = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         txtDescricao = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblMotivos = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        cmbParametroPesquisa = new javax.swing.JComboBox<>();
+        txtPesquisa = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Motivos de Retirada de Produtos");
         setIconImage(null);
         setIconImages(null);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                formKeyReleased(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro de Motivos de Retirada de Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(51, 153, 255))); // NOI18N
 
@@ -100,14 +133,60 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
             }
         });
 
+        tblMotivos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "ID", "Descrição do motivo"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblMotivos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tblMotivosFocusGained(evt);
+            }
+        });
+        tblMotivos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMotivosMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblMotivosMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblMotivos);
+
+        jLabel3.setText("Pesquisar por:");
+
+        txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                    .addComponent(jSeparator1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,15 +196,22 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDescricao))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 284, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnInserir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir)))
+                        .addComponent(btnExcluir))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbParametroPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPesquisa)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -145,8 +231,24 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
                     .addComponent(btnInserir)
                     .addComponent(btnNovo)
                     .addComponent(btnExcluir))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbParametroPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setText("F2 - Seleciona item para alteração");
+        jPanel3.add(jLabel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,15 +256,18 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -184,8 +289,12 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
             if (motivoProdutoRetiradoServico.inserir(motivoProdutoRetirado)) {
                 int resposta = JOptionPane.showConfirmDialog(this, "Cadastro realizado com sucesso. \nDeseja permanecer"
                         + "no cadastro de motivos?", "Confirmação de Cadastro", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) { redefinir(); }
-                else { dispose(); }
+                if (resposta == JOptionPane.YES_OPTION) { 
+                    redefinir();
+                    preencherTabela(cmbParametroPesquisa.getSelectedItem().toString(), txtPesquisa.getText());
+                } else { 
+                    dispose(); 
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Ocorreu uma falha não especificada ao tentar inserir o motivo.", 
                         "Não foi possível concluir o cadastro", JOptionPane.ERROR_MESSAGE);
@@ -200,7 +309,11 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        if (!idInserido()) return;
+        if (!idInserido()) {
+            JOptionPane.showMessageDialog(this, "É necessário inserir o ID para pesquisar.", 
+                        "Pesquisa sem resultado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         
         motivoProdutoRetirado = new MotivoProdutoRetirado();
         motivoProdutoRetiradoServico = new MotivoProdutoRetiradoServico();
@@ -210,11 +323,7 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
             motivoProdutoRetirado = motivoProdutoRetiradoServico.pesquisar(motivoProdutoRetirado);
             txtDescricao.setText(motivoProdutoRetirado.getDescricao());
             
-            txtId.setEditable(false);
-            btnAlterar.setEnabled(true);
-            btnExcluir.setEnabled(true);
-            btnInserir.setEnabled(false);
-            btnPesquisar.setEnabled(false);
+            alterarPermissaoDosBotoes();
             
         } catch (PesquisaNulaException ex) {
             JOptionPane.showMessageDialog(this, "A pesquisa não retornou nenhum resultado. \n" + ex.getMessage(), 
@@ -227,14 +336,19 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        motivoProdutoRetiradoServico = new MotivoProdutoRetiradoServico();
         motivoProdutoRetirado.setDescricao(txtDescricao.getText());
         
         try {
             if (motivoProdutoRetiradoServico.alterar(motivoProdutoRetirado)) {
                 int resposta = JOptionPane.showConfirmDialog(this, "Alteração realizada com sucesso. \nDeseja permanecer"
                         + "no cadastro de motivos?", "Confirmação de alteração", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) { redefinir(); }
-                else { dispose(); }
+                if (resposta == JOptionPane.YES_OPTION) { 
+                    redefinir();
+                    preencherTabela(cmbParametroPesquisa.getSelectedItem().toString(), txtPesquisa.getText());
+                } else { 
+                    dispose(); 
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Ocorreu uma falha não especificada ao tentar alterar o motivo.", 
                         "Não foi possível concluir a alteração", JOptionPane.ERROR_MESSAGE);
@@ -251,12 +365,18 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (!confirmaExclusao()) return;
         
+        motivoProdutoRetiradoServico = new MotivoProdutoRetiradoServico();
+        
         try {
             if (motivoProdutoRetiradoServico.excluir(motivoProdutoRetirado)) {
                 int resposta = JOptionPane.showConfirmDialog(this, "Exclusão realizada com sucesso. \nDeseja permanecer"
                         + "no cadastro de motivos?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) { redefinir(); }
-                else { dispose(); }
+                if (resposta == JOptionPane.YES_OPTION) { 
+                    redefinir(); 
+                    preencherTabela(cmbParametroPesquisa.getSelectedItem().toString(), txtPesquisa.getText());
+                } else { 
+                    dispose(); 
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Ocorreu uma falha não especificada ao tentar excluir o motivo.", 
                         "Não foi possível concluir a exclusao", JOptionPane.ERROR_MESSAGE);
@@ -281,6 +401,44 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtIdKeyTyped
 
+    private void tblMotivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMotivosMouseClicked
+        // TODO add your handling code here:
+        txtId.requestFocus();
+    }//GEN-LAST:event_tblMotivosMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        tblMotivos.getColumnModel().getColumn(0).setPreferredWidth(110);
+        tblMotivos.getColumnModel().getColumn(1).setPreferredWidth(tblMotivos.getWidth() - 110);
+        preencherTabela("","");
+        preencherComboBox();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void txtPesquisaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPesquisaKeyTyped
+
+    private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
+        // TODO add your handling code here:
+        preencherTabela(cmbParametroPesquisa.getSelectedItem().toString(), txtPesquisa.getText());
+    }//GEN-LAST:event_txtPesquisaKeyReleased
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyReleased
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+    private void tblMotivosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tblMotivosFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblMotivosFocusGained
+
+    private void tblMotivosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMotivosMousePressed
+        // TODO add your handling code here:
+        txtId.requestFocus();
+    }//GEN-LAST:event_tblMotivosMousePressed
+
     
     
     private void redefinir() {
@@ -292,6 +450,7 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         btnPesquisar.setEnabled(true);
         btnInserir.setEnabled(true);
         txtId.setEditable(true);
+        motivoProdutoRetirado = null;
     }
     
     /**
@@ -342,11 +501,19 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnPesquisar;
+    private javax.swing.JComboBox<String> cmbParametroPesquisa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable tblMotivos;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
 
     private boolean confirmaExclusao() {
@@ -356,12 +523,104 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     }
 
     private boolean idInserido() {
-        if (txtId.getText().equals("")) {
-            FormConsultaMotivoProdutoRetirado formConsultaMotivoProdutoRetirado;
-            formConsultaMotivoProdutoRetirado = new FormConsultaMotivoProdutoRetirado(null, true);
-            formConsultaMotivoProdutoRetirado.setVisible(true);
-            return false;
+        return !txtId.getText().equals("");
+    }
+
+    /*private void mostrarFormConsulta() {
+        FormConsultaMotivoProdutoRetirado formConsultaMotivoProdutoRetirado;
+        formConsultaMotivoProdutoRetirado = new FormConsultaMotivoProdutoRetirado(null, true);
+        formConsultaMotivoProdutoRetirado.setVisible(true);
+
+        motivoProdutoRetirado = formConsultaMotivoProdutoRetirado.getMotivoProdutoRetirado();
+        if (motivoProdutoRetirado != null) {
+            txtId.setText(motivoProdutoRetirado.getIdMotivo().toString());
+            txtDescricao.setText(motivoProdutoRetirado.getDescricao());
+            alterarPermissaoDosBotoes();
+        } else {
+            txtId.requestFocus();
         }
-        return true;
+    }*/
+
+    private void alterarPermissaoDosBotoes() {
+        txtId.setEditable(false);
+        btnAlterar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        btnInserir.setEnabled(false);
+        btnPesquisar.setEnabled(false);
+    }
+
+    private void preencherTabela(String pesquisaPor, String texto) {
+        limparTabela();
+        DefaultTableModel dtm = (DefaultTableModel) tblMotivos.getModel();
+        try {
+            motivoProdutoRetiradoServico = new MotivoProdutoRetiradoServico();
+            List<MotivoProdutoRetirado> motivos = motivoProdutoRetiradoServico.listar(pesquisaPor, texto);
+            for (int i = 0; i < motivos.size(); i++) {
+                dtm.addRow(new Object[]{"",""});
+                tblMotivos.setValueAt(motivos.get(i).getIdMotivo(), i, 0);
+                tblMotivos.setValueAt(motivos.get(i).getDescricao(), i, 1);
+            }
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Não foi possível iniciar o formulario", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void limparTabela() {
+        DefaultTableModel dtm = (DefaultTableModel) tblMotivos.getModel();
+        dtm.setRowCount(0);
+        
+    }
+
+    private void preencherComboBox() {
+        cmbParametroPesquisa.addItem("ID");
+        cmbParametroPesquisa.addItem("Descrição");
+        cmbParametroPesquisa.setSelectedIndex(1);
+    }
+
+    private void carregarObjetoSelecionado() {
+        //if (tblMotivos.clearSelection() == tblMotivos.c)
+        if (tblMotivos.getSelectedRowCount() > 1) {
+            JOptionPane.showMessageDialog(this, "Selecione apenas um item para realizar a alteração.",
+                    "Atenção", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if (tblMotivos.getSelectedRowCount() < 1) {
+                JOptionPane.showMessageDialog(this, "Selecione um item para realizar a alteração.",
+                    "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                motivoProdutoRetirado = new MotivoProdutoRetirado();
+                int idMotivo = Integer.parseInt(tblMotivos.getValueAt(tblMotivos.getSelectedRow(), 0).toString());
+                String descricao = tblMotivos.getValueAt(tblMotivos.getSelectedRow(), 1).toString();
+                motivoProdutoRetirado.setIdMotivo(idMotivo);
+                motivoProdutoRetirado.setDescricao(descricao);
+                txtId.setText(motivoProdutoRetirado.getIdMotivo().toString());
+                txtDescricao.setText(motivoProdutoRetirado.getDescricao());
+                alterarPermissaoDosBotoes();
+            }
+        }
+    }
+
+    private void registrarAcoesDosAtalhos() {
+        ActionMap actionMapForm = this.rootPane.getActionMap();
+        actionMapForm.put("acaof2", acaoF2);
+        rootPane.setActionMap(actionMapForm);
+        
+        InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        imapForm.put(KeyStroke.getKeyStroke("F2"), "acaof2");
+    }
+    
+    private class AtalhoAction extends AbstractAction {
+	private String atalho;
+
+	public AtalhoAction(String atalho)
+	{
+		super(atalho);
+		this.atalho = atalho;
+	}
+        
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            carregarObjetoSelecionado();
+        }
     }
 }

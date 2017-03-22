@@ -4,7 +4,6 @@ package sistemasupermercado.servicos;
 import sistemasupermercado.exceptions.PesquisaNulaException;
 import sistemasupermercado.exceptions.CampoRequeridoVazioException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import sistemasupermercado.dao.MotivoProdutoRetiradoDAOImpl;
 import sistemasupermercado.dominio.MotivoProdutoRetirado;

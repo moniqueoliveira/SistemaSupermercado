@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sistemasupermercado.visao;
 
 import java.util.List;
@@ -11,10 +7,6 @@ import javax.swing.table.DefaultTableModel;
 import sistemasupermercado.dominio.MotivoProdutoRetirado;
 import sistemasupermercado.servicos.MotivoProdutoRetiradoServico;
 
-/**
- *
- * @author Monique
- */
 public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
     MotivoProdutoRetiradoServico motivoProdutoRetiradoServico;
     
@@ -51,6 +43,11 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                formKeyTyped(evt);
             }
         });
 
@@ -119,7 +116,7 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
                         .addComponent(cmbParametroPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -157,8 +154,11 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
 
     private void tblMotivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMotivosMouseClicked
         // TODO add your handling code here:
-        retornarItemSelecionado();
     }//GEN-LAST:event_tblMotivosMouseClicked
+
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyTyped
 
     /**
      * @param args the command line arguments
@@ -239,9 +239,7 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
     private void limparTabela() {
         DefaultTableModel dtm = (DefaultTableModel) tblMotivos.getModel();
         dtm.setRowCount(0);
-    }
-
-    public void retornarItemSelecionado() {
         
     }
+
 }
