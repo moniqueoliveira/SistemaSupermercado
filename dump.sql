@@ -48,24 +48,39 @@ CREATE TABLE `categorias_produtos` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `contatos_fornecedores`
+-- Table structure for table `emails_fornecedores`
 --
 
-DROP TABLE IF EXISTS `contatos_fornecedores`;
+DROP TABLE IF EXISTS `emails_fornecedores`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `contatos_fornecedores` (
-  `ID_Contato` int(11) NOT NULL AUTO_INCREMENT,
-  `Telefone` char(14) NOT NULL,
-  `Rua` varchar(100) DEFAULT NULL,
+CREATE TABLE `emails_fornecedores` (
+  `ID_Fornecedor` int(11) NOT NULL,
+  `Email` varchar(80) NOT NULL,
+  PRIMARY KEY (`ID_Fornecedor`,`Email`),
+  CONSTRAINT `emails_fornecedores_ibfk_1` FOREIGN KEY (`ID_Fornecedor`) REFERENCES `fornecedores` (`ID_Fornecedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `enderecos_fornecedores`
+--
+
+DROP TABLE IF EXISTS `enderecos_fornecedores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `enderecos_fornecedores` (
+  `ID_Fornecedor` int(11) NOT NULL,
+  `Logradouro` varchar(80) DEFAULT NULL,
   `Numero` int(11) NOT NULL,
   `CEP` char(9) NOT NULL,
   `Complemento` varchar(30) DEFAULT NULL,
   `Bairro` varchar(60) DEFAULT NULL,
   `Cidade` varchar(60) DEFAULT NULL,
   `UF` char(2) NOT NULL,
-  PRIMARY KEY (`ID_Contato`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`ID_Fornecedor`),
+  CONSTRAINT `enderecos_fornecedores_ibfk_1` FOREIGN KEY (`ID_Fornecedor`) REFERENCES `fornecedores` (`ID_Fornecedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,11 +139,9 @@ CREATE TABLE `fornecedores` (
   `Nome_Fantasia` varchar(20) NOT NULL,
   `Razao_Social` varchar(70) NOT NULL,
   `CNPJ` char(18) NOT NULL,
-  `ID_Contato` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ID_Fornecedor`),
-  UNIQUE KEY `ID_Contato` (`ID_Contato`),
-  CONSTRAINT `fornecedores_ibfk_1` FOREIGN KEY (`ID_Contato`) REFERENCES `contatos_fornecedores` (`ID_Contato`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `Ativo` tinyint(4) DEFAULT '1',
+  PRIMARY KEY (`ID_Fornecedor`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +187,7 @@ CREATE TABLE `motivos_produtos_retirados` (
   `ID_Motivo` int(11) NOT NULL AUTO_INCREMENT,
   `Descricao` varchar(70) NOT NULL,
   PRIMARY KEY (`ID_Motivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,6 +313,21 @@ CREATE TABLE `sessoes_caixas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `telefones_fornecedores`
+--
+
+DROP TABLE IF EXISTS `telefones_fornecedores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `telefones_fornecedores` (
+  `ID_Fornecedor` int(11) NOT NULL,
+  `Telefone` char(14) NOT NULL,
+  PRIMARY KEY (`ID_Fornecedor`,`Telefone`),
+  CONSTRAINT `telefones_fornecedores_ibfk_1` FOREIGN KEY (`ID_Fornecedor`) REFERENCES `fornecedores` (`ID_Fornecedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `unidades`
 --
 
@@ -362,4 +390,4 @@ CREATE TABLE `vendas` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-17 14:59:06
+-- Dump completed on 2017-03-25 10:45:43
