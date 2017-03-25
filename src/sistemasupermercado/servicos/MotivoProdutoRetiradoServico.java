@@ -2,42 +2,43 @@
 package sistemasupermercado.servicos;
 
 import sistemasupermercado.exceptions.PesquisaNulaException;
-import sistemasupermercado.exceptions.CampoRequeridoVazioException;
+import sistemasupermercado.exceptions.DadosInvalidosException;
 import java.sql.SQLException;
 import java.util.List;
 import sistemasupermercado.dao.MotivoProdutoRetiradoDAOImpl;
 import sistemasupermercado.dominio.MotivoProdutoRetirado;
+import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoException;
 import sistemasupermercado.interfaces.dao.MotivoProdutoRetiradoDAO;
 
 public class MotivoProdutoRetiradoServico {
     MotivoProdutoRetiradoDAO motivoProdutoRetiradoDAO;
     
-    public boolean inserir(MotivoProdutoRetirado motivoProdutoRetirado) {
+    public void inserir(MotivoProdutoRetirado motivoProdutoRetirado) {
         validarDescricao(motivoProdutoRetirado);
         motivoProdutoRetiradoDAO = new MotivoProdutoRetiradoDAOImpl();
         try {
-            return motivoProdutoRetiradoDAO.inserir(motivoProdutoRetirado);
+            verificarResultado(motivoProdutoRetiradoDAO.inserir(motivoProdutoRetirado));
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
     }
     
-    public boolean alterar(MotivoProdutoRetirado motivoProdutoRetirado) {
+    public void alterar(MotivoProdutoRetirado motivoProdutoRetirado) {
         validarDescricao(motivoProdutoRetirado);
         motivoProdutoRetiradoDAO = new MotivoProdutoRetiradoDAOImpl();
         try {
-            return motivoProdutoRetiradoDAO.alterar(motivoProdutoRetirado);
+            verificarResultado(motivoProdutoRetiradoDAO.alterar(motivoProdutoRetirado));
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
     }
     
-    public boolean excluir(MotivoProdutoRetirado motivoProdutoRetirado) {
+    public void excluir(MotivoProdutoRetirado motivoProdutoRetirado) {
         motivoProdutoRetiradoDAO = new MotivoProdutoRetiradoDAOImpl();
         try {
-            return motivoProdutoRetiradoDAO.excluir(motivoProdutoRetirado);
+            verificarResultado(motivoProdutoRetiradoDAO.excluir(motivoProdutoRetirado));
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException("SQLException: " + ex);
         }
     }
     
@@ -48,7 +49,7 @@ public class MotivoProdutoRetiradoServico {
             validarPesquisa(motivoProdutoRetirado);
             return motivoProdutoRetirado;
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException("SQLException: " + ex);
         }
     }
         
@@ -58,14 +59,14 @@ public class MotivoProdutoRetiradoServico {
         try {
             return motivoProdutoRetiradoDAO.listar(pesquisaPor, texto);
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException("SQLException: " + ex);
         }
         
     }
     
     private void validarDescricao(MotivoProdutoRetirado motivoProdutoRetirado) {
         if (motivoProdutoRetirado.getDescricao().equals("")) {
-            throw new CampoRequeridoVazioException("O campo \"descrição\" não pode ser vazio.");
+            throw new DadosInvalidosException("O campo \"descrição\" não pode ser vazio.");
         }
     }
 
@@ -73,6 +74,10 @@ public class MotivoProdutoRetiradoServico {
         if (motivoProdutoRetirado == null) {
             throw new PesquisaNulaException("Não há motivos cadastrados com o ID informado.");
         }
+    }
+
+    private void verificarResultado(boolean resultado) {
+        if (resultado != true) throw new RetornoDeAlteracaoDeDadosInesperadoException();
     }
     
 }

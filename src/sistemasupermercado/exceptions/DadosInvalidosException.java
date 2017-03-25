@@ -9,9 +9,9 @@ package sistemasupermercado.exceptions;
  *
  * @author Monique
  */
-public class CampoRequeridoVazioException extends RuntimeException {
+public class DadosInvalidosException extends RuntimeException {
 
-    public CampoRequeridoVazioException(String message) {
+    public DadosInvalidosException(String message) {
         super(message);
     }
     

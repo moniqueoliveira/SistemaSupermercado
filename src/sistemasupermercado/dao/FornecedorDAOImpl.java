@@ -20,26 +20,43 @@ public class FornecedorDAOImpl implements FornecedorDAO {
 
     @Override
     public boolean inserir(Fornecedor obj) throws SQLException {
-        String sql = "insert into fornecedores (nome_fantasia, razao_social, cnpj, id_contato) values (?, ?, ?, ?)";
+        if (obj.getIdFornecedor() == null) return inserirSemID(obj);
+        else return inserirComID(obj);
+    }
+    
+    public boolean inserirSemID(Fornecedor obj) throws SQLException {
+        String sql = "insert into fornecedores (nome_fantasia, razao_social, cnpj, ativo) values (?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setString(1, obj.getNomeFantasia());
         pstm.setString(2, obj.getRazaoSocial());
         pstm.setString(3, obj.getCnpj());
-        pstm.setInt(4, obj.getContato().getIdContatoFornecedor());
+        pstm.setBoolean(4, obj.isAtivo());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
     }
-
+    private boolean inserirComID(Fornecedor obj) throws SQLException {
+        String sql = "insert into fornecedores (id_fornecedor, nome_fantasia, razao_social, cnpj, ativo) values (?, ?, ?, ?)";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        pstm.setInt(1, obj.getIdFornecedor());
+        pstm.setString(2, obj.getNomeFantasia());
+        pstm.setString(3, obj.getRazaoSocial());
+        pstm.setString(4, obj.getCnpj());
+        pstm.setBoolean(5, obj.isAtivo());
+        int result = pstm.executeUpdate();
+        pstm.close();
+        return result == 1;
+    }
     @Override
     public boolean alterar(Fornecedor obj) throws SQLException {
-        String sql = "update fornecedores set nome_fantasia = ?, razao_social = ?, cnpj = ?, id_contato = ? "
+        String sql = "update fornecedores set nome_fantasia = ?, razao_social = ?, cnpj = ?, ativo = ? "
                 + "where id_fornecedor = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setString(1, obj.getNomeFantasia());
         pstm.setString(2, obj.getRazaoSocial());
         pstm.setString(3, obj.getCnpj());
-        pstm.setInt(4, obj.getContato().getIdContatoFornecedor());
+        pstm.setBoolean(4, obj.isAtivo());
+        pstm.setInt(5, obj.getIdFornecedor());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -68,14 +85,13 @@ public class FornecedorDAOImpl implements FornecedorDAO {
             fornecedor.setNomeFantasia(rs.getString("nome_fantasia"));
             fornecedor.setRazaoSocial(rs.getString("razao_social"));
             fornecedor.setCnpj(rs.getString("cnpj"));
-            fornecedor.setContato(rs.getInt("id_contato"));
+            fornecedor.setAtivo(rs.getBoolean("ativo"));
         }
         pstm.close();
         return fornecedor;
     }
 
-    @Override
-    public List<Fornecedor> listar(String filtro) throws SQLException {
+    private List<Fornecedor> listar(String filtro) throws SQLException {
         List<Fornecedor> fornecedores = new ArrayList<>();
         String sql = "select * from fornecedores " + filtro;
         PreparedStatement pstm = conexao.prepareStatement(sql);
@@ -86,11 +102,43 @@ public class FornecedorDAOImpl implements FornecedorDAO {
             fornecedor.setNomeFantasia(rs.getString("nome_fantasia"));
             fornecedor.setRazaoSocial(rs.getString("razao_social"));
             fornecedor.setCnpj(rs.getString("cnpj"));
-            fornecedor.setContato(rs.getInt("id_contato"));
             fornecedores.add(fornecedor);
         }
         pstm.close();
         return fornecedores;
     }
+
+    @Override
+    public List<Fornecedor> listar(String pesquisaPor, String texto) throws SQLException {
+        String filtro;
+        switch (pesquisaPor) {
+            case ("ID"):
+                filtro = "where id_fornecedor = " + texto;
+                break;
+            case ("CNPJ"):
+                filtro = "where cnpj = " + texto;
+                break;
+            case ("Razão Social"):
+                filtro = "where razao_social = " + texto;
+                break;
+            case ("Nome Fantasia"):
+                filtro = "where nome_fantasia = " + texto;
+                break;
+            default:
+                filtro = "";
+        }
+        return listar(filtro);
+    }
+
+    @Override
+    public Integer obterUltimoID() throws SQLException {
+        String sql = "select last_insert_id()";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        return rs.getInt("last_insert_id()");
+    }
+
+    
     
 }

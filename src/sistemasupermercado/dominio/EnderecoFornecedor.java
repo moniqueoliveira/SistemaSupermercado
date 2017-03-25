@@ -1,46 +1,37 @@
 
 package sistemasupermercado.dominio;
 
-public class ContatoFornecedor {
-    private int idContato;
-    private String telefone;
-    private String rua;
-    private int numero;
+public class EnderecoFornecedor {
+    private final Fornecedor fornecedor;
+    private String logradouro;
+    private Integer numero;
     private String cep;
     private String complemtento;
     private String bairro;
     private String cidade;
     private String uf;
 
-    public String getTelefone() {
-        return telefone;
+    public EnderecoFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+    
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public int getIdContatoFornecedor() {
-        return idContato;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
-    public void setIdContatoFornecedor(int idContato) {
-        this.idContato = idContato;
-    }
-
-    public String getRua() {
-        return rua;
-    }
-
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public int getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
@@ -84,4 +75,11 @@ public class ContatoFornecedor {
         this.uf = uf;
     }
     
+    public boolean validarCep() {
+        return this.cep.length() == 9;
+    }
+    
+    public boolean validarUf() {
+        return this.uf.length() == 2;
+    }
 }

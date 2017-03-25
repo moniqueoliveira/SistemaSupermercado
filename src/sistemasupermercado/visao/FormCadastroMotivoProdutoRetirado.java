@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import sistemasupermercado.dominio.MotivoProdutoRetirado;
-import sistemasupermercado.exceptions.CampoRequeridoVazioException;
+import sistemasupermercado.exceptions.DadosInvalidosException;
 import sistemasupermercado.exceptions.PesquisaNulaException;
 import sistemasupermercado.servicos.MotivoProdutoRetiradoServico;
 
@@ -164,6 +164,11 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
                 tblMotivosMousePressed(evt);
             }
         });
+        tblMotivos.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tblMotivosPropertyChange(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblMotivos);
 
         jLabel3.setText("Pesquisar por:");
@@ -197,7 +202,6 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDescricao))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnInserir)
@@ -286,20 +290,16 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         motivoProdutoRetirado.setDescricao(txtDescricao.getText());
         
         try {
-            if (motivoProdutoRetiradoServico.inserir(motivoProdutoRetirado)) {
-                int resposta = JOptionPane.showConfirmDialog(this, "Cadastro realizado com sucesso. \nDeseja permanecer"
-                        + "no cadastro de motivos?", "Confirmação de Cadastro", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) { 
-                    redefinir();
-                    preencherTabela(cmbParametroPesquisa.getSelectedItem().toString(), txtPesquisa.getText());
-                } else { 
-                    dispose(); 
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Ocorreu uma falha não especificada ao tentar inserir o motivo.", 
-                        "Não foi possível concluir o cadastro", JOptionPane.ERROR_MESSAGE);
+            motivoProdutoRetiradoServico.inserir(motivoProdutoRetirado);
+            int resposta = JOptionPane.showConfirmDialog(this, "Cadastro realizado com sucesso. \nDeseja permanecer"
+                    + "no cadastro de motivos?", "Confirmação de Cadastro", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { 
+                redefinir();
+                preencherTabela(cmbParametroPesquisa.getSelectedItem().toString(), txtPesquisa.getText());
+            } else { 
+                dispose(); 
             }
-        } catch (CampoRequeridoVazioException ex) {
+        } catch (DadosInvalidosException ex) {
             JOptionPane.showMessageDialog(this, "Preencha o(s) campo(s) necessário(s) para continuar. \n" + ex.getMessage(), 
                         "Campo(s) obrigatório(s) vazio(s)", JOptionPane.INFORMATION_MESSAGE);
         } catch (RuntimeException ex) {
@@ -340,20 +340,16 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         motivoProdutoRetirado.setDescricao(txtDescricao.getText());
         
         try {
-            if (motivoProdutoRetiradoServico.alterar(motivoProdutoRetirado)) {
-                int resposta = JOptionPane.showConfirmDialog(this, "Alteração realizada com sucesso. \nDeseja permanecer"
-                        + "no cadastro de motivos?", "Confirmação de alteração", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) { 
-                    redefinir();
-                    preencherTabela(cmbParametroPesquisa.getSelectedItem().toString(), txtPesquisa.getText());
-                } else { 
-                    dispose(); 
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Ocorreu uma falha não especificada ao tentar alterar o motivo.", 
-                        "Não foi possível concluir a alteração", JOptionPane.ERROR_MESSAGE);
+            motivoProdutoRetiradoServico.alterar(motivoProdutoRetirado);
+            int resposta = JOptionPane.showConfirmDialog(this, "Alteração realizada com sucesso. \nDeseja permanecer"
+                    + "no cadastro de motivos?", "Confirmação de alteração", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { 
+                redefinir();
+                preencherTabela(cmbParametroPesquisa.getSelectedItem().toString(), txtPesquisa.getText());
+            } else { 
+                dispose(); 
             }
-        } catch (CampoRequeridoVazioException ex) {
+        } catch (DadosInvalidosException ex) {
             JOptionPane.showMessageDialog(this, "Preencha o(s) campo(s) necessário(s) para continuar. \n" + ex.getMessage(), 
                         "Campo(s) obrigatório(s) vazio(s)", JOptionPane.INFORMATION_MESSAGE);
         } catch (RuntimeException ex) {
@@ -368,24 +364,20 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         motivoProdutoRetiradoServico = new MotivoProdutoRetiradoServico();
         
         try {
-            if (motivoProdutoRetiradoServico.excluir(motivoProdutoRetirado)) {
-                int resposta = JOptionPane.showConfirmDialog(this, "Exclusão realizada com sucesso. \nDeseja permanecer"
-                        + "no cadastro de motivos?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) { 
-                    redefinir(); 
-                    preencherTabela(cmbParametroPesquisa.getSelectedItem().toString(), txtPesquisa.getText());
-                } else { 
-                    dispose(); 
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Ocorreu uma falha não especificada ao tentar excluir o motivo.", 
-                        "Não foi possível concluir a exclusao", JOptionPane.ERROR_MESSAGE);
+            motivoProdutoRetiradoServico.excluir(motivoProdutoRetirado);
+            int resposta = JOptionPane.showConfirmDialog(this, "Exclusão realizada com sucesso. \nDeseja permanecer"
+                    + "no cadastro de motivos?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { 
+                redefinir(); 
+                preencherTabela(cmbParametroPesquisa.getSelectedItem().toString(), txtPesquisa.getText());
+            } else { 
+                dispose(); 
             }
-        } catch (CampoRequeridoVazioException ex) {
+        } catch (DadosInvalidosException ex) {
             JOptionPane.showMessageDialog(this, "Preencha o(s) campo(s) necessário(s) para continuar. \n" + ex.getMessage(), 
                         "Campo(s) obrigatório(s) vazio(s)", JOptionPane.INFORMATION_MESSAGE);
         } catch (RuntimeException ex) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha ao tentar realizar a excliusão: \n" + ex.getMessage(), 
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha ao tentar realizar a exclusão: \n" + ex.getMessage(), 
                         "Não foi possível concluir a exclusão", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -432,12 +424,18 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
 
     private void tblMotivosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tblMotivosFocusGained
         // TODO add your handling code here:
+        //txtId.requestFocus();
     }//GEN-LAST:event_tblMotivosFocusGained
 
     private void tblMotivosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMotivosMousePressed
         // TODO add your handling code here:
         txtId.requestFocus();
     }//GEN-LAST:event_tblMotivosMousePressed
+
+    private void tblMotivosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblMotivosPropertyChange
+        // TODO add your handling code here:
+        txtId.requestFocus();
+    }//GEN-LAST:event_tblMotivosPropertyChange
 
     
     

@@ -1,18 +1,31 @@
 
 package sistemasupermercado.dominio;
 
+import java.util.List;
+
 public class Fornecedor {
-    private int idFornecedor;
+    private Integer idFornecedor;
     private String nomeFantasia;
     private String razaoSocial;
     private String cnpj;
-    private ContatoFornecedor contato;
+    private boolean ativo;
+    private EnderecoFornecedor endereco;
+    private EmailFornecedor email;
+    private List<TelefoneFornecedor> telefones;
 
-    public int getIdFornecedor() {
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public Integer getIdFornecedor() {
         return idFornecedor;
     }
 
-    public void setIdFornecedor(int idFornecedor) {
+    public void setIdFornecedor(Integer idFornecedor) {
         this.idFornecedor = idFornecedor;
     }
 
@@ -40,17 +53,31 @@ public class Fornecedor {
         this.cnpj = cnpj;
     }
 
-    public ContatoFornecedor getContato() {
-        return contato;
+    public EnderecoFornecedor getEndereco() {
+        return endereco;
     }
 
-    public void setContato(ContatoFornecedor contato) {
-        this.contato = contato;
+    public void setEndereco(EnderecoFornecedor endereco) {
+        this.endereco = endereco;
+    }
+
+    public EmailFornecedor getEmail() {
+        return email;
+    }
+
+    public void setEmail(EmailFornecedor email) {
+        this.email = email;
+    }
+
+    public List<TelefoneFornecedor> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(List<TelefoneFornecedor> telefones) {
+        this.telefones = telefones;
     }
     
-    public void setContato(int idContato) {
-        this.contato = new ContatoFornecedor();
-        this.contato.setIdContatoFornecedor(idContato);
+    public boolean validarCnpj(){
+        return !this.cnpj.equals("  .   .   /    -  ");
     }
-    
 }
