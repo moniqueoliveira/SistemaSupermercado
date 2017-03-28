@@ -113,16 +113,16 @@ public class FornecedorDAOImpl implements FornecedorDAO {
         String filtro;
         switch (pesquisaPor) {
             case ("ID"):
-                filtro = "where id_fornecedor = " + texto;
+                filtro = "where id_fornecedor like '%" + texto + "%'";
                 break;
             case ("CNPJ"):
-                filtro = "where cnpj = " + texto;
+                filtro = "where cnpj like '%" + texto + "%'";
                 break;
             case ("Razão Social"):
-                filtro = "where razao_social = " + texto;
+                filtro = "where razao_social like '%" + texto + "%'";
                 break;
             case ("Nome Fantasia"):
-                filtro = "where nome_fantasia = " + texto;
+                filtro = "where nome_fantasia like '%" + texto + "%'";
                 break;
             default:
                 filtro = "";

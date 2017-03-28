@@ -17,6 +17,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
@@ -55,6 +56,7 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
     public FormCadastroFornecedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        definirModeloDasTabelas();
         registrarAcoesDosAtalhos();
         definirOrdemDeTabulação();
         redefinir();
@@ -347,7 +349,7 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
 
             },
             new String [] {
-                "E-mail"
+
             }
         ));
         jScrollPane2.setViewportView(tblEmails);
@@ -408,10 +410,10 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
 
         tblTelefones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null}
+
             },
             new String [] {
-                "Telefones"
+
             }
         ));
         jScrollPane1.setViewportView(tblTelefones);
@@ -1019,10 +1021,22 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
     
     
     private void exibirListaDeFornecedores() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        FormListaFornecedores form = new FormListaFornecedores(null, true);
+        form.setVisible(true);
+        if (form.getObjetoSelecionado() != null) {
+            
+            // Verifica se há algum cadastro já pesquisado na tela no FormCadastroFornecedor
+            if (btnAlterar.isEnabled()) {
+                int resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente selecionar outro fornecedor?",
+                        "Atenção", JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.NO_OPTION) return;
+            }
+            txtId.setText(form.getObjetoSelecionado().getIdFornecedor().toString());
+            btnPesquisarActionPerformed(null);
+        }
     }
     
-    /*
+    /**
      * Método que "mapeia" e "captura" os atalhos teclados pelo usuário
      */
     private void registrarAcoesDosAtalhos() {
@@ -1117,9 +1131,42 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
                         "Atenção", JOptionPane.WARNING_MESSAGE);
         }
     }
+
+    private void definirModeloDasTabelas() {
+        tblTelefones.setModel(  
+            new DefaultTableModel(  
+               new Object[] []{ },  
+               new String[]{"Telefone"}
+            ) {  
+
+            @Override
+            public boolean isCellEditable(int row, int col) {  
+                    return false;  
+            }  
+
+            }  
+         );  
+        
+        tblEmails.setModel(  
+            new DefaultTableModel(  
+               new Object[] []{ },  
+               new String[]{"E-mail"}
+            ) {  
+
+            @Override
+            public boolean isCellEditable(int row, int col) {  
+                    return false;  
+            }  
+
+            }  
+         ); 
+        
+        tblEmails.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblTelefones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
     
     
-    /*
+    /**
      * Classe usada para criar as ações dos atalhos do teclado (F1, F2 e F3)
      */
     private class AtalhoAction extends AbstractAction {

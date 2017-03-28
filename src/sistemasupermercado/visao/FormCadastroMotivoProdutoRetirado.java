@@ -9,6 +9,7 @@ import javax.swing.InputMap;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import sistemasupermercado.dominio.MotivoProdutoRetirado;
 import sistemasupermercado.exceptions.DadosInvalidosException;
@@ -27,6 +28,7 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        definirModeloDaTabela();
         redefinir();
         registrarAcoesDosAtalhos();
         
@@ -135,22 +137,12 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
 
         tblMotivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "ID", "Descrição do motivo"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         tblMotivos.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tblMotivosFocusGained(evt);
@@ -167,6 +159,11 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         tblMotivos.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tblMotivosPropertyChange(evt);
+            }
+        });
+        tblMotivos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblMotivosKeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(tblMotivos);
@@ -243,7 +240,7 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
                     .addComponent(cmbParametroPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -269,9 +266,9 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -395,7 +392,6 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
 
     private void tblMotivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMotivosMouseClicked
         // TODO add your handling code here:
-        txtId.requestFocus();
     }//GEN-LAST:event_tblMotivosMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -424,18 +420,22 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
 
     private void tblMotivosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tblMotivosFocusGained
         // TODO add your handling code here:
-        //txtId.requestFocus();
     }//GEN-LAST:event_tblMotivosFocusGained
 
     private void tblMotivosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMotivosMousePressed
         // TODO add your handling code here:
-        txtId.requestFocus();
     }//GEN-LAST:event_tblMotivosMousePressed
 
     private void tblMotivosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblMotivosPropertyChange
         // TODO add your handling code here:
-        txtId.requestFocus();
     }//GEN-LAST:event_tblMotivosPropertyChange
+
+    private void tblMotivosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblMotivosKeyPressed
+        // TODO add your handling code here:
+        if (KeyStroke.getKeyStrokeForEvent(evt) == KeyStroke.getKeyStroke("F2")){
+            carregarObjetoSelecionado();
+        }
+    }//GEN-LAST:event_tblMotivosKeyPressed
 
     
     
@@ -577,25 +577,14 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
     }
 
     private void carregarObjetoSelecionado() {
-        //if (tblMotivos.clearSelection() == tblMotivos.c)
-        if (tblMotivos.getSelectedRowCount() > 1) {
-            JOptionPane.showMessageDialog(this, "Selecione apenas um item para realizar a alteração.",
-                    "Atenção", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            if (tblMotivos.getSelectedRowCount() < 1) {
-                JOptionPane.showMessageDialog(this, "Selecione um item para realizar a alteração.",
-                    "Atenção", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                motivoProdutoRetirado = new MotivoProdutoRetirado();
-                int idMotivo = Integer.parseInt(tblMotivos.getValueAt(tblMotivos.getSelectedRow(), 0).toString());
-                String descricao = tblMotivos.getValueAt(tblMotivos.getSelectedRow(), 1).toString();
-                motivoProdutoRetirado.setIdMotivo(idMotivo);
-                motivoProdutoRetirado.setDescricao(descricao);
-                txtId.setText(motivoProdutoRetirado.getIdMotivo().toString());
-                txtDescricao.setText(motivoProdutoRetirado.getDescricao());
-                alterarPermissaoDosBotoes();
-            }
-        }
+        motivoProdutoRetirado = new MotivoProdutoRetirado();
+        int idMotivo = Integer.parseInt(tblMotivos.getValueAt(tblMotivos.getSelectedRow(), 0).toString());
+        String descricao = tblMotivos.getValueAt(tblMotivos.getSelectedRow(), 1).toString();
+        motivoProdutoRetirado.setIdMotivo(idMotivo);
+        motivoProdutoRetirado.setDescricao(descricao);
+        txtId.setText(motivoProdutoRetirado.getIdMotivo().toString());
+        txtDescricao.setText(motivoProdutoRetirado.getDescricao());
+        alterarPermissaoDosBotoes();
     }
 
     private void registrarAcoesDosAtalhos() {
@@ -605,6 +594,21 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
         
         InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
         imapForm.put(KeyStroke.getKeyStroke("F2"), "acaof2");
+    }
+
+    private void definirModeloDaTabela() {
+        tblMotivos.setModel(  
+            new DefaultTableModel(new Object[] []{ }, new String[]{"ID", "Descrição do motivo"}) { 
+                @Override
+                public boolean isCellEditable(int row, int col) {  
+                        return false;  
+                }  
+
+            }  
+         ); 
+        
+        tblMotivos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblMotivos.getColumnModel().getColumn(0).setPreferredWidth(100);
     }
     
     private class AtalhoAction extends AbstractAction {
