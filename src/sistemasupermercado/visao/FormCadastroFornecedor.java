@@ -352,6 +352,14 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
 
             }
         ));
+        tblEmails.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblEmailsKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tblEmailsKeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblEmails);
 
         btnExcluirEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeExcluirMenor.png"))); // NOI18N
@@ -416,6 +424,14 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
 
             }
         ));
+        tblTelefones.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblTelefonesKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tblTelefonesKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblTelefones);
 
         try {
@@ -879,6 +895,26 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAdicionarEmailActionPerformed
 
+    private void tblTelefonesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblTelefonesKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblTelefonesKeyTyped
+
+    private void tblEmailsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblEmailsKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblEmailsKeyTyped
+
+    private void tblTelefonesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblTelefonesKeyPressed
+        // TODO add your handling code here:
+        if (KeyStroke.getKeyStrokeForEvent(evt) == KeyStroke.getKeyStroke("TAB"))
+            txtEmail.requestFocus();
+    }//GEN-LAST:event_tblTelefonesKeyPressed
+
+    private void tblEmailsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblEmailsKeyPressed
+        // TODO add your handling code here:
+        if (KeyStroke.getKeyStrokeForEvent(evt) == KeyStroke.getKeyStroke("TAB"))
+            txtId.requestFocus();
+    }//GEN-LAST:event_tblEmailsKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -1075,7 +1111,9 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
         policy.addIndexedComponent(txtCidade);
         policy.addIndexedComponent(txtUf);
         policy.addIndexedComponent(txtTelefone);
+        policy.addIndexedComponent(tblTelefones);
         policy.addIndexedComponent(txtEmail);
+        policy.addIndexedComponent(tblEmails);
         setFocusTraversalPolicy(policy);
     }
 

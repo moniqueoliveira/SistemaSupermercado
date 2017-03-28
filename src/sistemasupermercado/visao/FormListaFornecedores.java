@@ -56,6 +56,8 @@ public class FormListaFornecedores extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Fornecedores");
+        setAlwaysOnTop(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -230,6 +232,7 @@ public class FormListaFornecedores extends javax.swing.JDialog {
     }
 
     private void setObjetoSelecionado() {
+        if (tblFornecedores.getSelectedRowCount() == 0) return;
         fornecedor = new Fornecedor();
         int idFornecedor = Integer.parseInt(tblFornecedores.getValueAt(tblFornecedores.getSelectedRow(), 0).toString());
         fornecedor.setIdFornecedor(idFornecedor);
