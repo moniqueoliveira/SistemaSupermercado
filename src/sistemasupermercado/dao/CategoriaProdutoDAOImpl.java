@@ -45,7 +45,7 @@ public class CategoriaProdutoDAOImpl implements CategoriaProdutoDAO {
 
     @Override
     public boolean alterar(CategoriaProduto obj) throws SQLException {
-        String sql = "update categorias_produtos set descricao = ? where codigo = ?";
+        String sql = "update categorias_produtos set descricao = ? where id_categoria = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setString(1, obj.getDescricao());
         pstm.setInt(2, obj.getIdCategoria());

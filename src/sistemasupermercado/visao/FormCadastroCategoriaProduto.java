@@ -5,18 +5,45 @@
  */
 package sistemasupermercado.visao;
 
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.FocusTraversalPolicy;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import sistemasupermercado.dominio.CategoriaProduto;
+import sistemasupermercado.servicos.CategoriaProdutoServico;
+
 /**
  *
  * @author Monique
  */
 public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
-
+    CategoriaProduto categoriaProduto;
+    CategoriaProdutoServico categoriaProdutoServico;
+    
+    AtalhoAction acaoF1 = new AtalhoAction("F1");
+    AtalhoAction acaoF2 = new AtalhoAction("F2");
+    AtalhoAction acaoF3 = new AtalhoAction("F3");
+    AtalhoAction acaoF4 = new AtalhoAction("F4");
+    AtalhoAction acaoF5 = new AtalhoAction("F5");
+    AtalhoAction acaoF6 = new AtalhoAction("F6");
     /**
      * Creates new form FormCadastroCategoriaProduto
      */
     public FormCadastroCategoriaProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -31,20 +58,20 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField5 = new javax.swing.JTextField();
+        cmbPesquisarPor = new javax.swing.JComboBox<>();
+        txtPesquisa = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCategorias = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtId = new javax.swing.JTextField();
+        txtDescricao = new javax.swing.JTextField();
+        btnPesquisar = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        btnIncluir = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -54,6 +81,11 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro de Categorias de Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(51, 153, 255))); // NOI18N
 
@@ -61,7 +93,13 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
 
         jLabel7.setText("Pesquisar por:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyReleased(evt);
+            }
+        });
+
+        tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -69,8 +107,13 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
 
             }
         ));
-        jTable1.setToolTipText("");
-        jScrollPane1.setViewportView(jTable1);
+        tblCategorias.setToolTipText("");
+        tblCategorias.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblCategoriasKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblCategorias);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -83,9 +126,9 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbPesquisarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5)))
+                        .addComponent(txtPesquisa)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -93,8 +136,8 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbPesquisarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                 .addContainerGap())
@@ -106,19 +149,50 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
 
         jLabel2.setText("Descrição:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconePesquisar.png"))); // NOI18N
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdKeyTyped(evt);
+            }
+        });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeNovoMenor.png"))); // NOI18N
-        jButton5.setText("Novo");
+        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconePesquisar.png"))); // NOI18N
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeInserirMenor.png"))); // NOI18N
-        jButton4.setText("Incluir");
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeNovoMenor.png"))); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeEditarMenor.png"))); // NOI18N
-        jButton3.setText("Alterar");
+        btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeInserirMenor.png"))); // NOI18N
+        btnIncluir.setText("Incluir");
+        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirActionPerformed(evt);
+            }
+        });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeExcluirMenor.png"))); // NOI18N
-        jButton2.setText("Excluir");
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeEditarMenor.png"))); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeExcluirMenor.png"))); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -130,22 +204,22 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2))
+                        .addComponent(txtDescricao))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton5)
+                        .addComponent(btnNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
+                        .addComponent(btnIncluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(btnAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(btnExcluir)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -154,17 +228,17 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2)
-                    .addComponent(jButton5)
-                    .addComponent(jButton4))
+                    .addComponent(btnAlterar)
+                    .addComponent(btnExcluir)
+                    .addComponent(btnNovo)
+                    .addComponent(btnIncluir))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -238,6 +312,135 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+        if (txtId.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "É necessário inserir o ID para pesquisar.", 
+                        "Pesquisa sem resultado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        categoriaProdutoServico = new CategoriaProdutoServico();
+        categoriaProduto = new CategoriaProduto();
+        categoriaProduto.setIdCategoria(Integer.parseInt(txtId.getText()));
+        
+        try {
+            categoriaProduto = categoriaProdutoServico.pesquisar(categoriaProduto);
+            txtDescricao.setText(categoriaProduto.getDescricao());
+            alterarPermissaoDosBotoes();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }  
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // TODO add your handling code here:
+        redefinir();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        // TODO add your handling code here:
+        categoriaProduto = new CategoriaProduto();
+        categoriaProdutoServico = new CategoriaProdutoServico();
+        
+        if (!txtId.getText().equals("")) categoriaProduto.setIdCategoria(Integer.parseInt(txtId.getText()));
+        categoriaProduto.setDescricao(txtDescricao.getText());
+        
+        try {
+            categoriaProdutoServico.inserir(categoriaProduto);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Categoria cadastrada com sucesso!\nDeseja continuar no cadastro de funções?", 
+                        "Informação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", "");}
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIncluirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+        try {
+            categoriaProduto.setDescricao(txtDescricao.getText());
+            categoriaProdutoServico.alterar(categoriaProduto);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Categoria alterada com sucesso!\nDeseja continuar no cadastro de funções?", 
+                        "Informação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", ""); }
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+        try {
+            categoriaProdutoServico.excluir(categoriaProduto);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Categoria excluída com sucesso!\nDeseja continuar no cadastro de funções?", 
+                        "Informação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", "");}
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void tblCategoriasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblCategoriasKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyCode()){
+            case (KeyEvent.VK_TAB):
+                txtId.requestFocus();
+                break;
+            case (KeyEvent.VK_F1):
+                if (btnPesquisar.isEnabled()) btnPesquisarActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F2):
+                capturarItemSelecionado();
+                break;
+            case (KeyEvent.VK_F3):
+                btnNovoActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F4):
+                if (btnIncluir.isEnabled()) btnIncluirActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F5):
+                if (btnAlterar.isEnabled()) btnAlterarActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F6):
+                if (btnExcluir.isEnabled()) btnExcluirActionPerformed(null);    
+        }
+    }//GEN-LAST:event_tblCategoriasKeyPressed
+
+    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+        // TODO add your handling code here:
+        String caracteres="0987654321";
+        if(!caracteres.contains(evt.getKeyChar() + "")){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIdKeyTyped
+
+    private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
+        // TODO add your handling code here:
+        preencherTabela(cmbPesquisarPor.getSelectedItem().toString(), txtPesquisa.getText());
+    }//GEN-LAST:event_txtPesquisaKeyReleased
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        redefinir();
+        definirModeloDaTabela();
+        registrarAcoesDosAtalhos();
+        definirOrdemDeTabulação();
+        preencherTabela("", "");
+        preencherComboBox();
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -281,12 +484,12 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnIncluir;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnPesquisar;
+    private javax.swing.JComboBox<String> cmbPesquisarPor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -301,9 +504,207 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTable tblCategorias;
+    private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
+    private void capturarItemSelecionado() {
+        if (tblCategorias.getSelectedRowCount() == 0) return;
+        
+        categoriaProduto = new CategoriaProduto();
+        categoriaProduto.setIdCategoria(Integer.parseInt(tblCategorias.getValueAt(tblCategorias.getSelectedRow(), 0).toString()));
+        categoriaProduto.setDescricao(tblCategorias.getValueAt(tblCategorias.getSelectedRow(), 1).toString());
+        
+        txtId.setText(categoriaProduto.getIdCategoria().toString());
+        txtDescricao.setText(categoriaProduto.getDescricao());
+        alterarPermissaoDosBotoes();
+    }
+    
+    /**
+     * Método que "mapeia" e "captura" os atalhos teclados pelo usuário
+     */
+    private void registrarAcoesDosAtalhos() {
+        ActionMap actionMapForm = this.rootPane.getActionMap();
+        actionMapForm.put("acaof1", acaoF1);
+        actionMapForm.put("acaof2", acaoF2);
+        actionMapForm.put("acaof3", acaoF3);
+        actionMapForm.put("acaof4", acaoF4);
+        actionMapForm.put("acaof5", acaoF5);
+        actionMapForm.put("acaof6", acaoF6);
+        rootPane.setActionMap(actionMapForm);
+        
+        InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        imapForm.put(KeyStroke.getKeyStroke("F1"), "acaof1");
+        imapForm.put(KeyStroke.getKeyStroke("F2"), "acaof2");
+        imapForm.put(KeyStroke.getKeyStroke("F3"), "acaof3");
+        imapForm.put(KeyStroke.getKeyStroke("F4"), "acaof4");
+        imapForm.put(KeyStroke.getKeyStroke("F5"), "acaof5");
+        imapForm.put(KeyStroke.getKeyStroke("F6"), "acaof6");
+    }
+    
+    private void definirOrdemDeTabulação() {
+        IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
+        policy.addIndexedComponent(txtId);
+        policy.addIndexedComponent(txtDescricao);
+        policy.addIndexedComponent(cmbPesquisarPor);
+        policy.addIndexedComponent(txtPesquisa);
+        policy.addIndexedComponent(tblCategorias
+        );
+        setFocusTraversalPolicy(policy);
+    }
+    
+    private void alterarPermissaoDosBotoes() {
+        txtId.setEditable(false);
+        txtDescricao.requestFocus();
+        btnAlterar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        btnPesquisar.setEnabled(false);
+        btnIncluir.setEnabled(false);
+    }
+
+    private void preencherTabela(String pesquisarPor, String texto) {
+        categoriaProdutoServico = new CategoriaProdutoServico();
+        DefaultTableModel dtm = (DefaultTableModel) tblCategorias
+                .getModel();
+        limparTabela();
+        try {
+            List<CategoriaProduto> Categorias
+                    = categoriaProdutoServico.listar(pesquisarPor, texto);
+            for (int i = 0; i < Categorias
+                    .size(); i++) {
+                dtm.addRow(new Object[]{""});
+                tblCategorias.setValueAt(Categorias.get(i).getIdCategoria().toString(), i, 0);
+                tblCategorias.setValueAt(Categorias.get(i).getDescricao(), i, 1);
+            }
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    private void limparTabela() {
+        DefaultTableModel dtm =(DefaultTableModel) tblCategorias
+                .getModel();
+        dtm.setRowCount(0);
+    }
+    
+    private void definirModeloDaTabela() {
+        tblCategorias.setModel(  
+            new DefaultTableModel(  
+               new Object[] []{ },  
+               new String[]{"ID", "Descrição"}
+            ) {  
+
+            @Override
+            public boolean isCellEditable(int row, int col) {  
+                    return false;  
+            }  
+
+            }  
+         ); 
+        
+        tblCategorias.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tblCategorias.getColumnModel().getColumn(1).setPreferredWidth((int) tblCategorias.getSize().getWidth() - 100);
+        tblCategorias.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    private void redefinir() {
+        txtId.setText("");
+        txtDescricao.setText("");
+        txtId.requestFocus();
+        txtId.setEditable(true);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnPesquisar.setEnabled(true);
+        btnIncluir.setEnabled(true);
+    }
+
+    private void preencherComboBox() {
+        cmbPesquisarPor.addItem("ID");
+        cmbPesquisarPor.addItem("Descrição");
+        cmbPesquisarPor.setSelectedIndex(1);
+    }
+    
+    /**
+     * Classe usada para criar as ações dos atalhos do teclado (F1, F2 e F3)
+     */
+    private class AtalhoAction extends AbstractAction {
+	private String atalho;
+
+	public AtalhoAction(String atalho)
+	{
+		super(atalho);
+		this.atalho = atalho;
+	}
+        
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            switch(atalho) {
+                case ("F1"):
+                    if (btnPesquisar.isEnabled()) btnPesquisarActionPerformed(ae);
+                    break;
+                case ("F2"):
+                    capturarItemSelecionado();
+                    break;
+                case ("F3"):
+                    btnNovoActionPerformed(ae);
+                    break;
+                case ("F4"):
+                    if (btnIncluir.isEnabled()) btnIncluirActionPerformed(ae);
+                    break;
+                case ("F5"):
+                    if (btnAlterar.isEnabled()) btnAlterarActionPerformed(ae);
+                    break;
+                case ("F6"):
+                    if (btnExcluir.isEnabled()) btnExcluirActionPerformed(ae);
+            }
+        }
+
+    }
+
+        
+    /*
+    * Classe usada para definir a ordem de tabulação entre os componentes
+    */
+    private class IndexedFocusTraversalPolicy extends FocusTraversalPolicy {
+
+        private ArrayList<Component> components = new ArrayList<>();
+
+        public void addIndexedComponent(Component component) {
+             components.add(component);
+        }
+
+        //@Override
+        @Override
+        public Component getComponentAfter(Container aContainer, Component aComponent) {
+             int atIndex = components.indexOf(aComponent);
+             int nextIndex = (atIndex + 1) % components.size();
+             return components.get(nextIndex);
+        }
+
+        @Override
+        public Component getComponentBefore(Container aContainer, Component aComponent) {
+             int atIndex = components.indexOf(aComponent);
+             int nextIndex = (atIndex + components.size() - 1) %
+                     components.size();
+             return components.get(nextIndex);
+        }
+
+        @Override
+        public Component getFirstComponent(Container aContainer) {
+             return components.get(0);
+        }
+
+        @Override
+        public Component getLastComponent(Container cntnr) {
+            return components.get(components.size() - 1);
+        }
+
+        @Override
+        public Component getDefaultComponent(Container cntnr) {
+            return components.get(0);
+        }
+    }
+
 }

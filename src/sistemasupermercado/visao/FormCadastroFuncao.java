@@ -369,7 +369,7 @@ public class FormCadastroFuncao extends javax.swing.JDialog {
             
             int resposta = JOptionPane.showConfirmDialog(this, "Função alterada com sucesso!\nDeseja continuar no cadastro de funções?", 
                         "Informação", JOptionPane.YES_NO_OPTION);
-            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", "");}
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", ""); }
             else dispose();
         } catch(RuntimeException ex) {
             JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 

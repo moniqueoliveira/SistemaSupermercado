@@ -6,6 +6,7 @@ import java.util.List;
 import sistemasupermercado.dao.CategoriaProdutoDAOImpl;
 import sistemasupermercado.dominio.CategoriaProduto;
 import sistemasupermercado.exceptions.DadosInvalidosException;
+import sistemasupermercado.exceptions.PesquisaNulaException;
 import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoException;
 import sistemasupermercado.interfaces.dao.CategoriaProdutoDAO;
 
@@ -72,6 +73,6 @@ public class CategoriaProdutoServico {
     }
 
     private void verificarPesquisa(CategoriaProduto categoriaProduto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (categoriaProduto == null) throw new PesquisaNulaException();
     }
 }
