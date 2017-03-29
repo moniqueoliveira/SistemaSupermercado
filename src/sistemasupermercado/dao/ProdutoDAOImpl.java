@@ -81,7 +81,11 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     }
 
     @Override
-    public List<Produto> listar(String filtro) throws SQLException {
+    public List<Produto> listar(String pesquisaPor, String texto) throws SQLException {
+        return listar(texto);
+    }
+    
+    private List<Produto> listar(String filtro) throws SQLException {
         List<Produto> produtos = new ArrayList<>();
         String sql = "select * from produtos " + filtro;
         PreparedStatement pstm = conexao.prepareStatement(sql);

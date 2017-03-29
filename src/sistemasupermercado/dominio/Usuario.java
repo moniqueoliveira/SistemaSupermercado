@@ -2,18 +2,18 @@
 package sistemasupermercado.dominio;
 
 public class Usuario {
-    private int idUsuario;
+    private Integer idUsuario;
     private String nome;
     private String login;
     private String senha;
     private Unidade unidade;
     private FuncaoUsuario funcaoUsuario;
 
-    public int getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
     
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
     

@@ -2,14 +2,14 @@
 package sistemasupermercado.dominio;
 
 public class FuncaoUsuario {
-    private int idFuncao;
+    private Integer idFuncao;
     private String descricao;
 
-    public int getIdFuncao() {
+    public Integer getIdFuncao() {
         return idFuncao;
     }
 
-    public void setIdFuncao(int idFuncao) {
+    public void setIdFuncao(Integer idFuncao) {
         this.idFuncao = idFuncao;
     }
 
@@ -21,5 +21,8 @@ public class FuncaoUsuario {
         this.descricao = descricao;
     }
     
-    
+    @Override
+    public String toString() {
+        return this.descricao;
+    }
 }

@@ -20,6 +20,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public boolean inserir(Usuario obj) throws SQLException {
+        if (obj.getIdUsuario() == null) return inserirSemId(obj);
+        return inserirComId(obj);
+    }
+    
+    private boolean inserirSemId(Usuario obj) throws SQLException {
         String sql = "insert into usuarios (nome, login, senha, id_unidade, id_funcao) values (?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setString(1, obj.getNome());
@@ -27,6 +32,21 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         pstm.setString(3, obj.getSenha());
         pstm.setInt(4, obj.getUnidade().getIdUnidade());
         pstm.setInt(5, obj.getFuncaoUsuario().getIdFuncao());
+        int result = pstm.executeUpdate();
+        pstm.close();
+        return result == 1;
+    }
+    
+    private boolean inserirComId(Usuario obj) throws SQLException {
+        String sql = "insert into usuarios (id_usuario, nome, login, senha, id_unidade, id_funcao) "
+                + "values (?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        pstm.setInt(1, obj.getIdUsuario());
+        pstm.setString(2, obj.getNome());
+        pstm.setString(3, obj.getLogin());
+        pstm.setString(4, obj.getSenha());
+        pstm.setInt(5, obj.getUnidade().getIdUnidade());
+        pstm.setInt(6, obj.getFuncaoUsuario().getIdFuncao());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -77,8 +97,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         return usuario;
     }
 
-    @Override
-    public List<Usuario> listar(String filtro) throws SQLException {
+    private List<Usuario> listar(String filtro) throws SQLException {
         List<Usuario> usuarios = new ArrayList<>();
         String sql = "select * from usuarios " + filtro;
         PreparedStatement pstm = conexao.prepareStatement(sql);
@@ -95,6 +114,22 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         }
         pstm.close();
         return usuarios;
+    }
+
+    @Override
+    public List<Usuario> listar(String pesquisaPor, String texto) throws SQLException {
+        String filtro;
+        switch(pesquisaPor) {
+            case ("ID"):
+                filtro = "where id_usuario like '%" + texto + "%'";
+                break;
+            case ("Login"):
+                filtro = "where id_usuario like '%" + texto + "%'";
+                break;
+            default:
+                filtro = "where nome like '%" + texto + "%'";
+        }
+        return listar(filtro);
     }
     
 }

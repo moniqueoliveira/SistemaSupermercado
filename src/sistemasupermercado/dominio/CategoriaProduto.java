@@ -2,14 +2,14 @@
 package sistemasupermercado.dominio;
 
 public class CategoriaProduto {
-    private int idCategoria;
+    private Integer idCategoria;
     private String descricao;
 
-    public int getIdCategoria() {
+    public Integer getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(int idCategoria) {
+    public void setIdCategoria(Integer idCategoria) {
         this.idCategoria = idCategoria;
     }
 

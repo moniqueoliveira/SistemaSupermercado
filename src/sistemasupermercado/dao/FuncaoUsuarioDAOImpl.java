@@ -20,9 +20,24 @@ public class FuncaoUsuarioDAOImpl implements FuncaoUsuarioDAO {
 
     @Override
     public boolean inserir(FuncaoUsuario obj) throws SQLException {
+        if (obj.getIdFuncao() == null) return inserirSemId(obj);
+        return inserirComId(obj);
+    }
+    
+    private boolean inserirSemId(FuncaoUsuario obj) throws SQLException {
         String sql = "insert into funcoes_usuarios (descricao) values (?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setString(1, obj.getDescricao());
+        int result = pstm.executeUpdate();
+        pstm.close();
+        return result == 1;
+    }
+    
+    private boolean inserirComId(FuncaoUsuario obj) throws SQLException {
+        String sql = "insert into funcoes_usuarios (id_funcao, descricao) values (?,?)";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        pstm.setInt(1, obj.getIdFuncao());
+        pstm.setString(2, obj.getDescricao());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -65,8 +80,7 @@ public class FuncaoUsuarioDAOImpl implements FuncaoUsuarioDAO {
         return funcaoUsuario;
     }
 
-    @Override
-    public List<FuncaoUsuario> listar(String filtro) throws SQLException {
+    private List<FuncaoUsuario> listar(String filtro) throws SQLException {
         List<FuncaoUsuario> funcoes = new ArrayList<>();
         String sql = "select * from funcoes_usuarios " + filtro;
         PreparedStatement pstm = conexao.prepareStatement(sql);
@@ -79,6 +93,19 @@ public class FuncaoUsuarioDAOImpl implements FuncaoUsuarioDAO {
         }
         pstm.close();
         return funcoes;
+    }
+
+    @Override
+    public List<FuncaoUsuario> listar(String pesquisaPor, String texto) throws SQLException {
+        String filtro;
+        switch(pesquisaPor){
+            case ("ID"):
+                filtro = "where id_funcao like '%" + texto + "%'";
+                break;
+            default:
+                filtro = "where descricao like '%" + texto + "%'";
+        }
+        return listar(filtro);
     }
     
     

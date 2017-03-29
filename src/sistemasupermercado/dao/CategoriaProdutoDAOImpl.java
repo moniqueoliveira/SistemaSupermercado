@@ -20,9 +20,24 @@ public class CategoriaProdutoDAOImpl implements CategoriaProdutoDAO {
     
     @Override
     public boolean inserir(CategoriaProduto obj) throws SQLException {
+        if (obj.getIdCategoria() == null) return inserirSemID(obj);
+        return inserirComID(obj);
+    }
+    
+    public boolean inserirSemID(CategoriaProduto obj) throws SQLException {
         String sql = "insert into categorias_produtos (descricao) values (?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setString(1, obj.getDescricao());
+        int result = pstm.executeUpdate();
+        pstm.close();
+        return result == 1;
+    }
+    
+    public boolean inserirComID(CategoriaProduto obj) throws SQLException {
+        String sql = "insert into categorias_produtos (id_categoria, descricao) values (?, ?)";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        pstm.setInt(1, obj.getIdCategoria());
+        pstm.setString(2, obj.getDescricao());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -66,6 +81,18 @@ public class CategoriaProdutoDAOImpl implements CategoriaProdutoDAO {
     }
 
     @Override
+    public List<CategoriaProduto> listar(String pesquisarPor, String texto) throws SQLException {
+        String filtro;
+        switch(pesquisarPor) {
+            case ("ID"):
+                filtro = "where id_categoria like '%" + texto + "%'";
+                break;
+            default:
+                filtro = "where descricao like '%" + texto + "%'";
+        }
+        return listar(filtro);
+    }
+    
     public List<CategoriaProduto> listar(String filtro) throws SQLException {
         List<CategoriaProduto> categorias = new ArrayList<>();
         String sql = "select * from categorias_produtos " + filtro;

@@ -77,7 +77,7 @@ public class MotivoProdutoRetiradoServico {
     }
 
     private void verificarResultado(boolean resultado) {
-        if (resultado != true) throw new RetornoDeAlteracaoDeDadosInesperadoException();
+        if (!resultado) throw new RetornoDeAlteracaoDeDadosInesperadoException();
     }
     
 }
