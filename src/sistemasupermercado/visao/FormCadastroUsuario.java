@@ -5,11 +5,39 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.FocusTraversalPolicy;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.InputMap;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import sistemasupermercado.dominio.FuncaoUsuario;
+import sistemasupermercado.dominio.Unidade;
+import sistemasupermercado.dominio.Usuario;
+import sistemasupermercado.servicos.FuncaoUsuarioServico;
+import sistemasupermercado.servicos.UsuarioServico;
 
 public class FormCadastroUsuario extends javax.swing.JDialog {
-
+    Usuario usuario;
+    UsuarioServico usuarioServico;
+    
+    Unidade unidade = new Unidade();
+    
+    AtalhoAction acaoF1 = new AtalhoAction("F1");
+    AtalhoAction acaoF2 = new AtalhoAction("F2");
+    AtalhoAction acaoF3 = new AtalhoAction("F3");
+    AtalhoAction acaoF4 = new AtalhoAction("F4");
+    AtalhoAction acaoF5 = new AtalhoAction("F5");
+    AtalhoAction acaoF6 = new AtalhoAction("F6");
     /**
      * Creates new form FormCadastroUsuario
      */
@@ -28,7 +56,7 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        bgAtivo = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -42,7 +70,7 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
         txtLogin = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        cmbFuncao = new javax.swing.JComboBox<>();
+        cmbFuncao = new javax.swing.JComboBox();
         btnExcluir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
@@ -58,20 +86,31 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
         tblUsuarios = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuários");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro de Usuários", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(51, 153, 255))); // NOI18N
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados de Cadastro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
 
         jLabel1.setText("ID:");
+
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdKeyTyped(evt);
+            }
+        });
 
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconePesquisar.png"))); // NOI18N
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -80,8 +119,10 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
             }
         });
 
+        bgAtivo.add(rbAtivo);
         rbAtivo.setText("Ativo");
 
+        bgAtivo.add(rbInativo);
         rbInativo.setText("Inativo");
 
         jLabel2.setText("Nome:");
@@ -91,6 +132,8 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
         jLabel4.setText("Senha: ");
 
         jLabel5.setText("Função:");
+
+        cmbFuncao.setToolTipText("");
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeExcluirMenor.png"))); // NOI18N
         btnExcluir.setText("Excluir");
@@ -217,6 +260,12 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
 
         jLabel7.setText("Pesquisar por:");
 
+        txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyReleased(evt);
+            }
+        });
+
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -226,6 +275,11 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
             }
         ));
         tblUsuarios.setToolTipText("");
+        tblUsuarios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblUsuariosKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblUsuarios);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -282,13 +336,13 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
         jLabel8.setText("F1 - Pesquisa");
         jPanel4.add(jLabel8);
 
-        jLabel10.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel10.setText("F3 - Novo");
-        jPanel4.add(jLabel10);
-
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("F2 - Captura item selecionado para alteração");
         jPanel4.add(jLabel9);
+
+        jLabel10.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel10.setText("F3 - Novo");
+        jPanel4.add(jLabel10);
 
         jLabel11.setForeground(new java.awt.Color(51, 51, 51));
         jLabel11.setText("F4 - Inclui novo cadastro");
@@ -310,7 +364,7 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,23 +380,179 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
+        if (txtId.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "É necessário inserir o ID para pesquisar.", 
+                        "Pesquisa sem resultado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        usuario = new Usuario();
+        usuarioServico = new UsuarioServico();
+        usuario.setIdUsuario(Integer.parseInt(txtId.getText()));
+        
+        try {
+            usuario = usuarioServico.pesquisar(usuario);
+            txtNome.setText(usuario.getNome());
+            txtLogin.setText(usuario.getLogin());
+            txtSenha.setText(usuario.getSenha());
+            txtConfirmarSenha.setText(usuario.getSenha());
+            
+            if (usuario.isAtivo()) rbAtivo.setSelected(true);
+            else rbInativo.setSelected(true);
+            
+            FuncaoUsuario funcao;
+            for (int i = 0; i < cmbFuncao.getItemCount(); i++) {
+                funcao = (FuncaoUsuario) cmbFuncao.getItemAt(i);
+                if (funcao.equals(usuario.getFuncaoUsuario())) {
+                    cmbFuncao.setSelectedIndex(i);
+                    break;
+                }
+            }
+            
+            cmbFuncao.setSelectedItem(usuario.getFuncaoUsuario());
+            
+            alterarPermissaoDosBotoes();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
+        //redefinir();
+        redefinir();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         // TODO add your handling code here:
+        usuario = new Usuario();
+        usuarioServico = new UsuarioServico();
+        
+        if (!usuarioServico.validarSenha(txtSenha.getText(), txtConfirmarSenha.getText())){
+            JOptionPane.showMessageDialog(this, "As senhas não conferem!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtSenha.requestFocus();
+            return;
+        }
+        
+        if(!txtId.getText().equals("")) usuario.setIdUsuario(Integer.parseInt(txtId.getText()));
+        usuario.setNome(txtNome.getText());
+        usuario.setLogin(txtLogin.getText());
+        usuario.setSenha(txtSenha.getText());
+        usuario.setFuncaoUsuario((FuncaoUsuario)cmbFuncao.getSelectedItem());
+        
+        unidade.setIdUnidade(1);
+        usuario.setUnidade(unidade);
+        
+        if(rbAtivo.isSelected()) usuario.setAtivo(true);
+        else usuario.setAtivo(false);
+        
+        try {
+            usuarioServico.inserir(usuario);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Usuário cadastrado com sucesso!\n"
+                    + "Deseja continuar no cadastro de usuários?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", "");}
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+        if (!usuarioServico.validarSenha(txtSenha.getText(), txtConfirmarSenha.getText())){
+            JOptionPane.showMessageDialog(this, "As senhas não conferem!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtSenha.requestFocus();
+            return;
+        }
+        
+        try {
+            usuario.setNome(txtNome.getText());
+            usuario.setLogin(txtLogin.getText());
+            usuario.setSenha(txtSenha.getText());
+            usuario.setFuncaoUsuario((FuncaoUsuario)cmbFuncao.getSelectedItem());
+
+            if(rbAtivo.isSelected()) usuario.setAtivo(true);
+            else usuario.setAtivo(false);
+            
+            usuarioServico.alterar(usuario);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Dados alterados com sucesso!\n"
+                    + "Deseja continuar no cadastro de usuários?", "Informação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", ""); }
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
+        try {
+            usuarioServico.excluir(usuario);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Dados excluídos com sucesso!\nDeseja continuar no cadastro de usuários?", 
+                        "Informação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", "");}
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        redefinir();
+        definirModeloDaTabela();
+        registrarAcoesDosAtalhos();
+        definirOrdemDeTabulação();
+        preencherTabela("", "");
+        preencherCmbPesquisaPor();
+        preencherCmbFuncao();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void tblUsuariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblUsuariosKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyCode()){
+            case (KeyEvent.VK_TAB):
+                txtId.requestFocus();
+                break;
+            case (KeyEvent.VK_F1):
+                if (btnPesquisar.isEnabled()) btnPesquisarActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F2):
+                capturarItemSelecionado();
+                break;
+            case (KeyEvent.VK_F3):
+                btnNovoActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F4):
+                if (btnIncluir.isEnabled()) btnIncluirActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F5):
+                if (btnAlterar.isEnabled()) btnAlterarActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F6):
+                if (btnExcluir.isEnabled()) btnExcluirActionPerformed(null);    
+        }
+    }//GEN-LAST:event_tblUsuariosKeyPressed
+
+    private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
+        // TODO add your handling code here:
+        preencherTabela(cmbPesquisarPor.getSelectedItem().toString(), txtPesquisa.getText());
+    }//GEN-LAST:event_txtPesquisaKeyReleased
+
+    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+        // TODO add your handling code here:
+        String caracteres="0987654321";
+        if(!caracteres.contains(evt.getKeyChar() + "")){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIdKeyTyped
 
     /**
      * @param args the command line arguments
@@ -387,13 +597,13 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgAtivo;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnPesquisar;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> cmbFuncao;
+    private javax.swing.JComboBox cmbFuncao;
     private javax.swing.JComboBox<String> cmbPesquisarPor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -423,7 +633,151 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
     private javax.swing.JTextField txtPesquisa;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
-/**
+    
+    
+    private void preencherTabela(String pesquisarPor, String texto) {
+        usuarioServico = new UsuarioServico();
+        DefaultTableModel dtm = (DefaultTableModel) tblUsuarios.getModel();
+        limparTabela();
+        try {
+            List<Usuario> usuarios = usuarioServico.listar(pesquisarPor, texto);
+            for (int i = 0; i < usuarios.size(); i++) {
+                dtm.addRow(new Object[]{""});
+                tblUsuarios.setValueAt(usuarios.get(i).getIdUsuario().toString(), i, 0);
+                tblUsuarios.setValueAt(usuarios.get(i).getNome(), i, 1);
+                tblUsuarios.setValueAt(usuarios.get(i).getLogin(), i, 2);
+                tblUsuarios.setValueAt(usuarios.get(i).getFuncaoUsuario().getDescricao(), i, 3);
+                
+                String ativo;
+                if (usuarios.get(i).isAtivo()) ativo = "Sim";
+                else ativo = "Não";
+                tblUsuarios.setValueAt(ativo, i, 4);
+            }
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    private void limparTabela() {
+        DefaultTableModel dtm =(DefaultTableModel) tblUsuarios.getModel();
+        dtm.setRowCount(0);
+    }
+    
+    private void definirModeloDaTabela() {
+        tblUsuarios.setModel(  
+            new DefaultTableModel(  
+               new Object[] []{ },  
+               new String[]{"ID", "Nome", "Login", "Função", "Ativo"}
+            ) {  
+
+            @Override
+            public boolean isCellEditable(int row, int col) {  
+                    return false;  
+            }  
+
+            }  
+         ); 
+        
+        tblUsuarios.getColumnModel().getColumn(0).setPreferredWidth(60);
+        tblUsuarios.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tblUsuarios.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tblUsuarios.getColumnModel().getColumn(3).setPreferredWidth(200);
+        tblUsuarios.getColumnModel().getColumn(4).setPreferredWidth(100);
+        tblUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+    
+    
+    private void alterarPermissaoDosBotoes() {
+        txtId.setEditable(false);
+        txtNome.requestFocus();
+        btnAlterar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        btnPesquisar.setEnabled(false);
+        btnIncluir.setEnabled(false);
+    }
+    
+    /**
+     * Método que "mapeia" e "captura" os atalhos teclados pelo usuário
+     */
+    private void registrarAcoesDosAtalhos() {
+        ActionMap actionMapForm = this.rootPane.getActionMap();
+        actionMapForm.put("acaof1", acaoF1);
+        actionMapForm.put("acaof2", acaoF2);
+        actionMapForm.put("acaof3", acaoF3);
+        actionMapForm.put("acaof4", acaoF4);
+        actionMapForm.put("acaof5", acaoF5);
+        actionMapForm.put("acaof6", acaoF6);
+        rootPane.setActionMap(actionMapForm);
+        
+        InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        imapForm.put(KeyStroke.getKeyStroke("F1"), "acaof1");
+        imapForm.put(KeyStroke.getKeyStroke("F2"), "acaof2");
+        imapForm.put(KeyStroke.getKeyStroke("F3"), "acaof3");
+        imapForm.put(KeyStroke.getKeyStroke("F4"), "acaof4");
+        imapForm.put(KeyStroke.getKeyStroke("F5"), "acaof5");
+        imapForm.put(KeyStroke.getKeyStroke("F6"), "acaof6");
+    }
+    
+    private void definirOrdemDeTabulação() {
+        IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
+        policy.addIndexedComponent(txtId);
+        policy.addIndexedComponent(rbAtivo);
+        policy.addIndexedComponent(txtNome);
+        policy.addIndexedComponent(txtLogin);
+        policy.addIndexedComponent(txtSenha);
+        policy.addIndexedComponent(txtConfirmarSenha);
+        policy.addIndexedComponent(cmbFuncao);
+        policy.addIndexedComponent(txtPesquisa);
+        policy.addIndexedComponent(tblUsuarios);
+        setFocusTraversalPolicy(policy);
+    }
+
+    private void capturarItemSelecionado() {
+        if (tblUsuarios.getSelectedRowCount() == 0) return;
+        
+        btnPesquisar.setEnabled(true);
+        txtId.setText(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0).toString());
+        btnPesquisarActionPerformed(null);
+        
+    }
+
+    private void preencherCmbPesquisaPor() {
+        cmbPesquisarPor.addItem("ID");
+        cmbPesquisarPor.addItem("Nome");
+        cmbPesquisarPor.addItem("Login");
+    }
+
+    private void preencherCmbFuncao() {
+        FuncaoUsuarioServico funcaoUsuarioServico = new FuncaoUsuarioServico();
+        
+        try {
+                      
+            DefaultComboBoxModel<FuncaoUsuario> model =new DefaultComboBoxModel<>(new Vector<>(funcaoUsuarioServico.listar()));
+            cmbFuncao.setModel(model);
+            
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
+                    "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void redefinir() {
+        txtId.setText("");
+        txtNome.setText("");
+        txtLogin.setText("");
+        txtSenha.setText("");
+        txtConfirmarSenha.setText("");
+        txtId.setEditable(true);
+        txtId.requestFocus();
+        btnAlterar.setEnabled(false);
+        btnPesquisar.setEnabled(true);
+        btnExcluir.setEnabled(false);
+        btnIncluir.setEnabled(true);
+        rbAtivo.setSelected(true);
+    }
+    
+    /**
      * Classe usada para criar as ações dos atalhos do teclado (F1, F2 e F3)
      */
     private class AtalhoAction extends AbstractAction {
@@ -439,30 +793,30 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
         public void actionPerformed(ActionEvent ae) {
             switch(atalho) {
                 case ("F1"):
-                    btnPesquisarActionPerformed(ae);
+                    if (btnPesquisar.isEnabled()) btnPesquisarActionPerformed(ae);
                     break;
                 case ("F2"):
-                    btnNovoActionPerformed(ae);
+                    capturarItemSelecionado();
                     break;
                 case ("F3"):
-                    
+                    btnNovoActionPerformed(ae);
                     break;
                 case ("F4"):
-                    
+                    if (btnIncluir.isEnabled()) btnIncluirActionPerformed(ae);
                     break;
                 case ("F5"):
-                    
+                    if (btnAlterar.isEnabled()) btnAlterarActionPerformed(ae);
                     break;
                 case ("F6"):
-                    
+                    if (btnExcluir.isEnabled()) btnExcluirActionPerformed(ae);
             }
         }
     }
 
         
-    /*
-    * Classe usada para definir a ordem de tabulação entre os componentes
-    */
+    /**
+     * Classe usada para definir a ordem de tabulação entre os componentes
+     */
     private class IndexedFocusTraversalPolicy extends FocusTraversalPolicy {
 
         private ArrayList<Component> components = new ArrayList<>();

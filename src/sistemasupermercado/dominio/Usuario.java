@@ -8,6 +8,7 @@ public class Usuario {
     private String senha;
     private Unidade unidade;
     private FuncaoUsuario funcaoUsuario;
+    private boolean ativo;
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -66,5 +67,13 @@ public class Usuario {
         this.funcaoUsuario = new FuncaoUsuario();
         this.funcaoUsuario.setIdFuncao(idFuncao);
     } 
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
     
 }

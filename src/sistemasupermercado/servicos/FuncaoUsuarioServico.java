@@ -53,6 +53,10 @@ public class FuncaoUsuarioServico {
         }
     }
     
+    public List<FuncaoUsuario> listar() {
+        return listar("", "");
+    }
+    
     public List<FuncaoUsuario> listar(String pesquisaPor, String texto) {
         funcaoUsuarioDAO = new FuncaoUsuarioDAOImpl();
         try {
