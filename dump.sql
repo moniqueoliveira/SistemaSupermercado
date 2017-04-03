@@ -92,17 +92,17 @@ DROP TABLE IF EXISTS `entradas_produtos`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entradas_produtos` (
   `ID_Entrada` int(11) NOT NULL AUTO_INCREMENT,
-  `Codigo` int(11) NOT NULL,
+  `ID_Produto` int(11) NOT NULL,
   `ID_Fornecedor` int(11) NOT NULL,
   `Quantidade` decimal(5,2) NOT NULL,
   `Valor_Unitario` decimal(7,2) DEFAULT NULL,
   `Data` datetime NOT NULL,
   `ID_Sessao` int(11) NOT NULL,
   PRIMARY KEY (`ID_Entrada`),
-  KEY `Codigo` (`Codigo`),
+  KEY `ID_Produto` (`ID_Produto`),
   KEY `ID_Sessao` (`ID_Sessao`),
   KEY `ID_Fornecedor` (`ID_Fornecedor`),
-  CONSTRAINT `entradas_produtos_ibfk_1` FOREIGN KEY (`Codigo`) REFERENCES `produtos` (`Codigo`),
+  CONSTRAINT `entradas_produtos_ibfk_1` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`),
   CONSTRAINT `entradas_produtos_ibfk_2` FOREIGN KEY (`ID_Sessao`) REFERENCES `sessoes` (`ID_Sessao`),
   CONSTRAINT `entradas_produtos_ibfk_3` FOREIGN KEY (`ID_Fornecedor`) REFERENCES `fornecedores` (`ID_Fornecedor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
@@ -117,13 +117,13 @@ DROP TABLE IF EXISTS `estoques`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `estoques` (
   `ID_Unidade` int(11) NOT NULL,
-  `Codigo` int(11) NOT NULL,
+  `ID_Produto` int(11) NOT NULL,
   `Quantidade` decimal(5,2) DEFAULT NULL,
   `Valor_Total` decimal(8,2) DEFAULT NULL,
-  PRIMARY KEY (`ID_Unidade`,`Codigo`),
-  KEY `Codigo` (`Codigo`),
+  PRIMARY KEY (`ID_Unidade`,`ID_Produto`),
+  KEY `ID_Produto` (`ID_Produto`),
   CONSTRAINT `estoques_ibfk_1` FOREIGN KEY (`ID_Unidade`) REFERENCES `unidades` (`ID_Unidade`),
-  CONSTRAINT `estoques_ibfk_2` FOREIGN KEY (`Codigo`) REFERENCES `produtos` (`Codigo`)
+  CONSTRAINT `estoques_ibfk_2` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -155,7 +155,7 @@ CREATE TABLE `funcoes_usuarios` (
   `ID_Funcao` int(11) NOT NULL AUTO_INCREMENT,
   `Descricao` varchar(50) NOT NULL,
   PRIMARY KEY (`ID_Funcao`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,12 +167,12 @@ DROP TABLE IF EXISTS `itens_vendas`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `itens_vendas` (
   `ID_Venda` int(11) NOT NULL,
-  `Codigo` int(11) NOT NULL,
+  `ID_Produto` int(11) NOT NULL,
   `Quantidade` decimal(5,2) NOT NULL,
-  PRIMARY KEY (`ID_Venda`,`Codigo`),
-  KEY `Codigo` (`Codigo`),
+  PRIMARY KEY (`ID_Venda`,`ID_Produto`),
+  KEY `ID_Produto` (`ID_Produto`),
   CONSTRAINT `itens_vendas_ibfk_1` FOREIGN KEY (`ID_Venda`) REFERENCES `vendas` (`ID_Venda`),
-  CONSTRAINT `itens_vendas_ibfk_2` FOREIGN KEY (`Codigo`) REFERENCES `produtos` (`Codigo`)
+  CONSTRAINT `itens_vendas_ibfk_2` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -220,13 +220,13 @@ DROP TABLE IF EXISTS `precos_produtos`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `precos_produtos` (
   `ID_Unidade` int(11) NOT NULL,
-  `Codigo` int(11) NOT NULL,
+  `ID_Produto` int(11) NOT NULL,
   `Valor` decimal(7,2) NOT NULL,
   `Data` datetime NOT NULL,
-  PRIMARY KEY (`ID_Unidade`,`Codigo`,`Data`),
-  KEY `Codigo` (`Codigo`),
+  PRIMARY KEY (`ID_Unidade`,`ID_Produto`,`Data`),
+  KEY `ID_Produto` (`ID_Produto`),
   CONSTRAINT `precos_produtos_ibfk_1` FOREIGN KEY (`ID_Unidade`) REFERENCES `unidades` (`ID_Unidade`),
-  CONSTRAINT `precos_produtos_ibfk_2` FOREIGN KEY (`Codigo`) REFERENCES `produtos` (`Codigo`)
+  CONSTRAINT `precos_produtos_ibfk_2` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -238,14 +238,15 @@ DROP TABLE IF EXISTS `produtos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `produtos` (
-  `Codigo` int(11) NOT NULL,
+  `ID_Produto` int(11) NOT NULL AUTO_INCREMENT,
   `Descricao` varchar(60) NOT NULL,
   `Descricao_Reduzida` varchar(50) DEFAULT NULL,
   `Venda_Fracionada` tinyint(1) DEFAULT '0',
   `ID_Categoria` int(11) NOT NULL,
   `Imagem` blob,
   `Codigo_De_Barras` varchar(13) DEFAULT NULL,
-  PRIMARY KEY (`Codigo`),
+  `Estocavel` tinyint(4) DEFAULT '1',
+  PRIMARY KEY (`ID_Produto`),
   KEY `ID_Categoria` (`ID_Categoria`),
   CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`ID_Categoria`) REFERENCES `categorias_produtos` (`ID_Categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -260,16 +261,16 @@ DROP TABLE IF EXISTS `produtos_retirados`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `produtos_retirados` (
   `ID_Retirada` int(11) NOT NULL AUTO_INCREMENT,
-  `Codigo` int(11) NOT NULL,
+  `ID_Produto` int(11) NOT NULL,
   `Quantidade` decimal(5,2) DEFAULT NULL,
   `Data` datetime NOT NULL,
   `ID_Sessao` int(11) NOT NULL,
   `ID_Motivo` int(11) NOT NULL,
   PRIMARY KEY (`ID_Retirada`),
-  KEY `Codigo` (`Codigo`),
+  KEY `ID_Produto` (`ID_Produto`),
   KEY `ID_Sessao` (`ID_Sessao`),
   KEY `ID_Motivo` (`ID_Motivo`),
-  CONSTRAINT `produtos_retirados_ibfk_1` FOREIGN KEY (`Codigo`) REFERENCES `produtos` (`Codigo`),
+  CONSTRAINT `produtos_retirados_ibfk_1` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`),
   CONSTRAINT `produtos_retirados_ibfk_2` FOREIGN KEY (`ID_Sessao`) REFERENCES `sessoes` (`ID_Sessao`),
   CONSTRAINT `produtos_retirados_ibfk_3` FOREIGN KEY (`ID_Motivo`) REFERENCES `motivos_produtos_retirados` (`ID_Motivo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -355,6 +356,7 @@ CREATE TABLE `usuarios` (
   `Senha` varchar(10) NOT NULL,
   `ID_Unidade` int(11) DEFAULT NULL,
   `ID_Funcao` int(11) NOT NULL,
+  `Ativo` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`ID_Usuario`),
   KEY `ID_Unidade` (`ID_Unidade`),
   KEY `ID_Funcao` (`ID_Funcao`),
@@ -390,4 +392,4 @@ CREATE TABLE `vendas` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-25 10:45:43
+-- Dump completed on 2017-04-03 18:14:37

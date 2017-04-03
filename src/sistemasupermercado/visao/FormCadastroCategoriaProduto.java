@@ -561,8 +561,10 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
                 .getModel();
         limparTabela();
         try {
-            List<CategoriaProduto> Categorias = categoriaProdutoServico.listar(pesquisarPor, texto);
-            for (int i = 0; i < Categorias.size(); i++) {
+            List<CategoriaProduto> Categorias
+                    = categoriaProdutoServico.listar(pesquisarPor, texto);
+            for (int i = 0; i < Categorias
+                    .size(); i++) {
                 dtm.addRow(new Object[]{""});
                 tblCategorias.setValueAt(Categorias.get(i).getIdCategoria().toString(), i, 0);
                 tblCategorias.setValueAt(Categorias.get(i).getDescricao(), i, 1);
@@ -654,9 +656,9 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
     }
 
         
-    /**
-     * Classe usada para definir a ordem de tabulação entre os componentes
-     */
+    /*
+    * Classe usada para definir a ordem de tabulação entre os componentes
+    */
     private class IndexedFocusTraversalPolicy extends FocusTraversalPolicy {
 
         private ArrayList<Component> components = new ArrayList<>();
