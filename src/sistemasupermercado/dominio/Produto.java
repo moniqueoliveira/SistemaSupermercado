@@ -9,6 +9,15 @@ public class Produto {
     private boolean vendaFracionada;
     private CategoriaProduto categoria;
     private String codigoDeBarras;
+    private boolean estocavel;
+
+    public boolean isEstocavel() {
+        return estocavel;
+    }
+
+    public void setEstocavel(boolean estocavel) {
+        this.estocavel = estocavel;
+    }
 
     public int getCodigo() {
         return codigo;

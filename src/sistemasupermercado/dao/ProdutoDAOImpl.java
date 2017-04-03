@@ -20,8 +20,12 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     
     @Override
     public boolean inserir(Produto obj) throws SQLException {
+        if (obj.getCodigo() == null) return inse
+    }
+    
+    public boolean inserirComCodigo(Produto obj) throws SQLException {
         String sql = "insert into produtos (codigo, descricao, descricao_reduzida, venda_fracionada, id_categoria, "
-                + "codigo_de_barras) values (?, ?, ?, ?, ?, ?)";
+                + "codigo_de_barras, estocavel) values (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getCodigo());
         pstm.setString(2, obj.getDescricao());
@@ -29,6 +33,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         pstm.setBoolean(4, obj.isVendaFracionada());
         pstm.setInt(5, obj.getCategoria().getIdCategoria());
         pstm.setString(6, obj.getCodigoDeBarras());
+        pstm.setBoolean(7, obj.isEstocavel());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -37,14 +42,15 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     @Override
     public boolean alterar(Produto obj) throws SQLException {
         String sql = "update produtos set descricao = ?, descricao_reduzida = ?, venda_fracionada = ?, "
-                + "id_categoria = ?, codigo_de_barras = ? where codigo = ?";
+                + "id_categoria = ?, codigo_de_barras = ?, estocavel = ? where codigo = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setString(1, obj.getDescricao());
         pstm.setString(2, obj.getDescricaoReduzida());
         pstm.setBoolean(3, obj.isVendaFracionada());
         pstm.setInt(4, obj.getCategoria().getIdCategoria());
         pstm.setString(5, obj.getCodigoDeBarras());
-        pstm.setInt(6, obj.getCodigo());
+        pstm.setBoolean(6, obj.isEstocavel());
+        pstm.setInt(7, obj.getCodigo());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -75,6 +81,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             produto.setDescricao(rs.getString("descricao"));
             produto.setDescricaoReduzida(rs.getString("descricao_reduzida"));
             produto.setVendaFracionada(rs.getBoolean("venda_fracionada"));
+            produto.setEstocavel(rs.getBoolean("estocavel"));
         }
         pstm.close();
         return produto;
@@ -98,6 +105,9 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             produto.setDescricao(rs.getString("descricao"));
             produto.setDescricaoReduzida(rs.getString("descricao_reduzida"));
             produto.setVendaFracionada(rs.getBoolean("venda_fracionada"));
+            produto.setEstocavel(rs.getBoolean("estocavel"));
+            
+            produtos.add(produto);
         }
         pstm.close();
         return produtos;
