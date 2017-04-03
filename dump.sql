@@ -155,7 +155,7 @@ CREATE TABLE `funcoes_usuarios` (
   `ID_Funcao` int(11) NOT NULL AUTO_INCREMENT,
   `Descricao` varchar(50) NOT NULL,
   PRIMARY KEY (`ID_Funcao`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,6 +245,7 @@ CREATE TABLE `produtos` (
   `ID_Categoria` int(11) NOT NULL,
   `Imagem` blob,
   `Codigo_De_Barras` varchar(13) DEFAULT NULL,
+  `Estocavel` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`Codigo`),
   KEY `ID_Categoria` (`ID_Categoria`),
   CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`ID_Categoria`) REFERENCES `categorias_produtos` (`ID_Categoria`)
@@ -355,6 +356,7 @@ CREATE TABLE `usuarios` (
   `Senha` varchar(10) NOT NULL,
   `ID_Unidade` int(11) DEFAULT NULL,
   `ID_Funcao` int(11) NOT NULL,
+  `Ativo` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`ID_Usuario`),
   KEY `ID_Unidade` (`ID_Unidade`),
   KEY `ID_Funcao` (`ID_Funcao`),
@@ -390,4 +392,4 @@ CREATE TABLE `vendas` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-25 10:45:43
+-- Dump completed on 2017-04-03 18:14:37
