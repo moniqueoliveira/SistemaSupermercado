@@ -25,7 +25,7 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
         String sql = "insert into entradas_produtos (codigo, id_fornecedor, quantidade, valor_unitario, data, id_sessao)"
                 + " values (?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getProduto().getCodigo());
+        pstm.setInt(1, obj.getProduto().getIdProduto());
         pstm.setInt(2, obj.getFornecedor().getIdFornecedor());
         pstm.setDouble(3, obj.getQuantidade());
         pstm.setBigDecimal(4, obj.getValorUnitario());
@@ -44,7 +44,7 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
         String sql = "update entradas_produtos set codigo = ?, id_fornecedor = ?, quantidade = ?, valor_unitario = ?, "
                 + "data = ?, id_sessao = ? where id_entrada = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getProduto().getCodigo());
+        pstm.setInt(1, obj.getProduto().getIdProduto());
         pstm.setInt(2, obj.getFornecedor().getIdFornecedor());
         pstm.setDouble(3, obj.getQuantidade());
         pstm.setBigDecimal(4, obj.getValorUnitario());
@@ -95,7 +95,7 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
         return entradaProduto;
     }
 
-    @Override
+    //@Override
     public List<EntradaProduto> listar(String filtro) throws SQLException {
         List<EntradaProduto> entradasProdutos = new ArrayList<>();
         String sql = "select * from entradas_produtos " + filtro;

@@ -32,7 +32,7 @@ public class EntradaProduto {
     
     public void setProduto(int codigo) {
         this.produto = new Produto();
-        this.produto.setCodigo(codigo);
+        this.produto.setIdProduto(codigo);
     }
 
     public Fornecedor getFornecedor() {

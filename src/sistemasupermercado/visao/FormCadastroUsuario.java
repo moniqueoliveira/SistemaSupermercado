@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.FocusTraversalPolicy;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.InputMap;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -31,6 +29,7 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
     UsuarioServico usuarioServico;
     
     Unidade unidade = new Unidade();
+    
     
     AtalhoAction acaoF1 = new AtalhoAction("F1");
     AtalhoAction acaoF2 = new AtalhoAction("F2");
@@ -134,6 +133,11 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
         jLabel5.setText("Função:");
 
         cmbFuncao.setToolTipText("");
+        cmbFuncao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cmbFuncaoKeyTyped(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeExcluirMenor.png"))); // NOI18N
         btnExcluir.setText("Excluir");
@@ -553,6 +557,10 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtIdKeyTyped
+
+    private void cmbFuncaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbFuncaoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbFuncaoKeyTyped
 
     /**
      * @param args the command line arguments

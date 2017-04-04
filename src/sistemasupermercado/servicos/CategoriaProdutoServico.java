@@ -53,6 +53,10 @@ public class CategoriaProdutoServico {
         }
     }
     
+    public List<CategoriaProduto> listar() {
+        return listar("", "");
+    }
+    
     public List<CategoriaProduto> listar(String pesquisarPor, String filtro) {
         categoriaProdutoDAO = new CategoriaProdutoDAOImpl();
         try {

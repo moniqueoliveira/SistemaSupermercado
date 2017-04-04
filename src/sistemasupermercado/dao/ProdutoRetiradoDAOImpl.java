@@ -25,7 +25,7 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
         String sql = "insert into produtos_retirados (codigo, quantidade, data, id_sessao, id_motivo) "
                 + "values (?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getProduto().getCodigo());
+        pstm.setInt(1, obj.getProduto().getIdProduto());
         pstm.setDouble(2, obj.getQuantidade());
         
         Timestamp timestamp = new Timestamp(obj.getData().getTimeInMillis());
@@ -43,7 +43,7 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
         String sql = "update produtos_retirados set codigo = ?, quantidade = ?, data = ?, id_sessao = ?, "
                 + "id_motivo = ? where id_retirada = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getProduto().getCodigo());
+        pstm.setInt(1, obj.getProduto().getIdProduto());
         pstm.setDouble(2, obj.getQuantidade());
         
         Timestamp timestamp = new Timestamp(obj.getData().getTimeInMillis());

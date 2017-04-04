@@ -23,7 +23,7 @@ public class ItemVendaDAOImpl implements ItemVendaDAO {
         String sql = "insert into itens_vendas values (?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getVenda().getIdVenda());
-        pstm.setInt(2, obj.getProduto().getCodigo());
+        pstm.setInt(2, obj.getProduto().getIdProduto());
         pstm.setDouble(3, obj.getQuantidade());
         int result = pstm.executeUpdate();
         pstm.close();
@@ -36,7 +36,7 @@ public class ItemVendaDAOImpl implements ItemVendaDAO {
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setDouble(1, obj.getQuantidade());
         pstm.setInt(2, obj.getVenda().getIdVenda());
-        pstm.setInt(3, obj.getProduto().getCodigo());
+        pstm.setInt(3, obj.getProduto().getIdProduto());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -47,7 +47,7 @@ public class ItemVendaDAOImpl implements ItemVendaDAO {
         String sql = "delete from itens_vendas where id_venda = ? and codigo = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getVenda().getIdVenda());
-        pstm.setInt(2, obj.getProduto().getCodigo());
+        pstm.setInt(2, obj.getProduto().getIdProduto());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -58,7 +58,7 @@ public class ItemVendaDAOImpl implements ItemVendaDAO {
         String sql = "select * from itens_vendas where id_venda = ? and codigo = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getVenda().getIdVenda());
-        pstm.setInt(2, obj.getProduto().getCodigo());
+        pstm.setInt(2, obj.getProduto().getIdProduto());
         ResultSet rs = pstm.executeQuery();
         if (rs.next()) {
             itemVenda = new ItemVenda();

@@ -11,7 +11,7 @@ public class TestaProdutoDAO {
         Produto produto = new Produto();
         ProdutoDAO dao = new ProdutoDAOImpl();
         
-        produto.setCodigo(1);
+        produto.setIdProduto(1);
         produto = dao.pesquisar(produto);
         
         System.out.println(produto.isVendaFracionada());

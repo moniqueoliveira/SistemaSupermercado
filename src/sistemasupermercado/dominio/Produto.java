@@ -3,7 +3,7 @@ package sistemasupermercado.dominio;
 
 
 public class Produto {
-    private int codigo;
+    private Integer idProduto;
     private String descricao;
     private String descricaoReduzida;
     private boolean vendaFracionada;
@@ -19,12 +19,12 @@ public class Produto {
         this.estocavel = estocavel;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public Integer getIdProduto() {
+        return idProduto;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setIdProduto(Integer idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getDescricao() {

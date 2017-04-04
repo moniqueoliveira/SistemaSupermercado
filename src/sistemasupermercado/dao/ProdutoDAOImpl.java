@@ -20,14 +20,30 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     
     @Override
     public boolean inserir(Produto obj) throws SQLException {
-        if (obj.getCodigo() == null) return inse
+        if (obj.getIdProduto()== null) return inserirSemCodigo(obj);
+        return inserirComCodigo(obj);
+    }
+    
+    public boolean inserirSemCodigo(Produto obj) throws SQLException {
+        String sql = "insert into produtos (descricao, descricao_reduzida, venda_fracionada, id_categoria, "
+                + "codigo_de_barras, estocavel) values (?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        pstm.setString(1, obj.getDescricao());
+        pstm.setString(2, obj.getDescricaoReduzida());
+        pstm.setBoolean(3, obj.isVendaFracionada());
+        pstm.setInt(4, obj.getCategoria().getIdCategoria());
+        pstm.setString(5, obj.getCodigoDeBarras());
+        pstm.setBoolean(6, obj.isEstocavel());
+        int result = pstm.executeUpdate();
+        pstm.close();
+        return result == 1;
     }
     
     public boolean inserirComCodigo(Produto obj) throws SQLException {
         String sql = "insert into produtos (codigo, descricao, descricao_reduzida, venda_fracionada, id_categoria, "
                 + "codigo_de_barras, estocavel) values (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getCodigo());
+        pstm.setInt(1, obj.getIdProduto());
         pstm.setString(2, obj.getDescricao());
         pstm.setString(3, obj.getDescricaoReduzida());
         pstm.setBoolean(4, obj.isVendaFracionada());
@@ -50,7 +66,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         pstm.setInt(4, obj.getCategoria().getIdCategoria());
         pstm.setString(5, obj.getCodigoDeBarras());
         pstm.setBoolean(6, obj.isEstocavel());
-        pstm.setInt(7, obj.getCodigo());
+        pstm.setInt(7, obj.getIdProduto());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -60,7 +76,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     public boolean excluir(Produto obj) throws SQLException {
         String sql = "delete from produtos where codigo = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getCodigo());
+        pstm.setInt(1, obj.getIdProduto());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -71,11 +87,11 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         Produto produto = null;
         String sql = "select * from produtos where codigo = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getCodigo());
+        pstm.setInt(1, obj.getIdProduto());
         ResultSet rs = pstm.executeQuery();
         if (rs.next()) {
             produto = new Produto();
-            produto.setCodigo(rs.getInt("codigo"));
+            produto.setIdProduto(rs.getInt("codigo"));
             produto.setCategoria(rs.getInt("id_categoria"));
             produto.setCodigoDeBarras(rs.getString("codigo_de_barras"));
             produto.setDescricao(rs.getString("descricao"));
@@ -99,7 +115,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         ResultSet rs = pstm.executeQuery();
         while (rs.next()) {
             Produto produto = new Produto();
-            produto.setCodigo(rs.getInt("codigo"));
+            produto.setIdProduto(rs.getInt("codigo"));
             produto.setCategoria(rs.getInt("id_categoria"));
             produto.setCodigoDeBarras(rs.getString("codigo_de_barras"));
             produto.setDescricao(rs.getString("descricao"));

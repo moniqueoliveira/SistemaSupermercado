@@ -1,22 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sistemasupermercado.visao;
 
-/**
- *
- * @author Monique
- */
-public class FormCadastroProduto extends javax.swing.JDialog {
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.FocusTraversalPolicy;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.InputMap;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import sistemasupermercado.dominio.CategoriaProduto;
+import sistemasupermercado.dominio.Produto;
+import sistemasupermercado.servicos.CategoriaProdutoServico;
+import sistemasupermercado.servicos.ProdutoServico;
 
+public class FormCadastroProduto extends javax.swing.JDialog {
+    Produto produto;
+    ProdutoServico produtoServico;
+    
+    CategoriaProduto categoriaProduto;
+    CategoriaProdutoServico categoriaProdutoServico;
+    
+    AtalhoAction acaoF1 = new AtalhoAction("F1");
+    AtalhoAction acaoF2 = new AtalhoAction("F2");
+    AtalhoAction acaoF3 = new AtalhoAction("F3");
+    AtalhoAction acaoF4 = new AtalhoAction("F4");
+    AtalhoAction acaoF5 = new AtalhoAction("F5");
+    AtalhoAction acaoF6 = new AtalhoAction("F6");
     /**
      * Creates new form FormCadastroProduto
      */
     public FormCadastroProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -28,45 +54,260 @@ public class FormCadastroProduto extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgEstocavel = new javax.swing.ButtonGroup();
+        bgVendaFracionada = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        rbVendaFracionadaSim = new javax.swing.JRadioButton();
+        rbVendaFracionadaNao = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        rbEstocavelSim = new javax.swing.JRadioButton();
+        rbEstocavelNao = new javax.swing.JRadioButton();
+        jLabel12 = new javax.swing.JLabel();
+        txtCodigoDeBarras = new javax.swing.JTextField();
+        txtDescricao = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        txtDescricaoReduzida = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        cmbCategoria = new javax.swing.JComboBox();
+        btnPesquisar = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        btnIncluir = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbPesquisarPor = new javax.swing.JComboBox<>();
+        txtPesquisa = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProdutos = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Produtos");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro de Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(51, 153, 255))); // NOI18N
 
-        jLabel1.setText("Código:");
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados de Cadastro"));
+        jPanel2.setForeground(new java.awt.Color(51, 51, 51));
 
-        jLabel2.setText("Descrição:");
+        jLabel11.setText("ID:");
 
-        jLabel5.setText("Valor unitário de venda (R$):");
+        jLabel2.setText("Venda fracionada:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconeConfirmar.png"))); // NOI18N
-        jButton1.setText("Cadastrar");
+        bgVendaFracionada.add(rbVendaFracionadaSim);
+        rbVendaFracionadaSim.setText("Sim");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconeExcluir.png"))); // NOI18N
-        jButton2.setText("Limpar");
+        bgVendaFracionada.add(rbVendaFracionadaNao);
+        rbVendaFracionadaNao.setText("Não");
 
-        jLabel8.setText("Categoria:");
+        jLabel1.setText("Estocável:");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconePesquisar.png"))); // NOI18N
-        jButton3.setText("Pesquisar");
+        bgEstocavel.add(rbEstocavelSim);
+        rbEstocavelSim.setText("Sim");
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconeEditar.png"))); // NOI18N
-        jButton4.setText("Alterar");
+        rbEstocavelNao.setText("Não");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel12.setText("Código de barras:");
+
+        jLabel13.setText("Descrição:");
+
+        jLabel14.setText("Descrição reduzida:");
+
+        jLabel15.setText("Categoria:");
+
+        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconePesquisar.png"))); // NOI18N
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeNovoMenor.png"))); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+
+        btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeInserirMenor.png"))); // NOI18N
+        btnIncluir.setText("Incluir");
+        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirActionPerformed(evt);
+            }
+        });
+
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeEditarMenor.png"))); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeExcluirMenor.png"))); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDescricaoReduzida)
+                            .addComponent(txtCodigoDeBarras)
+                            .addComponent(txtDescricao)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtId)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbVendaFracionadaSim)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbVendaFracionadaNao)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbEstocavelSim)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbEstocavelNao))
+                            .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnNovo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnIncluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAlterar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluir)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbEstocavelNao)
+                    .addComponent(rbEstocavelSim)
+                    .addComponent(jLabel1)
+                    .addComponent(rbVendaFracionadaNao)
+                    .addComponent(rbVendaFracionadaSim)
+                    .addComponent(jLabel2)
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtCodigoDeBarras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(txtDescricaoReduzida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAlterar)
+                    .addComponent(btnExcluir)
+                    .addComponent(btnNovo)
+                    .addComponent(btnIncluir))
+                .addContainerGap())
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lista de Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
+
+        jLabel5.setText("Pesquisar por:");
+
+        cmbPesquisarPor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbPesquisarPorKeyPressed(evt);
+            }
+        });
+
+        tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tblProdutos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblProdutosKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblProdutos);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbPesquisarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPesquisa)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cmbPesquisarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -75,56 +316,44 @@ public class FormCadastroProduto extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField5)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
-                                .addComponent(jButton3))
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
+
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setText("F1 - Pesquisa");
+        jPanel4.add(jLabel3);
+
+        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel4.setText("F2 - Captura item selecionado para alteração");
+        jPanel4.add(jLabel4);
+
+        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel6.setText("F3 - Novo");
+        jPanel4.add(jLabel6);
+
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setText("F4 - Inclui novo cadastro");
+        jPanel4.add(jLabel7);
+
+        jLabel9.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel9.setText("F5 - Grava alterações");
+        jPanel4.add(jLabel9);
+
+        jLabel10.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel10.setText("F6 - Exclui cadastro");
+        jPanel4.add(jLabel10);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,18 +363,86 @@ public class FormCadastroProduto extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 982, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        setSize(new java.awt.Dimension(520, 273));
+        setSize(new java.awt.Dimension(998, 533));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // TODO add your handling code here:
+        redefinir();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnIncluirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void tblProdutosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdutosKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyCode()){
+            case (KeyEvent.VK_TAB):
+                txtId.requestFocus();
+                break;
+            case (KeyEvent.VK_F1):
+                if (btnPesquisar.isEnabled()) btnPesquisarActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F2):
+                capturarItemSelecionado();
+                break;
+            case (KeyEvent.VK_F3):
+                btnNovoActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F4):
+                if (btnIncluir.isEnabled()) btnIncluirActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F5):
+                if (btnAlterar.isEnabled()) btnAlterarActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F6):
+                if (btnExcluir.isEnabled()) btnExcluirActionPerformed(null);    
+        }
+    }//GEN-LAST:event_tblProdutosKeyPressed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void cmbPesquisarPorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbPesquisarPorKeyPressed
+            // TODO add your handling code here:
+            
+    }//GEN-LAST:event_cmbPesquisarPorKeyPressed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        redefinir();
+        definirModeloDaTabela();
+        registrarAcoesDosAtalhos();
+        definirOrdemDeTabulação();
+        preencherTabela("", "");
+        preencherCmbPesquisaPor();
+        preencherCmbCategoria();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -190,18 +487,265 @@ public class FormCadastroProduto extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.ButtonGroup bgEstocavel;
+    private javax.swing.ButtonGroup bgVendaFracionada;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnIncluir;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnPesquisar;
+    private javax.swing.JComboBox cmbCategoria;
+    private javax.swing.JComboBox<String> cmbPesquisarPor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rbEstocavelNao;
+    private javax.swing.JRadioButton rbEstocavelSim;
+    private javax.swing.JRadioButton rbVendaFracionadaNao;
+    private javax.swing.JRadioButton rbVendaFracionadaSim;
+    private javax.swing.JTable tblProdutos;
+    private javax.swing.JTextField txtCodigoDeBarras;
+    private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextField txtDescricaoReduzida;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
+
+    private void redefinir() {
+        txtId.setText("");
+        txtCodigoDeBarras.setText("");
+        txtDescricao.setText("");
+        txtId.requestFocus();
+        txtId.setEditable(true);
+        rbEstocavelSim.setSelected(true);
+        rbVendaFracionadaSim.setSelected(true);
+        btnPesquisar.setEnabled(true);
+        btnIncluir.setEnabled(true);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+    }
+    
+    private void alterarPermissaoDosBotoes() {
+        txtId.setEditable(false);
+        btnPesquisar.setEnabled(false);
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        txtCodigoDeBarras.requestFocus();
+    }
+    
+    private void definirOrdemDeTabulação() {
+        IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
+        policy.addIndexedComponent(txtId);
+        policy.addIndexedComponent(rbVendaFracionadaSim);
+        policy.addIndexedComponent(rbEstocavelSim);
+        policy.addIndexedComponent(txtCodigoDeBarras);
+        policy.addIndexedComponent(txtDescricao);
+        policy.addIndexedComponent(txtDescricaoReduzida);
+        policy.addIndexedComponent(cmbCategoria);
+        policy.addIndexedComponent(cmbPesquisarPor);
+        policy.addIndexedComponent(txtPesquisa);
+        policy.addIndexedComponent(tblProdutos);
+        setFocusTraversalPolicy(policy);
+    }
+    
+    private void registrarAcoesDosAtalhos() {
+        ActionMap actionMapForm = this.rootPane.getActionMap();
+        actionMapForm.put("acaof1", acaoF1);
+        actionMapForm.put("acaof2", acaoF2);
+        actionMapForm.put("acaof3", acaoF3);
+        actionMapForm.put("acaof4", acaoF4);
+        actionMapForm.put("acaof5", acaoF5);
+        actionMapForm.put("acaof6", acaoF6);
+        rootPane.setActionMap(actionMapForm);
+        
+        InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        imapForm.put(KeyStroke.getKeyStroke("F1"), "acaof1");
+        imapForm.put(KeyStroke.getKeyStroke("F2"), "acaof2");
+        imapForm.put(KeyStroke.getKeyStroke("F3"), "acaof3");
+        imapForm.put(KeyStroke.getKeyStroke("F4"), "acaof4");
+        imapForm.put(KeyStroke.getKeyStroke("F5"), "acaof5");
+        imapForm.put(KeyStroke.getKeyStroke("F6"), "acaof6");
+    }
+
+    private void capturarItemSelecionado() {
+        
+    }
+
+    private void preencherTabela(String pesquisarPor, String texto) {
+        produtoServico = new ProdutoServico();
+        DefaultTableModel dtm = (DefaultTableModel) tblProdutos.getModel();
+        limparTabela();
+        try {
+            List<Produto> produtos = produtoServico.listar(pesquisarPor, texto);
+            for (int i = 0; i < produtos.size(); i++) {
+                dtm.addRow(new Object[]{""});
+                tblProdutos.setValueAt(produtos.get(i).getIdProduto().toString(), i, 0);
+                tblProdutos.setValueAt(produtos.get(i).getCodigoDeBarras(), i, 1);
+                tblProdutos.setValueAt(produtos.get(i).getDescricao(), i, 2);
+                tblProdutos.setValueAt(produtos.get(i).getDescricaoReduzida(), i, 3);
+                tblProdutos.setValueAt(produtos.get(i).getCategoria().getDescricao(), i, 4);
+                
+                String vendaFracionada;
+                if (produtos.get(i).isVendaFracionada()) vendaFracionada = "Sim";
+                else vendaFracionada = "Não";
+                tblProdutos.setValueAt(vendaFracionada, i, 5);
+                
+                String estocavel;
+                if (produtos.get(i).isEstocavel()) estocavel = "Sim";
+                else estocavel = "Não";
+                tblProdutos.setValueAt(estocavel, i, 6);
+            }
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    private void limparTabela() {
+        DefaultTableModel dtm = (DefaultTableModel) tblProdutos.getModel();
+        dtm.setRowCount(0);
+    }
+
+    private void definirModeloDaTabela() {
+        tblProdutos.setModel(  
+            new DefaultTableModel(
+                    new Object[] []{ },
+                    new String[]{"ID", "Código de barras", "Descrição", "Descricão reduzida", "Categoria", "Fracionado",
+                    "Estocável"}
+            ) {
+                @Override
+                public boolean isCellEditable(int row, int col) {  
+                        return false;  
+                }
+            }
+        ); 
+        
+        tblProdutos.getColumnModel().getColumn(0).setPreferredWidth(60);
+        tblProdutos.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tblProdutos.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tblProdutos.getColumnModel().getColumn(3).setPreferredWidth(150);
+        tblProdutos.getColumnModel().getColumn(4).setPreferredWidth(100);
+        tblProdutos.getColumnModel().getColumn(5).setPreferredWidth(50);
+        tblProdutos.getColumnModel().getColumn(6).setPreferredWidth(50);
+        tblProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    private void preencherCmbPesquisaPor() {
+        cmbPesquisarPor.addItem("ID");
+        cmbPesquisarPor.addItem("Código de Barras");
+        cmbPesquisarPor.addItem("Descricão");
+        cmbPesquisarPor.addItem("Descricão reduzida");
+        cmbPesquisarPor.addItem("Categoria");
+        
+    }
+
+    private void preencherCmbCategoria() {
+        categoriaProdutoServico = new CategoriaProdutoServico();
+        try {
+                      
+            DefaultComboBoxModel<CategoriaProduto> model = new DefaultComboBoxModel<>(new Vector<>(categoriaProdutoServico.listar()));
+            cmbCategoria.setModel(model);
+            
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
+                    "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    /**
+     * Classe usada para criar as ações dos atalhos do teclado (F1, F2 e F3)
+     */
+    private class AtalhoAction extends AbstractAction {
+	private String atalho;
+
+	public AtalhoAction(String atalho)
+	{
+		super(atalho);
+		this.atalho = atalho;
+	}
+        
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            switch(atalho) {
+                case ("F1"):
+                    if (btnPesquisar.isEnabled()) btnPesquisarActionPerformed(ae);
+                    break;
+                case ("F2"):
+                    capturarItemSelecionado();
+                    break;
+                case ("F3"):
+                    btnNovoActionPerformed(ae);
+                    break;
+                case ("F4"):
+                    if (btnIncluir.isEnabled()) btnIncluirActionPerformed(ae);
+                    break;
+                case ("F5"):
+                    if (btnAlterar.isEnabled()) btnAlterarActionPerformed(ae);
+                    break;
+                case ("F6"):
+                    if (btnExcluir.isEnabled()) btnExcluirActionPerformed(ae);
+            }
+        }
+    }
+
+        
+    /**
+     * Classe usada para definir a ordem de tabulação entre os componentes
+     */
+    private class IndexedFocusTraversalPolicy extends FocusTraversalPolicy {
+
+        private ArrayList<Component> components = new ArrayList<>();
+
+        public void addIndexedComponent(Component component) {
+             components.add(component);
+        }
+
+        //@Override
+        @Override
+        public Component getComponentAfter(Container aContainer, Component aComponent) {
+             int atIndex = components.indexOf(aComponent);
+             int nextIndex = (atIndex + 1) % components.size();
+             return components.get(nextIndex);
+        }
+
+        @Override
+        public Component getComponentBefore(Container aContainer, Component aComponent) {
+             int atIndex = components.indexOf(aComponent);
+             int nextIndex = (atIndex + components.size() - 1) %
+                     components.size();
+             return components.get(nextIndex);
+        }
+
+        @Override
+        public Component getFirstComponent(Container aContainer) {
+             return components.get(0);
+        }
+
+        @Override
+        public Component getLastComponent(Container cntnr) {
+            return components.get(components.size() - 1);
+        }
+
+        @Override
+        public Component getDefaultComponent(Container cntnr) {
+            return components.get(0);
+        }
+    }
 }

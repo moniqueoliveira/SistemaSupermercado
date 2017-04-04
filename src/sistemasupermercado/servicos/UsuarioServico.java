@@ -56,6 +56,10 @@ public class UsuarioServico {
         }
     }
     
+    public List<Usuario> listar() {
+        return listar("", "");
+    }
+    
     public List<Usuario> listar(String pesquisarPor, String texto) {
         usuarioDAO = new UsuarioDAOImpl();
         try {
@@ -86,6 +90,8 @@ public class UsuarioServico {
         if (mensagem.length() > 1)
             throw new DadosInvalidosException("O(s) seguinte(s) dado(s) estão sem preenchimento ou foram preenchidos"
                     + "incorretamente:\n" + mensagem);
+        
+        validarLogin(usuario);
     }
 
     private void verificarResultado(boolean result) {
@@ -94,6 +100,14 @@ public class UsuarioServico {
 
     private void validarPesquisa(Usuario usuario) {
         if (usuario == null) throw new PesquisaNulaException();
+    }
+
+    private void validarLogin(Usuario usuario) {
+        List<Usuario> usuarios = listar();
+        for (Usuario usuarioLista : usuarios) {
+            if (usuarioLista.getLogin().equals(usuario.getLogin()))
+                throw new DadosInvalidosException("O login digitado já existe!");
+        }
     }
     
 }

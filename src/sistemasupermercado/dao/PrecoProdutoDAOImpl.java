@@ -25,7 +25,7 @@ public class PrecoProdutoDAOImpl implements PrecoProdutoDAO {
         String sql = "insert into precos_produtos values (?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getUnidade().getIdUnidade());
-        pstm.setInt(2, obj.getProduto().getCodigo());
+        pstm.setInt(2, obj.getProduto().getIdProduto());
         pstm.setBigDecimal(3, obj.getValor());
         
         Timestamp timestamp = new Timestamp(obj.getData().getTimeInMillis());
@@ -41,7 +41,7 @@ public class PrecoProdutoDAOImpl implements PrecoProdutoDAO {
         String sql = "delete from precos_produtos where id_unidade =? and codigo = ? and data = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getUnidade().getIdUnidade());
-        pstm.setInt(2, obj.getProduto().getCodigo());
+        pstm.setInt(2, obj.getProduto().getIdProduto());
         
         Timestamp timestamp = new Timestamp(obj.getData().getTimeInMillis());
         pstm.setTimestamp(3, timestamp);
@@ -57,7 +57,7 @@ public class PrecoProdutoDAOImpl implements PrecoProdutoDAO {
         String sql = "select (valor) from precos_produtos where id_unidade = ?, codigo = ? and data = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getUnidade().getIdUnidade());
-        pstm.setInt(2, obj.getProduto().getCodigo());
+        pstm.setInt(2, obj.getProduto().getIdProduto());
         
         Timestamp timestamp = new Timestamp(obj.getData().getTimeInMillis());
         pstm.setTimestamp(3, timestamp);
