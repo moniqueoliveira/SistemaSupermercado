@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import sistemasupermercado.dominio.MotivoProdutoRetirado;
 
-public interface MotivoProdutoRetiradoDAO extends DAOSemListar<MotivoProdutoRetirado> {
+public interface MotivoProdutoRetiradoDAO extends DAO<MotivoProdutoRetirado> {
     
     public List<MotivoProdutoRetirado> listar(String pesquisaPor, String texto) throws SQLException;
     

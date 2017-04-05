@@ -7,6 +7,8 @@ import sistemasupermercado.dominio.EmailFornecedor;
 
 public interface EmailFornecedorDAO {
     
+    public void fecharConexao() throws SQLException;
+    
     public boolean inserir(EmailFornecedor obj) throws SQLException;
     
     public boolean alterar(EmailFornecedor obj) throws SQLException;

@@ -81,5 +81,10 @@ public class EstoqueDAOImpl implements EstoqueDAO {
         pstm.close();
         return estoques;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
 }

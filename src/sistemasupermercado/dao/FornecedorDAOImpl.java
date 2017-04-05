@@ -139,6 +139,11 @@ public class FornecedorDAOImpl implements FornecedorDAO {
         return rs.getInt("last_insert_id()");
     }
 
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
+
     
     
 }

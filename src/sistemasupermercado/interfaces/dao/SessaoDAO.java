@@ -7,6 +7,8 @@ import sistemasupermercado.dominio.Sessao;
 
 public interface SessaoDAO {
 
+    public void fecharConexao() throws SQLException;
+    
     public boolean inserir(Sessao obj) throws SQLException;
 
     public boolean alterar(Sessao obj) throws SQLException;

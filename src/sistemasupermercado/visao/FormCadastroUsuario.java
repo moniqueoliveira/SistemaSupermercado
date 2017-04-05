@@ -404,15 +404,6 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
             if (usuario.isAtivo()) rbAtivo.setSelected(true);
             else rbInativo.setSelected(true);
             
-            FuncaoUsuario funcao;
-            for (int i = 0; i < cmbFuncao.getItemCount(); i++) {
-                funcao = (FuncaoUsuario) cmbFuncao.getItemAt(i);
-                if (funcao.equals(usuario.getFuncaoUsuario())) {
-                    cmbFuncao.setSelectedIndex(i);
-                    break;
-                }
-            }
-            
             cmbFuncao.setSelectedItem(usuario.getFuncaoUsuario());
             
             alterarPermissaoDosBotoes();

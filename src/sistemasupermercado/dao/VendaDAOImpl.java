@@ -90,5 +90,10 @@ public class VendaDAOImpl implements VendaDAO {
         pstm.close();
         return vendas;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
 }

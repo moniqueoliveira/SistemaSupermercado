@@ -18,6 +18,7 @@ public class UsuarioServico {
         usuarioDAO = new UsuarioDAOImpl();
         try {
             verificarResultado(usuarioDAO.inserir(usuario));
+            usuarioDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -28,6 +29,7 @@ public class UsuarioServico {
         usuarioDAO = new UsuarioDAOImpl();
         try {
             verificarResultado(usuarioDAO.alterar(usuario));
+            usuarioDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -37,6 +39,7 @@ public class UsuarioServico {
         usuarioDAO = new UsuarioDAOImpl();
         try {
             verificarResultado(usuarioDAO.excluir(usuario));
+            usuarioDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -50,6 +53,7 @@ public class UsuarioServico {
             
             usuario.setFuncaoUsuario(new FuncaoUsuarioServico().pesquisar(usuario.getFuncaoUsuario()));
            
+            usuarioDAO.fecharConexao();
             return usuario;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
@@ -70,6 +74,7 @@ public class UsuarioServico {
                 // Define a descrição da função do usuário. Ao listar os usuários somente o ID da função é definido.
                 usuarios.get(i).setFuncaoUsuario(funcaoUsuarioServico.pesquisar(usuarios.get(i).getFuncaoUsuario()));
             }
+            usuarioDAO.fecharConexao();
             return usuarios;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());

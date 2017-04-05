@@ -6,7 +6,7 @@ import java.util.List;
 import sistemasupermercado.dominio.Fornecedor;
 
 
-public interface FornecedorDAO extends DAOSemListar<Fornecedor> {
+public interface FornecedorDAO extends DAO<Fornecedor> {
     
     public List<Fornecedor> listar(String pesquisaPor, String texto) throws SQLException;
 

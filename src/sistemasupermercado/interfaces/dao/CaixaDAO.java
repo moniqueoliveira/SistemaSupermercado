@@ -7,6 +7,8 @@ import sistemasupermercado.dominio.Caixa;
 
 public interface CaixaDAO {
     
+    public void fecharConexao() throws SQLException;
+    
     public boolean inserir(Caixa obj) throws SQLException;
     
     public boolean excluir(Caixa obj) throws SQLException;

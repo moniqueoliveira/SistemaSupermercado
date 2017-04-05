@@ -7,6 +7,8 @@ import sistemasupermercado.dominio.PrecoProduto;
 
 public interface PrecoProdutoDAO {
     
+    public void fecharConexao() throws SQLException;
+    
     public boolean inserir(PrecoProduto obj) throws SQLException;
     
     public boolean excluir(PrecoProduto obj) throws SQLException;

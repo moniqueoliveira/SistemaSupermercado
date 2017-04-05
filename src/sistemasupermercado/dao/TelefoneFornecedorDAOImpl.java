@@ -67,5 +67,10 @@ public class TelefoneFornecedorDAOImpl implements TelefoneFornecedorDAO {
         pstm.close();
         return result == 1;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
 }

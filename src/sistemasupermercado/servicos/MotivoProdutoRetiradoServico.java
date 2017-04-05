@@ -18,6 +18,7 @@ public class MotivoProdutoRetiradoServico {
         motivoProdutoRetiradoDAO = new MotivoProdutoRetiradoDAOImpl();
         try {
             verificarResultado(motivoProdutoRetiradoDAO.inserir(motivoProdutoRetirado));
+            motivoProdutoRetiradoDAO.fecharConexao();
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -28,6 +29,7 @@ public class MotivoProdutoRetiradoServico {
         motivoProdutoRetiradoDAO = new MotivoProdutoRetiradoDAOImpl();
         try {
             verificarResultado(motivoProdutoRetiradoDAO.alterar(motivoProdutoRetirado));
+            motivoProdutoRetiradoDAO.fecharConexao();
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -37,6 +39,7 @@ public class MotivoProdutoRetiradoServico {
         motivoProdutoRetiradoDAO = new MotivoProdutoRetiradoDAOImpl();
         try {
             verificarResultado(motivoProdutoRetiradoDAO.excluir(motivoProdutoRetirado));
+            motivoProdutoRetiradoDAO.fecharConexao();
         } catch (SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }
@@ -47,6 +50,7 @@ public class MotivoProdutoRetiradoServico {
         try {
             motivoProdutoRetirado = motivoProdutoRetiradoDAO.pesquisar(motivoProdutoRetirado);
             validarPesquisa(motivoProdutoRetirado);
+            motivoProdutoRetiradoDAO.fecharConexao();
             return motivoProdutoRetirado;
         } catch (SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
@@ -54,10 +58,11 @@ public class MotivoProdutoRetiradoServico {
     }
         
     public List<MotivoProdutoRetirado> listar(String pesquisaPor, String texto) {
-        
         motivoProdutoRetiradoDAO = new MotivoProdutoRetiradoDAOImpl();
         try {
-            return motivoProdutoRetiradoDAO.listar(pesquisaPor, texto);
+            List<MotivoProdutoRetirado> motivos = motivoProdutoRetiradoDAO.listar(pesquisaPor, texto);
+            motivoProdutoRetiradoDAO.fecharConexao();
+            return motivos;
         } catch (SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }

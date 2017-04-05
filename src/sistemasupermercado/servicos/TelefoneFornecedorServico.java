@@ -10,13 +10,14 @@ import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoExcepti
 import sistemasupermercado.interfaces.dao.TelefoneFornecedorDAO;
 
 public class TelefoneFornecedorServico {
-    TelefoneFornecedorDAO TelefoneFornecedorDAO;
+    TelefoneFornecedorDAO telefoneFornecedorDAO;
     
     public void inserir(TelefoneFornecedor telefoneFornecedor) {
         validarDados(telefoneFornecedor);
-        TelefoneFornecedorDAO = new TelefoneFornecedorDAOImpl();
+        telefoneFornecedorDAO = new TelefoneFornecedorDAOImpl();
         try {
-            verificarResultado(TelefoneFornecedorDAO.inserir(telefoneFornecedor));
+            verificarResultado(telefoneFornecedorDAO.inserir(telefoneFornecedor));
+            telefoneFornecedorDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }
@@ -24,27 +25,31 @@ public class TelefoneFornecedorServico {
     
     public void alterar(TelefoneFornecedor telefoneFornecedor) {
         validarDados(telefoneFornecedor);
-        TelefoneFornecedorDAO = new TelefoneFornecedorDAOImpl();
+        telefoneFornecedorDAO = new TelefoneFornecedorDAOImpl();
         try {
-            verificarResultado(TelefoneFornecedorDAO.alterar(telefoneFornecedor));
+            verificarResultado(telefoneFornecedorDAO.alterar(telefoneFornecedor));
+            telefoneFornecedorDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }
     }
     
     public void excluir(TelefoneFornecedor telefoneFornecedor) {
-        TelefoneFornecedorDAO = new TelefoneFornecedorDAOImpl();
+        telefoneFornecedorDAO = new TelefoneFornecedorDAOImpl();
         try {
-            verificarResultado(TelefoneFornecedorDAO.excluir(telefoneFornecedor));
+            verificarResultado(telefoneFornecedorDAO.excluir(telefoneFornecedor));
+            telefoneFornecedorDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }
     }
     
     public List<TelefoneFornecedor> listar(int idFornecedor) {
-        TelefoneFornecedorDAO = new TelefoneFornecedorDAOImpl();
+        telefoneFornecedorDAO = new TelefoneFornecedorDAOImpl();
         try {
-            return TelefoneFornecedorDAO.listar(idFornecedor);
+            List<TelefoneFornecedor> telefones = telefoneFornecedorDAO.listar(idFornecedor);
+            telefoneFornecedorDAO.fecharConexao();
+            return telefones;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }

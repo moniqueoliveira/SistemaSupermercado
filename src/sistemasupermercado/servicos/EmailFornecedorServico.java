@@ -17,6 +17,7 @@ public class EmailFornecedorServico {
         emailFornecedorDAO = new EmailFornecedorDAOImpl();
         try {
             verificarResultado(emailFornecedorDAO.inserir(emailFornecedor));
+            emailFornecedorDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }
@@ -27,6 +28,7 @@ public class EmailFornecedorServico {
         emailFornecedorDAO = new EmailFornecedorDAOImpl();
         try {
             verificarResultado(emailFornecedorDAO.alterar(emailFornecedor));
+            emailFornecedorDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }
@@ -36,6 +38,7 @@ public class EmailFornecedorServico {
         emailFornecedorDAO = new EmailFornecedorDAOImpl();
         try {
             verificarResultado(emailFornecedorDAO.excluir(emailFornecedor));
+            emailFornecedorDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }
@@ -44,7 +47,9 @@ public class EmailFornecedorServico {
     public List<EmailFornecedor> listar(int idFornecedor) {
         emailFornecedorDAO = new EmailFornecedorDAOImpl();
         try {
-            return emailFornecedorDAO.listar(idFornecedor);
+            List<EmailFornecedor> emails = emailFornecedorDAO.listar(idFornecedor);
+            emailFornecedorDAO.fecharConexao();
+            return emails;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }

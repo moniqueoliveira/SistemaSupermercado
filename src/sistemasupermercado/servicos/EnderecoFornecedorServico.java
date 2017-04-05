@@ -4,7 +4,6 @@ package sistemasupermercado.servicos;
 import java.sql.SQLException;
 import sistemasupermercado.dao.EnderecoFornecedorDAOImpl;
 import sistemasupermercado.dominio.EnderecoFornecedor;
-import sistemasupermercado.exceptions.DadosInvalidosException;
 import sistemasupermercado.exceptions.PesquisaNulaException;
 import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoException;
 import sistemasupermercado.interfaces.dao.EnderecoFornecedorDAO;
@@ -17,6 +16,7 @@ public class EnderecoFornecedorServico {
         enderecoFornecedorDAO = new EnderecoFornecedorDAOImpl();
         try {
             verificarResultado(enderecoFornecedorDAO.inserir(enderecoFornecedor));
+            enderecoFornecedorDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }
@@ -27,6 +27,7 @@ public class EnderecoFornecedorServico {
         enderecoFornecedorDAO = new EnderecoFornecedorDAOImpl();
         try {
             verificarResultado(enderecoFornecedorDAO.alterar(enderecoFornecedor));
+            enderecoFornecedorDAO.fecharConexao();
         } catch (SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }
@@ -36,6 +37,7 @@ public class EnderecoFornecedorServico {
         enderecoFornecedorDAO = new EnderecoFornecedorDAOImpl();
         try {
             verificarResultado(enderecoFornecedorDAO.excluir(enderecoFornecedor));
+            enderecoFornecedorDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex);
         }
@@ -46,6 +48,7 @@ public class EnderecoFornecedorServico {
         try {
             enderecoFornecedor = enderecoFornecedorDAO.pesquisar(enderecoFornecedor);
             verificarPesquisa(enderecoFornecedor);
+            enderecoFornecedorDAO.fecharConexao();
             return enderecoFornecedor;
             
         } catch(SQLException ex) {

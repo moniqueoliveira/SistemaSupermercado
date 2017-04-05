@@ -92,5 +92,10 @@ public class PrecoProdutoDAOImpl implements PrecoProdutoDAO {
         pstm.close();
         return precos;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
 }

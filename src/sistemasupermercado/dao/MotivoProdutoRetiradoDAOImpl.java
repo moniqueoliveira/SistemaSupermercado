@@ -108,5 +108,10 @@ public class MotivoProdutoRetiradoDAOImpl implements MotivoProdutoRetiradoDAO {
         pstm.close();
         return motivos;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
 }

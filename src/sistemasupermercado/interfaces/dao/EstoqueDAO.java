@@ -7,6 +7,8 @@ import sistemasupermercado.dominio.Estoque;
 
 public interface EstoqueDAO {
     
+    public void fecharConexao() throws SQLException;
+    
     public boolean inserir(Estoque obj) throws SQLException;
     
     public boolean alterar(Estoque obj) throws SQLException;

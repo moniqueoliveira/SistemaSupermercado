@@ -7,6 +7,8 @@ import sistemasupermercado.dominio.TelefoneFornecedor;
 
 public interface TelefoneFornecedorDAO {
     
+    public void fecharConexao() throws SQLException;
+    
     public boolean inserir(TelefoneFornecedor obj) throws SQLException;
     
     public boolean alterar(TelefoneFornecedor obj) throws SQLException;

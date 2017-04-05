@@ -105,6 +105,11 @@ public class SessaoDAOImpl implements SessaoDAO {
         pstm.close();
         return sessoes;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
     
 }

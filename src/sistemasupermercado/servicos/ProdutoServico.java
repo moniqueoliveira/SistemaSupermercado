@@ -15,9 +15,11 @@ public class ProdutoServico {
     
     public void inserir(Produto produto) {
         validarDados(produto);
+        validarCodigoDeBarras(produto);
         produtoDAO = new ProdutoDAOImpl();
         try {
             verificarResultado(produtoDAO.inserir(produto));
+            produtoDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -28,6 +30,7 @@ public class ProdutoServico {
         produtoDAO = new ProdutoDAOImpl();
         try {
             verificarResultado(produtoDAO.alterar(produto));
+            produtoDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -37,6 +40,7 @@ public class ProdutoServico {
         produtoDAO = new ProdutoDAOImpl();
         try {
             verificarResultado(produtoDAO.excluir(produto));
+            produtoDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -50,6 +54,7 @@ public class ProdutoServico {
             
             produto.setCategoria(new CategoriaProdutoServico().pesquisar(produto.getCategoria()));
            
+            produtoDAO.fecharConexao();
             return produto;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
@@ -70,6 +75,8 @@ public class ProdutoServico {
                 // Define a descrição da função do usuário. Ao listar os usuários somente o ID da função é definido.
                 produtos.get(i).setCategoria(categoriaProdutoServico.pesquisar(produtos.get(i).getCategoria()));
             }
+            
+            produtoDAO.fecharConexao();
             return produtos;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
@@ -87,8 +94,6 @@ public class ProdutoServico {
         if (mensagem.length() > 1)
             throw new DadosInvalidosException("O(s) seguinte(s) dado(s) estão sem preenchimento ou foram preenchidos"
                     + "incorretamente:\n" + mensagem);
-        
-        validarCodigoDeBarras(produto);
     }
 
     private void verificarResultado(boolean result) {

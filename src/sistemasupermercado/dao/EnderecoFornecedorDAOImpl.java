@@ -18,8 +18,8 @@ public class EnderecoFornecedorDAOImpl implements EnderecoFornecedorDAO {
     
     @Override
     public boolean inserir(EnderecoFornecedor obj) throws SQLException {
-        String sql = "insert into enderecos_fornecedores (logradouro, numero, cep, complemento, bairro, cidade, uf, if_fornecedor)"
-                + " values (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into enderecos_fornecedores (logradouro, numero, cep, complemento, bairro, cidade, uf, id_fornecedor)"
+                + " values (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setString(1, obj.getLogradouro());
         pstm.setInt(2, obj.getNumero());
@@ -28,6 +28,7 @@ public class EnderecoFornecedorDAOImpl implements EnderecoFornecedorDAO {
         pstm.setString(5, obj.getBairro());
         pstm.setString(6, obj.getCidade());
         pstm.setString(7, obj.getUf());
+        pstm.setInt(8, obj.getFornecedor().getIdFornecedor());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -80,6 +81,11 @@ public class EnderecoFornecedorDAOImpl implements EnderecoFornecedorDAO {
         }
         pstm.close();
         return enderecoFornecedor;
+    }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
     }
     
 }

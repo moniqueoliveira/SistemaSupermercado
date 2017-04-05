@@ -108,6 +108,12 @@ public class FormCadastroProduto extends javax.swing.JDialog {
 
         jLabel11.setText("ID:");
 
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdKeyTyped(evt);
+            }
+        });
+
         jLabel2.setText("Venda fracionada:");
 
         bgVendaFracionada.add(rbVendaFracionadaSim);
@@ -121,9 +127,16 @@ public class FormCadastroProduto extends javax.swing.JDialog {
         bgEstocavel.add(rbEstocavelSim);
         rbEstocavelSim.setText("Sim");
 
+        bgEstocavel.add(rbEstocavelNao);
         rbEstocavelNao.setText("Não");
 
         jLabel12.setText("Código de barras:");
+
+        txtCodigoDeBarras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoDeBarrasKeyTyped(evt);
+            }
+        });
 
         jLabel13.setText("Descrição:");
 
@@ -221,16 +234,17 @@ public class FormCadastroProduto extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbEstocavelNao)
-                    .addComponent(rbEstocavelSim)
-                    .addComponent(jLabel1)
-                    .addComponent(rbVendaFracionadaNao)
-                    .addComponent(rbVendaFracionadaSim)
-                    .addComponent(jLabel2)
-                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(rbEstocavelNao)
+                        .addComponent(rbEstocavelSim)
+                        .addComponent(jLabel1)
+                        .addComponent(rbVendaFracionadaNao)
+                        .addComponent(rbVendaFracionadaSim)
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -263,6 +277,12 @@ public class FormCadastroProduto extends javax.swing.JDialog {
         cmbPesquisarPor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cmbPesquisarPorKeyPressed(evt);
+            }
+        });
+
+        txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyReleased(evt);
             }
         });
 
@@ -385,17 +405,69 @@ public class FormCadastroProduto extends javax.swing.JDialog {
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         // TODO add your handling code here:
+        produto = new Produto();
+        produtoServico = new ProdutoServico();
         
+        if (!txtId.getText().equals("")) produto.setIdProduto(Integer.parseInt(txtId.getText()));
+        produto.setCategoria((CategoriaProduto)cmbCategoria.getSelectedItem());
+        produto.setCodigoDeBarras(txtCodigoDeBarras.getText());
+        produto.setDescricao(txtDescricao.getText());
+        produto.setDescricaoReduzida(txtDescricaoReduzida.getText());
+        if (rbVendaFracionadaSim.isSelected()) produto.setVendaFracionada(true);
+        if (rbEstocavelSim.isSelected()) produto.setEstocavel(true);
+        
+        try {
+            produtoServico.inserir(produto);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Produto cadastrado com sucesso!\n"
+                    + "Deseja continuar no cadastro de produtos?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", "");}
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+        produto.setCategoria((CategoriaProduto)cmbCategoria.getSelectedItem());
+        produto.setCodigoDeBarras(txtCodigoDeBarras.getText());
+        produto.setDescricao(txtDescricao.getText());
+        produto.setDescricaoReduzida(txtDescricaoReduzida.getText());
         
+        if (rbVendaFracionadaSim.isSelected()) produto.setVendaFracionada(true);
+        else produto.setVendaFracionada(false);
+        
+        if (rbEstocavelSim.isSelected()) produto.setEstocavel(true);
+        else produto.setEstocavel(false);
+        
+        try {
+            produtoServico.alterar(produto);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Produto alterado com sucesso!\n"
+                    + "Deseja continuar no cadastro de produtos?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", "");}
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
-        
+        try {
+            produtoServico.excluir(produto);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Produto excluído com sucesso!\n"
+                    + "Deseja continuar no cadastro de produtos?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", "");}
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void tblProdutosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdutosKeyPressed
@@ -426,6 +498,35 @@ public class FormCadastroProduto extends javax.swing.JDialog {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
+        if (txtId.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "É necessário inserir o ID para pesquisar.", 
+                        "Pesquisa sem resultado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        produto = new Produto();
+        produtoServico = new ProdutoServico();
+        produto.setIdProduto(Integer.parseInt(txtId.getText()));
+        
+        try {
+            produto = produtoServico.pesquisar(produto);
+            txtDescricao.setText(produto.getDescricao());
+            txtDescricaoReduzida.setText(produto.getDescricaoReduzida());
+            txtCodigoDeBarras.setText(produto.getCodigoDeBarras());
+            
+            if (produto.isEstocavel()) rbEstocavelSim.setSelected(true);
+            else rbEstocavelNao.setSelected(true);
+            
+            if (produto.isVendaFracionada()) rbVendaFracionadaSim.setSelected(true);
+            else rbVendaFracionadaNao.setSelected(true);
+            
+            cmbCategoria.setSelectedItem(produto.getCategoria());
+            
+            alterarPermissaoDosBotoes();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void cmbPesquisarPorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbPesquisarPorKeyPressed
@@ -443,6 +544,27 @@ public class FormCadastroProduto extends javax.swing.JDialog {
         preencherCmbPesquisaPor();
         preencherCmbCategoria();
     }//GEN-LAST:event_formWindowOpened
+
+    private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
+        // TODO add your handling code here:
+        preencherTabela(cmbPesquisarPor.getSelectedItem().toString(), txtPesquisa.getText());
+    }//GEN-LAST:event_txtPesquisaKeyReleased
+
+    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+        // TODO add your handling code here:
+        String caracteres="0987654321";
+        if(!caracteres.contains(evt.getKeyChar() + "")){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIdKeyTyped
+
+    private void txtCodigoDeBarrasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoDeBarrasKeyTyped
+        // TODO add your handling code here:
+        String caracteres="0987654321";
+        if(!caracteres.contains(evt.getKeyChar() + "")){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoDeBarrasKeyTyped
 
     /**
      * @param args the command line arguments
@@ -531,10 +653,11 @@ public class FormCadastroProduto extends javax.swing.JDialog {
         txtId.setText("");
         txtCodigoDeBarras.setText("");
         txtDescricao.setText("");
+        txtDescricaoReduzida.setText("");
         txtId.requestFocus();
         txtId.setEditable(true);
         rbEstocavelSim.setSelected(true);
-        rbVendaFracionadaSim.setSelected(true);
+        rbVendaFracionadaNao.setSelected(true);
         btnPesquisar.setEnabled(true);
         btnIncluir.setEnabled(true);
         btnAlterar.setEnabled(false);
@@ -585,7 +708,11 @@ public class FormCadastroProduto extends javax.swing.JDialog {
     }
 
     private void capturarItemSelecionado() {
+        if (tblProdutos.getSelectedRowCount() == 0) return;
         
+        btnPesquisar.setEnabled(true);
+        txtId.setText(tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 0).toString());
+        btnPesquisarActionPerformed(null);
     }
 
     private void preencherTabela(String pesquisarPor, String texto) {
@@ -627,7 +754,7 @@ public class FormCadastroProduto extends javax.swing.JDialog {
         tblProdutos.setModel(  
             new DefaultTableModel(
                     new Object[] []{ },
-                    new String[]{"ID", "Código de barras", "Descrição", "Descricão reduzida", "Categoria", "Fracionado",
+                    new String[]{"ID", "Código de barras", "Descrição", "Descrição reduzida", "Categoria", "Fracionado",
                     "Estocável"}
             ) {
                 @Override
@@ -649,9 +776,9 @@ public class FormCadastroProduto extends javax.swing.JDialog {
 
     private void preencherCmbPesquisaPor() {
         cmbPesquisarPor.addItem("ID");
-        cmbPesquisarPor.addItem("Código de Barras");
-        cmbPesquisarPor.addItem("Descricão");
-        cmbPesquisarPor.addItem("Descricão reduzida");
+        cmbPesquisarPor.addItem("Código de barras");
+        cmbPesquisarPor.addItem("Descrição");
+        cmbPesquisarPor.addItem("Descrição reduzida");
         cmbPesquisarPor.addItem("Categoria");
         
     }

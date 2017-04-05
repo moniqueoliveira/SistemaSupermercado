@@ -86,4 +86,9 @@ public class ItemVendaDAOImpl implements ItemVendaDAO {
         return itens;
     }
 
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
+
 }

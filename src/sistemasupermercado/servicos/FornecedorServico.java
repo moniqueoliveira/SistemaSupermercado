@@ -14,21 +14,20 @@ import sistemasupermercado.interfaces.dao.FornecedorDAO;
 
 public class FornecedorServico {
     private FornecedorDAO fornecedorDAO;
-    private EnderecoFornecedorDAO enderecoFornecedorDAO;
     private EnderecoFornecedorServico enderecoFornecedorServico;
     private int ultimoID;
     
     public void inserir(Fornecedor fornecedor) {
         validarDados(fornecedor);
         fornecedorDAO = new FornecedorDAOImpl();
-        enderecoFornecedorDAO = new EnderecoFornecedorDAOImpl();
+        enderecoFornecedorServico = new EnderecoFornecedorServico();
         try {
             verificarResultado(fornecedorDAO.inserir(fornecedor));
             if (fornecedor.getIdFornecedor() == null) {
                 ultimoID = fornecedorDAO.obterUltimoID();
                 fornecedor.setIdFornecedor(this.ultimoID);
             }
-            verificarResultado(enderecoFornecedorDAO.inserir(fornecedor.getEndereco()));
+            enderecoFornecedorServico.inserir(fornecedor.getEndereco());
         } catch(SQLException ex) {
             throw new RuntimeException("SQLExeption: " + ex);
         }
@@ -37,15 +36,15 @@ public class FornecedorServico {
     public void alterar(Fornecedor fornecedor) {
         validarDados(fornecedor);
         fornecedorDAO = new FornecedorDAOImpl();
-        enderecoFornecedorDAO = new EnderecoFornecedorDAOImpl();
+        enderecoFornecedorServico = new EnderecoFornecedorServico();
         try {
             verificarResultado(fornecedorDAO.alterar(fornecedor));
-            verificarResultado(enderecoFornecedorDAO.alterar(fornecedor.getEndereco()));
+            enderecoFornecedorServico.alterar(fornecedor.getEndereco());
         } catch(SQLException ex) {
             throw new RuntimeException("SQLExeption: " + ex);
         }
     }
-    
+    /*
     public void excluir(Fornecedor fornecedor) {
         fornecedorDAO = new FornecedorDAOImpl();
         try {
@@ -54,7 +53,7 @@ public class FornecedorServico {
             throw new RuntimeException("SQLExeption: " + ex);
         }
     }
-    
+    */
     public Fornecedor pesquisar(Fornecedor fornecedor) {
         fornecedorDAO = new FornecedorDAOImpl();
         try {

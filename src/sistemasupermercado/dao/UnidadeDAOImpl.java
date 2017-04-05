@@ -81,5 +81,10 @@ public class UnidadeDAOImpl implements UnidadeDAO {
         pstm.close();
         return unidades;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
 }

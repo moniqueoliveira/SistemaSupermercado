@@ -18,6 +18,7 @@ public class CategoriaProdutoServico {
         categoriaProdutoDAO = new CategoriaProdutoDAOImpl();
         try {
             verificarResultado(categoriaProdutoDAO.inserir(categoriaProduto));
+            categoriaProdutoDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -28,6 +29,7 @@ public class CategoriaProdutoServico {
         categoriaProdutoDAO = new CategoriaProdutoDAOImpl();
         try {
             verificarResultado(categoriaProdutoDAO.alterar(categoriaProduto));
+            categoriaProdutoDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -37,6 +39,7 @@ public class CategoriaProdutoServico {
         categoriaProdutoDAO = new CategoriaProdutoDAOImpl();
         try {
             verificarResultado(categoriaProdutoDAO.excluir(categoriaProduto));
+            categoriaProdutoDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -47,6 +50,7 @@ public class CategoriaProdutoServico {
         try {
             categoriaProduto = categoriaProdutoDAO.pesquisar(categoriaProduto);
             verificarPesquisa(categoriaProduto); 
+            categoriaProdutoDAO.fecharConexao();
             return categoriaProduto;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
@@ -60,7 +64,9 @@ public class CategoriaProdutoServico {
     public List<CategoriaProduto> listar(String pesquisarPor, String filtro) {
         categoriaProdutoDAO = new CategoriaProdutoDAOImpl();
         try {
-            return categoriaProdutoDAO.listar(pesquisarPor, filtro);
+            List<CategoriaProduto> categorias = categoriaProdutoDAO.listar(pesquisarPor, filtro);
+            categoriaProdutoDAO.fecharConexao();
+            return categorias;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }

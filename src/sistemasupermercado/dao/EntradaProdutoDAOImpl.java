@@ -121,4 +121,9 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
         pstm.close();
         return entradasProdutos;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
 }

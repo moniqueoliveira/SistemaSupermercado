@@ -20,11 +20,11 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     
     @Override
     public boolean inserir(Produto obj) throws SQLException {
-        if (obj.getIdProduto()== null) return inserirSemCodigo(obj);
-        return inserirComCodigo(obj);
+        if (obj.getIdProduto()== null) return inserirSemId(obj);
+        return inserirComId(obj);
     }
     
-    public boolean inserirSemCodigo(Produto obj) throws SQLException {
+    public boolean inserirSemId(Produto obj) throws SQLException {
         String sql = "insert into produtos (descricao, descricao_reduzida, venda_fracionada, id_categoria, "
                 + "codigo_de_barras, estocavel) values (?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
@@ -39,8 +39,8 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         return result == 1;
     }
     
-    public boolean inserirComCodigo(Produto obj) throws SQLException {
-        String sql = "insert into produtos (codigo, descricao, descricao_reduzida, venda_fracionada, id_categoria, "
+    public boolean inserirComId(Produto obj) throws SQLException {
+        String sql = "insert into produtos (id_produto, descricao, descricao_reduzida, venda_fracionada, id_categoria, "
                 + "codigo_de_barras, estocavel) values (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getIdProduto());
@@ -58,7 +58,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     @Override
     public boolean alterar(Produto obj) throws SQLException {
         String sql = "update produtos set descricao = ?, descricao_reduzida = ?, venda_fracionada = ?, "
-                + "id_categoria = ?, codigo_de_barras = ?, estocavel = ? where codigo = ?";
+                + "id_categoria = ?, codigo_de_barras = ?, estocavel = ? where id_produto = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setString(1, obj.getDescricao());
         pstm.setString(2, obj.getDescricaoReduzida());
@@ -74,7 +74,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
     @Override
     public boolean excluir(Produto obj) throws SQLException {
-        String sql = "delete from produtos where codigo = ?";
+        String sql = "delete from produtos where id_produto = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getIdProduto());
         int result = pstm.executeUpdate();
@@ -85,13 +85,13 @@ public class ProdutoDAOImpl implements ProdutoDAO {
     @Override
     public Produto pesquisar(Produto obj) throws SQLException {
         Produto produto = null;
-        String sql = "select * from produtos where codigo = ?";
+        String sql = "select * from produtos where id_produto = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getIdProduto());
         ResultSet rs = pstm.executeQuery();
         if (rs.next()) {
             produto = new Produto();
-            produto.setIdProduto(rs.getInt("codigo"));
+            produto.setIdProduto(rs.getInt("id_produto"));
             produto.setCategoria(rs.getInt("id_categoria"));
             produto.setCodigoDeBarras(rs.getString("codigo_de_barras"));
             produto.setDescricao(rs.getString("descricao"));
@@ -105,7 +105,25 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
     @Override
     public List<Produto> listar(String pesquisaPor, String texto) throws SQLException {
-        return listar(texto);
+        String filtro = "";
+        switch(pesquisaPor) {
+            case ("ID"):
+                filtro = "where id_produto like '%" + texto + "%'";
+                break;
+            case ("Código de barras"):
+                filtro = "where codigo_de_barras like '%" + texto + "%'";
+                break;
+            case ("Descrição"):
+                filtro = "where descricao like '%" + texto + "%'";
+                break;
+            case ("Descrição reduzida"):
+                filtro = "where descricao_reduzida like '%" + texto + "%'";
+                break;
+            case ("Categoria"):
+                filtro = "left join categorias_produtos on produtos.id_categoria = categorias_produtos.id_categoria "
+                        + "where categorias_produtos.descricao like '%" + texto + "%'";
+        }
+        return listar(filtro);
     }
     
     private List<Produto> listar(String filtro) throws SQLException {
@@ -115,7 +133,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         ResultSet rs = pstm.executeQuery();
         while (rs.next()) {
             Produto produto = new Produto();
-            produto.setIdProduto(rs.getInt("codigo"));
+            produto.setIdProduto(rs.getInt("id_produto"));
             produto.setCategoria(rs.getInt("id_categoria"));
             produto.setCodigoDeBarras(rs.getString("codigo_de_barras"));
             produto.setDescricao(rs.getString("descricao"));
@@ -127,6 +145,11 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         }
         pstm.close();
         return produtos;
+    }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
     }
     
 }

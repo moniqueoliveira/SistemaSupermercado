@@ -68,5 +68,10 @@ public class SessaoCaixaDAOImpl implements SessaoCaixaDAO {
         return result == 1;
     }
 
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
+
     
 }

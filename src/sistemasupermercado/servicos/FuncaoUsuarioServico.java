@@ -18,6 +18,7 @@ public class FuncaoUsuarioServico {
         funcaoUsuarioDAO = new FuncaoUsuarioDAOImpl();
         try {
             verificarResultado(funcaoUsuarioDAO.inserir(funcaoUsuario));
+            funcaoUsuarioDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -28,6 +29,7 @@ public class FuncaoUsuarioServico {
         funcaoUsuarioDAO = new FuncaoUsuarioDAOImpl();
         try {
             verificarResultado(funcaoUsuarioDAO.alterar(funcaoUsuario));
+            funcaoUsuarioDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -37,6 +39,7 @@ public class FuncaoUsuarioServico {
         funcaoUsuarioDAO = new FuncaoUsuarioDAOImpl();
         try {
             verificarResultado(funcaoUsuarioDAO.excluir(funcaoUsuario));
+            funcaoUsuarioDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
@@ -47,6 +50,7 @@ public class FuncaoUsuarioServico {
         try {
             funcaoUsuario = funcaoUsuarioDAO.pesquisar(funcaoUsuario);
             validarPesquisa(funcaoUsuario);
+            funcaoUsuarioDAO.fecharConexao();
             return funcaoUsuario;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
@@ -60,7 +64,9 @@ public class FuncaoUsuarioServico {
     public List<FuncaoUsuario> listar(String pesquisaPor, String texto) {
         funcaoUsuarioDAO = new FuncaoUsuarioDAOImpl();
         try {
-            return funcaoUsuarioDAO.listar(pesquisaPor, texto);
+            List<FuncaoUsuario> funcoes = funcaoUsuarioDAO.listar(pesquisaPor, texto);
+            funcaoUsuarioDAO.fecharConexao();
+            return funcoes;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }

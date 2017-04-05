@@ -107,6 +107,11 @@ public class FuncaoUsuarioDAOImpl implements FuncaoUsuarioDAO {
         }
         return listar(filtro);
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
     
 }

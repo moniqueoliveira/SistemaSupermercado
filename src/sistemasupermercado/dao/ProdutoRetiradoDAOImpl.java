@@ -115,5 +115,10 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
         pstm.close();
         return produtosRetirados;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
 }

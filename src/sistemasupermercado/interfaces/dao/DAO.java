@@ -2,9 +2,10 @@
 package sistemasupermercado.interfaces.dao;
 
 import java.sql.SQLException;
-import java.util.List;
 
-interface DAO<T> {
+public interface DAO<T> {
+    
+    public void fecharConexao() throws SQLException;
     
     public boolean inserir(T obj) throws SQLException;
     
@@ -14,7 +15,4 @@ interface DAO<T> {
     
     public T pesquisar(T obj) throws SQLException;
     
-    public List<T> listar(String filtro) throws SQLException;
-    
 }
-

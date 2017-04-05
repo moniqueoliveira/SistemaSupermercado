@@ -56,5 +56,10 @@ public class CaixaDAOImpl implements CaixaDAO {
         }
         return caixas;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
 }

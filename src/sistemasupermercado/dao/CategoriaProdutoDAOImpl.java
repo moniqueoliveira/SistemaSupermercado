@@ -107,5 +107,10 @@ public class CategoriaProdutoDAOImpl implements CategoriaProdutoDAO {
         pstm.close();
         return categorias;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
 }

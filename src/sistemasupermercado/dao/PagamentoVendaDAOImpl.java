@@ -79,5 +79,10 @@ public class PagamentoVendaDAOImpl implements PagamentoVendaDAO {
         pstm.close();
         return pagamentoVenda;
     }
+
+    @Override
+    public void fecharConexao() throws SQLException {
+        this.conexao.close();
+    }
     
 }
