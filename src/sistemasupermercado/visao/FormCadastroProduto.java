@@ -144,7 +144,7 @@ public class FormCadastroProduto extends javax.swing.JDialog {
 
         jLabel15.setText("Categoria:");
 
-        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconePesquisar.png"))); // NOI18N
+        btnPesquisar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Monique\\Documents\\Estudos\\TCC\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\ÍconePesquisar.png")); // NOI18N
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisarActionPerformed(evt);
