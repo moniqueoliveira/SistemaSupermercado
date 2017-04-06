@@ -11,10 +11,8 @@ public interface PrecoProdutoDAO {
     
     public boolean inserir(PrecoProduto obj) throws SQLException;
     
-    public boolean excluir(PrecoProduto obj) throws SQLException;
-    
     public PrecoProduto pesquisar(PrecoProduto obj) throws SQLException;
     
-    public List<PrecoProduto> listar(String filtro) throws SQLException;
+    public List<PrecoProduto> listar(int idProduto, int idUnidade) throws SQLException;
     
 }

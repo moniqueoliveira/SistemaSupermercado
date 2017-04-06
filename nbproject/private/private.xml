@@ -5,8 +5,8 @@
         <group>
             <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/dao/ProdutoDAOImpl.java</file>
             <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/servicos/ProdutoServico.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormCadastroCategoriaProduto.java</file>
             <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/interfaces/dao/DAO.java</file>
-            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormCadastroProduto.java</file>
             <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/interfaces/dao/ProdutoDAO.java</file>
         </group>
     </open-files>

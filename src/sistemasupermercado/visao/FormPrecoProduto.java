@@ -1,22 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sistemasupermercado.visao;
 
-/**
- *
- * @author Monique
- */
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.FocusTraversalPolicy;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import sistemasupermercado.dominio.PrecoProduto;
+import sistemasupermercado.dominio.Produto;
+import sistemasupermercado.dominio.Unidade;
+import sistemasupermercado.servicos.PrecoProdutoServico;
+import sistemasupermercado.servicos.ProdutoServico;
+
 public class FormPrecoProduto extends javax.swing.JDialog {
 
+    PrecoProduto precoProduto;
+    Produto produto;
+    
+    PrecoProdutoServico precoProdutoServico;
+    ProdutoServico produtoServico;
+    
+    Unidade unidade = new Unidade();
+    
+    AtalhoAction acaoF1 = new AtalhoAction("F1");
+    AtalhoAction acaoF2 = new AtalhoAction("F2");
+    AtalhoAction acaoF3 = new AtalhoAction("F3");
+    AtalhoAction acaoF4 = new AtalhoAction("F4");
     /**
      * Creates new form FormPrecoProduto
      */
     public FormPrecoProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -28,21 +56,538 @@ public class FormPrecoProduto extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblDescricao = new javax.swing.JLabel();
+        lblCodigoDeBarras = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        btnPesquisar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        lblDescricaoReduzida = new javax.swing.JLabel();
+        lblCategoria = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        lblPrecoAtual = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        txtNovoPreco = new javax.swing.JTextField();
+        spnAumentar = new javax.swing.JSpinner();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        spnDiminuir = new javax.swing.JSpinner();
+        jLabel18 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        btnNovo = new javax.swing.JButton();
+        btnGravar = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        cmbPesquisarPor = new javax.swing.JComboBox<>();
+        txtPesquisa = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPrecos = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro de Preços", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(51, 153, 255))); // NOI18N
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Definição de Preços", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
+
+        jLabel1.setText("ID:");
+
+        jLabel2.setText("Descrição:");
+
+        jLabel3.setText("Código de barras:");
+
+        lblDescricao.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblCodigoDeBarras.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdKeyTyped(evt);
+            }
+        });
+
+        btnPesquisar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Monique\\Documents\\Estudos\\TCC\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\ÍconePesquisar.png")); // NOI18N
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Descrição reduzida:");
+
+        lblDescricaoReduzida.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblCategoria.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel7.setText("Categoria:");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel8.setText("Preço atual:");
+
+        jLabel9.setText("R$");
+
+        lblPrecoAtual.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel13.setText("Novo preço:");
+
+        jLabel14.setText("R$");
+
+        txtNovoPreco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNovoPrecoActionPerformed(evt);
+            }
+        });
+        txtNovoPreco.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNovoPrecoKeyTyped(evt);
+            }
+        });
+
+        spnAumentar.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
+        spnAumentar.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnAumentarStateChanged(evt);
+            }
+        });
+
+        jLabel15.setText("%");
+
+        jLabel16.setText("Aumentar");
+
+        jLabel17.setText("Diminuir");
+
+        spnDiminuir.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 100.0d, 1.0d));
+        spnDiminuir.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnDiminuirStateChanged(evt);
+            }
+        });
+        spnDiminuir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                spnDiminuirKeyPressed(evt);
+            }
+        });
+
+        jLabel18.setText("%");
+
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeNovo.png"))); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnNovo.setPreferredSize(new java.awt.Dimension(65, 45));
+        btnNovo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnNovo);
+
+        btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeGravar.png"))); // NOI18N
+        btnGravar.setText("Gravar");
+        btnGravar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnGravar.setPreferredSize(new java.awt.Dimension(65, 45));
+        btnGravar.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        btnGravar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnGravar);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblDescricaoReduzida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCodigoDeBarras, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spnDiminuir, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel18))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spnAumentar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel15))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel9))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel14)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblPrecoAtual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtNovoPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel3)
+                        .addComponent(lblCodigoDeBarras, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(lblDescricaoReduzida, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(lblPrecoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNovoPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(spnAumentar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel16))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(spnDiminuir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel17)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lista de Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
+
+        jLabel19.setText("Pesquisar por:");
+
+        txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyReleased(evt);
+            }
+        });
+
+        tblPrecos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tblPrecos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblPrecosKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblPrecos);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbPesquisarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPesquisa)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(cmbPesquisarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
+
+        jLabel20.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel20.setText("F1 - Pesquisa");
+        jPanel5.add(jLabel20);
+
+        jLabel21.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel21.setText("F2 - Captura item selecionado para alteração");
+        jPanel5.add(jLabel21);
+
+        jLabel22.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel22.setText("F3 - Novo");
+        jPanel5.add(jLabel22);
+
+        jLabel23.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel23.setText("F4 - Grava novo preço");
+        jPanel5.add(jLabel23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtNovoPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovoPrecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNovoPrecoActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+        if (txtId.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "É necessário inserir o ID para pesquisar.", 
+                        "Pesquisa sem resultado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        produto = new Produto();
+        precoProduto = new PrecoProduto();
+        
+        produtoServico = new ProdutoServico();
+        precoProdutoServico = new PrecoProdutoServico();
+        produto.setIdProduto(Integer.parseInt(txtId.getText()));
+        
+        try {
+            produto = produtoServico.pesquisar(produto);
+            lblCategoria.setText(produto.getCategoria().getDescricao());
+            lblCodigoDeBarras.setText(produto.getCodigoDeBarras());
+            lblDescricao.setText(produto.getDescricao());
+            lblDescricaoReduzida.setText(produto.getDescricaoReduzida());
+            
+            
+            precoProduto = precoProdutoServico.pesquisarPrecoAtual(produto.getIdProduto(), 1);
+            lblPrecoAtual.setText(precoProduto.getValor().toString());
+            txtNovoPreco.requestFocus();
+            
+            alterarPrermissoesDosBotoes();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // TODO add your handling code here:
+        redefinir();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        // TODO add your handling code here:
+        if (txtId.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "É necessário inserir o ID para pesquisar.", 
+                        "Pesquisa sem resultado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        try {
+            precoProduto.setValor(new BigDecimal(txtNovoPreco.getText().replaceAll(",", ".")));
+            
+            if (precoProduto.getValor().compareTo(BigDecimal.ZERO) != -1)
+                precoProdutoServico.inserir(precoProduto);
+            else {
+                JOptionPane.showMessageDialog(this, "O valor digitado é inválido.", 
+                        "Pesquisa sem resultado", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Novo preço gravado com sucesso!\n"
+                    + "Deseja continuar no cadastro de preços?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { redefinir(); preencherTabela("", "");}
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        definirModeloDeTabela();
+        preencherCmbPesquisarPor();
+        preencherTabela("", "");
+        registrarAcoesDosAtalhos();
+        definirOrdemDeTabulacao();
+        redefinir();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
+        // TODO add your handling code here:
+        preencherTabela(cmbPesquisarPor.getSelectedItem().toString(), txtPesquisa.getText());
+    }//GEN-LAST:event_txtPesquisaKeyReleased
+
+    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+        // TODO add your handling code here:
+        String caracteres="0987654321";
+        if(!caracteres.contains(evt.getKeyChar() + "")){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIdKeyTyped
+
+    private void tblPrecosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblPrecosKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyCode()){
+            case (KeyEvent.VK_TAB):
+            txtId.requestFocus();
+            break;
+            case (KeyEvent.VK_F1):
+            if (btnPesquisar.isEnabled()) btnPesquisarActionPerformed(null);
+            break;
+            case (KeyEvent.VK_F2):
+            capturarItemSelecionado();
+            break;
+            case (KeyEvent.VK_F3):
+            btnNovoActionPerformed(null);
+            break;
+            case (KeyEvent.VK_F4):
+            if (btnGravar.isEnabled()) btnGravarActionPerformed(null);
+        }
+    }//GEN-LAST:event_tblPrecosKeyPressed
+
+    private void txtNovoPrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNovoPrecoKeyTyped
+        // TODO add your handling code here:
+        String caracteres="0987654321.,";
+        if(!caracteres.contains(evt.getKeyChar() + "")){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNovoPrecoKeyTyped
+
+    private void spnAumentarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnAumentarStateChanged
+        // TODO add your handling code here:
+        if (lblPrecoAtual.getText().equals("")) return;
+        spnDiminuir.setValue(0.0);
+        BigDecimal porcentagemAumento = new BigDecimal(spnAumentar.getValue().toString()).divide(BigDecimal.valueOf(100.0));
+        BigDecimal valorAtual = precoProduto.getValor();
+        txtNovoPreco.setText(valorAtual.multiply(BigDecimal.ONE.add(porcentagemAumento)).setScale(2, RoundingMode.UP).toString());
+
+    }//GEN-LAST:event_spnAumentarStateChanged
+
+    private void spnDiminuirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnDiminuirKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_spnDiminuirKeyPressed
+
+    private void spnDiminuirStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnDiminuirStateChanged
+        // TODO add your handling code here:
+        if (lblPrecoAtual.getText().equals("")) return;
+        
+        spnAumentar.setValue(0.0);
+        BigDecimal porcentagem = new BigDecimal(spnDiminuir.getValue().toString()).divide(BigDecimal.valueOf(100.0));
+        BigDecimal valorAtual = precoProduto.getValor();
+        txtNovoPreco.setText(valorAtual.multiply(BigDecimal.ONE.subtract(porcentagem)).setScale(2, RoundingMode.UP).toString());
+    }//GEN-LAST:event_spnDiminuirStateChanged
 
     /**
      * @param args the command line arguments
@@ -55,7 +600,7 @@ public class FormPrecoProduto extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -87,5 +632,244 @@ public class FormPrecoProduto extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGravar;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnPesquisar;
+    private javax.swing.JComboBox<String> cmbPesquisarPor;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblCategoria;
+    private javax.swing.JLabel lblCodigoDeBarras;
+    private javax.swing.JLabel lblDescricao;
+    private javax.swing.JLabel lblDescricaoReduzida;
+    private javax.swing.JLabel lblPrecoAtual;
+    private javax.swing.JSpinner spnAumentar;
+    private javax.swing.JSpinner spnDiminuir;
+    private javax.swing.JTable tblPrecos;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNovoPreco;
+    private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
+    private void capturarItemSelecionado() {
+        if (tblPrecos.getSelectedRowCount() == 0) return;
+        
+        btnPesquisar.setEnabled(true);
+        txtId.setText(tblPrecos.getValueAt(tblPrecos.getSelectedRow(), 0).toString());
+        btnPesquisarActionPerformed(null);
+    }
+
+    private void preencherCmbPesquisarPor() {
+        cmbPesquisarPor.addItem("ID Produto");
+        cmbPesquisarPor.addItem("Código de barras");
+        cmbPesquisarPor.addItem("Descrição");
+        cmbPesquisarPor.addItem("Descrição reduzida");
+        cmbPesquisarPor.addItem("Categoria");
+    }
+
+    private void definirModeloDeTabela() {
+        tblPrecos.setModel(  
+            new DefaultTableModel(
+                    new Object[] []{ },
+                    new String[]{"ID Prod.", "Código de barras", "Descrição reduzida", "Categoria", "Preço (R$)",}
+            ) {
+                @Override
+                public boolean isCellEditable(int row, int col) {  
+                        return false;  
+                }
+            }
+        ); 
+        
+        tblPrecos.getColumnModel().getColumn(0).setPreferredWidth(60);
+        tblPrecos.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tblPrecos.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tblPrecos.getColumnModel().getColumn(3).setPreferredWidth(70);
+        tblPrecos.getColumnModel().getColumn(4).setPreferredWidth(100);
+        tblPrecos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    private void preencherTabela(String pesquisarPor, String texto) {
+        produtoServico = new ProdutoServico();
+        precoProdutoServico = new PrecoProdutoServico();
+        List<Produto> produtos;
+        List<PrecoProduto> precos;
+        
+        DefaultTableModel dtm = (DefaultTableModel) tblPrecos.getModel();
+        limparTabela();
+        
+        try {
+            produtos = produtoServico.listar();
+            precos = precoProdutoServico.obterPrecos(produtos, 1);
+            
+            for (int i = 0; i < produtos.size(); i++){
+                dtm.addRow(new Object[]{""});
+                tblPrecos.setValueAt(produtos.get(i).getIdProduto(), i, 0);
+                tblPrecos.setValueAt(produtos.get(i).getCodigoDeBarras(), i, 1);
+                tblPrecos.setValueAt(produtos.get(i).getDescricaoReduzida(), i, 2);
+                tblPrecos.setValueAt(produtos.get(i).getCategoria().getDescricao(), i, 3);
+                
+                if (precos.get(i) != null) tblPrecos.setValueAt(precos.get(i).getValor(), i, 4);
+                else tblPrecos.setValueAt("Não definido", i, 4);
+            }
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    public void limparTabela() {
+        DefaultTableModel dtm = (DefaultTableModel) tblPrecos.getModel();
+        dtm.setRowCount(0);
+    }
+
+    private void redefinir() {
+        txtId.setText("");
+        lblCodigoDeBarras.setText("");
+        lblDescricao.setText("");
+        lblDescricaoReduzida.setText("");
+        lblCategoria.setText("");
+        lblPrecoAtual.setText("");
+        txtNovoPreco.setText("");
+        spnAumentar.setValue(0);
+        spnDiminuir.setValue(0);
+        txtId.setEditable(true);
+        txtId.requestFocus();
+        btnPesquisar.setEnabled(true);
+        btnGravar.setEnabled(false);
+        spnAumentar.setEnabled(false);
+        spnDiminuir.setEnabled(false);
+    }
+    
+    private void alterarPrermissoesDosBotoes() {
+        btnPesquisar.setEnabled(false);
+        btnGravar.setEnabled(true);
+        txtId.setEditable(false);
+        spnAumentar.setEnabled(true);
+        spnDiminuir.setEnabled(true);
+    }
+
+    private void definirOrdemDeTabulacao() {
+        IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
+        policy.addIndexedComponent(txtId);
+        policy.addIndexedComponent(txtNovoPreco);
+        policy.addIndexedComponent(spnAumentar);
+        policy.addIndexedComponent(spnDiminuir);
+        policy.addIndexedComponent(cmbPesquisarPor);
+        policy.addIndexedComponent(txtPesquisa);
+        policy.addIndexedComponent(tblPrecos);
+        setFocusTraversalPolicy(policy);
+    }
+
+    private void registrarAcoesDosAtalhos() {
+        ActionMap actionMapForm = this.rootPane.getActionMap();
+        actionMapForm.put("acaof1", acaoF1);
+        actionMapForm.put("acaof2", acaoF2);
+        actionMapForm.put("acaof3", acaoF3);
+        actionMapForm.put("acaof4", acaoF4);
+        rootPane.setActionMap(actionMapForm);
+        
+        InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        imapForm.put(KeyStroke.getKeyStroke("F1"), "acaof1");
+        imapForm.put(KeyStroke.getKeyStroke("F2"), "acaof2");
+        imapForm.put(KeyStroke.getKeyStroke("F3"), "acaof3");
+        imapForm.put(KeyStroke.getKeyStroke("F4"), "acaof4");
+    }
+    
+    /**
+     * Classe usada para criar as ações dos atalhos do teclado (F1, F2 e F3)
+     */
+    private class AtalhoAction extends AbstractAction {
+	private String atalho;
+
+	public AtalhoAction(String atalho)
+	{
+		super(atalho);
+		this.atalho = atalho;
+	}
+        
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            switch(atalho) {
+                case ("F1"):
+                    if (btnPesquisar.isEnabled()) btnPesquisarActionPerformed(ae);
+                    break;
+                case ("F2"):
+                    capturarItemSelecionado();
+                    break;
+                case ("F3"):
+                    btnNovoActionPerformed(ae);
+                    break;
+                case ("F4"):
+                    if (btnGravar.isEnabled()) btnGravarActionPerformed(ae);
+            }
+        }
+
+    }
+
+        
+    /**
+     * Classe usada para definir a ordem de tabulação entre os componentes
+     */
+    private class IndexedFocusTraversalPolicy extends FocusTraversalPolicy {
+
+        private ArrayList<Component> components = new ArrayList<>();
+
+        public void addIndexedComponent(Component component) {
+             components.add(component);
+        }
+
+        //@Override
+        @Override
+        public Component getComponentAfter(Container aContainer, Component aComponent) {
+             int atIndex = components.indexOf(aComponent);
+             int nextIndex = (atIndex + 1) % components.size();
+             return components.get(nextIndex);
+        }
+
+        @Override
+        public Component getComponentBefore(Container aContainer, Component aComponent) {
+             int atIndex = components.indexOf(aComponent);
+             int nextIndex = (atIndex + components.size() - 1) %
+                     components.size();
+             return components.get(nextIndex);
+        }
+
+        @Override
+        public Component getFirstComponent(Container aContainer) {
+             return components.get(0);
+        }
+
+        @Override
+        public Component getLastComponent(Container cntnr) {
+            return components.get(components.size() - 1);
+        }
+
+        @Override
+        public Component getDefaultComponent(Container cntnr) {
+            return components.get(0);
+        }
+    }
+
 }

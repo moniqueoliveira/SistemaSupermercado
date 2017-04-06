@@ -37,24 +37,9 @@ public class PrecoProdutoDAOImpl implements PrecoProdutoDAO {
     }
 
     @Override
-    public boolean excluir(PrecoProduto obj) throws SQLException {
-        String sql = "delete from precos_produtos where id_unidade =? and codigo = ? and data = ?";
-        PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getUnidade().getIdUnidade());
-        pstm.setInt(2, obj.getProduto().getIdProduto());
-        
-        Timestamp timestamp = new Timestamp(obj.getData().getTimeInMillis());
-        pstm.setTimestamp(3, timestamp);
-        
-        int result = pstm.executeUpdate();
-        pstm.close();
-        return result == 1;
-    }
-
-    @Override
     public PrecoProduto pesquisar(PrecoProduto obj) throws SQLException {
         PrecoProduto precoProduto = null;
-        String sql = "select (valor) from precos_produtos where id_unidade = ?, codigo = ? and data = ?";
+        String sql = "select (valor) from precos_produtos where id_unidade = ? and id_produto = ? and data = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getUnidade().getIdUnidade());
         pstm.setInt(2, obj.getProduto().getIdProduto());
@@ -71,8 +56,7 @@ public class PrecoProdutoDAOImpl implements PrecoProdutoDAO {
         return precoProduto;
     }
 
-    @Override
-    public List<PrecoProduto> listar(String filtro) throws SQLException {
+    private List<PrecoProduto> listar(String filtro) throws SQLException {
         List<PrecoProduto> precos = new ArrayList<>();
         String sql = "select * from precos_produtos " + filtro;
         PreparedStatement pstm = conexao.prepareStatement(sql);
@@ -80,17 +64,23 @@ public class PrecoProdutoDAOImpl implements PrecoProdutoDAO {
         while (rs.next()) {
             PrecoProduto precoProduto = new PrecoProduto();
             precoProduto.setValor(rs.getBigDecimal("valor"));
-            precoProduto.setProduto(rs.getInt("codigo"));
+            precoProduto.setProduto(rs.getInt("id_produto"));
             precoProduto.setUnidade(rs.getInt("id_unidade"));
             
             Timestamp timestamp = rs.getTimestamp("data");
             Calendar data = Calendar.getInstance();
             data.setTimeInMillis(timestamp.getTime());
+            precoProduto.setData(data);
             
             precos.add(precoProduto);
         }
         pstm.close();
         return precos;
+    }
+    
+    @Override
+    public List<PrecoProduto> listar(int idProduto, int idUnidade) throws SQLException {
+        return listar("where id_produto = " + idProduto + " and id_unidade = " + idUnidade);
     }
 
     @Override
