@@ -9,7 +9,7 @@ public class EntradaProduto {
     private int idEntrada;
     private Produto produto;
     private Fornecedor fornecedor;
-    private double quantidade;
+    private BigDecimal quantidade;
     private BigDecimal valorUnitario;
     private Calendar data;
     private Sessao sessao;
@@ -48,11 +48,11 @@ public class EntradaProduto {
         this.fornecedor.setIdFornecedor(idFornecedor);
     }
 
-    public double getQuantidade() {
+    public BigDecimal getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(double quantidade) {
+    public void setQuantidade(BigDecimal quantidade) {
         this.quantidade = quantidade;
     }
 

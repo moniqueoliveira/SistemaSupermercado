@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 public class Estoque {
     private Unidade unidade;
     private Produto produto;
-    private double quantidade;
+    private BigDecimal quantidade;
     private BigDecimal valorTotal;
 
     public Unidade getUnidade() {
@@ -35,11 +35,11 @@ public class Estoque {
         this.produto.setIdProduto(codigo);
     }
 
-    public double getQuantidade() {
+    public BigDecimal getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(double quantidade) {
+    public void setQuantidade(BigDecimal quantidade) {
         this.quantidade = quantidade;
     }
 

@@ -24,7 +24,7 @@ public class EstoqueDAOImpl implements EstoqueDAO {
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getUnidade().getIdUnidade());
         pstm.setInt(2, obj.getProduto().getIdProduto());
-        pstm.setDouble(3, obj.getQuantidade());
+        pstm.setBigDecimal(3, obj.getQuantidade());
         pstm.setBigDecimal(4, obj.getValorTotal());
         int result = pstm.executeUpdate();
         pstm.close();
@@ -33,9 +33,9 @@ public class EstoqueDAOImpl implements EstoqueDAO {
 
     @Override
     public boolean alterar(Estoque obj) throws SQLException {
-        String sql = "update estoques set quantidade = ?, valor_total = ? where id_unidade = ? and codigo = ?);";
+        String sql = "update estoques set quantidade = ?, valor_total = ? where id_unidade = ? and id_produto = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setDouble(1, obj.getQuantidade());
+        pstm.setBigDecimal(1, obj.getQuantidade());
         pstm.setBigDecimal(2, obj.getValorTotal());
         pstm.setInt(3, obj.getUnidade().getIdUnidade());
         pstm.setInt(4, obj.getProduto().getIdProduto());
@@ -47,7 +47,7 @@ public class EstoqueDAOImpl implements EstoqueDAO {
     @Override
     public Estoque pesquisar(Estoque obj) throws SQLException {
         Estoque estoque = null;
-        String sql = "select * from estoques where id_unidade = ? and codigo = ?";
+        String sql = "select * from estoques where id_unidade = ? and id_produto = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getUnidade().getIdUnidade());
         pstm.setInt(2, obj.getProduto().getIdProduto());
@@ -56,7 +56,7 @@ public class EstoqueDAOImpl implements EstoqueDAO {
             estoque = new Estoque();
             estoque.setProduto(obj.getProduto());
             estoque.setUnidade(obj.getUnidade());
-            estoque.setQuantidade(rs.getDouble("quantidade"));
+            estoque.setQuantidade(rs.getBigDecimal("quantidade"));
             estoque.setValorTotal(rs.getBigDecimal("valor_total"));
         }
         pstm.close();
@@ -71,9 +71,9 @@ public class EstoqueDAOImpl implements EstoqueDAO {
         ResultSet rs = pstm.executeQuery();
         while (rs.next()) {
             Estoque estoque = new Estoque();
-            estoque.setProduto(rs.getInt("codigo"));
+            estoque.setProduto(rs.getInt("id_produto"));
             estoque.setUnidade(rs.getInt("id_unidade"));
-            estoque.setQuantidade(rs.getDouble("quantidade"));
+            estoque.setQuantidade(rs.getBigDecimal("quantidade"));
             estoque.setValorTotal(rs.getBigDecimal("valor_total"));
             
             estoques.add(estoque);

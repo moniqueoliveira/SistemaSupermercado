@@ -111,4 +111,11 @@ public class ProdutoServico {
                 throw new DadosInvalidosException("O código de barras digitado já está cadastrado!");
         }
     }
+
+    public Produto pesquisarProdutoEstocavel(Produto produto) {
+        produto = pesquisar(produto);
+        if (!produto.isEstocavel()) 
+            throw new DadosInvalidosException("O produto pesquisado não é estocável.");
+        return produto;
+    }
 }

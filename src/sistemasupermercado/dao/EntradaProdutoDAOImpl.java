@@ -22,12 +22,12 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
 
     @Override
     public boolean inserir(EntradaProduto obj) throws SQLException {
-        String sql = "insert into entradas_produtos (codigo, id_fornecedor, quantidade, valor_unitario, data, id_sessao)"
+        String sql = "insert into entradas_produtos (id_produto, id_fornecedor, quantidade, valor_unitario, data, id_sessao)"
                 + " values (?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getProduto().getIdProduto());
         pstm.setInt(2, obj.getFornecedor().getIdFornecedor());
-        pstm.setDouble(3, obj.getQuantidade());
+        pstm.setBigDecimal(3, obj.getQuantidade());
         pstm.setBigDecimal(4, obj.getValorUnitario());
         
         Timestamp tmstmp = new Timestamp(obj.getData().getTimeInMillis());
@@ -39,9 +39,9 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
         return result == 1;
     }
 
-    @Override
+    /*@Override
     public boolean alterar(EntradaProduto obj) throws SQLException {
-        String sql = "update entradas_produtos set codigo = ?, id_fornecedor = ?, quantidade = ?, valor_unitario = ?, "
+        String sql = "update entradas_produtos set id_produto = ?, id_fornecedor = ?, quantidade = ?, valor_unitario = ?, "
                 + "data = ?, id_sessao = ? where id_entrada = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getProduto().getIdProduto());
@@ -57,9 +57,9 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean excluir(EntradaProduto obj) throws SQLException {
         String sql = "delete from entradas_produtos where id_entrada = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
@@ -67,7 +67,7 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
-    }
+    }*/
 
     @Override
     public EntradaProduto pesquisar(EntradaProduto obj) throws SQLException {
@@ -86,8 +86,8 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
             entradaProduto.setData(data);
             
             entradaProduto.setFornecedor(rs.getInt("id_fornecedor"));
-            entradaProduto.setProduto(rs.getInt("codigo"));
-            entradaProduto.setQuantidade(rs.getDouble("quantidade"));
+            entradaProduto.setProduto(rs.getInt("id_produto"));
+            entradaProduto.setQuantidade(rs.getBigDecimal("quantidade"));
             entradaProduto.setSessao(rs.getInt("id_sessao"));
             entradaProduto.setValorUnitario(rs.getBigDecimal("valor_unitario"));
         }
@@ -111,8 +111,8 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
             entradaProduto.setData(data);
             
             entradaProduto.setFornecedor(rs.getInt("id_fornecedor"));
-            entradaProduto.setProduto(rs.getInt("codigo"));
-            entradaProduto.setQuantidade(rs.getDouble("quantidade"));
+            entradaProduto.setProduto(rs.getInt("id_produto"));
+            entradaProduto.setQuantidade(rs.getBigDecimal("quantidade"));
             entradaProduto.setSessao(rs.getInt("id_sessao"));
             entradaProduto.setValorUnitario(rs.getBigDecimal("valor_unitario"));
             
@@ -121,9 +121,16 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
         pstm.close();
         return entradasProdutos;
     }
+    
+    
 
     @Override
     public void fecharConexao() throws SQLException {
         this.conexao.close();
+    }
+
+    @Override
+    public List<EntradaProduto> listar(String pesquisarPor, String texto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

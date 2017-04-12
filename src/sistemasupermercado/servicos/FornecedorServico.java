@@ -104,4 +104,11 @@ public class FornecedorServico {
     public int obterUltimoID(){
         return this.ultimoID;
     }
+
+    public Fornecedor pesquisarFornecedorAtivo(Fornecedor fornecedor) {
+        fornecedor = pesquisar(fornecedor);
+        if (!fornecedor.isAtivo())
+            throw new DadosInvalidosException("O fornecedor pesquisado não está ativo.");
+        return fornecedor;
+    }
 }
