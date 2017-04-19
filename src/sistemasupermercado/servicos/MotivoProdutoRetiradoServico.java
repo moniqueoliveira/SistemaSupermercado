@@ -69,6 +69,10 @@ public class MotivoProdutoRetiradoServico {
         
     }
     
+    public List<MotivoProdutoRetirado> listar() {
+        return listar("", "");
+    }
+    
     private void validarDescricao(MotivoProdutoRetirado motivoProdutoRetirado) {
         if (motivoProdutoRetirado.getDescricao().equals("")) {
             throw new DadosInvalidosException("O campo \"descrição\" não pode ser vazio.");

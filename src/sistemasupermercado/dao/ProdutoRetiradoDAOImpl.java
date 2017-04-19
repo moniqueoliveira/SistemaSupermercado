@@ -22,29 +22,30 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
     
     @Override
     public boolean inserir(ProdutoRetirado obj) throws SQLException {
-        String sql = "insert into produtos_retirados (codigo, quantidade, data, id_sessao, id_motivo) "
-                + "values (?, ?, ?, ?, ?)";
+        String sql = "insert into produtos_retirados (id_produto, quantidade, data, id_sessao, id_motivo, observacao) "
+                + "values (?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getProduto().getIdProduto());
-        pstm.setDouble(2, obj.getQuantidade());
+        pstm.setBigDecimal(2, obj.getQuantidade());
         
         Timestamp timestamp = new Timestamp(obj.getData().getTimeInMillis());
         pstm.setTimestamp(3, timestamp);
         
         pstm.setInt(4, obj.getSessao().getIdSessao());
         pstm.setInt(5, obj.getMotivo().getIdMotivo());
+        pstm.setString(6, obj.getObservacao());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
     }
 
-    @Override
+    /*@Override
     public boolean alterar(ProdutoRetirado obj) throws SQLException {
-        String sql = "update produtos_retirados set codigo = ?, quantidade = ?, data = ?, id_sessao = ?, "
+        String sql = "update produtos_retirados set id_produto = ?, quantidade = ?, data = ?, id_sessao = ?, "
                 + "id_motivo = ? where id_retirada = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getProduto().getIdProduto());
-        pstm.setDouble(2, obj.getQuantidade());
+        pstm.setBigDecimal(2, obj.getQuantidade());
         
         Timestamp timestamp = new Timestamp(obj.getData().getTimeInMillis());
         pstm.setTimestamp(3, timestamp);
@@ -55,9 +56,9 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean excluir(ProdutoRetirado obj) throws SQLException {
         String sql = "delete from produtos_retirados where id_retirada = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
@@ -65,7 +66,7 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
-    }
+    }*/
 
     @Override
     public ProdutoRetirado pesquisar(ProdutoRetirado obj) throws SQLException {
@@ -77,10 +78,11 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
         if (rs.next()) {
             produtoRetirado = new ProdutoRetirado();
             produtoRetirado.setIdRetirada(rs.getInt("id_retirada"));
-            produtoRetirado.setProduto(rs.getInt("codigo"));
+            produtoRetirado.setProduto(rs.getInt("id_produto"));
             produtoRetirado.setSessao(rs.getInt("id_sessao"));
             produtoRetirado.setMotivo(rs.getInt("id_motivo"));
-            produtoRetirado.setQuantidade(rs.getDouble("quantidade"));
+            produtoRetirado.setQuantidade(rs.getBigDecimal("quantidade"));
+            produtoRetirado.setObservacao(rs.getString("observacao"));
             
             Timestamp timestamp = rs.getTimestamp("data");
             Calendar calendar = Calendar.getInstance();
@@ -91,7 +93,7 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
         return produtoRetirado;
     }
 
-    @Override
+    //@Override
     public List<ProdutoRetirado> listar(String filtro) throws SQLException {
         List<ProdutoRetirado> produtosRetirados = new ArrayList<>();
         String sql = "select * from produtos_retirados " + filtro;
@@ -100,10 +102,11 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
         while (rs.next()) {
             ProdutoRetirado produtoRetirado = new ProdutoRetirado();
             produtoRetirado.setIdRetirada(rs.getInt("id_retirada"));
-            produtoRetirado.setProduto(rs.getInt("codigo"));
+            produtoRetirado.setProduto(rs.getInt("id_produto"));
             produtoRetirado.setSessao(rs.getInt("id_sessao"));
             produtoRetirado.setMotivo(rs.getInt("id_motivo"));
-            produtoRetirado.setQuantidade(rs.getDouble("quantidade"));
+            produtoRetirado.setQuantidade(rs.getBigDecimal("quantidade"));
+            produtoRetirado.setObservacao(rs.getString("observacao"));
             
             Timestamp timestamp = rs.getTimestamp("data");
             Calendar calendar = Calendar.getInstance();

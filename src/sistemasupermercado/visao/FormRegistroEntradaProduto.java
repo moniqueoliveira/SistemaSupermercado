@@ -719,7 +719,8 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
         if (form.getObjetoSelecionado() != null) {
             txtIdProduto.setText(form.getObjetoSelecionado().getIdProduto().toString());
             btnPesquisarProdutoActionPerformed(null);
-        }}
+        }
+    }
 
     private void exibirListaFornecedores() {
         FormListaFornecedores form = new FormListaFornecedores(null, true);

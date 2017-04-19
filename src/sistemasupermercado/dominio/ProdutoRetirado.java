@@ -1,15 +1,25 @@
 
 package sistemasupermercado.dominio;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 public class ProdutoRetirado {
     private int idRetirada;
     private Produto produto;
-    private double quantidade;
+    private BigDecimal quantidade;
     private Calendar data;
     private Sessao sessao;
     private MotivoProdutoRetirado motivo;
+    private String observacao;
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
 
     public int getIdRetirada() {
         return idRetirada;
@@ -32,11 +42,11 @@ public class ProdutoRetirado {
         this.produto.setIdProduto(codigo);
     }
 
-    public double getQuantidade() {
+    public BigDecimal getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(double quantidade) {
+    public void setQuantidade(BigDecimal quantidade) {
         this.quantidade = quantidade;
     }
 

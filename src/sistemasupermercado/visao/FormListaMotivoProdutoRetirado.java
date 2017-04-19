@@ -1,19 +1,28 @@
 
 package sistemasupermercado.visao;
 
+import java.awt.event.ActionEvent;
 import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import sistemasupermercado.dominio.MotivoProdutoRetirado;
 import sistemasupermercado.servicos.MotivoProdutoRetiradoServico;
 
-public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
+public class FormListaMotivoProdutoRetirado extends javax.swing.JDialog {
+    
+    MotivoProdutoRetirado motivoProdutoRetirado;
     MotivoProdutoRetiradoServico motivoProdutoRetiradoServico;
     
+    AtalhoAction acaoF2 = new AtalhoAction("F2");
     /**
      * Creates new form FormConsultaMotivoProsutoRetirado
      */
-    public FormConsultaMotivoProdutoRetirado(java.awt.Frame parent, boolean modal) {
+    public FormListaMotivoProdutoRetirado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -35,6 +44,8 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
         btnPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMotivos = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        lblF2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Motivos de Retirada de Produtos");
@@ -85,6 +96,11 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
                 tblMotivosMouseClicked(evt);
             }
         });
+        tblMotivos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblMotivosKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblMotivos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -116,9 +132,15 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
                         .addComponent(cmbParametroPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        lblF2.setForeground(new java.awt.Color(51, 51, 51));
+        lblF2.setText("F2 - Seleciona item");
+        jPanel2.add(lblF2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,13 +150,15 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -145,6 +169,7 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        registrarAcoesDosAtalhos();
         tblMotivos.getColumnModel().getColumn(0).setPreferredWidth(110);
         tblMotivos.getColumnModel().getColumn(1).setPreferredWidth(tblMotivos.getWidth() - 110);
         preencherTabela("","");
@@ -159,6 +184,16 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyTyped
+
+    private void tblMotivosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblMotivosKeyPressed
+        // TODO add your handling code here:
+        if (KeyStroke.getKeyStrokeForEvent(evt) == KeyStroke.getKeyStroke("F2")) {
+            setObjetoSelecionado();
+            dispose();
+        } else if (KeyStroke.getKeyStrokeForEvent(evt) == KeyStroke.getKeyStroke("TAB")) {
+            cmbParametroPesquisa.requestFocus();
+        }
+    }//GEN-LAST:event_tblMotivosKeyPressed
 
     /**
      * @param args the command line arguments
@@ -177,21 +212,23 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormConsultaMotivoProdutoRetirado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormListaMotivoProdutoRetirado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormConsultaMotivoProdutoRetirado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormListaMotivoProdutoRetirado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormConsultaMotivoProdutoRetirado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormListaMotivoProdutoRetirado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormConsultaMotivoProdutoRetirado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormListaMotivoProdutoRetirado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FormConsultaMotivoProdutoRetirado dialog = new FormConsultaMotivoProdutoRetirado(new javax.swing.JFrame(), true);
+                FormListaMotivoProdutoRetirado dialog = new FormListaMotivoProdutoRetirado(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -208,11 +245,24 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cmbParametroPesquisa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblF2;
     private javax.swing.JTable tblMotivos;
     private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
 
+    public MotivoProdutoRetirado getObjetoSelecionado() {
+        return this.motivoProdutoRetirado;
+    }
+    
+    private void setObjetoSelecionado() {
+        if (tblMotivos.getSelectedRowCount() == 0) return;
+        motivoProdutoRetirado = new MotivoProdutoRetirado();
+        int idProduto = Integer.parseInt(tblMotivos.getValueAt(tblMotivos.getSelectedRow(), 0).toString());
+        motivoProdutoRetirado.setIdMotivo(idProduto);
+    }
+    
     private void preencherComboBox() {
         cmbParametroPesquisa.addItem("ID");
         cmbParametroPesquisa.addItem("Descrição");
@@ -240,6 +290,34 @@ public class FormConsultaMotivoProdutoRetirado extends javax.swing.JDialog {
         DefaultTableModel dtm = (DefaultTableModel) tblMotivos.getModel();
         dtm.setRowCount(0);
         
+    }
+    
+    private void registrarAcoesDosAtalhos() {
+        ActionMap actionMapForm = this.rootPane.getActionMap();
+        actionMapForm.put("acaof2", acaoF2);
+        rootPane.setActionMap(actionMapForm);
+        
+        InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        imapForm.put(KeyStroke.getKeyStroke("F2"), "acaof2");
+    }
+    
+    /**
+     * Classe usada para criar as ações dos atalhos do teclado (F1, F2 e F3)
+     */
+    private class AtalhoAction extends AbstractAction {
+	private String atalho;
+
+	public AtalhoAction(String atalho)
+	{
+		super(atalho);
+		this.atalho = atalho;
+	}
+        
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            setObjetoSelecionado();
+            dispose();
+        }
     }
 
 }

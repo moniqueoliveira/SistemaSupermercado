@@ -5,8 +5,12 @@ import java.sql.SQLException;
 import java.util.List;
 import sistemasupermercado.dominio.ProdutoRetirado;
 
-public interface ProdutoRetiradoDAO extends DAO<ProdutoRetirado> {
-
-    public List<ProdutoRetirado> listar(String filtro) throws SQLException;
+public interface ProdutoRetiradoDAO {
+    
+    public void fecharConexao() throws SQLException;
+    
+    public boolean inserir(ProdutoRetirado obj) throws SQLException;
+    
+    public ProdutoRetirado pesquisar(ProdutoRetirado obj) throws SQLException;
     
 }

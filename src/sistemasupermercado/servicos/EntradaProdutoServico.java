@@ -79,6 +79,5 @@ public class EntradaProdutoServico {
             
             estoqueServico.alterar(estoque);
         }
-        
     }
 }
