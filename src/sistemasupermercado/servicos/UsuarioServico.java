@@ -52,7 +52,8 @@ public class UsuarioServico {
             validarPesquisa(usuario);
             
             usuario.setFuncaoUsuario(new FuncaoUsuarioServico().pesquisar(usuario.getFuncaoUsuario()));
-           
+            usuario.setUnidade(new UnidadeServico().pesquisar(usuario.getUnidade()));
+            
             usuarioDAO.fecharConexao();
             return usuario;
         } catch(SQLException ex) {
@@ -71,7 +72,7 @@ public class UsuarioServico {
             
             FuncaoUsuarioServico funcaoUsuarioServico = new FuncaoUsuarioServico();
             for(int i = 0; i < usuarios.size(); i++) {
-                // Define a descrição da função do usuário. Ao listar os usuários somente o ID da função é definido.
+                // Define a descrição da função do usuário e da unidade. Ao listar os usuários somente o ID da função é definido.
                 usuarios.get(i).setFuncaoUsuario(funcaoUsuarioServico.pesquisar(usuarios.get(i).getFuncaoUsuario()));
             }
             usuarioDAO.fecharConexao();
@@ -114,5 +115,8 @@ public class UsuarioServico {
                 throw new DadosInvalidosException("O login digitado já existe!");
         }
     }
+    
+    
+    
     
 }

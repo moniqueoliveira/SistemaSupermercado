@@ -5,6 +5,17 @@
  */
 package sistemasupermercado.visao;
 
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
+import sistemasupermercado.dao.SessaoCaixaDAOImpl;
+import sistemasupermercado.dao.SessaoDAOImpl;
+import sistemasupermercado.dominio.Sessao;
+import sistemasupermercado.dominio.Usuario;
+import sistemasupermercado.servicos.SessaoServico;
+import sistemasupermercado.servicos.UsuarioServico;
+
 /**
  *
  * @author Monique
@@ -30,18 +41,16 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtUsuario = new javax.swing.JTextField();
+        btnEntrar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtSenha = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(null);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/LogotipoPequeno.png"))); // NOI18N
         getContentPane().add(jLabel2);
         jLabel2.setBounds(10, 0, 250, 180);
 
@@ -53,32 +62,38 @@ public class FormLogin extends javax.swing.JFrame {
         getContentPane().add(jLabel4);
         jLabel4.setBounds(290, 90, 34, 14);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(340, 60, 190, 20);
+        getContentPane().add(txtUsuario);
+        txtUsuario.setBounds(340, 60, 190, 20);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconeConfirmar.png"))); // NOI18N
-        jButton1.setText(" Entrar");
-        getContentPane().add(jButton1);
-        jButton1.setBounds(300, 150, 110, 30);
+        btnEntrar.setText(" Entrar");
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEntrar);
+        btnEntrar.setBounds(300, 150, 110, 30);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconeCancelar.png"))); // NOI18N
-        jButton2.setText(" Cancelar");
-        getContentPane().add(jButton2);
-        jButton2.setBounds(420, 150, 110, 30);
+        btnCancelar.setText(" Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCancelar);
+        btnCancelar.setBounds(420, 150, 110, 30);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel5.setText("Área de Acesso");
         getContentPane().add(jLabel5);
         jLabel5.setBounds(290, 20, 110, 20);
-        getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(340, 90, 190, 20);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/FundoPequeno.png"))); // NOI18N
+        getContentPane().add(txtSenha);
+        txtSenha.setBounds(340, 90, 190, 20);
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 550, 200);
 
@@ -88,9 +103,36 @@ public class FormLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        
+        Sessao sessao = new Sessao();
+        
+        UsuarioServico usuarioServico = new UsuarioServico();
+        SessaoServico sessaoServico = new SessaoServico();
+        
+        sessao.setUsuario(new Usuario());
+        sessao.getUsuario().setLogin(txtUsuario.getText());
+        sessao.getUsuario().setSenha(txtSenha.getText());
+        
+        try {
+            sessao = sessaoServico.iniciarSessao(sessao);
+            JOptionPane.showMessageDialog(this, "Bem vindo " + sessao.getUsuario().getNome() + "!");
+            FormMenuPrincipal f = new FormMenuPrincipal(sessao);
+            f.setVisible(true);
+            dispose();
+        } catch(RuntimeException e) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a inicialização da sessão.\n" + 
+                    e.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,6 +160,7 @@ public class FormLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FormLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -128,14 +171,14 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEntrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField txtSenha;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

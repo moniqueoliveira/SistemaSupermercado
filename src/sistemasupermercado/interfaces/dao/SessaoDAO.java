@@ -17,4 +17,6 @@ public interface SessaoDAO {
 
     public Sessao pesquisar(Sessao obj) throws SQLException;
     
+    public int obterUltimoID() throws SQLException;
+    
 }

@@ -43,8 +43,15 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
     /**
      * Creates new form FormRegistroEntradaProduto
      */
-    public FormRegistroEntradaProduto(java.awt.Frame parent, boolean modal) {
+    private FormRegistroEntradaProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    
+    public FormRegistroEntradaProduto(java.awt.Frame parent, boolean modal, Sessao sessao) {
+        super(parent, modal);
+        this.sessao = sessao;
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -551,10 +558,10 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
         redefinir();
         
         // Código provisório
-        sessao = new Sessao();
+        /*sessao = new Sessao();
         sessao.setIdSessao(1);
         sessao.setUsuario(1);
-        sessao.getUsuario().setUnidade(1);
+        sessao.getUsuario().setUnidade(1);*/
         
     }//GEN-LAST:event_formWindowOpened
 

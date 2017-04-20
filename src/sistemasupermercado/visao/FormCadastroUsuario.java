@@ -40,8 +40,15 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
     /**
      * Creates new form FormCadastroUsuario
      */
-    public FormCadastroUsuario(java.awt.Frame parent, boolean modal) {
+    private FormCadastroUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    
+    public FormCadastroUsuario(java.awt.Frame parent, boolean modal, Unidade unidade) {
+        super(parent, modal);
+        this.unidade = unidade;
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -436,7 +443,6 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
         usuario.setSenha(txtSenha.getText());
         usuario.setFuncaoUsuario((FuncaoUsuario)cmbFuncao.getSelectedItem());
         
-        unidade.setIdUnidade(1);
         usuario.setUnidade(unidade);
         
         if(rbAtivo.isSelected()) usuario.setAtivo(true);

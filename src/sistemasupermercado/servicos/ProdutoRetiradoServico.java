@@ -2,6 +2,7 @@
 package sistemasupermercado.servicos;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.Calendar;
 import sistemasupermercado.dao.ProdutoRetiradoDAOImpl;
@@ -60,11 +61,12 @@ public class ProdutoRetiradoServico {
         
         Estoque estoqueAuxiliar = estoqueServico.pesquisar(estoque);
         estoque.setQuantidade(estoqueAuxiliar.getQuantidade().subtract(produtoRetirado.getQuantidade()));
-
-        BigDecimal valorUnitarioMedio = estoqueAuxiliar.getValorTotal().divide(estoqueAuxiliar.getQuantidade());
+        BigDecimal valorUnitarioMedio = estoqueAuxiliar.getValorTotal().divide(estoqueAuxiliar.getQuantidade(), RoundingMode.HALF_UP);
+        
         BigDecimal valorTotalRetirado = produtoRetirado.getQuantidade().multiply(valorUnitarioMedio);
         estoque.setValorTotal(estoqueAuxiliar.getValorTotal().subtract(valorTotalRetirado));
 
+        
         estoqueServico.alterar(estoque);
     }
 
@@ -87,7 +89,7 @@ public class ProdutoRetiradoServico {
         if (estoque == null) {
             throw new EstoqueInsuficienteException("Não há unidades do produto selecionado em estoque.");
         } else if (produtoRetirado.getQuantidade().compareTo(estoque.getQuantidade()) == 1) {
-            throw new EstoqueInsuficienteException("Há apenas " + estoque.getQuantidade() + "unidades/quilos do produto.");
+            throw new EstoqueInsuficienteException("Há apenas " + estoque.getQuantidade() + " unidades/quilos do produto.");
         }
     }
 }

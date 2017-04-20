@@ -105,6 +105,15 @@ public class SessaoDAOImpl implements SessaoDAO {
         pstm.close();
         return sessoes;
     }
+    
+    @Override
+    public int obterUltimoID() throws SQLException {
+        String sql = "select last_insert_id()";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        return rs.getInt("last_insert_id()");
+    }
 
     @Override
     public void fecharConexao() throws SQLException {

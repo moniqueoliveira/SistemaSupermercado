@@ -5,16 +5,24 @@
  */
 package sistemasupermercado.visao;
 
+import sistemasupermercado.dominio.Sessao;
+
 /**
  *
  * @author Monique
  */
 public class FormVenda extends javax.swing.JFrame {
 
+    Sessao sessao;
     /**
      * Creates new form FormVenda
      */
-    public FormVenda() {
+    private FormVenda() {
+        initComponents();
+    }
+    
+    public FormVenda(Sessao sessao) {
+        this.sessao = sessao;
         initComponents();
     }
 
@@ -129,7 +137,6 @@ public class FormVenda extends javax.swing.JFrame {
         jPanel2.add(jLabel27);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/IconeSair.png"))); // NOI18N
         jLabel5.setText("Sair");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -328,7 +335,6 @@ public class FormVenda extends javax.swing.JFrame {
         );
 
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconeConfirmar.png"))); // NOI18N
         jButton4.setText(" Confirmar venda");
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -400,7 +406,6 @@ public class FormVenda extends javax.swing.JFrame {
         jLabel3.setText("Adição de Produtos");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconeAdicionar.png"))); // NOI18N
         jButton1.setText(" Adicionar item");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -426,11 +431,9 @@ public class FormVenda extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconeExcluir.png"))); // NOI18N
         jButton2.setText(" Remover item selecionado");
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconeCancelar.png"))); // NOI18N
         jButton3.setText(" Cancelar venda");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);

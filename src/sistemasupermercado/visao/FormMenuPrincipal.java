@@ -8,16 +8,24 @@ package sistemasupermercado.visao;
 import java.awt.Image;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
+import sistemasupermercado.dominio.Sessao;
+import sistemasupermercado.servicos.UsuarioServico;
 /**
  *
  * @author Monique
  */
 public class FormMenuPrincipal extends javax.swing.JFrame {
 
+    Sessao sessao; 
     /**
      * Creates new form FormMenuPrincipal
      */
-    public FormMenuPrincipal() {
+    private FormMenuPrincipal() {
+        initComponents();
+    }
+    
+    public FormMenuPrincipal(Sessao sessao) {
+        this.sessao = sessao;
         initComponents();
     }
 
@@ -30,35 +38,31 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/br/com/fatec/imagens/BackgroundMenu.png"));
-        Image image = imageIcon.getImage();
-        jPanel1 = new javax.swing.JPanel(){
-            public void paintComponent(Graphics g){
-                g.drawImage(image,0,0,getWidth(),getHeight(),this);
-            }
-        };
-        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu6 = new javax.swing.JMenu();
+        jMenuVenda = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItemRealizarVenda = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuEstoque = new javax.swing.JMenu();
+        jMenuItemRegistrarEntradaProdutos = new javax.swing.JMenuItem();
+        jMenuItemRegistrarSaídaProdutos = new javax.swing.JMenuItem();
+        jMenuCadastro = new javax.swing.JMenu();
+        jMenuItemCadastroProdutos = new javax.swing.JMenuItem();
+        jMenuItemCadastroPrecos = new javax.swing.JMenuItem();
+        jMenuItemCadastroFornecedores = new javax.swing.JMenuItem();
+        jMenuItemCadastroCategorias = new javax.swing.JMenuItem();
+        jMenuItemCadastroMotivos = new javax.swing.JMenuItem();
+        jMenuItemCadastroUsuarios = new javax.swing.JMenuItem();
+        jMenuItemCadastroFuncoes = new javax.swing.JMenuItem();
+        jMenuConsulta = new javax.swing.JMenu();
+        jMenuItemConsultaUsuarios = new javax.swing.JMenuItem();
+        jMenuItemConsultaFornecedores = new javax.swing.JMenuItem();
+        jMenuItemConsultaProdutos = new javax.swing.JMenuItem();
+        jMenuItemConsultaEstoque = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
@@ -67,39 +71,23 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setExtendedState(6);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/LogotipoMenu.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-        );
-
-        jMenu6.setText("Venda");
+        jMenuVenda.setText("Venda");
 
         jMenuItem1.setText("Iniciar Caixa");
-        jMenu6.add(jMenuItem1);
+        jMenuVenda.add(jMenuItem1);
 
-        jMenuItem3.setText("Realizar Venda");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemRealizarVenda.setText("Realizar Venda");
+        jMenuItemRealizarVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jMenuItemRealizarVendaActionPerformed(evt);
             }
         });
-        jMenu6.add(jMenuItem3);
+        jMenuVenda.add(jMenuItemRealizarVenda);
 
         jMenuItem2.setText("Finalizar Caixa");
-        jMenu6.add(jMenuItem2);
+        jMenuVenda.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu6);
+        jMenuBar1.add(jMenuVenda);
 
         jMenu1.setText("Caixas");
 
@@ -114,49 +102,121 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Estoque");
+        jMenuEstoque.setText("Estoque");
 
-        jMenuItem6.setText("Registrar Entrada de Produtos");
-        jMenu2.add(jMenuItem6);
-
-        jMenuItem7.setText("Registrar Saída de Produtos");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemRegistrarEntradaProdutos.setText("Registrar Entrada de Produtos");
+        jMenuItemRegistrarEntradaProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                jMenuItemRegistrarEntradaProdutosActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem7);
+        jMenuEstoque.add(jMenuItemRegistrarEntradaProdutos);
 
-        jMenuBar1.add(jMenu2);
+        jMenuItemRegistrarSaídaProdutos.setText("Registrar Saída de Produtos");
+        jMenuItemRegistrarSaídaProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRegistrarSaídaProdutosActionPerformed(evt);
+            }
+        });
+        jMenuEstoque.add(jMenuItemRegistrarSaídaProdutos);
 
-        jMenu3.setText("Cadastro");
+        jMenuBar1.add(jMenuEstoque);
 
-        jMenuItem9.setText("Cadastro de Usuários");
-        jMenu3.add(jMenuItem9);
+        jMenuCadastro.setText("Cadastro");
 
-        jMenuItem10.setText("Cadastro de Fornecedores");
-        jMenu3.add(jMenuItem10);
+        jMenuItemCadastroProdutos.setText("Cadastro de Produtos");
+        jMenuItemCadastroProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastroProdutosActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemCadastroProdutos);
 
-        jMenuItem11.setText("Cadastro de Produtos");
-        jMenu3.add(jMenuItem11);
+        jMenuItemCadastroPrecos.setText("Cadastro de Preços");
+        jMenuItemCadastroPrecos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastroPrecosActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemCadastroPrecos);
 
-        jMenuBar1.add(jMenu3);
+        jMenuItemCadastroFornecedores.setText("Cadastro de Fornecedores");
+        jMenuItemCadastroFornecedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastroFornecedoresActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemCadastroFornecedores);
 
-        jMenu5.setText("Consulta");
+        jMenuItemCadastroCategorias.setText("Cadastro de Categorias de Produtos");
+        jMenuItemCadastroCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastroCategoriasActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemCadastroCategorias);
 
-        jMenuItem12.setText("Consulta de Usuários");
-        jMenu5.add(jMenuItem12);
+        jMenuItemCadastroMotivos.setText("Cadastro de Motivos Retirada de Produtos");
+        jMenuItemCadastroMotivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastroMotivosActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemCadastroMotivos);
 
-        jMenuItem13.setText("Consulta de Fornecedores");
-        jMenu5.add(jMenuItem13);
+        jMenuItemCadastroUsuarios.setText("Cadastro de Usuários");
+        jMenuItemCadastroUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastroUsuariosActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemCadastroUsuarios);
 
-        jMenuItem14.setText("Consulta de Produtos");
-        jMenu5.add(jMenuItem14);
+        jMenuItemCadastroFuncoes.setText("Cadastro de Funções");
+        jMenuItemCadastroFuncoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastroFuncoesActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemCadastroFuncoes);
 
-        jMenuItem15.setText("Consulta de Produtos em Estoque");
-        jMenu5.add(jMenuItem15);
+        jMenuBar1.add(jMenuCadastro);
 
-        jMenuBar1.add(jMenu5);
+        jMenuConsulta.setText("Consulta");
+
+        jMenuItemConsultaUsuarios.setText("Consulta de Usuários");
+        jMenuItemConsultaUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultaUsuariosActionPerformed(evt);
+            }
+        });
+        jMenuConsulta.add(jMenuItemConsultaUsuarios);
+
+        jMenuItemConsultaFornecedores.setText("Consulta de Fornecedores");
+        jMenuItemConsultaFornecedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultaFornecedoresActionPerformed(evt);
+            }
+        });
+        jMenuConsulta.add(jMenuItemConsultaFornecedores);
+
+        jMenuItemConsultaProdutos.setText("Consulta de Produtos");
+        jMenuItemConsultaProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultaProdutosActionPerformed(evt);
+            }
+        });
+        jMenuConsulta.add(jMenuItemConsultaProdutos);
+
+        jMenuItemConsultaEstoque.setText("Consulta de Produtos em Estoque");
+        jMenuItemConsultaEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultaEstoqueActionPerformed(evt);
+            }
+        });
+        jMenuConsulta.add(jMenuItemConsultaEstoque);
+
+        jMenuBar1.add(jMenuConsulta);
 
         jMenu4.setText("Relatórios");
 
@@ -177,23 +237,96 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 633, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jMenuItemRealizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRealizarVendaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+        FormVenda formVenda = new FormVenda(sessao);
+        formVenda.setVisible(true);
+    }//GEN-LAST:event_jMenuItemRealizarVendaActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void jMenuItemRegistrarSaídaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrarSaídaProdutosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+        FormRegistroProdutoRetirado formRegistroProdutoRetirado = new FormRegistroProdutoRetirado(this, true, sessao);
+        formRegistroProdutoRetirado.setVisible(true);
+    }//GEN-LAST:event_jMenuItemRegistrarSaídaProdutosActionPerformed
+
+    private void jMenuItemRegistrarEntradaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrarEntradaProdutosActionPerformed
+        // TODO add your handling code here:
+        FormRegistroEntradaProduto formRegistroEntradaProduto = new FormRegistroEntradaProduto(this, true, sessao);
+        formRegistroEntradaProduto.setVisible(true);
+    }//GEN-LAST:event_jMenuItemRegistrarEntradaProdutosActionPerformed
+
+    private void jMenuItemCadastroProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastroProdutosActionPerformed
+        // TODO add your handling code here:
+        FormCadastroProduto formCadastroProduto = new FormCadastroProduto(this, true);
+        formCadastroProduto.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCadastroProdutosActionPerformed
+
+    private void jMenuItemCadastroPrecosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastroPrecosActionPerformed
+        // TODO add your handling code here:
+        //Provisório
+        
+        FormCadastroPrecoProduto formCadastroPrecoProduto = new FormCadastroPrecoProduto(this, true, sessao.getUsuario().getUnidade());
+        
+        formCadastroPrecoProduto.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCadastroPrecosActionPerformed
+
+    private void jMenuItemCadastroFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastroFornecedoresActionPerformed
+        // TODO add your handling code here:
+        FormCadastroFornecedor formCadastroFornecedor = new FormCadastroFornecedor(this, true);
+        formCadastroFornecedor.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCadastroFornecedoresActionPerformed
+
+    private void jMenuItemCadastroCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastroCategoriasActionPerformed
+        // TODO add your handling code here:
+        FormCadastroCategoriaProduto formCadastroCategoriaProduto = new FormCadastroCategoriaProduto(this, rootPaneCheckingEnabled);
+        formCadastroCategoriaProduto.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCadastroCategoriasActionPerformed
+
+    private void jMenuItemCadastroMotivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastroMotivosActionPerformed
+        // TODO add your handling code here:
+        FormCadastroMotivoProdutoRetirado formCadastroMotivoProdutoRetirado = new FormCadastroMotivoProdutoRetirado(this, true);
+        formCadastroMotivoProdutoRetirado.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCadastroMotivosActionPerformed
+
+    private void jMenuItemCadastroUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastroUsuariosActionPerformed
+        // TODO add your handling code here:
+        FormCadastroUsuario formCadastroUsuario = new FormCadastroUsuario(this, true, sessao.getUsuario().getUnidade());
+        formCadastroUsuario.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCadastroUsuariosActionPerformed
+
+    private void jMenuItemCadastroFuncoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastroFuncoesActionPerformed
+        // TODO add your handling code here:
+        FormCadastroFuncao formCadastroFuncao = new FormCadastroFuncao(this, true);
+        formCadastroFuncao.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCadastroFuncoesActionPerformed
+
+    private void jMenuItemConsultaFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaFornecedoresActionPerformed
+        // TODO add your handling code here:
+        FormConsultaFornecedor formConsultaFornecedor = new FormConsultaFornecedor(this, true);
+        formConsultaFornecedor.setVisible(true);
+    }//GEN-LAST:event_jMenuItemConsultaFornecedoresActionPerformed
+
+    private void jMenuItemConsultaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaUsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemConsultaUsuariosActionPerformed
+
+    private void jMenuItemConsultaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaProdutosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemConsultaProdutosActionPerformed
+
+    private void jMenuItemConsultaEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaEstoqueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemConsultaEstoqueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,32 +364,34 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuCadastro;
+    private javax.swing.JMenu jMenuConsulta;
+    private javax.swing.JMenu jMenuEstoque;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem jMenuItemCadastroCategorias;
+    private javax.swing.JMenuItem jMenuItemCadastroFornecedores;
+    private javax.swing.JMenuItem jMenuItemCadastroFuncoes;
+    private javax.swing.JMenuItem jMenuItemCadastroMotivos;
+    private javax.swing.JMenuItem jMenuItemCadastroPrecos;
+    private javax.swing.JMenuItem jMenuItemCadastroProdutos;
+    private javax.swing.JMenuItem jMenuItemCadastroUsuarios;
+    private javax.swing.JMenuItem jMenuItemConsultaEstoque;
+    private javax.swing.JMenuItem jMenuItemConsultaFornecedores;
+    private javax.swing.JMenuItem jMenuItemConsultaProdutos;
+    private javax.swing.JMenuItem jMenuItemConsultaUsuarios;
+    private javax.swing.JMenuItem jMenuItemRealizarVenda;
+    private javax.swing.JMenuItem jMenuItemRegistrarEntradaProdutos;
+    private javax.swing.JMenuItem jMenuItemRegistrarSaídaProdutos;
+    private javax.swing.JMenu jMenuVenda;
     // End of variables declaration//GEN-END:variables
 }

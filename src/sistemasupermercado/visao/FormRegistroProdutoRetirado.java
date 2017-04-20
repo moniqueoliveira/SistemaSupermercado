@@ -47,8 +47,15 @@ public class FormRegistroProdutoRetirado extends javax.swing.JDialog {
     /**
      * Creates new form FormProdutoRetirado
      */
-    public FormRegistroProdutoRetirado(java.awt.Frame parent, boolean modal) {
+    private FormRegistroProdutoRetirado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    
+    public FormRegistroProdutoRetirado(java.awt.Frame parent, boolean modal, Sessao sessao) {
+        super(parent, modal);
+        this.sessao = sessao;
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -247,6 +254,7 @@ public class FormRegistroProdutoRetirado extends javax.swing.JDialog {
         jLabel4.setText("Observação:");
 
         txtObservacao.setColumns(20);
+        txtObservacao.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         txtObservacao.setRows(5);
         jScrollPane1.setViewportView(txtObservacao);
 
@@ -461,10 +469,10 @@ public class FormRegistroProdutoRetirado extends javax.swing.JDialog {
         redefinir();
         
         // Código provisório
-        sessao = new Sessao();
+        /*sessao = new Sessao();
         sessao.setIdSessao(1);
         sessao.setUsuario(1);
-        sessao.getUsuario().setUnidade(1);
+        sessao.getUsuario().setUnidade(1);*/
     }//GEN-LAST:event_formWindowOpened
 
     /**
