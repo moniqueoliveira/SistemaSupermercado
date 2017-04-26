@@ -469,14 +469,23 @@ public class FormCadastroPrecoProduto extends javax.swing.JDialog {
         
         try {
             produto = produtoServico.pesquisar(produto);
+            precoProduto.setProduto(produto);
+            precoProduto.setUnidade(unidade);
+            
             lblCategoria.setText(produto.getCategoria().getDescricao());
             lblCodigoDeBarras.setText(produto.getCodigoDeBarras());
             lblDescricao.setText(produto.getDescricao());
             lblDescricaoReduzida.setText(produto.getDescricaoReduzida());
             
             
-            precoProduto = precoProdutoServico.pesquisarPrecoAtual(produto.getIdProduto(), unidade.getIdUnidade());
-            lblPrecoAtual.setText(precoProduto.getValor().toString());
+            precoProduto = precoProdutoServico.pesquisarPrecoAtual(precoProduto);
+            if (precoProduto == null) {
+                lblPrecoAtual.setText("Não definido");
+                precoProduto = new PrecoProduto();
+                precoProduto.setProduto(produto);
+                precoProduto.setUnidade(unidade);
+            }
+            else lblPrecoAtual.setText(precoProduto.getValor().toString());
             txtNovoPreco.requestFocus();
             
             alterarPrermissoesDosBotoes();
@@ -494,9 +503,10 @@ public class FormCadastroPrecoProduto extends javax.swing.JDialog {
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         // TODO add your handling code here:
-        if (txtId.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "É necessário inserir o ID para pesquisar.", 
+        if (txtNovoPreco.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Novo preço não informado.", 
                         "Pesquisa sem resultado", JOptionPane.INFORMATION_MESSAGE);
+            txtNovoPreco.requestFocus();
             return;
         }
         
@@ -548,19 +558,19 @@ public class FormCadastroPrecoProduto extends javax.swing.JDialog {
         // TODO add your handling code here:
         switch (evt.getKeyCode()){
             case (KeyEvent.VK_TAB):
-            txtId.requestFocus();
-            break;
+                txtId.requestFocus();
+                break;
             case (KeyEvent.VK_F1):
-            if (btnPesquisar.isEnabled()) btnPesquisarActionPerformed(null);
-            break;
+                if (btnPesquisar.isEnabled()) btnPesquisarActionPerformed(null);
+                break;
             case (KeyEvent.VK_F2):
-            capturarItemSelecionado();
-            break;
+                capturarItemSelecionado();
+                break;
             case (KeyEvent.VK_F3):
-            btnNovoActionPerformed(null);
-            break;
+                btnNovoActionPerformed(null);
+                break;
             case (KeyEvent.VK_F4):
-            if (btnGravar.isEnabled()) btnGravarActionPerformed(null);
+                if (btnGravar.isEnabled()) btnGravarActionPerformed(null);
         }
     }//GEN-LAST:event_tblPrecosKeyPressed
 
@@ -574,7 +584,7 @@ public class FormCadastroPrecoProduto extends javax.swing.JDialog {
 
     private void spnAumentarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnAumentarStateChanged
         // TODO add your handling code here:
-        if (lblPrecoAtual.getText().equals("")) return;
+        if (lblPrecoAtual.getText().equals("") || lblPrecoAtual.getText().equals("Não definido")) return;
         spnDiminuir.setValue(0.0);
         BigDecimal porcentagemAumento = new BigDecimal(spnAumentar.getValue().toString()).divide(BigDecimal.valueOf(100.0));
         BigDecimal valorAtual = precoProduto.getValor();
@@ -588,7 +598,7 @@ public class FormCadastroPrecoProduto extends javax.swing.JDialog {
 
     private void spnDiminuirStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnDiminuirStateChanged
         // TODO add your handling code here:
-        if (lblPrecoAtual.getText().equals("")) return;
+        if (lblPrecoAtual.getText().equals("") || lblPrecoAtual.getText().equals("Não definido")) return;
         
         spnAumentar.setValue(0.0);
         BigDecimal porcentagem = new BigDecimal(spnDiminuir.getValue().toString()).divide(BigDecimal.valueOf(100.0));

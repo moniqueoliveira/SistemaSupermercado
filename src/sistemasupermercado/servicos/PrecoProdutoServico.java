@@ -26,11 +26,11 @@ public class PrecoProdutoServico {
         }
     }
     
-    public PrecoProduto pesquisarPrecoAtual(int idProduto, int idUnidade) {
-        PrecoProduto precoProduto;
+    public PrecoProduto pesquisarPrecoAtual(PrecoProduto precoProduto) {
         precoProdutoDAO = new PrecoProdutoDAOImpl();
         try {
-            List<PrecoProduto> precos = precoProdutoDAO.listar(idProduto, idUnidade);
+            List<PrecoProduto> precos = precoProdutoDAO.listar(precoProduto.getProduto().getIdProduto(), 
+                    precoProduto.getUnidade().getIdUnidade());
             
             precoProduto = obterPrecoAtual(precos);
            
@@ -39,6 +39,13 @@ public class PrecoProdutoServico {
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
         }
+    }
+    
+    private PrecoProduto pesquisarPrecoAtual(int idProduto, int idUnidade) {
+        PrecoProduto precoProduto = new PrecoProduto();
+        precoProduto.setProduto(idProduto);
+        precoProduto.setUnidade(idUnidade);
+        return pesquisarPrecoAtual(precoProduto);
     }
     
     public List<PrecoProduto> obterPrecos(List<Produto> produtos, int idUnidade) {

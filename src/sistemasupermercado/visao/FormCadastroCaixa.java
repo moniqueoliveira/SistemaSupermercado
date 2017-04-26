@@ -5,18 +5,50 @@
  */
 package sistemasupermercado.visao;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
+import sistemasupermercado.dominio.Caixa;
+import sistemasupermercado.dominio.Unidade;
+import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoException;
+import sistemasupermercado.servicos.CaixaServico;
+import sistemasupermercado.servicos.UnidadeServico;
+
 /**
  *
  * @author Monique
  */
 public class FormCadastroCaixa extends javax.swing.JDialog {
 
+    Caixa caixa;
+    Unidade unidade;
+    
+    CaixaServico caixaServico;
+    UnidadeServico unidadeServico;
+    
+    AtalhoAction acaoF1 = new AtalhoAction("F1");
+    AtalhoAction acaoF2 = new AtalhoAction("F2");
     /**
      * Creates new form FormAdicionarNovoCaixa
      */
-    public FormCadastroCaixa(java.awt.Frame parent, boolean modal) {
+    private FormCadastroCaixa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    
+    public FormCadastroCaixa(java.awt.Frame parent, boolean modal, Unidade unidade) {
+        super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.unidade = unidade;
     }
 
     /**
@@ -30,52 +62,45 @@ public class FormCadastroCaixa extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnInserir = new javax.swing.JButton();
-        txtNumero = new javax.swing.JTextField();
-        btnExcluir = new javax.swing.JButton();
-        btnNovo = new javax.swing.JButton();
-        btnPesquisar = new javax.swing.JButton();
+        btnAdicionar = new javax.swing.JButton();
+        txtQuantidade = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCaixas = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Adicionar Novo Caixa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(51, 153, 255))); // NOI18N
-
-        jLabel1.setText("Digite o número do caixa:");
-
-        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeInserir.png"))); // NOI18N
-        btnInserir.setText("Inserir");
-
-        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeExcluir.png"))); // NOI18N
-        btnExcluir.setText("Excluir");
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
+        setTitle("Caixas");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
-        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeNovo.png"))); // NOI18N
-        btnNovo.setText("Novo");
-        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro de Caixas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(51, 153, 255))); // NOI18N
+
+        jLabel1.setText("Quantidade de caixas a adicionar:");
+
+        btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconeInserirMenor.png"))); // NOI18N
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoActionPerformed(evt);
+                btnAdicionarActionPerformed(evt);
             }
         });
 
-        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/ÍconePesquisar.png"))); // NOI18N
-        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesquisarActionPerformed(evt);
+        txtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtQuantidadeKeyTyped(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCaixas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Numero do caixa"
+                "Caixas"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -86,50 +111,50 @@ public class FormCadastroCaixa extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tblCaixas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblCaixasKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblCaixas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnNovo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInserir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInserir)
-                    .addComponent(btnExcluir)
-                    .addComponent(btnNovo))
+                    .addComponent(jLabel1)
+                    .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setText("F1 - Adicionar caixas");
+        jPanel2.add(jLabel2);
+
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setText("F2 - Excluir último caixa inserido");
+        jPanel2.add(jLabel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,30 +164,81 @@ public class FormCadastroCaixa extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        setSize(new java.awt.Dimension(341, 335));
+        setSize(new java.awt.Dimension(400, 332));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // TODO add your handling code here:
+        if (txtQuantidade.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Digite a quantidade de caixas a serem adicionados.", 
+                        "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            txtQuantidade.requestFocus();
+            return;
+        }
         
-    }//GEN-LAST:event_btnExcluirActionPerformed
+        int quantidade = Integer.parseInt(txtQuantidade.getText());
+        if (quantidade < 1 || quantidade > 10) {
+            JOptionPane.showMessageDialog(this, "É permitido inserir no máximo 10 caixas por vez.", 
+                        "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            txtQuantidade.requestFocus();
+            return;
+        }
+        
+        caixaServico = new CaixaServico();
+        try {
+            caixaServico.adicionarCaixas(quantidade, unidade);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Novo(s) caixa(s) adicionado(s) com sucesso!\n"
+                    + "Deseja continuar no cadastro de caixas?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) { preencherTabela(); redefinir(); }
+            else dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
-    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        
-    }//GEN-LAST:event_btnNovoActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        definirModeloDeTabela();
+        preencherTabela();
+        registrarAcoesDosAtalhos();
+    }//GEN-LAST:event_formWindowOpened
 
-    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        
-    }//GEN-LAST:event_btnPesquisarActionPerformed
+    private void tblCaixasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblCaixasKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyCode()){
+            case (KeyEvent.VK_TAB):
+                txtQuantidade.requestFocus();
+                break;
+            case (KeyEvent.VK_F1):
+                btnAdicionarActionPerformed(null);
+                break;
+            case (KeyEvent.VK_F2):
+                excluirUltimoCaixaInserido();
+        }
+          
+    }//GEN-LAST:event_tblCaixasKeyPressed
+
+    private void txtQuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantidadeKeyTyped
+        // TODO add your handling code here:
+        String caracteres="0987654321";
+        if(!caracteres.contains(evt.getKeyChar() + "")){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtQuantidadeKeyTyped
 
     /**
      * @param args the command line arguments
@@ -208,14 +284,100 @@ public class FormCadastroCaixa extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnInserir;
-    private javax.swing.JButton btnNovo;
-    private javax.swing.JButton btnPesquisar;
+    private javax.swing.JButton btnAdicionar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtNumero;
+    private javax.swing.JTable tblCaixas;
+    private javax.swing.JTextField txtQuantidade;
     // End of variables declaration//GEN-END:variables
+
+    private void excluirUltimoCaixaInserido() {
+        caixaServico = new CaixaServico();
+        
+        try {
+            caixaServico.excluirUltimoCaixa(unidade);
+            preencherTabela();
+            redefinir();
+        } catch (RetornoDeAlteracaoDeDadosInesperadoException ex) {
+            JOptionPane.showMessageDialog(this, "Não há caixas cadastrados.\nErro: " + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }
+    
+    private void registrarAcoesDosAtalhos() {
+        ActionMap actionMapForm = this.rootPane.getActionMap();
+        actionMapForm.put("acaof1", acaoF1);
+        actionMapForm.put("acaof2", acaoF2);
+        rootPane.setActionMap(actionMapForm);
+        
+        InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        imapForm.put(KeyStroke.getKeyStroke("F1"), "acaof1");
+        imapForm.put(KeyStroke.getKeyStroke("F2"), "acaof2");
+    }
+
+    private void definirModeloDeTabela() {
+        tblCaixas.setCellSelectionEnabled(false);
+    }
+
+    private void preencherTabela() {
+        caixaServico = new CaixaServico();
+        List<Caixa> caixas;
+        
+        DefaultTableModel dtm = (DefaultTableModel) tblCaixas.getModel();
+        limparTabela();
+        
+        try {
+            caixas = caixaServico.listar(unidade);
+            
+            for (int i = 0; i < caixas.size(); i++) {
+                dtm.addRow(new Object[]{""});
+                tblCaixas.setValueAt(caixas.get(i).getNumeroCaixa(), i, 0);
+            }
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    private void limparTabela() {
+        DefaultTableModel dtm = (DefaultTableModel) tblCaixas.getModel();
+        dtm.setRowCount(0);
+    }
+
+    private void redefinir() {
+        txtQuantidade.setText("");
+        txtQuantidade.requestFocus();
+    }
+    
+    /**
+     * Classe usada para criar as ações dos atalhos do teclado (F1, F2 e F3)
+     */
+    private class AtalhoAction extends AbstractAction {
+	private String atalho;
+
+	public AtalhoAction(String atalho)
+	{
+		super(atalho);
+		this.atalho = atalho;
+	}
+        
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            switch(atalho) {
+                case ("F1"):
+                    btnAdicionarActionPerformed(ae);
+                    break;
+                case ("F2"):
+                    excluirUltimoCaixaInserido();
+            }
+        }
+    }
 }

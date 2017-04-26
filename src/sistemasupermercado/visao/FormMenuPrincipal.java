@@ -58,6 +58,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItemCadastroMotivos = new javax.swing.JMenuItem();
         jMenuItemCadastroUsuarios = new javax.swing.JMenuItem();
         jMenuItemCadastroFuncoes = new javax.swing.JMenuItem();
+        jMenuItemCadastroDeCaixas = new javax.swing.JMenuItem();
         jMenuConsulta = new javax.swing.JMenu();
         jMenuItemConsultaUsuarios = new javax.swing.JMenuItem();
         jMenuItemConsultaFornecedores = new javax.swing.JMenuItem();
@@ -179,6 +180,14 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuCadastro.add(jMenuItemCadastroFuncoes);
+
+        jMenuItemCadastroDeCaixas.setText("Cadastro de Caixas");
+        jMenuItemCadastroDeCaixas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastroDeCaixasActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemCadastroDeCaixas);
 
         jMenuBar1.add(jMenuCadastro);
 
@@ -328,6 +337,13 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemConsultaEstoqueActionPerformed
 
+    private void jMenuItemCadastroDeCaixasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastroDeCaixasActionPerformed
+        // TODO add your handling code here:
+        FormCadastroCaixa formCadastroCaixa = new FormCadastroCaixa(this, rootPaneCheckingEnabled, 
+                sessao.getUsuario().getUnidade());
+        formCadastroCaixa.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCadastroDeCaixasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -379,6 +395,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItemCadastroCategorias;
+    private javax.swing.JMenuItem jMenuItemCadastroDeCaixas;
     private javax.swing.JMenuItem jMenuItemCadastroFornecedores;
     private javax.swing.JMenuItem jMenuItemCadastroFuncoes;
     private javax.swing.JMenuItem jMenuItemCadastroMotivos;

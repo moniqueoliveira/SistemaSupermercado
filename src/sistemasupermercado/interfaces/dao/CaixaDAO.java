@@ -13,6 +13,6 @@ public interface CaixaDAO {
     
     public boolean excluir(Caixa obj) throws SQLException;
     
-    public List<Caixa> listar(String filtro) throws SQLException;
+    public List<Caixa> listar(int idUnidade) throws SQLException;
     
 }

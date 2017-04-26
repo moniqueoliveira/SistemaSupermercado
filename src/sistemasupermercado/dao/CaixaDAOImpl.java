@@ -43,9 +43,9 @@ public class CaixaDAOImpl implements CaixaDAO {
     }
 
     @Override
-    public List<Caixa> listar(String filtro) throws SQLException {
+    public List<Caixa> listar(int idUnidade) throws SQLException {
         List<Caixa> caixas = new ArrayList<>();
-        String sql = "select * from caixas " + filtro;
+        String sql = "select * from caixas where id_unidade = " + idUnidade;
         PreparedStatement pstm = conexao.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         while (rs.next()){
