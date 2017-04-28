@@ -61,14 +61,31 @@ public class UsuarioServico {
         }
     }
     
-    public List<Usuario> listar() {
-        return listar("", "");
+    public List<Usuario> listar(int idUnidade) {
+        return listar("", "", idUnidade);
     }
     
-    public List<Usuario> listar(String pesquisarPor, String texto) {
+    public List<Usuario> listar() {
         usuarioDAO = new UsuarioDAOImpl();
         try {
-            List<Usuario> usuarios = usuarioDAO.listar(pesquisarPor, texto);
+            List<Usuario> usuarios = usuarioDAO.listar();
+            
+            FuncaoUsuarioServico funcaoUsuarioServico = new FuncaoUsuarioServico();
+            for(int i = 0; i < usuarios.size(); i++) {
+                // Define a descrição da função do usuário e da unidade. Ao listar os usuários somente o ID da função é definido.
+                usuarios.get(i).setFuncaoUsuario(funcaoUsuarioServico.pesquisar(usuarios.get(i).getFuncaoUsuario()));
+            }
+            usuarioDAO.fecharConexao();
+            return usuarios;
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException: " + ex.getMessage());
+        }
+    }
+    
+    public List<Usuario> listar(String pesquisarPor, String texto, int idUnidade) {
+        usuarioDAO = new UsuarioDAOImpl();
+        try {
+            List<Usuario> usuarios = usuarioDAO.listar(pesquisarPor, texto, idUnidade);
             
             FuncaoUsuarioServico funcaoUsuarioServico = new FuncaoUsuarioServico();
             for(int i = 0; i < usuarios.size(); i++) {
@@ -111,8 +128,15 @@ public class UsuarioServico {
     private void validarLogin(Usuario usuario) {
         List<Usuario> usuarios = listar();
         for (Usuario usuarioLista : usuarios) {
-            if (usuarioLista.getLogin().equals(usuario.getLogin()))
+            if (usuarioLista.getLogin().equals(usuario.getLogin())){
+                
+                if (usuario.getIdUsuario() != null && 
+                        usuario.getIdUsuario().equals(usuarioLista.getIdUsuario()))
+                    return;
+                
                 throw new DadosInvalidosException("O login digitado já existe!");
+                
+            }
         }
     }
     

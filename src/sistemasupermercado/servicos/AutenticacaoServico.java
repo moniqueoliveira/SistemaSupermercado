@@ -13,7 +13,7 @@ public class AutenticacaoServico {
     
     public Usuario autenticar(Usuario usuario){
 	UsuarioServico usuarioServico = new UsuarioServico();
-        List<Usuario> usuarios = usuarioServico.listar("Login", usuario.getLogin());
+        List<Usuario> usuarios = usuarioServico.listar();
 
         if (usuarios.isEmpty()) {
             throw new PesquisaNulaException("Usuário inexiste!");

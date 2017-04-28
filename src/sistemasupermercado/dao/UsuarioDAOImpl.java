@@ -121,19 +121,24 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         pstm.close();
         return usuarios;
     }
+    
+    @Override
+    public List<Usuario> listar() throws SQLException {
+        return listar("");
+    }
 
     @Override
-    public List<Usuario> listar(String pesquisaPor, String texto) throws SQLException {
-        String filtro;
+    public List<Usuario> listar(String pesquisaPor, String texto, int idUnidade) throws SQLException {
+        String filtro= "where id_unidade = " + idUnidade;
         switch(pesquisaPor) {
             case ("ID"):
-                filtro = "where id_usuario like '%" + texto + "%'";
+                filtro = filtro + " and id_usuario like '%" + texto + "%'";
                 break;
             case ("Login"):
-                filtro = "where login like '%" + texto + "%'";
+                filtro = filtro + " and login like '%" + texto + "%'";
                 break;
-            default:
-                filtro = "where nome like '%" + texto + "%'";
+            case ("Nome"):
+                filtro = filtro + " and nome like '%" + texto + "%'";
         }
         return listar(filtro);
     }

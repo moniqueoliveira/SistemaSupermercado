@@ -118,16 +118,16 @@ public class FormLogin extends javax.swing.JFrame {
         sessao.getUsuario().setLogin(txtUsuario.getText());
         sessao.getUsuario().setSenha(txtSenha.getText());
         
-        try {
+        //try {
             sessao = sessaoServico.iniciarSessao(sessao);
             JOptionPane.showMessageDialog(this, "Bem vindo " + sessao.getUsuario().getNome() + "!");
             FormMenuPrincipal f = new FormMenuPrincipal(sessao);
             f.setVisible(true);
             dispose();
-        } catch(RuntimeException e) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a inicialização da sessão.\n" + 
-                    e.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
-        }
+        //} catch(RuntimeException e) {
+        //    JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a inicialização da sessão.\n" + 
+        //            e.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+        //}
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

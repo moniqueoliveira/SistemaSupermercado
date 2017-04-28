@@ -327,6 +327,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemConsultaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaUsuariosActionPerformed
         // TODO add your handling code here:
+        FormConsultaUsuario formConsultaUsuario = new FormConsultaUsuario(this, true, sessao.getUsuario().getUnidade());
+        formConsultaUsuario.setVisible(true);
     }//GEN-LAST:event_jMenuItemConsultaUsuariosActionPerformed
 
     private void jMenuItemConsultaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaProdutosActionPerformed

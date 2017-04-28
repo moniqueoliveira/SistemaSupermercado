@@ -400,6 +400,7 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
         usuario = new Usuario();
         usuarioServico = new UsuarioServico();
         usuario.setIdUsuario(Integer.parseInt(txtId.getText()));
+        usuario.setUnidade(unidade);
         
         try {
             usuario = usuarioServico.pesquisar(usuario);
@@ -468,16 +469,15 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
             txtSenha.requestFocus();
             return;
         }
-        
-        try {
-            usuario.setNome(txtNome.getText());
-            usuario.setLogin(txtLogin.getText());
-            usuario.setSenha(txtSenha.getText());
-            usuario.setFuncaoUsuario((FuncaoUsuario)cmbFuncao.getSelectedItem());
+        usuario.setNome(txtNome.getText());
+        usuario.setLogin(txtLogin.getText());
+        usuario.setSenha(txtSenha.getText());
+        usuario.setFuncaoUsuario((FuncaoUsuario)cmbFuncao.getSelectedItem());
 
-            if(rbAtivo.isSelected()) usuario.setAtivo(true);
-            else usuario.setAtivo(false);
-            
+        if(rbAtivo.isSelected()) usuario.setAtivo(true);
+        else usuario.setAtivo(false);
+        try {
+             
             usuarioServico.alterar(usuario);
             
             int resposta = JOptionPane.showConfirmDialog(this, "Dados alterados com sucesso!\n"
@@ -645,7 +645,7 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
         DefaultTableModel dtm = (DefaultTableModel) tblUsuarios.getModel();
         limparTabela();
         try {
-            List<Usuario> usuarios = usuarioServico.listar(pesquisarPor, texto);
+            List<Usuario> usuarios = usuarioServico.listar(pesquisarPor, texto, unidade.getIdUnidade());
             for (int i = 0; i < usuarios.size(); i++) {
                 dtm.addRow(new Object[]{""});
                 tblUsuarios.setValueAt(usuarios.get(i).getIdUsuario().toString(), i, 0);
