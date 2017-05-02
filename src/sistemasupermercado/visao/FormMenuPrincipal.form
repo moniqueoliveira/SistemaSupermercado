@@ -176,11 +176,21 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemConsultaEstoque">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Consulta de Produtos em Estoque"/>
+                <Property name="text" type="java.lang.String" value="Consulta de  Estoque"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemConsultaEstoqueActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consulta de Produtos Retirados"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consulta de Entradas de Produtos"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>

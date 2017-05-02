@@ -64,6 +64,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItemConsultaFornecedores = new javax.swing.JMenuItem();
         jMenuItemConsultaProdutos = new javax.swing.JMenuItem();
         jMenuItemConsultaEstoque = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
@@ -217,13 +219,19 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuConsulta.add(jMenuItemConsultaProdutos);
 
-        jMenuItemConsultaEstoque.setText("Consulta de Produtos em Estoque");
+        jMenuItemConsultaEstoque.setText("Consulta de  Estoque");
         jMenuItemConsultaEstoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemConsultaEstoqueActionPerformed(evt);
             }
         });
         jMenuConsulta.add(jMenuItemConsultaEstoque);
+
+        jMenuItem3.setText("Consulta de Produtos Retirados");
+        jMenuConsulta.add(jMenuItem3);
+
+        jMenuItem6.setText("Consulta de Entradas de Produtos");
+        jMenuConsulta.add(jMenuItem6);
 
         jMenuBar1.add(jMenuConsulta);
 
@@ -333,6 +341,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemConsultaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaProdutosActionPerformed
         // TODO add your handling code here:
+        FormConsultaProdutos formConsultaProdutos = new FormConsultaProdutos(this, true, sessao.getUsuario().getUnidade());
+        formConsultaProdutos.setVisible(true);
     }//GEN-LAST:event_jMenuItemConsultaProdutosActionPerformed
 
     private void jMenuItemConsultaEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaEstoqueActionPerformed
@@ -393,8 +403,10 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItemCadastroCategorias;
     private javax.swing.JMenuItem jMenuItemCadastroDeCaixas;
