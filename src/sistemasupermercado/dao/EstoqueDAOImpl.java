@@ -64,7 +64,33 @@ public class EstoqueDAOImpl implements EstoqueDAO {
     }
 
     @Override
-    public List<Estoque> listar(String filtro) throws SQLException {
+    public List<Estoque> listar(String pesquisarPor, String texto, int idUnidade) throws SQLException {
+        String filtro = new String();
+        switch (pesquisarPor) {
+            case ("ID Produto"):
+                filtro = "where id_produto like '%" + texto + "%' and id_unidade = " + idUnidade;
+                break;
+            case ("Descrição"):
+                filtro = "left join produtos on estoques.id_produto = produtos.id_produto where "
+                        + "produtos.descricao like '%" + texto + "%' and estoques.id_unidade = " + idUnidade;
+                break;
+            case ("Descrição reduzida"):
+                filtro = "left join produtos on estoques.id_produto = produtos.id_produto where "
+                        + "produtos.descricao_reduzida like '%" + texto + "%' and estoques.id_unidade = " + idUnidade;
+                break;
+            case ("Codigo de barras"):
+                filtro = "left join produtos on estoques.id_produto = produtos.id_produto where "
+                        + "produtos.codigo_de_barras like '%" + texto + "%' and estoques.id_unidade = " + idUnidade;
+                break;
+            case ("Categoria"):
+                filtro += "left join produtos on estoques.id_produto = produtos.id_produto left join "
+                        + "categorias_produtos on categorias_produtos.id_categoria = produtos.id_categoria "
+                        + "where categorias_produtos.descricao like '%" + texto + "%' and estoques.id_unidade = " + idUnidade;
+        }
+        return listar(filtro);
+    }
+    
+    private List<Estoque> listar(String filtro) throws SQLException {
         List<Estoque> estoques = new ArrayList<>();
         String sql = "select * from estoques " + filtro;
         PreparedStatement pstm = conexao.prepareStatement(sql);

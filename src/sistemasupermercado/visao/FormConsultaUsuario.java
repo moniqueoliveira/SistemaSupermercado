@@ -428,7 +428,8 @@ public class FormConsultaUsuario extends javax.swing.JDialog {
         } catch(RuntimeException ex) {
             JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
                         "Atenção", JOptionPane.WARNING_MESSAGE);
-        }}
+        }
+    }
     
     private void registrarAcoesDosAtalhos() {
         ActionMap actionMapForm = this.rootPane.getActionMap();

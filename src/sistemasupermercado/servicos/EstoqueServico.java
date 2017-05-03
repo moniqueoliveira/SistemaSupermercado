@@ -2,6 +2,7 @@
 package sistemasupermercado.servicos;
 
 import java.sql.SQLException;
+import java.util.List;
 import sistemasupermercado.dao.EstoqueDAOImpl;
 import sistemasupermercado.dominio.Estoque;
 import sistemasupermercado.exceptions.DadosInvalidosException;
@@ -38,10 +39,25 @@ public class EstoqueServico {
         estoqueDAO = new EstoqueDAOImpl();
         try {
             estoque = estoqueDAO.pesquisar(estoque);
+            estoque.setProduto(new ProdutoServico().pesquisar(estoque.getProduto()));
             estoqueDAO.fecharConexao();
             return estoque;
         } catch(SQLException ex) {
-            throw new RuntimeException("SQLException: " + ex.getMessage());
+            throw new RuntimeException("SQLException (Erro ao pesquisar o item de estoque): " + ex.getMessage());
+        }
+    }
+    
+    public List<Estoque> listar(String pesquisarPor, String filtro, int idUnidade) {
+        estoqueDAO = new EstoqueDAOImpl();
+        try {
+            List<Estoque> estoques = estoqueDAO.listar(pesquisarPor, filtro, idUnidade);
+            for (Estoque estoque : estoques) {
+                estoque.setProduto(new ProdutoServico().pesquisar(estoque.getProduto()));
+            }
+            estoqueDAO.fecharConexao();
+            return estoques;
+        } catch (SQLException ex){
+            throw new RuntimeException("SQLException (Erro ao listar o conteúdo do estoque): " + ex.getMessage());
         }
     }
 

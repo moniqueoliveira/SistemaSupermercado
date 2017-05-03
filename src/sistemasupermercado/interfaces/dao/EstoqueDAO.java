@@ -15,5 +15,5 @@ public interface EstoqueDAO {
     
     public Estoque pesquisar(Estoque obj) throws SQLException;
     
-    public List<Estoque> listar(String filtro) throws SQLException;
+    public List<Estoque> listar(String pesquisarPor, String texto, int idUnidade) throws SQLException;
 }
