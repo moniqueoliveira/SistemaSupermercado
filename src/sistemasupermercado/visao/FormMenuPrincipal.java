@@ -51,6 +51,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItemRegistrarEntradaProdutos = new javax.swing.JMenuItem();
         jMenuItemRegistrarSaídaProdutos = new javax.swing.JMenuItem();
         jMenuItemConsultaEstoque = new javax.swing.JMenuItem();
+        jMenuItemConsultaDeEntradasDeProdutos = new javax.swing.JMenuItem();
+        jMenuItemConsultaDeProdutosRetirados = new javax.swing.JMenuItem();
         jMenuCadastro = new javax.swing.JMenu();
         jMenuItemCadastroProdutos = new javax.swing.JMenuItem();
         jMenuItemCadastroPrecos = new javax.swing.JMenuItem();
@@ -64,8 +66,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItemConsultaUsuarios = new javax.swing.JMenuItem();
         jMenuItemConsultaFornecedores = new javax.swing.JMenuItem();
         jMenuItemConsultaProdutos = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
@@ -130,6 +130,22 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuEstoque.add(jMenuItemConsultaEstoque);
+
+        jMenuItemConsultaDeEntradasDeProdutos.setText("Consulta de Entradas de Produtos");
+        jMenuItemConsultaDeEntradasDeProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultaDeEntradasDeProdutosActionPerformed(evt);
+            }
+        });
+        jMenuEstoque.add(jMenuItemConsultaDeEntradasDeProdutos);
+
+        jMenuItemConsultaDeProdutosRetirados.setText("Consulta de Produtos Retirados de Estoque");
+        jMenuItemConsultaDeProdutosRetirados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultaDeProdutosRetiradosActionPerformed(evt);
+            }
+        });
+        jMenuEstoque.add(jMenuItemConsultaDeProdutosRetirados);
 
         jMenuBar1.add(jMenuEstoque);
 
@@ -226,12 +242,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuConsulta.add(jMenuItemConsultaProdutos);
-
-        jMenuItem3.setText("Consulta de Produtos Retirados");
-        jMenuConsulta.add(jMenuItem3);
-
-        jMenuItem6.setText("Consulta de Entradas de Produtos");
-        jMenuConsulta.add(jMenuItem6);
 
         jMenuBar1.add(jMenuConsulta);
 
@@ -358,6 +368,19 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         formConsultaEstoque.setVisible(true);
     }//GEN-LAST:event_jMenuItemConsultaEstoqueActionPerformed
 
+    private void jMenuItemConsultaDeEntradasDeProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaDeEntradasDeProdutosActionPerformed
+        // TODO add your handling code here:
+        FormConsultaEntradaDeProdutos form = new FormConsultaEntradaDeProdutos(this, true, sessao);
+        form.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItemConsultaDeEntradasDeProdutosActionPerformed
+
+    private void jMenuItemConsultaDeProdutosRetiradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaDeProdutosRetiradosActionPerformed
+        // TODO add your handling code here:
+        FormConsultaProdutosRetirados form = new FormConsultaProdutosRetirados(this, true, sessao);
+        form.setVisible(true);
+    }//GEN-LAST:event_jMenuItemConsultaDeProdutosRetiradosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -405,10 +428,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItemCadastroCategorias;
     private javax.swing.JMenuItem jMenuItemCadastroDeCaixas;
@@ -418,6 +439,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemCadastroPrecos;
     private javax.swing.JMenuItem jMenuItemCadastroProdutos;
     private javax.swing.JMenuItem jMenuItemCadastroUsuarios;
+    private javax.swing.JMenuItem jMenuItemConsultaDeEntradasDeProdutos;
+    private javax.swing.JMenuItem jMenuItemConsultaDeProdutosRetirados;
     private javax.swing.JMenuItem jMenuItemConsultaEstoque;
     private javax.swing.JMenuItem jMenuItemConsultaFornecedores;
     private javax.swing.JMenuItem jMenuItemConsultaProdutos;

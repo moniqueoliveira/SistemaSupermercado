@@ -93,7 +93,29 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
         return produtoRetirado;
     }
 
-    //@Override
+    @Override
+    public List<ProdutoRetirado> listar(String pesquisarPor, String texto, int idUnidade) throws SQLException {
+        String filtro = new String();
+        switch (pesquisarPor){
+            case ("ID"):
+                filtro = "pr left join sessoes s on pr.id_sessao = s.id_sessao left join usuarios us on "
+                        + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
+                        + "where pr.id_retirada like '%" + texto + "%' and un.id_unidade = " + idUnidade;
+                break;
+            case ("ID Produto"):
+                filtro = "pr left join sessoes s on pr.id_sessao = s.id_sessao left join usuarios us on "
+                        + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
+                        + "where pr.id_produto like '%" + texto + "%' and un.id_unidade = " + idUnidade;
+                break;
+            case ("Produto"):
+                filtro = "pr left join produtos p on pr.id_produto = p.id_produto "
+                        + "left join sessoes s on pr.id_sessao = s.id_sessao left join usuarios us on "
+                        + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
+                        + "where p.descricao like '%" + texto + "%' and un.id_unidade = " + idUnidade;
+        }        
+        return listar(filtro);
+    }
+    
     public List<ProdutoRetirado> listar(String filtro) throws SQLException {
         List<ProdutoRetirado> produtosRetirados = new ArrayList<>();
         String sql = "select * from produtos_retirados " + filtro;

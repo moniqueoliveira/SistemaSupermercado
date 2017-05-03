@@ -13,6 +13,6 @@ public interface EntradaProdutoDAO {
     
     public EntradaProduto pesquisar(EntradaProduto obj) throws SQLException;
     
-    public List<EntradaProduto> listar(String pesquisarPor, String texto);
+    public List<EntradaProduto> listar(String pesquisarPor, String texto, int idUnidade) throws SQLException;
     
 }

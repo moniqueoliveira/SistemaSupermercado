@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.List;
 import sistemasupermercado.dao.ProdutoRetiradoDAOImpl;
 import sistemasupermercado.dominio.Estoque;
 import sistemasupermercado.dominio.ProdutoRetirado;
@@ -14,11 +15,11 @@ import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoExcepti
 import sistemasupermercado.interfaces.dao.ProdutoRetiradoDAO;
 
 public class ProdutoRetiradoServico {
-    ProdutoRetirado produtoRetirado;
+    ProdutoRetiradoDAO produtoRetiradoDAO;
     
     public void inserir(ProdutoRetirado produtoRetirado) {
         validarDados(produtoRetirado);
-        ProdutoRetiradoDAO produtoRetiradoDAO = new ProdutoRetiradoDAOImpl();
+        produtoRetiradoDAO = new ProdutoRetiradoDAOImpl();
         
         produtoRetirado.setData(Calendar.getInstance());
         produtoRetirado.getData().setTimeInMillis(System.currentTimeMillis());
@@ -30,6 +31,36 @@ public class ProdutoRetiradoServico {
             atualizarEstoque(produtoRetirado);
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
+        }
+    }
+    
+    public ProdutoRetirado pesquisar(ProdutoRetirado produtoRetirado) {
+        produtoRetiradoDAO = new ProdutoRetiradoDAOImpl();
+        try {
+            produtoRetirado = produtoRetiradoDAO.pesquisar(produtoRetirado);
+            produtoRetirado.setProduto(new ProdutoServico().pesquisar(produtoRetirado.getProduto()));
+            produtoRetirado.setSessao(new SessaoServico().pesquisar(produtoRetirado.getSessao()));
+            produtoRetirado.setMotivo(new MotivoProdutoRetiradoServico().pesquisar(produtoRetirado.getMotivo()));
+            produtoRetiradoDAO.fecharConexao();
+            return produtoRetirado;
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao pesquisar o item): " + ex.getMessage());
+        }
+    }
+    
+    public List<ProdutoRetirado> listar(String pesquisarPor, String texto, int idUnidade) {
+        produtoRetiradoDAO = new ProdutoRetiradoDAOImpl();
+        try {
+            List<ProdutoRetirado> entradas = produtoRetiradoDAO.listar(pesquisarPor, texto, idUnidade);
+            for (ProdutoRetirado produtoRetirado : entradas) {
+                produtoRetirado.setProduto(new ProdutoServico().pesquisar(produtoRetirado.getProduto()));
+                produtoRetirado.setSessao(new SessaoServico().pesquisar(produtoRetirado.getSessao()));
+                produtoRetirado.setMotivo(new MotivoProdutoRetiradoServico().pesquisar(produtoRetirado.getMotivo()));
+            }
+            produtoRetiradoDAO.fecharConexao();
+            return entradas;
+        } catch (SQLException ex){
+            throw new RuntimeException("SQLException (Erro ao listar os registros de retiradas de produtos):\n" + ex.getMessage());
         }
     }
 

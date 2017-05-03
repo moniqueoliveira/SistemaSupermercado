@@ -47,10 +47,10 @@ public class EstoqueServico {
         }
     }
     
-    public List<Estoque> listar(String pesquisarPor, String filtro, int idUnidade) {
+    public List<Estoque> listar(String pesquisarPor, String texto, int idUnidade) {
         estoqueDAO = new EstoqueDAOImpl();
         try {
-            List<Estoque> estoques = estoqueDAO.listar(pesquisarPor, filtro, idUnidade);
+            List<Estoque> estoques = estoqueDAO.listar(pesquisarPor, texto, idUnidade);
             for (Estoque estoque : estoques) {
                 estoque.setProduto(new ProdutoServico().pesquisar(estoque.getProduto()));
             }

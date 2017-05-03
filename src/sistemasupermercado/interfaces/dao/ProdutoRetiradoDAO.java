@@ -13,4 +13,6 @@ public interface ProdutoRetiradoDAO {
     
     public ProdutoRetirado pesquisar(ProdutoRetirado obj) throws SQLException;
     
+    public List<ProdutoRetirado> listar(String pesquisarPor, String texto, int idUnidade) throws SQLException;
+    
 }

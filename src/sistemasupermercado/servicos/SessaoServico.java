@@ -35,6 +35,18 @@ public class SessaoServico {
         }
         
     }
+    
+    public Sessao pesquisar(Sessao sessao) {
+        sessaoDAO = new SessaoDAOImpl();
+        try {
+            sessao = sessaoDAO.pesquisar(sessao);
+            sessao.setUsuario(new UsuarioServico().pesquisar(sessao.getUsuario()));
+            sessaoDAO.fecharConexao();
+            return sessao;
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao pesquisar o item de sessao): " + ex.getMessage());
+        }
+    }
 
     private void verificarResultado(boolean result) {
         if (!result) throw new RetornoDeAlteracaoDeDadosInesperadoException("Retorno inesperado de "

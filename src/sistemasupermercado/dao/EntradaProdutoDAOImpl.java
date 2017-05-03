@@ -95,8 +95,36 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
         return entradaProduto;
     }
 
-    //@Override
-    public List<EntradaProduto> listar(String filtro) throws SQLException {
+    @Override
+    public List<EntradaProduto> listar(String pesquisarPor, String texto, int idUnidade) throws SQLException {
+        String filtro = new String();
+        switch (pesquisarPor) {
+            case ("ID"):
+                filtro = "ep left join sessoes s on ep.id_sessao = s.id_sessao left join usuarios us on "
+                        + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
+                        + "where ep.id_entrada like '%" + texto + "%' and un.id_unidade = " + idUnidade;
+                break;
+            case ("ID Produto"):
+                filtro = "ep left join sessoes s on ep.id_sessao = s.id_sessao left join usuarios us on "
+                        + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
+                        + "where ep.id_produto like '%" + texto + "%' and un.id_unidade = " + idUnidade;
+                break;
+            case ("ID Fornecedor"):
+                filtro = "ep left join sessoes s on ep.id_sessao = s.id_sessao left join usuarios us on "
+                        + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
+                        + "where ep.id_fornecedor like '%" + texto + "%' and un.id_unidade = " + idUnidade;
+                break;
+            case ("Produto"):
+                filtro = "ep left join produtos p on ep.id_produto = p.id_produto left join"
+                        + "sessoes s on ep.id_sessao = s.id_sessao left join usuarios us on "
+                        + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
+                        + "where p.descricao like '%" + texto + "%'un.id_unidade = " + idUnidade;
+                break;
+        }
+        return listar(filtro);
+    }
+    
+    private List<EntradaProduto> listar(String filtro) throws SQLException {
         List<EntradaProduto> entradasProdutos = new ArrayList<>();
         String sql = "select * from entradas_produtos " + filtro;
         PreparedStatement pstm = conexao.prepareStatement(sql);
@@ -127,10 +155,5 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
     @Override
     public void fecharConexao() throws SQLException {
         this.conexao.close();
-    }
-
-    @Override
-    public List<EntradaProduto> listar(String pesquisarPor, String texto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

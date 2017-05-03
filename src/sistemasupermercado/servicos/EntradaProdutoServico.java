@@ -4,6 +4,7 @@ package sistemasupermercado.servicos;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.List;
 import sistemasupermercado.dao.EntradaProdutoDAOImpl;
 import sistemasupermercado.dominio.EntradaProduto;
 import sistemasupermercado.dominio.Estoque;
@@ -12,11 +13,11 @@ import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoExcepti
 import sistemasupermercado.interfaces.dao.EntradaProdutoDAO;
 
 public class EntradaProdutoServico {
-    EntradaProduto entradaProduto;
+    EntradaProdutoDAO entradaProdutoDAO;
     
     public void inserir(EntradaProduto entradaProduto) {
         validarDados(entradaProduto);
-        EntradaProdutoDAO entradaProdutoDAO = new EntradaProdutoDAOImpl();
+        entradaProdutoDAO = new EntradaProdutoDAOImpl();
         
         entradaProduto.setData(Calendar.getInstance());
         entradaProduto.getData().setTimeInMillis(System.currentTimeMillis());
@@ -27,6 +28,36 @@ public class EntradaProdutoServico {
             atualizarEstoque(entradaProduto);
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException: " + ex.getMessage());
+        }
+    }
+    
+    public EntradaProduto pesquisar(EntradaProduto entradaProduto) {
+        entradaProdutoDAO = new EntradaProdutoDAOImpl();
+        try {
+            entradaProduto = entradaProdutoDAO.pesquisar(entradaProduto);
+            entradaProduto.setProduto(new ProdutoServico().pesquisar(entradaProduto.getProduto()));
+            entradaProduto.setFornecedor(new FornecedorServico().pesquisar(entradaProduto.getFornecedor()));
+            entradaProduto.setSessao(new SessaoServico().pesquisar(entradaProduto.getSessao()));
+            entradaProdutoDAO.fecharConexao();
+            return entradaProduto;
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao pesquisar o item): " + ex.getMessage());
+        }
+    }
+    
+    public List<EntradaProduto> listar(String pesquisarPor, String texto, int idUnidade) {
+        entradaProdutoDAO = new EntradaProdutoDAOImpl();
+        try {
+            List<EntradaProduto> entradas = entradaProdutoDAO.listar(pesquisarPor, texto, idUnidade);
+            for (EntradaProduto entradaProduto : entradas) {
+                entradaProduto.setProduto(new ProdutoServico().pesquisar(entradaProduto.getProduto()));
+                entradaProduto.setFornecedor(new FornecedorServico().pesquisar(entradaProduto.getFornecedor()));
+                entradaProduto.setSessao(new SessaoServico().pesquisar(entradaProduto.getSessao()));
+            }
+            entradaProdutoDAO.fecharConexao();
+            return entradas;
+        } catch (SQLException ex){
+            throw new RuntimeException("SQLException (Erro ao listar os registros de entradas de produtos):\n" + ex.getMessage());
         }
     }
 
