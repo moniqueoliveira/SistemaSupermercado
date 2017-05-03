@@ -27,20 +27,12 @@ DROP TABLE IF EXISTS `caixas`;
 CREATE TABLE `caixas` (
   `Numero_Caixa` int(11) NOT NULL,
   `ID_Unidade` int(11) NOT NULL,
+  `Aberto` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`Numero_Caixa`,`ID_Unidade`),
   KEY `ID_Unidade` (`ID_Unidade`),
   CONSTRAINT `caixas_ibfk_1` FOREIGN KEY (`ID_Unidade`) REFERENCES `unidades` (`ID_Unidade`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `caixas`
---
-
-LOCK TABLES `caixas` WRITE;
-/*!40000 ALTER TABLE `caixas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `caixas` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `categorias_produtos`
@@ -57,16 +49,6 @@ CREATE TABLE `categorias_produtos` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `categorias_produtos`
---
-
-LOCK TABLES `categorias_produtos` WRITE;
-/*!40000 ALTER TABLE `categorias_produtos` DISABLE KEYS */;
-INSERT INTO `categorias_produtos` VALUES (1,'Alimentos'),(2,'Bebidas'),(3,'Limpeza'),(4,'Higiene Pessoal'),(5,'Perfumaria');
-/*!40000 ALTER TABLE `categorias_produtos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `emails_fornecedores`
 --
 
@@ -80,16 +62,6 @@ CREATE TABLE `emails_fornecedores` (
   CONSTRAINT `emails_fornecedores_ibfk_1` FOREIGN KEY (`ID_Fornecedor`) REFERENCES `fornecedores` (`ID_Fornecedor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `emails_fornecedores`
---
-
-LOCK TABLES `emails_fornecedores` WRITE;
-/*!40000 ALTER TABLE `emails_fornecedores` DISABLE KEYS */;
-INSERT INTO `emails_fornecedores` VALUES (4,'fornecedor1@rmail.com');
-/*!40000 ALTER TABLE `emails_fornecedores` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `enderecos_fornecedores`
@@ -113,16 +85,6 @@ CREATE TABLE `enderecos_fornecedores` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `enderecos_fornecedores`
---
-
-LOCK TABLES `enderecos_fornecedores` WRITE;
-/*!40000 ALTER TABLE `enderecos_fornecedores` DISABLE KEYS */;
-INSERT INTO `enderecos_fornecedores` VALUES (4,'1',1,'11111-111','1','1','1','SP');
-/*!40000 ALTER TABLE `enderecos_fornecedores` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `entradas_produtos`
 --
 
@@ -144,18 +106,8 @@ CREATE TABLE `entradas_produtos` (
   CONSTRAINT `entradas_produtos_ibfk_1` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`),
   CONSTRAINT `entradas_produtos_ibfk_2` FOREIGN KEY (`ID_Sessao`) REFERENCES `sessoes` (`ID_Sessao`),
   CONSTRAINT `entradas_produtos_ibfk_3` FOREIGN KEY (`ID_Fornecedor`) REFERENCES `fornecedores` (`ID_Fornecedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `entradas_produtos`
---
-
-LOCK TABLES `entradas_produtos` WRITE;
-/*!40000 ALTER TABLE `entradas_produtos` DISABLE KEYS */;
-INSERT INTO `entradas_produtos` VALUES (5,1,4,10.00,1.25,'2017-04-12 15:26:59',1),(8,1,4,10.00,1.00,'2017-04-12 15:30:47',1);
-/*!40000 ALTER TABLE `entradas_produtos` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `estoques`
@@ -177,16 +129,6 @@ CREATE TABLE `estoques` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `estoques`
---
-
-LOCK TABLES `estoques` WRITE;
-/*!40000 ALTER TABLE `estoques` DISABLE KEYS */;
-INSERT INTO `estoques` VALUES (1,1,20.00,22.50);
-/*!40000 ALTER TABLE `estoques` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `fornecedores`
 --
 
@@ -204,16 +146,6 @@ CREATE TABLE `fornecedores` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `fornecedores`
---
-
-LOCK TABLES `fornecedores` WRITE;
-/*!40000 ALTER TABLE `fornecedores` DISABLE KEYS */;
-INSERT INTO `fornecedores` VALUES (4,'1','1','11.111.111/1111-11',1);
-/*!40000 ALTER TABLE `fornecedores` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `funcoes_usuarios`
 --
 
@@ -224,18 +156,8 @@ CREATE TABLE `funcoes_usuarios` (
   `ID_Funcao` int(11) NOT NULL AUTO_INCREMENT,
   `Descricao` varchar(50) NOT NULL,
   PRIMARY KEY (`ID_Funcao`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `funcoes_usuarios`
---
-
-LOCK TABLES `funcoes_usuarios` WRITE;
-/*!40000 ALTER TABLE `funcoes_usuarios` DISABLE KEYS */;
-INSERT INTO `funcoes_usuarios` VALUES (1,'Gerente'),(2,'Operador(a) de caixa'),(3,'Estoquista');
-/*!40000 ALTER TABLE `funcoes_usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `itens_vendas`
@@ -256,15 +178,6 @@ CREATE TABLE `itens_vendas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `itens_vendas`
---
-
-LOCK TABLES `itens_vendas` WRITE;
-/*!40000 ALTER TABLE `itens_vendas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `itens_vendas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `motivos_produtos_retirados`
 --
 
@@ -275,17 +188,8 @@ CREATE TABLE `motivos_produtos_retirados` (
   `ID_Motivo` int(11) NOT NULL AUTO_INCREMENT,
   `Descricao` varchar(70) NOT NULL,
   PRIMARY KEY (`ID_Motivo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `motivos_produtos_retirados`
---
-
-LOCK TABLES `motivos_produtos_retirados` WRITE;
-/*!40000 ALTER TABLE `motivos_produtos_retirados` DISABLE KEYS */;
-/*!40000 ALTER TABLE `motivos_produtos_retirados` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `pagamentos_vendas`
@@ -309,15 +213,6 @@ CREATE TABLE `pagamentos_vendas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pagamentos_vendas`
---
-
-LOCK TABLES `pagamentos_vendas` WRITE;
-/*!40000 ALTER TABLE `pagamentos_vendas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pagamentos_vendas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `precos_produtos`
 --
 
@@ -335,16 +230,6 @@ CREATE TABLE `precos_produtos` (
   CONSTRAINT `precos_produtos_ibfk_2` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `precos_produtos`
---
-
-LOCK TABLES `precos_produtos` WRITE;
-/*!40000 ALTER TABLE `precos_produtos` DISABLE KEYS */;
-INSERT INTO `precos_produtos` VALUES (1,1,1.95,'2017-04-06 18:17:34'),(1,1,2.10,'2017-04-06 19:05:58'),(1,1,2.75,'2017-04-06 19:06:20'),(1,1,2.90,'2017-04-06 19:34:52'),(1,1,2.95,'2017-04-06 19:35:28'),(1,1,3.01,'2017-04-06 20:23:43'),(1,2,5.15,'2017-04-06 18:39:21'),(1,2,5.26,'2017-04-06 20:23:58');
-/*!40000 ALTER TABLE `precos_produtos` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `produtos`
@@ -365,18 +250,8 @@ CREATE TABLE `produtos` (
   PRIMARY KEY (`ID_Produto`),
   KEY `ID_Categoria` (`ID_Categoria`),
   CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`ID_Categoria`) REFERENCES `categorias_produtos` (`ID_Categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `produtos`
---
-
-LOCK TABLES `produtos` WRITE;
-/*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
-INSERT INTO `produtos` VALUES (1,'Macarrão instantâneo Nissin Miojo','Mac. Inst. Nissin',0,1,NULL,'1739563847362',1),(2,'Detergente Ypê Maçã','Det. Ypê Maça',0,3,NULL,'1739563847351',1);
-/*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `produtos_retirados`
@@ -400,17 +275,8 @@ CREATE TABLE `produtos_retirados` (
   CONSTRAINT `produtos_retirados_ibfk_1` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`),
   CONSTRAINT `produtos_retirados_ibfk_2` FOREIGN KEY (`ID_Sessao`) REFERENCES `sessoes` (`ID_Sessao`),
   CONSTRAINT `produtos_retirados_ibfk_3` FOREIGN KEY (`ID_Motivo`) REFERENCES `motivos_produtos_retirados` (`ID_Motivo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `produtos_retirados`
---
-
-LOCK TABLES `produtos_retirados` WRITE;
-/*!40000 ALTER TABLE `produtos_retirados` DISABLE KEYS */;
-/*!40000 ALTER TABLE `produtos_retirados` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `sessoes`
@@ -427,18 +293,8 @@ CREATE TABLE `sessoes` (
   PRIMARY KEY (`ID_Sessao`),
   KEY `ID_Usuario` (`ID_Usuario`),
   CONSTRAINT `sessoes_ibfk_1` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuarios` (`ID_Usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sessoes`
---
-
-LOCK TABLES `sessoes` WRITE;
-/*!40000 ALTER TABLE `sessoes` DISABLE KEYS */;
-INSERT INTO `sessoes` VALUES (1,1,'2017-04-07 15:28:26',NULL);
-/*!40000 ALTER TABLE `sessoes` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `sessoes_caixas`
@@ -460,15 +316,6 @@ CREATE TABLE `sessoes_caixas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sessoes_caixas`
---
-
-LOCK TABLES `sessoes_caixas` WRITE;
-/*!40000 ALTER TABLE `sessoes_caixas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sessoes_caixas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `telefones_fornecedores`
 --
 
@@ -484,16 +331,6 @@ CREATE TABLE `telefones_fornecedores` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `telefones_fornecedores`
---
-
-LOCK TABLES `telefones_fornecedores` WRITE;
-/*!40000 ALTER TABLE `telefones_fornecedores` DISABLE KEYS */;
-INSERT INTO `telefones_fornecedores` VALUES (4,'(11) 4755-7885');
-/*!40000 ALTER TABLE `telefones_fornecedores` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `unidades`
 --
 
@@ -506,16 +343,6 @@ CREATE TABLE `unidades` (
   PRIMARY KEY (`ID_Unidade`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `unidades`
---
-
-LOCK TABLES `unidades` WRITE;
-/*!40000 ALTER TABLE `unidades` DISABLE KEYS */;
-INSERT INTO `unidades` VALUES (1,'Unidade São Paulo');
-/*!40000 ALTER TABLE `unidades` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `usuarios`
@@ -541,16 +368,6 @@ CREATE TABLE `usuarios` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuarios`
---
-
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'1','1','1',1,1,1),(10,'2','2','2',1,1,1);
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `vendas`
 --
 
@@ -567,15 +384,6 @@ CREATE TABLE `vendas` (
   CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`ID_Sessao`) REFERENCES `sessoes` (`ID_Sessao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `vendas`
---
-
-LOCK TABLES `vendas` WRITE;
-/*!40000 ALTER TABLE `vendas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `vendas` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -586,4 +394,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-19 13:00:03
+-- Dump completed on 2017-05-03 19:49:43
