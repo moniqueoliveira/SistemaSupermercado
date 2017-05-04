@@ -2,10 +2,12 @@
 package sistemasupermercado.servicos;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import sistemasupermercado.dao.CaixaDAOImpl;
 import sistemasupermercado.dominio.Caixa;
 import sistemasupermercado.dominio.Unidade;
+import sistemasupermercado.exceptions.PesquisaNulaException;
 import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoException;
 import sistemasupermercado.interfaces.dao.CaixaDAO;
 
@@ -19,6 +21,16 @@ public class CaixaServico {
             caixaDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException (Erro ao inserir caixa): " + ex.getMessage());
+        }
+    }
+    
+    public void alterar(Caixa caixa) {
+        caixaDAO = new CaixaDAOImpl();
+        try {
+            verificarResultado(caixaDAO.alterar(caixa));
+            caixaDAO.fecharConexao();
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao alterar caixa): " + ex.getMessage());
         }
     }
     
@@ -47,6 +59,27 @@ public class CaixaServico {
         }
     }
     
+    public boolean confirmarCaixaFechado(Caixa caixa) {
+        caixaDAO = new CaixaDAOImpl();
+        try {
+            caixa = caixaDAO.pesquisar(caixa);
+            caixaDAO.fecharConexao();
+            verificarPesquisa(caixa);
+            return !caixa.isAberto();
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao pesquisar caixa): " + ex.getMessage());
+        }
+    }
+    
+    public List<Caixa> listarCaixasFechados(Unidade unidade) {
+        List<Caixa> caixas = listar(unidade);
+        List<Caixa> caixasFechados = new ArrayList<>();
+        for (Caixa caixa : caixas) {
+            if (!caixa.isAberto()) caixasFechados.add(caixa);
+        }
+        return caixasFechados;
+    }
+    
     public List<Caixa> listar(Unidade unidade) {
         caixaDAO = new CaixaDAOImpl();
         try {
@@ -71,5 +104,9 @@ public class CaixaServico {
 
     private void verificarResultado(boolean result) {
         if (!result) throw new RetornoDeAlteracaoDeDadosInesperadoException();
+    }
+    
+    private void verificarPesquisa(Caixa caixa) {
+        if (caixa == null) throw new PesquisaNulaException();
     }
 }

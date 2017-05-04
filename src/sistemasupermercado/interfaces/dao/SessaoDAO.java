@@ -14,6 +14,8 @@ public interface SessaoDAO {
     public boolean alterar(Sessao obj) throws SQLException;
 
     public List<Sessao> listar(String filtro) throws SQLException;
+    
+    public Sessao pesquisarSessaoAberta(Sessao obj) throws SQLException;
 
     public Sessao pesquisar(Sessao obj) throws SQLException;
     

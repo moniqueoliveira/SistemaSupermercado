@@ -36,7 +36,7 @@ public class SessaoDAOImpl implements SessaoDAO {
 
     @Override
     public boolean alterar(Sessao obj) throws SQLException {
-        String sql = "update sessoes set fim_sessao = ? where id_sesssao = ?";
+        String sql = "update sessoes set fim_sessao = ? where id_sessao = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         
         Timestamp tmstmp = new Timestamp(obj.getFimSessao().getTimeInMillis());
@@ -46,6 +46,29 @@ public class SessaoDAOImpl implements SessaoDAO {
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
+    }
+    
+    @Override
+    public Sessao pesquisarSessaoAberta(Sessao obj) throws SQLException {
+        Sessao sessao = null;
+        String sql = "select * from sessoes where id_usuario = ? and fim_sessao = 0";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        pstm.setInt(1, obj.getUsuario().getIdUsuario());
+        ResultSet rs = pstm.executeQuery();
+        if (rs.next()) {
+            sessao = new Sessao();
+            Timestamp tmstmp;
+            Calendar calendar = Calendar.getInstance();
+            
+            sessao.setIdSessao(rs.getInt("id_sessao"));
+            sessao.setUsuario(rs.getInt("id_usuario"));
+            
+            tmstmp = rs.getTimestamp("inicio_sessao");
+            calendar.setTimeInMillis(tmstmp.getTime());
+            sessao.setInicioSessao(calendar);
+        }
+        pstm.close();
+        return sessao;
     }
 
     @Override

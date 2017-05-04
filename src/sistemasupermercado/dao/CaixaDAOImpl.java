@@ -41,6 +41,35 @@ public class CaixaDAOImpl implements CaixaDAO {
         pstm.close();
         return result == 1;
     }
+    
+    @Override
+    public boolean alterar(Caixa obj) throws SQLException {
+        String sql = "update caixas set aberto = ? where numero_caixa = ? and id_unidade = ?";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        pstm.setBoolean(1, obj.isAberto());
+        pstm.setInt(2, obj.getNumeroCaixa());
+        pstm.setInt(3, obj.getUnidade().getIdUnidade());
+        int result = pstm.executeUpdate();
+        pstm.close();
+        return result == 1;
+    }
+    
+    @Override
+    public Caixa pesquisar(Caixa obj) throws SQLException {
+        Caixa caixa = null;
+        String sql = "select * from caixas where id_unidade = ? and numero_caixa = ?";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        pstm.setInt(1, obj.getUnidade().getIdUnidade());
+        pstm.setInt(2, obj.getNumeroCaixa());
+        ResultSet rs = pstm.executeQuery();
+        if (rs.next()){
+            caixa = new Caixa();
+            caixa.setNumeroCaixa(rs.getInt("numero_caixa"));
+            caixa.setUnidade(rs.getInt("id_unidade"));
+            caixa.setAberto(rs.getBoolean("aberto"));
+        }
+        return caixa;
+    }
 
     @Override
     public List<Caixa> listar(int idUnidade) throws SQLException {
@@ -52,6 +81,7 @@ public class CaixaDAOImpl implements CaixaDAO {
             Caixa caixa = new Caixa();
             caixa.setNumeroCaixa(rs.getInt("numero_caixa"));
             caixa.setUnidade(rs.getInt("id_unidade"));
+            caixa.setAberto(rs.getBoolean("aberto"));
             caixas.add(caixa);
         }
         return caixas;
@@ -61,5 +91,5 @@ public class CaixaDAOImpl implements CaixaDAO {
     public void fecharConexao() throws SQLException {
         this.conexao.close();
     }
-    
+
 }

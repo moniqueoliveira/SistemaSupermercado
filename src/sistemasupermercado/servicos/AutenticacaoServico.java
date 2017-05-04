@@ -13,14 +13,12 @@ public class AutenticacaoServico {
     
     public Usuario autenticar(Usuario usuario){
 	UsuarioServico usuarioServico = new UsuarioServico();
-        List<Usuario> usuarios = usuarioServico.listar();
+        Usuario usuarioPesquisa = usuarioServico.pesquisar(usuario);
 
-        if (usuarios.isEmpty()) {
+        if (usuarioPesquisa == null) {
             throw new PesquisaNulaException("Usuário inexiste!");
-        } else {
-            if (!usuarioServico.validarSenha(usuario.getSenha(), usuarios.get(0).getSenha()))
-                throw new PesquisaNulaException("Senha inválida!");
-            return usuarios.get(0);
-        }
+        } else if (!usuarioServico.validarSenha(usuario.getSenha(), usuarioPesquisa.getSenha()))    
+            throw new PesquisaNulaException("Senha inválida!");
+        return usuarioPesquisa;
     }
 }

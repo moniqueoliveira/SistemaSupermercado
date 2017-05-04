@@ -4,11 +4,21 @@ package sistemasupermercado.dominio;
 import java.math.BigDecimal;
 
 
-public class SessaoCaixa extends Sessao {
+public class SessaoCaixa {
+    private Sessao sessao;
     private Caixa caixa;
     private BigDecimal valorInicialCaixa;
     private BigDecimal valorFechamento;
 
+    
+    public Sessao getSessao() {
+        return sessao;
+    }
+
+    public void setSessao(Sessao sessao) {
+        this.sessao = sessao;
+    }
+    
     public Caixa getCaixa() {
         return caixa;
     }

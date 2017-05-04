@@ -20,8 +20,8 @@ public class SessaoCaixaDAOImpl implements SessaoCaixaDAO {
     public boolean inserir(SessaoCaixa obj) throws SQLException {
         String sql = "insert into sessoes_caixas (id_sessao, valor_inicial_caixa, numero_caixa) values (?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getIdSessao());
-        pstm.setBigDecimal(1, obj.getValorInicialCaixa());
+        pstm.setInt(1, obj.getSessao().getIdSessao());
+        pstm.setBigDecimal(2, obj.getValorInicialCaixa());
         pstm.setInt(3, obj.getCaixa().getNumeroCaixa());
         int result = pstm.executeUpdate();
         pstm.close();
@@ -33,11 +33,11 @@ public class SessaoCaixaDAOImpl implements SessaoCaixaDAO {
         SessaoCaixa sessaoCaixa = null;
         String sql = "select * from sessoes_caixas where id_sessao = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getIdSessao());
+        pstm.setInt(1, obj.getSessao().getIdSessao());
         ResultSet rs = pstm.executeQuery();
         if (rs.next()) {
             sessaoCaixa = new SessaoCaixa();
-            sessaoCaixa.setIdSessao(obj.getIdSessao());
+            sessaoCaixa.setSessao(obj.getSessao());
             sessaoCaixa.setCaixa(rs.getInt("numero_caixa"));
             sessaoCaixa.setValorInicialCaixa(rs.getBigDecimal("valor_inicial_caixa"));
             sessaoCaixa.setValorFechamento(rs.getBigDecimal("valor_fechamento"));
@@ -51,7 +51,7 @@ public class SessaoCaixaDAOImpl implements SessaoCaixaDAO {
         String sql = "update sessoes_caixas set valor_fechamento = ? where id_sessao = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setBigDecimal(1, obj.getValorFechamento());
-        pstm.setInt(2, obj.getIdSessao());
+        pstm.setInt(2, obj.getSessao().getIdSessao());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -62,7 +62,7 @@ public class SessaoCaixaDAOImpl implements SessaoCaixaDAO {
         String sql = "update sessoes_caixas set valor_inicial_caixa = ? where id_sessao = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setBigDecimal(1, obj.getValorInicialCaixa());
-        pstm.setInt(2, obj.getIdSessao());
+        pstm.setInt(2, obj.getSessao().getIdSessao());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;

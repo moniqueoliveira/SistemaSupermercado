@@ -5,11 +5,11 @@
  */
 package sistemasupermercado.visao;
 
-import java.awt.Image;
-import java.awt.Graphics;
-import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import sistemasupermercado.dominio.Sessao;
-import sistemasupermercado.servicos.UsuarioServico;
+import sistemasupermercado.dominio.SessaoCaixa;
+import sistemasupermercado.servicos.SessaoCaixaServico;
+import sistemasupermercado.servicos.SessaoServico;
 /**
  *
  * @author Monique
@@ -17,6 +17,8 @@ import sistemasupermercado.servicos.UsuarioServico;
 public class FormMenuPrincipal extends javax.swing.JFrame {
 
     Sessao sessao; 
+    
+    SessaoCaixa sessaoCaixa;
     /**
      * Creates new form FormMenuPrincipal
      */
@@ -40,13 +42,12 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuVenda = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItemIniciarCaixa = new javax.swing.JMenuItem();
         jMenuItemRealizarVenda = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItemFinalizarCaixa = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItemCadastroDeCaixas = new javax.swing.JMenuItem();
         jMenuEstoque = new javax.swing.JMenu();
         jMenuItemRegistrarEntradaProdutos = new javax.swing.JMenuItem();
         jMenuItemRegistrarSaídaProdutos = new javax.swing.JMenuItem();
@@ -61,7 +62,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItemCadastroMotivos = new javax.swing.JMenuItem();
         jMenuItemCadastroUsuarios = new javax.swing.JMenuItem();
         jMenuItemCadastroFuncoes = new javax.swing.JMenuItem();
-        jMenuItemCadastroDeCaixas = new javax.swing.JMenuItem();
         jMenuConsulta = new javax.swing.JMenu();
         jMenuItemConsultaUsuarios = new javax.swing.JMenuItem();
         jMenuItemConsultaFornecedores = new javax.swing.JMenuItem();
@@ -70,14 +70,26 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuSair = new javax.swing.JMenu();
+        jMenuItemEncerrarSessao = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setExtendedState(6);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jMenuVenda.setText("Venda");
 
-        jMenuItem1.setText("Iniciar Caixa");
-        jMenuVenda.add(jMenuItem1);
+        jMenuItemIniciarCaixa.setText("Iniciar Caixa");
+        jMenuItemIniciarCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemIniciarCaixaActionPerformed(evt);
+            }
+        });
+        jMenuVenda.add(jMenuItemIniciarCaixa);
 
         jMenuItemRealizarVenda.setText("Realizar Venda");
         jMenuItemRealizarVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -87,8 +99,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuVenda.add(jMenuItemRealizarVenda);
 
-        jMenuItem2.setText("Finalizar Caixa");
-        jMenuVenda.add(jMenuItem2);
+        jMenuItemFinalizarCaixa.setText("Finalizar Caixa");
+        jMenuVenda.add(jMenuItemFinalizarCaixa);
 
         jMenuBar1.add(jMenuVenda);
 
@@ -97,11 +109,13 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItem4.setText("Observar Caixas");
         jMenu1.add(jMenuItem4);
 
-        jMenuItem5.setText("Configurar Valor Inicial de Caixas");
-        jMenu1.add(jMenuItem5);
-
-        jMenuItem8.setText("Adicionar Novo Caixa");
-        jMenu1.add(jMenuItem8);
+        jMenuItemCadastroDeCaixas.setText("Adicionar Caixas");
+        jMenuItemCadastroDeCaixas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastroDeCaixasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemCadastroDeCaixas);
 
         jMenuBar1.add(jMenu1);
 
@@ -207,14 +221,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuCadastro.add(jMenuItemCadastroFuncoes);
 
-        jMenuItemCadastroDeCaixas.setText("Cadastro de Caixas");
-        jMenuItemCadastroDeCaixas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCadastroDeCaixasActionPerformed(evt);
-            }
-        });
-        jMenuCadastro.add(jMenuItemCadastroDeCaixas);
-
         jMenuBar1.add(jMenuCadastro);
 
         jMenuConsulta.setText("Consulta");
@@ -257,6 +263,18 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenu4.add(jMenuItem18);
 
         jMenuBar1.add(jMenu4);
+
+        jMenuSair.setText("Sair");
+
+        jMenuItemEncerrarSessao.setText("Encerrar Sessão");
+        jMenuItemEncerrarSessao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEncerrarSessaoActionPerformed(evt);
+            }
+        });
+        jMenuSair.add(jMenuItemEncerrarSessao);
+
+        jMenuBar1.add(jMenuSair);
 
         setJMenuBar(jMenuBar1);
 
@@ -381,6 +399,47 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         form.setVisible(true);
     }//GEN-LAST:event_jMenuItemConsultaDeProdutosRetiradosActionPerformed
 
+    private void jMenuItemIniciarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemIniciarCaixaActionPerformed
+        // TODO add your handling code here:
+        if (sessaoCaixa != null)
+            JOptionPane.showMessageDialog(this, "O caixa já está aberto!", "Caixa aberto", JOptionPane.INFORMATION_MESSAGE);
+        else {
+            FormAberturaDeCaixa form = new FormAberturaDeCaixa(this, true, sessao);
+            form.setVisible(true);
+            sessaoCaixa = form.getSessaoCaixa();
+        }
+    }//GEN-LAST:event_jMenuItemIniciarCaixaActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        SessaoCaixaServico sessaoCaixaServico = new SessaoCaixaServico();
+        try {
+            sessaoCaixa = sessaoCaixaServico.verificarCaixaAberto(sessao);
+            if (sessaoCaixa != null) sessaoCaixa.setSessao(sessao);
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
+                    "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jMenuItemEncerrarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEncerrarSessaoActionPerformed
+        // TODO add your handling code here:
+        if (sessaoCaixa != null)
+            JOptionPane.showMessageDialog(this, "É necessário realizar o fechamento do caixa antes de encerrar a sessão!",
+                    "Atenção", JOptionPane.WARNING_MESSAGE);
+        else {
+            SessaoServico sessaoServico = new SessaoServico();
+            try {
+                sessaoServico.encerrarSessao(sessao);
+            System.exit(0);
+            } catch(RuntimeException ex) {
+                JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+            
+        }
+    }//GEN-LAST:event_jMenuItemEncerrarSessaoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -423,14 +482,10 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenu jMenuConsulta;
     private javax.swing.JMenu jMenuEstoque;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItemCadastroCategorias;
     private javax.swing.JMenuItem jMenuItemCadastroDeCaixas;
     private javax.swing.JMenuItem jMenuItemCadastroFornecedores;
@@ -445,9 +500,13 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemConsultaFornecedores;
     private javax.swing.JMenuItem jMenuItemConsultaProdutos;
     private javax.swing.JMenuItem jMenuItemConsultaUsuarios;
+    private javax.swing.JMenuItem jMenuItemEncerrarSessao;
+    private javax.swing.JMenuItem jMenuItemFinalizarCaixa;
+    private javax.swing.JMenuItem jMenuItemIniciarCaixa;
     private javax.swing.JMenuItem jMenuItemRealizarVenda;
     private javax.swing.JMenuItem jMenuItemRegistrarEntradaProdutos;
     private javax.swing.JMenuItem jMenuItemRegistrarSaídaProdutos;
+    private javax.swing.JMenu jMenuSair;
     private javax.swing.JMenu jMenuVenda;
     // End of variables declaration//GEN-END:variables
 }

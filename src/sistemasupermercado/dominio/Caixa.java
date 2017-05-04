@@ -4,6 +4,15 @@ package sistemasupermercado.dominio;
 public class Caixa {
     private int numeroCaixa;
     private Unidade unidade;
+    private boolean aberto;
+
+    public boolean isAberto() {
+        return aberto;
+    }
+
+    public void setAberto(boolean aberto) {
+        this.aberto = aberto;
+    }
 
     public int getNumeroCaixa() {
         return numeroCaixa;
@@ -25,5 +34,12 @@ public class Caixa {
         this.unidade = new Unidade();
         this.unidade.setIdUnidade(idUnidade);
     }
+
+    @Override
+    public String toString() {
+        return numeroCaixa + "";
+    }
+    
+    
     
 }

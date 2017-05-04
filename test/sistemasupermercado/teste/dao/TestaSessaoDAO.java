@@ -17,5 +17,6 @@ public class TestaSessaoDAO {
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         System.out.println(sdf.format(sessao.getInicioSessao().getTime()));
+        System.out.println(sessao.getFimSessao());
     }
 }

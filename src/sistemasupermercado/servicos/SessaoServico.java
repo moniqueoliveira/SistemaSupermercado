@@ -19,21 +19,45 @@ public class SessaoServico {
         sessaoDAO = new SessaoDAOImpl();
         AutenticacaoServico autenticacaoServico = new AutenticacaoServico();
         
-        //Retorna o usuario com todos os dados
+        //Retorna o usuario com todos os dados e valida o usuario e a senha
         sessao.setUsuario(autenticacaoServico.autenticar(sessao.getUsuario()));
         
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(System.currentTimeMillis());
-        sessao.setInicioSessao(c);
-        
         try {
+            
+            //Verifica se o usuário já tem uma sessão aberta
+            Sessao sessaoAberta = sessaoDAO.pesquisarSessaoAberta(sessao);
+            if (sessaoAberta != null) {
+                sessaoDAO.fecharConexao();
+                sessaoAberta.setUsuario(sessao.getUsuario());
+                return sessaoAberta;
+            }
+            
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(System.currentTimeMillis());
+            sessao.setInicioSessao(c);
+        
             verificarResultado(sessaoDAO.inserir(sessao));
             sessao.setIdSessao(sessaoDAO.obterUltimoID());
+            sessaoDAO.fecharConexao();
             return sessao;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException (Erro durante o inicio da sessão.): " + ex.getMessage());
         }
         
+    }
+    
+    public void encerrarSessao(Sessao sessao) {
+        sessaoDAO = new SessaoDAOImpl();
+        try {
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(System.currentTimeMillis());
+            sessao.setFimSessao(c);
+        
+            verificarResultado(sessaoDAO.alterar(sessao));
+            sessaoDAO.fecharConexao();
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao encerrar a sessão):\n" + ex.getMessage());
+        }
     }
     
     public Sessao pesquisar(Sessao sessao) {
@@ -52,4 +76,6 @@ public class SessaoServico {
         if (!result) throw new RetornoDeAlteracaoDeDadosInesperadoException("Retorno inesperado de "
                 + "alteração do banco de dados durante o início da sessão.");
     }
+    
+    
 }

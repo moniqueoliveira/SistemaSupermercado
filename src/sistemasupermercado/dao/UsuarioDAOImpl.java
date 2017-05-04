@@ -83,14 +83,20 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public Usuario pesquisar(Usuario obj) throws SQLException {
+        if (!obj.getLogin().equals(""))
+            return pesquisar("select * from usuarios where login = " + obj.getLogin());
+        else
+            return pesquisar("select * from usuarios where id_usuario = " + obj.getIdUsuario());
+        
+    }
+    
+    private Usuario pesquisar(String sql) throws SQLException {
         Usuario usuario = null;
-        String sql = "select * from usuarios where id_usuario = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
-        pstm.setInt(1, obj.getIdUsuario());
         ResultSet rs = pstm.executeQuery();
         if (rs.next()) {
             usuario = new Usuario();
-            usuario.setIdUsuario(obj.getIdUsuario());
+            usuario.setIdUsuario(rs.getInt("id_usuario"));
             usuario.setNome(rs.getString("nome"));
             usuario.setLogin(rs.getString("login"));
             usuario.setSenha(rs.getString("senha"));
