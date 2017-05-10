@@ -106,7 +106,7 @@ CREATE TABLE `entradas_produtos` (
   CONSTRAINT `entradas_produtos_ibfk_1` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`),
   CONSTRAINT `entradas_produtos_ibfk_2` FOREIGN KEY (`ID_Sessao`) REFERENCES `sessoes` (`ID_Sessao`),
   CONSTRAINT `entradas_produtos_ibfk_3` FOREIGN KEY (`ID_Fornecedor`) REFERENCES `fornecedores` (`ID_Fornecedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,8 +169,11 @@ DROP TABLE IF EXISTS `itens_vendas`;
 CREATE TABLE `itens_vendas` (
   `ID_Venda` int(11) NOT NULL,
   `ID_Produto` int(11) NOT NULL,
+  `Numero_Item` int(11) NOT NULL,
   `Quantidade` decimal(5,2) NOT NULL,
-  PRIMARY KEY (`ID_Venda`,`ID_Produto`),
+  `Subtotal` decimal(10,2) NOT NULL,
+  `Cancelado` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`ID_Venda`,`ID_Produto`,`Numero_Item`),
   KEY `ID_Produto` (`ID_Produto`),
   CONSTRAINT `itens_vendas_ibfk_1` FOREIGN KEY (`ID_Venda`) REFERENCES `vendas` (`ID_Venda`),
   CONSTRAINT `itens_vendas_ibfk_2` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`)
@@ -250,7 +253,7 @@ CREATE TABLE `produtos` (
   PRIMARY KEY (`ID_Produto`),
   KEY `ID_Categoria` (`ID_Categoria`),
   CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`ID_Categoria`) REFERENCES `categorias_produtos` (`ID_Categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,7 +296,7 @@ CREATE TABLE `sessoes` (
   PRIMARY KEY (`ID_Sessao`),
   KEY `ID_Usuario` (`ID_Usuario`),
   CONSTRAINT `sessoes_ibfk_1` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuarios` (`ID_Usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -382,7 +385,7 @@ CREATE TABLE `vendas` (
   PRIMARY KEY (`ID_Venda`),
   KEY `ID_Sessao` (`ID_Sessao`),
   CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`ID_Sessao`) REFERENCES `sessoes` (`ID_Sessao`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -394,4 +397,4 @@ CREATE TABLE `vendas` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-04 12:38:05
+-- Dump completed on 2017-05-09 21:32:20
