@@ -135,9 +135,10 @@ public class FormAberturaDeCaixa extends javax.swing.JDialog {
                 .addGap(0, 8, Short.MAX_VALUE))
         );
 
+        jPanel2.setBackground(new java.awt.Color(51, 153, 255));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
 
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("F2 - Abre caixa");
         jPanel2.add(jLabel2);
 

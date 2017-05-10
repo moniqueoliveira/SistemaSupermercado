@@ -408,21 +408,22 @@ public class FormCadastroPrecoProduto extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel5.setBackground(new java.awt.Color(51, 153, 255));
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
 
-        jLabel20.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("F1 - Pesquisa");
         jPanel5.add(jLabel20);
 
-        jLabel21.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("F2 - Captura item selecionado para alteração");
         jPanel5.add(jLabel21);
 
-        jLabel22.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setText("F3 - Novo");
         jPanel5.add(jLabel22);
 
-        jLabel23.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("F4 - Grava novo preço");
         jPanel5.add(jLabel23);
 

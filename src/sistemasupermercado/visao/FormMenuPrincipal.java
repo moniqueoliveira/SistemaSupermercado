@@ -74,6 +74,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItemEncerrarSessao = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("MarketSoft");
         setExtendedState(6);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -100,6 +101,11 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuVenda.add(jMenuItemRealizarVenda);
 
         jMenuItemFinalizarCaixa.setText("Finalizar Caixa");
+        jMenuItemFinalizarCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemFinalizarCaixaActionPerformed(evt);
+            }
+        });
         jMenuVenda.add(jMenuItemFinalizarCaixa);
 
         jMenuBar1.add(jMenuVenda);
@@ -294,8 +300,14 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemRealizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRealizarVendaActionPerformed
         // TODO add your handling code here:
-        FormVenda formVenda = new FormVenda(sessao);
-        formVenda.setVisible(true);
+        if (sessaoCaixa == null) {
+            JOptionPane.showMessageDialog(this, "É necessário abrir o caixa para realizar vendas!", "Caixa aberto", 
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            FormVenda formVenda = new FormVenda(sessaoCaixa);
+            formVenda.setVisible(true);
+        }
+        
     }//GEN-LAST:event_jMenuItemRealizarVendaActionPerformed
 
     private void jMenuItemRegistrarSaídaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrarSaídaProdutosActionPerformed
@@ -435,10 +447,24 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
             } catch(RuntimeException ex) {
                 JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
                         "Atenção", JOptionPane.WARNING_MESSAGE);
-        }
+            }
             
         }
     }//GEN-LAST:event_jMenuItemEncerrarSessaoActionPerformed
+
+    private void jMenuItemFinalizarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFinalizarCaixaActionPerformed
+        // TODO add your handling code here:
+        
+        if (sessaoCaixa == null){
+            JOptionPane.showMessageDialog(this, "O caixa não foi aberto.\n",
+                        "Atenção", JOptionPane.INFORMATION_MESSAGE);
+        }else {
+            FormFechamentoDeCaixa formFechamentoDeCaixa = new FormFechamentoDeCaixa(this, true, sessaoCaixa);
+            formFechamentoDeCaixa.setVisible(true);
+            
+        }
+        
+    }//GEN-LAST:event_jMenuItemFinalizarCaixaActionPerformed
 
     /**
      * @param args the command line arguments

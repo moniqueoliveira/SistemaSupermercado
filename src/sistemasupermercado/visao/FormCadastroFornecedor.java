@@ -582,34 +582,35 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel8.setBackground(new java.awt.Color(51, 153, 255));
         jPanel8.setForeground(new java.awt.Color(51, 51, 51));
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 15, 5));
 
-        jLabel20.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("F1 - Pesquisa");
         jPanel8.add(jLabel20);
 
-        jLabel14.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("F2 - Exibe lista de fornecedores");
         jPanel8.add(jLabel14);
 
-        jLabel15.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("F3 - Novo cadastro");
         jPanel8.add(jLabel15);
 
-        jLabel16.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("F4 - Insere cadastro");
         jPanel8.add(jLabel16);
 
-        jLabel17.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("F5 - Grava alterações");
         jPanel8.add(jLabel17);
 
-        jLabel18.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("F6 - Adiciona telefone");
         jPanel8.add(jLabel18);
 
-        jLabel19.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("F7 - Adiciona e-mail");
         jPanel8.add(jLabel19);
 

@@ -341,29 +341,30 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel4.setBackground(new java.awt.Color(51, 153, 255));
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
 
-        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("F1 - Pesquisa");
         jPanel4.add(jLabel8);
 
-        jLabel9.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("F2 - Captura item selecionado para alteração");
         jPanel4.add(jLabel9);
 
-        jLabel10.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("F3 - Novo");
         jPanel4.add(jLabel10);
 
-        jLabel11.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("F4 - Inclui novo cadastro");
         jPanel4.add(jLabel11);
 
-        jLabel12.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("F5 - Grava alterações");
         jPanel4.add(jLabel12);
 
-        jLabel13.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("F6 - Exclui cadastro");
         jPanel4.add(jLabel13);
 

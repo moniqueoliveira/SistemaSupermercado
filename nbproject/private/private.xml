@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormCadastroUsuario.java</file>
-            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/dao/ProdutoDAOImpl.java</file>
-            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/servicos/UsuarioServico.java</file>
-            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormLogin.java</file>
-            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormConsultaUsuario.java</file>
-            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/dao/UsuarioDAOImpl.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/servicos/ItemVendaServico.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/servicos/PagamentoServico.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormVenda.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/dao/ItemVendaDAOImpl.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormPagamento.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/servicos/VendaServico.java</file>
             <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormMenuPrincipal.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/test/sistemasupermercado/teste/operacoesmatematicas/TestaBigDecimal.java</file>
         </group>
     </open-files>
 </project-private>

@@ -83,7 +83,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public Usuario pesquisar(Usuario obj) throws SQLException {
-        if (!obj.getLogin().equals(""))
+        if (obj.getLogin() != null)
             return pesquisar("select * from usuarios where login = " + obj.getLogin());
         else
             return pesquisar("select * from usuarios where id_usuario = " + obj.getIdUsuario());

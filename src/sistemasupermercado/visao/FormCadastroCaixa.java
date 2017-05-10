@@ -147,13 +147,14 @@ public class FormCadastroCaixa extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel2.setBackground(new java.awt.Color(51, 153, 255));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
 
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("F1 - Adicionar caixas");
         jPanel2.add(jLabel2);
 
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("F2 - Excluir último caixa inserido");
         jPanel2.add(jLabel3);
 

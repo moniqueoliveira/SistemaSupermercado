@@ -268,9 +268,10 @@ public class FormConsultaProdutos extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel7.setBackground(new java.awt.Color(51, 153, 255));
         jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel13.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("F2 - Seleciona item da tabela para consulta");
         jPanel7.add(jLabel13);
 

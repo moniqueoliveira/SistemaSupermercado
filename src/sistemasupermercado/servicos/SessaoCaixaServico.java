@@ -28,6 +28,24 @@ public class SessaoCaixaServico {
         }
     }
     
+    public void fecharCaixa(SessaoCaixa sessaoCaixa) {
+        sessaoCaixaDAO = new SessaoCaixaDAOImpl();
+        SessaoServico sessaoServico = new SessaoServico();
+        sessaoServico.encerrarSessao(sessaoCaixa.getSessao());
+        
+        CaixaServico caixaServico = new CaixaServico();
+        sessaoCaixa.getCaixa().setAberto(false);
+        caixaServico.alterar(sessaoCaixa.getCaixa());
+        
+        try {
+            verificarResultado(sessaoCaixaDAO.alterarValorFechamento(sessaoCaixa));
+            sessaoCaixaDAO.fecharConexao();
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao fechar o caixa):\n" + ex.getMessage());
+        }
+        
+    }
+    
     public SessaoCaixa verificarCaixaAberto(Sessao sessao) {
         sessaoCaixaDAO = new SessaoCaixaDAOImpl();
         SessaoCaixa sessaoCaixa = new SessaoCaixa();

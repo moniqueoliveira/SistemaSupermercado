@@ -116,9 +116,10 @@ public class FormListaProdutos extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel2.setBackground(new java.awt.Color(51, 153, 255));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        lblF2.setForeground(new java.awt.Color(51, 51, 51));
+        lblF2.setForeground(new java.awt.Color(255, 255, 255));
         lblF2.setText("F2 - Seleciona item");
         jPanel2.add(lblF2);
 

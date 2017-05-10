@@ -39,7 +39,7 @@ public class EstoqueServico {
         estoqueDAO = new EstoqueDAOImpl();
         try {
             estoque = estoqueDAO.pesquisar(estoque);
-            estoque.setProduto(new ProdutoServico().pesquisar(estoque.getProduto()));
+            if (estoque != null) estoque.setProduto(new ProdutoServico().pesquisar(estoque.getProduto()));
             estoqueDAO.fecharConexao();
             return estoque;
         } catch(SQLException ex) {
@@ -60,6 +60,7 @@ public class EstoqueServico {
             throw new RuntimeException("SQLException (Erro ao listar o conteúdo do estoque): " + ex.getMessage());
         }
     }
+    
 
     private void validarDados(Estoque estoque) {
         StringBuilder mensagem = new StringBuilder();

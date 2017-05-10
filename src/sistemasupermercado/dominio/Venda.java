@@ -2,12 +2,22 @@
 package sistemasupermercado.dominio;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class Venda {
     private int idVenda;
     private Sessao sessao;
     private boolean finalizada;
     private Calendar data;
+    public List<ItemVenda> itens;
+
+    public List<ItemVenda> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemVenda> itens) {
+        this.itens = itens;
+    }
 
     public int getIdVenda() {
         return idVenda;

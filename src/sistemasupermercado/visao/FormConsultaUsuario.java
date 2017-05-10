@@ -228,9 +228,10 @@ public class FormConsultaUsuario extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel7.setBackground(new java.awt.Color(51, 153, 255));
         jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel13.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("F2 - Seleciona item da tabela para consulta");
         jPanel7.add(jLabel13);
 
@@ -389,10 +390,11 @@ public class FormConsultaUsuario extends javax.swing.JDialog {
         usuario = new Usuario();
         usuarioServico = new UsuarioServico();
         usuario.setIdUsuario(Integer.parseInt(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0).toString()));
-        
+        System.out.println(usuario.getIdUsuario());
         
         try {
             usuario = usuarioServico.pesquisar(usuario);
+            System.out.println(usuario.getNome());
             txtNome.setText(usuario.getNome());
             txtLogin.setText(usuario.getLogin());
             txtId.setText(usuario.getIdUsuario().toString());

@@ -26,7 +26,7 @@ public class PagamentoVendaDAOImpl implements PagamentoVendaDAO {
         pstm.setBigDecimal(4, obj.getCredito());
         pstm.setBigDecimal(5, obj.getVoucher());
         pstm.setBigDecimal(6, obj.getCheque());
-        pstm.setBigDecimal(8, obj.getOutros());
+        pstm.setBigDecimal(7, obj.getOutros());
         pstm.setBigDecimal(8, obj.getTroco());
         int result = pstm.executeUpdate();
         pstm.close();
@@ -74,7 +74,10 @@ public class PagamentoVendaDAOImpl implements PagamentoVendaDAO {
             pagamentoVenda.setDinheiro(rs.getBigDecimal("dinheiro"));
             pagamentoVenda.setDebito(rs.getBigDecimal("debito"));
             pagamentoVenda.setCredito(rs.getBigDecimal("credito"));
+            pagamentoVenda.setCheque(rs.getBigDecimal("cheque"));
             pagamentoVenda.setVoucher(rs.getBigDecimal("voucher"));
+            pagamentoVenda.setOutros(rs.getBigDecimal("outros"));
+            pagamentoVenda.setTroco(rs.getBigDecimal("troco"));
         }
         pstm.close();
         return pagamentoVenda;

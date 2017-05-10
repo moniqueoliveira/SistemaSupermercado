@@ -1,12 +1,42 @@
 
 package sistemasupermercado.dominio;
 
+import java.math.BigDecimal;
+
 
 public class ItemVenda {
+    private int numeroItem;
     private Venda venda;
     private Produto produto;
-    private double quantidade;
+    private BigDecimal quantidade;
+    private BigDecimal subtotal;
+    private boolean cancelado;
 
+    public boolean isCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(boolean cancelado) {
+        this.cancelado = cancelado;
+    }
+
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public int getNumeroItem() {
+        return numeroItem;
+    }
+
+    public void setNumeroItem(int numeroItem) {
+        this.numeroItem = numeroItem;
+    }
+
+    
     public Venda getVenda() {
         return venda;
     }
@@ -33,11 +63,11 @@ public class ItemVenda {
         this.produto.setIdProduto(codigo);
     }
 
-    public double getQuantidade() {
+    public BigDecimal getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(double quantidade) {
+    public void setQuantidade(BigDecimal quantidade) {
         this.quantidade = quantidade;
     }
     

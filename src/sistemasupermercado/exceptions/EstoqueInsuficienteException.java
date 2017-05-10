@@ -8,7 +8,7 @@ package sistemasupermercado.exceptions;
 public class EstoqueInsuficienteException extends RuntimeException {
 
     public EstoqueInsuficienteException() {
-        super("Não há quantidade suficiente do produto em estoque!s");
+        super("Não há quantidade suficiente do produto em estoque!");
     }
     
     public EstoqueInsuficienteException(String string) {

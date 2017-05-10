@@ -67,7 +67,6 @@ public class FormCadastroProduto extends javax.swing.JDialog {
         rbEstocavelSim = new javax.swing.JRadioButton();
         rbEstocavelNao = new javax.swing.JRadioButton();
         jLabel12 = new javax.swing.JLabel();
-        txtCodigoDeBarras = new javax.swing.JTextField();
         txtDescricao = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -79,6 +78,7 @@ public class FormCadastroProduto extends javax.swing.JDialog {
         btnIncluir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        txtCodigoDeBarras = new javax.swing.JFormattedTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         cmbPesquisarPor = new javax.swing.JComboBox<>();
@@ -132,12 +132,6 @@ public class FormCadastroProduto extends javax.swing.JDialog {
 
         jLabel12.setText("Código de barras:");
 
-        txtCodigoDeBarras.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCodigoDeBarrasKeyTyped(evt);
-            }
-        });
-
         jLabel13.setText("Descrição:");
 
         jLabel14.setText("Descrição reduzida:");
@@ -183,6 +177,12 @@ public class FormCadastroProduto extends javax.swing.JDialog {
             }
         });
 
+        try {
+            txtCodigoDeBarras.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -200,10 +200,9 @@ public class FormCadastroProduto extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDescricaoReduzida)
-                            .addComponent(txtCodigoDeBarras)
                             .addComponent(txtDescricao)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtId)
+                                .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -218,7 +217,8 @@ public class FormCadastroProduto extends javax.swing.JDialog {
                                 .addComponent(rbEstocavelSim)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rbEstocavelNao))
-                            .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCodigoDeBarras)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnNovo)
@@ -349,29 +349,30 @@ public class FormCadastroProduto extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel4.setBackground(new java.awt.Color(51, 153, 255));
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
 
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("F1 - Pesquisa");
         jPanel4.add(jLabel3);
 
-        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("F2 - Captura item selecionado para alteração");
         jPanel4.add(jLabel4);
 
-        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("F3 - Novo");
         jPanel4.add(jLabel6);
 
-        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("F4 - Inclui novo cadastro");
         jPanel4.add(jLabel7);
 
-        jLabel9.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("F5 - Grava alterações");
         jPanel4.add(jLabel9);
 
-        jLabel10.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("F6 - Exclui cadastro");
         jPanel4.add(jLabel10);
 
@@ -558,14 +559,6 @@ public class FormCadastroProduto extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtIdKeyTyped
 
-    private void txtCodigoDeBarrasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoDeBarrasKeyTyped
-        // TODO add your handling code here:
-        String caracteres="0987654321";
-        if(!caracteres.contains(evt.getKeyChar() + "")){
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtCodigoDeBarrasKeyTyped
-
     /**
      * @param args the command line arguments
      */
@@ -642,7 +635,7 @@ public class FormCadastroProduto extends javax.swing.JDialog {
     private javax.swing.JRadioButton rbVendaFracionadaNao;
     private javax.swing.JRadioButton rbVendaFracionadaSim;
     private javax.swing.JTable tblProdutos;
-    private javax.swing.JTextField txtCodigoDeBarras;
+    private javax.swing.JFormattedTextField txtCodigoDeBarras;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtDescricaoReduzida;
     private javax.swing.JTextField txtId;

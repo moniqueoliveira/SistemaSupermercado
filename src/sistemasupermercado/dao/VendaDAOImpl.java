@@ -40,7 +40,17 @@ public class VendaDAOImpl implements VendaDAO {
        String sql = "update vendas set finalizada = ? where id_venda = ?";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setBoolean(1, obj.isFinalizada());
-        pstm.setInt(0, obj.getIdVenda());
+        pstm.setInt(2, obj.getIdVenda());
+        int result = pstm.executeUpdate();
+        pstm.close();
+        return result == 1;
+    }
+    
+    @Override
+    public boolean excluir(Venda obj) throws SQLException {
+       String sql = "delete from vendas where id_venda = ?";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        pstm.setInt(1, obj.getIdVenda());
         int result = pstm.executeUpdate();
         pstm.close();
         return result == 1;
@@ -68,7 +78,6 @@ public class VendaDAOImpl implements VendaDAO {
         return venda;
     }
 
-    @Override
     public List<Venda> listar(String filtro) throws SQLException {
         List<Venda> vendas = new ArrayList<>();
         String sql = "select * from vendas " + filtro;
@@ -89,6 +98,20 @@ public class VendaDAOImpl implements VendaDAO {
         }
         pstm.close();
         return vendas;
+    }
+    
+    @Override
+    public List<Venda> listar(int idSessao) throws SQLException {
+        return listar("where id_sessao = " + idSessao + " and finalizada = 1");
+    }
+    
+    @Override
+    public Integer obterUltimoID() throws SQLException {
+        String sql = "select last_insert_id()";
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        return rs.getInt("last_insert_id()");
     }
 
     @Override

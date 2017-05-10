@@ -309,25 +309,26 @@ public class FormRegistroProdutoRetirado extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel5.setBackground(new java.awt.Color(51, 153, 255));
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
 
-        jLabel20.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("F1 - Pesquisa produto");
         jPanel5.add(jLabel20);
 
-        jLabel24.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setText("F2 - Lista produtos");
         jPanel5.add(jLabel24);
 
-        jLabel22.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setText("F3 - Novo");
         jPanel5.add(jLabel22);
 
-        jLabel23.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("F4 - Grava registro");
         jPanel5.add(jLabel23);
 
-        jLabel25.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("F5 - Lista motivos");
         jPanel5.add(jLabel25);
 
