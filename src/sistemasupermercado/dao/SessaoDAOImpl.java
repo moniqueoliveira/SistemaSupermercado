@@ -51,7 +51,7 @@ public class SessaoDAOImpl implements SessaoDAO {
     @Override
     public Sessao pesquisarSessaoAberta(Sessao obj) throws SQLException {
         Sessao sessao = null;
-        String sql = "select * from sessoes where id_usuario = ? and fim_sessao = 0";
+        String sql = "select * from sessoes where id_usuario = ? and fim_sessao is null";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getUsuario().getIdUsuario());
         ResultSet rs = pstm.executeQuery();

@@ -19,6 +19,11 @@ public class SessaoCaixa {
         this.sessao = sessao;
     }
     
+    public void setSessao(int idSessao) {
+        this.sessao = new Sessao();
+        this.sessao.setIdSessao(idSessao);
+    }
+    
     public Caixa getCaixa() {
         return caixa;
     }

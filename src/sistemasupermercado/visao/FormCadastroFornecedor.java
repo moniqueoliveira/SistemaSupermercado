@@ -341,6 +341,7 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
             }
         });
 
+        tblEmails.setAutoCreateRowSorter(true);
         tblEmails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -413,6 +414,7 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
             }
         });
 
+        tblTelefones.setAutoCreateRowSorter(true);
         tblTelefones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

@@ -71,6 +71,18 @@ public class CaixaServico {
         }
     }
     
+    public Caixa pesquisar(Caixa caixa) {
+        caixaDAO = new CaixaDAOImpl();
+        try {
+            caixa = caixaDAO.pesquisar(caixa);
+            caixaDAO.fecharConexao();
+            verificarPesquisa(caixa);
+            return caixa;
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao pesquisar caixa): " + ex.getMessage());
+        }
+    }
+    
     public List<Caixa> listarCaixasFechados(Unidade unidade) {
         List<Caixa> caixas = listar(unidade);
         List<Caixa> caixasFechados = new ArrayList<>();
@@ -80,10 +92,22 @@ public class CaixaServico {
         return caixasFechados;
     }
     
+    public List<Caixa> listarCaixasAbertos(Unidade unidade) {
+        List<Caixa> caixas = listar(unidade);
+        List<Caixa> caixasAbertos = new ArrayList<>();
+        for (Caixa caixa : caixas) {
+            if (caixa.isAberto()) caixasAbertos.add(caixa);
+        }
+        return caixasAbertos;
+    }
+    
     public List<Caixa> listar(Unidade unidade) {
         caixaDAO = new CaixaDAOImpl();
         try {
             List<Caixa> caixas = caixaDAO.listar(unidade.getIdUnidade());
+            for (Caixa caixa : caixas) {
+                caixa.setUnidade(new UnidadeServico().pesquisar(caixa.getUnidade()));
+            }
             caixaDAO.fecharConexao();
             return caixas;
         } catch(SQLException ex) {

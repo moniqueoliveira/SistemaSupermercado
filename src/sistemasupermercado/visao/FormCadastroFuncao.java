@@ -193,6 +193,7 @@ public class FormCadastroFuncao extends javax.swing.JDialog {
             }
         });
 
+        tblFuncoes.setAutoCreateRowSorter(true);
         tblFuncoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

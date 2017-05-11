@@ -345,6 +345,7 @@ public class FormCadastroPrecoProduto extends javax.swing.JDialog {
             }
         });
 
+        tblPrecos.setAutoCreateRowSorter(true);
         tblPrecos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

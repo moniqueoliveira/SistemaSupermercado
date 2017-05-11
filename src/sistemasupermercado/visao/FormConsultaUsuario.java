@@ -158,6 +158,7 @@ public class FormConsultaUsuario extends javax.swing.JDialog {
 
         jLabel1.setText("Pesquisar por:");
 
+        tblUsuarios.setAutoCreateRowSorter(true);
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

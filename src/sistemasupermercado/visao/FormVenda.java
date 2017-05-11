@@ -285,6 +285,7 @@ public class FormVenda extends javax.swing.JFrame {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
+        tblItens.setAutoCreateRowSorter(true);
         tblItens.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tblItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

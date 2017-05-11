@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import sistemasupermercado.conexao.ConnectionFactory;
 import sistemasupermercado.dominio.SessaoCaixa;
 
@@ -44,6 +46,33 @@ public class SessaoCaixaDAOImpl implements SessaoCaixaDAO {
         }
         pstm.close();
         return sessaoCaixa;
+    }
+    
+    private List<SessaoCaixa> listar(String filtro) throws SQLException {
+        List<SessaoCaixa> sessoesCaixas = new ArrayList<>();
+        String sql = "select * from sessoes_caixas " + filtro;
+        PreparedStatement pstm = conexao.prepareStatement(sql);
+         ResultSet rs = pstm.executeQuery();
+        while (rs.next()) {
+            SessaoCaixa sessaoCaixa = new SessaoCaixa();
+            sessaoCaixa.setCaixa(rs.getInt("numero_caixa"));
+            sessaoCaixa.setSessao(rs.getInt("id_sessao"));
+            sessaoCaixa.setValorInicialCaixa(rs.getBigDecimal("valor_inicial_caixa"));
+            sessaoCaixa.setValorFechamento(rs.getBigDecimal("valor_fechamento"));
+            sessoesCaixas.add(sessaoCaixa);
+        }
+        pstm.close();
+        return sessoesCaixas;
+    }
+    
+    public List<SessaoCaixa> listar(int idUnidade) throws SQLException {
+        return listar("sc left join sessoes s on s.id_sessao = sc.id_sessao left join usuarios us on "
+                + "s.id_usuario = us.id_usuario where us.id_unidade = " + idUnidade);
+    }
+    
+    public List<SessaoCaixa> listarSessoesAbertas(int idUnidade) throws SQLException {
+        return listar("sc left join sessoes s on s.id_sessao = sc.id_sessao left join usuarios us on "
+                + "s.id_usuario = us.id_usuario where us.id_unidade = " + idUnidade + " and sc.valor_fechamento is null");
     }
 
     @Override

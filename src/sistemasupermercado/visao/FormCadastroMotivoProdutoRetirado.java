@@ -205,6 +205,7 @@ public class FormCadastroMotivoProdutoRetirado extends javax.swing.JDialog {
             }
         });
 
+        tblMotivos.setAutoCreateRowSorter(true);
         tblMotivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

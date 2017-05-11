@@ -18,10 +18,6 @@ import javax.swing.table.DefaultTableModel;
 import sistemasupermercado.dominio.Fornecedor;
 import sistemasupermercado.servicos.FornecedorServico;
 
-/**
- *
- * @author Monique
- */
 public class FormListaFornecedores extends javax.swing.JDialog {
 
     Fornecedor fornecedor;
@@ -74,6 +70,7 @@ public class FormListaFornecedores extends javax.swing.JDialog {
             }
         });
 
+        tblFornecedores.setAutoCreateRowSorter(true);
         tblFornecedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

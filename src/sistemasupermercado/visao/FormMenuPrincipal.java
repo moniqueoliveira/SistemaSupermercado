@@ -40,6 +40,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuVenda = new javax.swing.JMenu();
         jMenuItemIniciarCaixa = new javax.swing.JMenuItem();
@@ -74,7 +75,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItemEncerrarSessao = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("MarketSoft");
+        setTitle("Marketsoft");
         setExtendedState(6);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -82,9 +83,21 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 633, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 380, Short.MAX_VALUE)
+        );
+
         jMenuVenda.setText("Venda");
 
-        jMenuItemIniciarCaixa.setText("Iniciar Caixa");
+        jMenuItemIniciarCaixa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemIniciarCaixa.setText("Abrir Caixa");
         jMenuItemIniciarCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemIniciarCaixaActionPerformed(evt);
@@ -92,6 +105,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuVenda.add(jMenuItemIniciarCaixa);
 
+        jMenuItemRealizarVenda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemRealizarVenda.setText("Realizar Venda");
         jMenuItemRealizarVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +114,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuVenda.add(jMenuItemRealizarVenda);
 
-        jMenuItemFinalizarCaixa.setText("Finalizar Caixa");
+        jMenuItemFinalizarCaixa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemFinalizarCaixa.setText("Fechar Caixa");
         jMenuItemFinalizarCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemFinalizarCaixaActionPerformed(evt);
@@ -113,8 +128,14 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenu1.setText("Caixas");
 
         jMenuItem4.setText("Observar Caixas");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
+        jMenuItemCadastroDeCaixas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemCadastroDeCaixas.setText("Adicionar Caixas");
         jMenuItemCadastroDeCaixas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,6 +148,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         jMenuEstoque.setText("Estoque");
 
+        jMenuItemRegistrarEntradaProdutos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemRegistrarEntradaProdutos.setText("Registrar Entrada de Produtos");
         jMenuItemRegistrarEntradaProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +157,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuEstoque.add(jMenuItemRegistrarEntradaProdutos);
 
+        jMenuItemRegistrarSaídaProdutos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemRegistrarSaídaProdutos.setText("Registrar Saída de Produtos");
         jMenuItemRegistrarSaídaProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,6 +166,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuEstoque.add(jMenuItemRegistrarSaídaProdutos);
 
+        jMenuItemConsultaEstoque.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemConsultaEstoque.setText("Consulta de Estoque");
         jMenuItemConsultaEstoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,11 +312,11 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -466,6 +490,12 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItemFinalizarCaixaActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        FormObservarCaixas formObservarCaixas = new FormObservarCaixas(this, true, sessao);
+        formObservarCaixas.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -534,5 +564,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemRegistrarSaídaProdutos;
     private javax.swing.JMenu jMenuSair;
     private javax.swing.JMenu jMenuVenda;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

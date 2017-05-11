@@ -627,32 +627,41 @@ public class FormPagamento extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void confirmarPagamento() {
+        if (txtDinheiro.getText().equals("") && troco.compareTo(BigDecimal.ZERO) > 0) {
+            JOptionPane.showMessageDialog(this, "O valor do troco deve ser menor que o valor pago em dinheiro!\n", 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         if (troco.compareTo(new BigDecimal(txtDinheiro.getText().replaceAll(",", "."))) >= 0) {
             JOptionPane.showMessageDialog(this, "O valor do troco deve ser menor que o valor pago em dinheiro!\n", 
                         "Atenção", JOptionPane.WARNING_MESSAGE);
-        } else {
-            pagamentoVenda = new PagamentoVenda();
-            PagamentoServico pagamentoServico = new PagamentoServico();
+            return;
+        }
+        
+        pagamentoVenda = new PagamentoVenda();
+        PagamentoServico pagamentoServico = new PagamentoServico();
 
-            pagamentoVenda.setVenda(venda);
-            pagamentoVenda.setTroco(troco);
-            if (!txtDinheiro.getText().equals("")) pagamentoVenda.setDinheiro(new BigDecimal(txtDinheiro.getText().replaceAll(",", ".")));
-            if (!txtDebito.getText().equals("")) pagamentoVenda.setDebito(new BigDecimal(txtDebito.getText().replaceAll(",", ".")));
-            if (!txtCredito.getText().equals("")) pagamentoVenda.setCredito(new BigDecimal(txtCredito.getText().replaceAll(",", ".")));
-            if (!txtCheque.getText().equals("")) pagamentoVenda.setCheque(new BigDecimal(txtCheque.getText().replaceAll(",", ".")));
-            if (!txtVoucher.getText().equals("")) pagamentoVenda.setVoucher(new BigDecimal(txtVoucher.getText().replaceAll(",", ".")));
-            if (!txtOutros.getText().equals("")) pagamentoVenda.setOutros(new BigDecimal(txtOutros.getText().replaceAll(",", ".")));
+        pagamentoVenda.setVenda(venda);
+        pagamentoVenda.setTroco(troco);
+        if (!txtDinheiro.getText().equals("")) pagamentoVenda.setDinheiro(new BigDecimal(txtDinheiro.getText().replaceAll(",", ".")));
+        if (!txtDebito.getText().equals("")) pagamentoVenda.setDebito(new BigDecimal(txtDebito.getText().replaceAll(",", ".")));
+        if (!txtCredito.getText().equals("")) pagamentoVenda.setCredito(new BigDecimal(txtCredito.getText().replaceAll(",", ".")));
+        if (!txtCheque.getText().equals("")) pagamentoVenda.setCheque(new BigDecimal(txtCheque.getText().replaceAll(",", ".")));
+        if (!txtVoucher.getText().equals("")) pagamentoVenda.setVoucher(new BigDecimal(txtVoucher.getText().replaceAll(",", ".")));
+        if (!txtOutros.getText().equals("")) pagamentoVenda.setOutros(new BigDecimal(txtOutros.getText().replaceAll(",", ".")));
 
-            try {
-                VendaServico vendaServico = new VendaServico();
-                vendaServico.finalizarVenda(venda);
-                pagamentoServico.inserir(pagamentoVenda);
-                JOptionPane.showMessageDialog(this, "Venda finalizada com sucesso!", "Finalização de venda", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
-            } catch(RuntimeException ex) {
-                JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
-                            "Atenção", JOptionPane.WARNING_MESSAGE);
-            }
+        if (valorAPagar.compareTo(BigDecimal.ZERO) > 0) return;
+        
+        try {
+            VendaServico vendaServico = new VendaServico();
+            vendaServico.finalizarVenda(venda);
+            pagamentoServico.inserir(pagamentoVenda);
+            JOptionPane.showMessageDialog(this, "Venda finalizada com sucesso!", "Finalização de venda", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
         }
         
     }

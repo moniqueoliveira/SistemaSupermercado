@@ -277,6 +277,7 @@ public class FormCadastroUsuario extends javax.swing.JDialog {
             }
         });
 
+        tblUsuarios.setAutoCreateRowSorter(true);
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

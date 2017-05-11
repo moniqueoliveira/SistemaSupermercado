@@ -95,6 +95,7 @@ public class FormCadastroCaixa extends javax.swing.JDialog {
             }
         });
 
+        tblCaixas.setAutoCreateRowSorter(true);
         tblCaixas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

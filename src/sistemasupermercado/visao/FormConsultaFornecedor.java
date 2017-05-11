@@ -108,6 +108,7 @@ public class FormConsultaFornecedor extends javax.swing.JDialog {
             }
         });
 
+        tblFornecedores.setAutoCreateRowSorter(true);
         tblFornecedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -328,6 +329,7 @@ public class FormConsultaFornecedor extends javax.swing.JDialog {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "E-mails", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
 
+        tblEmails.setAutoCreateRowSorter(true);
         tblEmails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -364,6 +366,7 @@ public class FormConsultaFornecedor extends javax.swing.JDialog {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Telefones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 51, 51))); // NOI18N
 
+        tblTelefones.setAutoCreateRowSorter(true);
         tblTelefones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

@@ -3,6 +3,7 @@ package sistemasupermercado.servicos;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 import sistemasupermercado.dao.SessaoCaixaDAOImpl;
 import sistemasupermercado.dominio.Caixa;
 import sistemasupermercado.dominio.Sessao;
@@ -44,6 +45,26 @@ public class SessaoCaixaServico {
             throw new RuntimeException("SQLException (Erro ao fechar o caixa):\n" + ex.getMessage());
         }
         
+    }
+    
+    public List<SessaoCaixa> listarSessoesAbertas(int idUnidade) {
+        sessaoCaixaDAO = new SessaoCaixaDAOImpl();
+        try{
+            List<SessaoCaixa> sessoesCaixas = sessaoCaixaDAO.listarSessoesAbertas(idUnidade);
+            
+            CaixaServico caixaServico = new CaixaServico();
+            SessaoServico sessaoServico = new SessaoServico();
+            for(SessaoCaixa sessaoCaixa : sessoesCaixas) {
+                sessaoCaixa.setSessao(sessaoServico.pesquisar(sessaoCaixa.getSessao()));
+                sessaoCaixa.getCaixa().setUnidade(idUnidade);
+                sessaoCaixa.setCaixa(caixaServico.pesquisar(sessaoCaixa.getCaixa()));
+            }
+            
+            sessaoCaixaDAO.fecharConexao();
+            return sessoesCaixas;
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLExeption: " + ex);
+        }
     }
     
     public SessaoCaixa verificarCaixaAberto(Sessao sessao) {

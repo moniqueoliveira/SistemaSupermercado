@@ -46,11 +46,13 @@ public class FormFechamentoDeCaixa extends javax.swing.JDialog {
     private FormFechamentoDeCaixa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     public FormFechamentoDeCaixa(java.awt.Frame parent, boolean modal, SessaoCaixa sessaoCaixa) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         this.sessaoCaixa = sessaoCaixa;
         dinheiro = sessaoCaixa.getValorInicialCaixa();
     }
@@ -263,11 +265,10 @@ public class FormFechamentoDeCaixa extends javax.swing.JDialog {
         VendaServico vendaServico = new VendaServico();
         PagamentoServico pagamentoServico = new PagamentoServico();
         
-        //try {
+        try {
             List<Venda> vendas = vendaServico.listar(sessaoCaixa.getSessao().getIdSessao());
             PagamentoVenda pagamentoVenda; 
             for (Venda venda : vendas) {
-                System.out.println(venda.getIdVenda());
                 pagamentoVenda = new PagamentoVenda();
                 pagamentoVenda.setVenda(venda);
                 
@@ -294,10 +295,10 @@ public class FormFechamentoDeCaixa extends javax.swing.JDialog {
             
             lblValorTotal.setText("VALOR TOTAL: R$ " + total.toString().replaceAll("\\.", ","));
             
-        //} catch(RuntimeException ex) {
-        //    JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
-        //               "Atenção", JOptionPane.WARNING_MESSAGE);
-        //}
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                       "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
         
     }//GEN-LAST:event_formWindowOpened
 
@@ -370,6 +371,7 @@ public class FormFechamentoDeCaixa extends javax.swing.JDialog {
         SessaoCaixaServico sessaoCaixaServico = new SessaoCaixaServico();
         sessaoCaixa.setValorFechamento(total);
         //try {
+            
             sessaoCaixaServico.fecharCaixa(sessaoCaixa);
             System.exit(0);
         //} catch(RuntimeException ex) {

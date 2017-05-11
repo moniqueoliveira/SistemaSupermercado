@@ -91,6 +91,7 @@ public class FormCadastroCategoriaProduto extends javax.swing.JDialog {
             }
         });
 
+        tblCategorias.setAutoCreateRowSorter(true);
         tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

@@ -108,6 +108,7 @@ public class FormConsultaEstoque extends javax.swing.JDialog {
                 .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        tblEstoque.setAutoCreateRowSorter(true);
         tblEstoque.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

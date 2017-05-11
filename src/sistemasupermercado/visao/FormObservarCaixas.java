@@ -5,18 +5,47 @@
  */
 package sistemasupermercado.visao;
 
-/**
- *
- * @author Monique
- */
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import sistemasupermercado.dominio.Caixa;
+import sistemasupermercado.dominio.PagamentoVenda;
+import sistemasupermercado.dominio.Sessao;
+import sistemasupermercado.dominio.SessaoCaixa;
+import sistemasupermercado.dominio.Venda;
+import sistemasupermercado.servicos.CaixaServico;
+import sistemasupermercado.servicos.PagamentoServico;
+import sistemasupermercado.servicos.SessaoCaixaServico;
+import sistemasupermercado.servicos.VendaServico;
+
+
 public class FormObservarCaixas extends javax.swing.JDialog {
 
+    Sessao sessao;
+    
+    BigDecimal dinheiro = BigDecimal.ZERO;
+    BigDecimal debito = BigDecimal.ZERO;
+    BigDecimal credito = BigDecimal.ZERO;
+    BigDecimal cheque = BigDecimal.ZERO;
+    BigDecimal voucher = BigDecimal.ZERO;
+    BigDecimal outros = BigDecimal.ZERO;
+    BigDecimal total = BigDecimal.ZERO;
     /**
      * Creates new form FormObservarCaixas
      */
-    public FormObservarCaixas(java.awt.Frame parent, boolean modal) {
+    private FormObservarCaixas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+    
+    public FormObservarCaixas(java.awt.Frame parent, boolean modal, Sessao sessao) {
+        super(parent, modal);
+        initComponents();
+        this.sessao = sessao;
     }
 
     /**
@@ -29,28 +58,29 @@ public class FormObservarCaixas extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCaixas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Caixas");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Observar Caixas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(51, 153, 255))); // NOI18N
 
-        jLabel1.setText("Selecione o número do caixa:");
+        tblCaixas.setAutoCreateRowSorter(true);
+        tblCaixas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+            },
+            new String [] {
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/fatec/imagens/ÍconeConfirmar.png"))); // NOI18N
-        jButton1.setText("Confirmar");
+            }
+        ));
+        jScrollPane1.setViewportView(tblCaixas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -58,48 +88,15 @@ public class FormObservarCaixas extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, 0, 126, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addContainerGap())
         );
-
-        jLabel2.setText("Número do Caixa:");
-
-        jLabel3.setText("Aberto:");
-
-        jLabel4.setText("Operador de Caixa:");
-
-        jLabel5.setText("Valor em Caixa:");
-
-        jTextField1.setEditable(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        jTextField2.setEditable(false);
-
-        jTextField3.setEditable(false);
-
-        jTextField4.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,64 +104,26 @@ public class FormObservarCaixas extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(82, 82, 82)
-                        .addComponent(jTextField2)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(24, 24, 24)
-                        .addComponent(jTextField3)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(44, 44, 44)
-                        .addComponent(jTextField4)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(33, 33, 33)
-                                .addComponent(jTextField1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(10, 10, 10))))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(352, 299));
+        setSize(new java.awt.Dimension(948, 357));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        definirModeloDeTabela();
+        preencherTabela();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -209,17 +168,115 @@ public class FormObservarCaixas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblCaixas;
     // End of variables declaration//GEN-END:variables
+    
+    private void preencherTabela() {
+        limparTabela();
+        CaixaServico caixaServico = new CaixaServico();
+        SessaoCaixaServico sessaoCaixaServico = new SessaoCaixaServico();
+        DefaultTableModel dtm = (DefaultTableModel) tblCaixas.getModel();
+        //List<Caixa> caixas = new ArrayList<>();
+        try {
+            
+            List<SessaoCaixa> sessoesCaixas = sessaoCaixaServico.listarSessoesAbertas(sessao.getUsuario().getUnidade().getIdUnidade());
+            for (int i = 0; i < sessoesCaixas.size(); i++) {
+                SessaoCaixa sessaoCaixa = sessoesCaixas.get(i);
+                definirValores(sessaoCaixa);
+                dtm.addRow(new Object[]{"", ""});
+                tblCaixas.setValueAt(sessaoCaixa.getCaixa().getNumeroCaixa(), i, 0);
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                tblCaixas.setValueAt(sdf.format(sessaoCaixa.getSessao().getInicioSessao().getTimeInMillis()), i, 1);
+                
+                tblCaixas.setValueAt(sessaoCaixa.getSessao().getUsuario().getNome(), i, 2);
+                tblCaixas.setValueAt(dinheiro.toString().replaceAll("\\.", ","), i, 3);
+                tblCaixas.setValueAt(debito.toString().replaceAll("\\.", ","), i, 4);
+                tblCaixas.setValueAt(credito.toString().replaceAll("\\.", ","), i, 5);
+                tblCaixas.setValueAt(cheque.toString().replaceAll("\\.", ","), i, 6);
+                tblCaixas.setValueAt(voucher.toString().replaceAll("\\.", ","), i, 7);
+                tblCaixas.setValueAt(outros.toString().replaceAll("\\.", ","), i, 8);
+                tblCaixas.setValueAt(total.toString().replaceAll("\\.", ","), i, 9);
+                
+                dinheiro = BigDecimal.ZERO;
+                debito = BigDecimal.ZERO;
+                credito = BigDecimal.ZERO;
+                cheque = BigDecimal.ZERO;
+                voucher = BigDecimal.ZERO;
+                outros = BigDecimal.ZERO;
+                total = BigDecimal.ZERO;
+            }
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                        "Não foi possível iniciar o formulario", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void definirValores(SessaoCaixa sessaoCaixa) {
+        VendaServico vendaServico = new VendaServico();
+        PagamentoServico pagamentoServico = new PagamentoServico();
+        
+        try {
+            List<Venda> vendas = vendaServico.listar(sessaoCaixa.getSessao().getIdSessao());
+            PagamentoVenda pagamentoVenda; 
+            for (Venda venda : vendas) {
+                pagamentoVenda = new PagamentoVenda();
+                pagamentoVenda.setVenda(venda);
+                
+                pagamentoVenda = pagamentoServico.pesquisar(pagamentoVenda);
+                
+                dinheiro = dinheiro.add(pagamentoVenda.getDinheiro());
+                debito = debito.add(pagamentoVenda.getDebito());
+                credito = credito.add(pagamentoVenda.getCredito());
+                cheque = cheque.add(pagamentoVenda.getCheque());
+                voucher = voucher.add(pagamentoVenda.getVoucher());
+                outros = outros.add(pagamentoVenda.getOutros());
+                dinheiro = dinheiro.subtract(pagamentoVenda.getTroco());
+            }
+            
+            dinheiro = dinheiro.add(sessaoCaixa.getValorInicialCaixa());
+            
+            total = BigDecimal.ZERO;
+            total = dinheiro.add(debito.add(credito.add(cheque.add(voucher.add(outros)))));
+            
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n segundo" + ex.getMessage(), 
+                       "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    private void limparTabela() {
+        DefaultTableModel dtm = (DefaultTableModel) tblCaixas.getModel();
+        dtm.setRowCount(0);
+    }
+    
+    private void definirModeloDeTabela() {
+        tblCaixas.setModel(  
+            new DefaultTableModel(
+                    new Object[] []{ },
+                    new String[]{"Nummero","Horário de abertura", "Operador", "Dinheiro (R$)", "Débito (R$)", "Crédito (R$)", 
+                        "Cheque (R$)", "Voucher (R$)", "Outros (R$)", "Total (R$)"}
+            ) {
+                @Override
+                public boolean isCellEditable(int row, int col) {  
+                        return false;  
+                }
+            }
+        ); 
+        
+        tblCaixas.getColumnModel().getColumn(0).setPreferredWidth(60);
+        tblCaixas.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tblCaixas.getColumnModel().getColumn(2).setPreferredWidth(70);
+        tblCaixas.getColumnModel().getColumn(3).setPreferredWidth(70);
+        tblCaixas.getColumnModel().getColumn(4).setPreferredWidth(70);
+        tblCaixas.getColumnModel().getColumn(5).setPreferredWidth(70);
+        tblCaixas.getColumnModel().getColumn(6).setPreferredWidth(70);
+        tblCaixas.getColumnModel().getColumn(7).setPreferredWidth(70);
+        tblCaixas.getColumnModel().getColumn(8).setPreferredWidth(70);
+        tblCaixas.getColumnModel().getColumn(9).setPreferredWidth(70);
+        tblCaixas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
 }

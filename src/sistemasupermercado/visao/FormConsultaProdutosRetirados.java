@@ -133,6 +133,7 @@ public class FormConsultaProdutosRetirados extends javax.swing.JDialog {
                 .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        tblProdutosRetirados.setAutoCreateRowSorter(true);
         tblProdutosRetirados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
