@@ -9,14 +9,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.dominio.PagamentoVenda;
 import sistemasupermercado.dominio.Venda;
+import sistemasupermercado.relatorios.GeradorDeRelatorios;
 import sistemasupermercado.servicos.PagamentoServico;
 import sistemasupermercado.servicos.VendaServico;
 import sistemasupermercado.visao.tabulacao.IndexedFocusTraversalPolicy;
@@ -657,6 +661,11 @@ public class FormPagamento extends javax.swing.JDialog {
             VendaServico vendaServico = new VendaServico();
             vendaServico.finalizarVenda(venda);
             pagamentoServico.inserir(pagamentoVenda);
+            try {
+                new GeradorDeRelatorios().abrirRelatorioClientes(venda.getIdVenda());
+            } catch (JRException ex) {
+                Logger.getLogger(FormPagamento.class.getName()).log(Level.SEVERE, null, ex);
+            }
             JOptionPane.showMessageDialog(this, "Venda finalizada com sucesso!", "Finalização de venda", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         } catch(RuntimeException ex) {

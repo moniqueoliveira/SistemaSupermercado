@@ -55,7 +55,11 @@ public class FormVenda extends javax.swing.JFrame {
     
     
     AtalhoAction acaoEnter = new AtalhoAction("ENTER");
+    AtalhoAction acaoF1 = new AtalhoAction("F1");
+    AtalhoAction acaoF2 = new AtalhoAction("F2");
     AtalhoAction acaoF3 = new AtalhoAction("F3");
+    AtalhoAction acaoF4 = new AtalhoAction("F4");
+    AtalhoAction acaoF5 = new AtalhoAction("F5");
     /**
      * Creates new form FormVenda
      */
@@ -87,6 +91,7 @@ public class FormVenda extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -152,8 +157,13 @@ public class FormVenda extends javax.swing.JFrame {
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("F4 - Sair");
+        jLabel18.setText("F4 - Listar produtos");
         jPanel2.add(jLabel18);
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText("F5 - Sair");
+        jPanel2.add(jLabel23);
 
         jPanel3.setBackground(new java.awt.Color(51, 153, 255));
 
@@ -568,6 +578,9 @@ public class FormVenda extends javax.swing.JFrame {
                 registrarPagamento();
                 break;
             case (KeyEvent.VK_F4):
+                listarProdutos();
+                break;
+            case (KeyEvent.VK_F5):
                 sair();
         }
     }//GEN-LAST:event_tblItensKeyPressed
@@ -659,6 +672,7 @@ public class FormVenda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
@@ -928,6 +942,16 @@ public class FormVenda extends javax.swing.JFrame {
         policy.addIndexedComponent(tblItens);
         setFocusTraversalPolicy(policy);
     }
+    
+    private void listarProdutos() {
+        FormListaProdutos form = new FormListaProdutos(this, true);
+        form.setVisible(true);
+        if (form.getObjetoSelecionado() != null) {
+            txtProduto.setText(form.getObjetoSelecionado().getIdProduto().toString());
+            txtQuantidade.requestFocus();
+            pesquisarProduto();
+        }
+    }
         
     private void definirDataEHora() {
         Timer timer = new Timer();
@@ -954,12 +978,20 @@ public class FormVenda extends javax.swing.JFrame {
     private void registrarAcoesDosAtalhos() {
         ActionMap actionMapForm = this.rootPane.getActionMap();
         actionMapForm.put("acaoEnter", acaoEnter);
+        actionMapForm.put("acaoF1", acaoF1);
+        actionMapForm.put("acaoF2", acaoF2);
         actionMapForm.put("acaoF3", acaoF3);
+        actionMapForm.put("acaoF4", acaoF4);
+        actionMapForm.put("acaoF5", acaoF5);
         rootPane.setActionMap(actionMapForm);
         
         InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
         imapForm.put(KeyStroke.getKeyStroke("ENTER"), "acaoEnter");
+        imapForm.put(KeyStroke.getKeyStroke("F1"), "acaoF1");
+        imapForm.put(KeyStroke.getKeyStroke("F2"), "acaoF2");
         imapForm.put(KeyStroke.getKeyStroke("F3"), "acaoF3");
+        imapForm.put(KeyStroke.getKeyStroke("F4"), "acaoF4");
+        imapForm.put(KeyStroke.getKeyStroke("F5"), "acaoF5");
     }
 
     
@@ -992,6 +1024,8 @@ public class FormVenda extends javax.swing.JFrame {
                     registrarPagamento();
                     break;
                 case ("F4"):
+                    listarProdutos();
+                case ("F5"):
                     sair();
             }
         }

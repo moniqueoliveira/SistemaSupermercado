@@ -5,9 +5,13 @@
  */
 package sistemasupermercado.visao;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.dominio.Sessao;
 import sistemasupermercado.dominio.SessaoCaixa;
+import sistemasupermercado.relatorios.GeradorDeRelatorios;
 import sistemasupermercado.servicos.SessaoCaixaServico;
 import sistemasupermercado.servicos.SessaoServico;
 /**
@@ -68,7 +72,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItemConsultaFornecedores = new javax.swing.JMenuItem();
         jMenuItemConsultaProdutos = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuSair = new javax.swing.JMenu();
@@ -283,13 +286,15 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         jMenu4.setText("Relatórios");
 
-        jMenuItem16.setText("Gerar Relatório de Lucro/Receita");
-        jMenu4.add(jMenuItem16);
-
         jMenuItem17.setText("Gerar Relatório de Saída de Produtos");
         jMenu4.add(jMenuItem17);
 
         jMenuItem18.setText("Gerar Relatório de Estoque");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem18);
 
         jMenuBar1.add(jMenu4);
@@ -496,6 +501,18 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         formObservarCaixas.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        // TODO add your handling code here:
+        
+        GeradorDeRelatorios g = new GeradorDeRelatorios();
+        try {
+            g.abrirRelatorioEstoque(1);
+        } catch (JRException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -538,7 +555,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenu jMenuConsulta;
     private javax.swing.JMenu jMenuEstoque;
-    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem4;

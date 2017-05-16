@@ -36,7 +36,7 @@ public class FornecedorDAOImpl implements FornecedorDAO {
         return result == 1;
     }
     private boolean inserirComID(Fornecedor obj) throws SQLException {
-        String sql = "insert into fornecedores (id_fornecedor, nome_fantasia, razao_social, cnpj, ativo) values (?, ?, ?, ?)";
+        String sql = "insert into fornecedores (id_fornecedor, nome_fantasia, razao_social, cnpj, ativo) values (?, ?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getIdFornecedor());
         pstm.setString(2, obj.getNomeFantasia());
