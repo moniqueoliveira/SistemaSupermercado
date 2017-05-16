@@ -35,6 +35,16 @@ CREATE TABLE `caixas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `caixas`
+--
+
+LOCK TABLES `caixas` WRITE;
+/*!40000 ALTER TABLE `caixas` DISABLE KEYS */;
+INSERT INTO `caixas` VALUES (1,1,1),(2,1,1),(3,1,1),(4,1,0),(5,1,0),(6,1,0),(7,1,0);
+/*!40000 ALTER TABLE `caixas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `categorias_produtos`
 --
 
@@ -47,6 +57,16 @@ CREATE TABLE `categorias_produtos` (
   PRIMARY KEY (`ID_Categoria`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categorias_produtos`
+--
+
+LOCK TABLES `categorias_produtos` WRITE;
+/*!40000 ALTER TABLE `categorias_produtos` DISABLE KEYS */;
+INSERT INTO `categorias_produtos` VALUES (1,'Alimentos'),(2,'Bebidas'),(3,'Limpeza'),(4,'Higiene Pessoal'),(5,'Perfumaria');
+/*!40000 ALTER TABLE `categorias_produtos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `emails_fornecedores`
@@ -62,6 +82,16 @@ CREATE TABLE `emails_fornecedores` (
   CONSTRAINT `emails_fornecedores_ibfk_1` FOREIGN KEY (`ID_Fornecedor`) REFERENCES `fornecedores` (`ID_Fornecedor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `emails_fornecedores`
+--
+
+LOCK TABLES `emails_fornecedores` WRITE;
+/*!40000 ALTER TABLE `emails_fornecedores` DISABLE KEYS */;
+INSERT INTO `emails_fornecedores` VALUES (4,'fornecedor1@rmail.com');
+/*!40000 ALTER TABLE `emails_fornecedores` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `enderecos_fornecedores`
@@ -85,6 +115,16 @@ CREATE TABLE `enderecos_fornecedores` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `enderecos_fornecedores`
+--
+
+LOCK TABLES `enderecos_fornecedores` WRITE;
+/*!40000 ALTER TABLE `enderecos_fornecedores` DISABLE KEYS */;
+INSERT INTO `enderecos_fornecedores` VALUES (4,'1',1,'11111-111','1','1','1','SP');
+/*!40000 ALTER TABLE `enderecos_fornecedores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `entradas_produtos`
 --
 
@@ -106,8 +146,18 @@ CREATE TABLE `entradas_produtos` (
   CONSTRAINT `entradas_produtos_ibfk_1` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`),
   CONSTRAINT `entradas_produtos_ibfk_2` FOREIGN KEY (`ID_Sessao`) REFERENCES `sessoes` (`ID_Sessao`),
   CONSTRAINT `entradas_produtos_ibfk_3` FOREIGN KEY (`ID_Fornecedor`) REFERENCES `fornecedores` (`ID_Fornecedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `entradas_produtos`
+--
+
+LOCK TABLES `entradas_produtos` WRITE;
+/*!40000 ALTER TABLE `entradas_produtos` DISABLE KEYS */;
+INSERT INTO `entradas_produtos` VALUES (16,6,4,100.00,100.00,'2017-05-10 15:40:58',105);
+/*!40000 ALTER TABLE `entradas_produtos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `estoques`
@@ -129,6 +179,16 @@ CREATE TABLE `estoques` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `estoques`
+--
+
+LOCK TABLES `estoques` WRITE;
+/*!40000 ALTER TABLE `estoques` DISABLE KEYS */;
+INSERT INTO `estoques` VALUES (1,1,62.00,62.01),(1,4,0.00,0.00),(1,5,4.00,15.00),(1,6,95.50,9550.00);
+/*!40000 ALTER TABLE `estoques` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `fornecedores`
 --
 
@@ -146,6 +206,16 @@ CREATE TABLE `fornecedores` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `fornecedores`
+--
+
+LOCK TABLES `fornecedores` WRITE;
+/*!40000 ALTER TABLE `fornecedores` DISABLE KEYS */;
+INSERT INTO `fornecedores` VALUES (4,'1','1','11.111.111/1111-11',1);
+/*!40000 ALTER TABLE `fornecedores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `funcoes_usuarios`
 --
 
@@ -158,6 +228,16 @@ CREATE TABLE `funcoes_usuarios` (
   PRIMARY KEY (`ID_Funcao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `funcoes_usuarios`
+--
+
+LOCK TABLES `funcoes_usuarios` WRITE;
+/*!40000 ALTER TABLE `funcoes_usuarios` DISABLE KEYS */;
+INSERT INTO `funcoes_usuarios` VALUES (1,'Gerente'),(2,'Operador(a) de caixa'),(3,'Estoquista'),(4,'Administrador');
+/*!40000 ALTER TABLE `funcoes_usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `itens_vendas`
@@ -181,6 +261,16 @@ CREATE TABLE `itens_vendas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `itens_vendas`
+--
+
+LOCK TABLES `itens_vendas` WRITE;
+/*!40000 ALTER TABLE `itens_vendas` DISABLE KEYS */;
+INSERT INTO `itens_vendas` VALUES (94,1,1,11.00,33.00,0),(95,1,1,10.00,30.00,0),(96,1,1,1.00,3.00,0),(97,1,1,13.00,39.00,0),(98,6,1,1.50,8.99,0),(99,1,1,1.00,3.00,0),(99,5,2,1.00,3.75,0),(99,6,3,1.00,5.99,0),(100,1,1,1.00,3.00,0),(100,5,2,1.00,3.75,0),(100,6,3,1.00,5.99,0),(101,1,1,1.00,3.00,0),(101,6,2,1.00,5.99,0);
+/*!40000 ALTER TABLE `itens_vendas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `motivos_produtos_retirados`
 --
 
@@ -193,6 +283,16 @@ CREATE TABLE `motivos_produtos_retirados` (
   PRIMARY KEY (`ID_Motivo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `motivos_produtos_retirados`
+--
+
+LOCK TABLES `motivos_produtos_retirados` WRITE;
+/*!40000 ALTER TABLE `motivos_produtos_retirados` DISABLE KEYS */;
+INSERT INTO `motivos_produtos_retirados` VALUES (1,'Mercadoria vencida');
+/*!40000 ALTER TABLE `motivos_produtos_retirados` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `pagamentos_vendas`
@@ -216,6 +316,16 @@ CREATE TABLE `pagamentos_vendas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `pagamentos_vendas`
+--
+
+LOCK TABLES `pagamentos_vendas` WRITE;
+/*!40000 ALTER TABLE `pagamentos_vendas` DISABLE KEYS */;
+INSERT INTO `pagamentos_vendas` VALUES (94,100.00,0.00,0.00,0.00,0.00,0.00,67.00),(95,113.00,0.00,0.00,0.00,0.00,0.00,83.00),(97,50.00,0.00,0.00,0.00,0.00,0.00,11.00),(98,10.00,0.00,0.00,0.00,0.00,0.00,1.02),(99,12.74,0.00,0.00,0.00,0.00,0.00,0.00),(100,12.74,0.00,0.00,0.00,0.00,0.00,0.00),(101,8.99,0.00,0.00,0.00,0.00,0.00,0.00);
+/*!40000 ALTER TABLE `pagamentos_vendas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `precos_produtos`
 --
 
@@ -233,6 +343,16 @@ CREATE TABLE `precos_produtos` (
   CONSTRAINT `precos_produtos_ibfk_2` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `precos_produtos`
+--
+
+LOCK TABLES `precos_produtos` WRITE;
+/*!40000 ALTER TABLE `precos_produtos` DISABLE KEYS */;
+INSERT INTO `precos_produtos` VALUES (1,1,1.95,'2017-04-06 18:17:34'),(1,1,2.10,'2017-04-06 19:05:58'),(1,1,2.75,'2017-04-06 19:06:20'),(1,1,2.90,'2017-04-06 19:34:52'),(1,1,2.95,'2017-04-06 19:35:28'),(1,1,3.01,'2017-04-06 20:23:43'),(1,1,2.50,'2017-04-20 11:58:54'),(1,1,3.00,'2017-04-20 12:30:22'),(1,2,5.15,'2017-04-06 18:39:21'),(1,2,5.26,'2017-04-06 20:23:58'),(1,3,3.60,'2017-04-25 12:16:16'),(1,4,2.00,'2017-05-09 11:23:49'),(1,5,3.75,'2017-05-09 12:22:25'),(1,6,5.99,'2017-05-10 15:39:08');
+/*!40000 ALTER TABLE `precos_produtos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `produtos`
@@ -253,8 +373,18 @@ CREATE TABLE `produtos` (
   PRIMARY KEY (`ID_Produto`),
   KEY `ID_Categoria` (`ID_Categoria`),
   CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`ID_Categoria`) REFERENCES `categorias_produtos` (`ID_Categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `produtos`
+--
+
+LOCK TABLES `produtos` WRITE;
+/*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
+INSERT INTO `produtos` VALUES (1,'Macarrão instantâneo Nissin Miojo','Mac. Inst. Nissin',0,1,NULL,'1739563847362',1),(2,'Detergente Ypê Maçã','Det. Ypê Maça',0,3,NULL,'1739563847351',1),(3,'Macarrão','Mac',0,1,NULL,'1231234212',1),(4,'Detergente','Det',0,3,NULL,'1111111111111',1),(5,'Leite','Leite',0,2,NULL,'1223456789',1),(6,'Tomate','Tomate',1,1,NULL,'6666666666',1);
+/*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `produtos_retirados`
@@ -278,8 +408,17 @@ CREATE TABLE `produtos_retirados` (
   CONSTRAINT `produtos_retirados_ibfk_1` FOREIGN KEY (`ID_Produto`) REFERENCES `produtos` (`ID_Produto`),
   CONSTRAINT `produtos_retirados_ibfk_2` FOREIGN KEY (`ID_Sessao`) REFERENCES `sessoes` (`ID_Sessao`),
   CONSTRAINT `produtos_retirados_ibfk_3` FOREIGN KEY (`ID_Motivo`) REFERENCES `motivos_produtos_retirados` (`ID_Motivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `produtos_retirados`
+--
+
+LOCK TABLES `produtos_retirados` WRITE;
+/*!40000 ALTER TABLE `produtos_retirados` DISABLE KEYS */;
+/*!40000 ALTER TABLE `produtos_retirados` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `sessoes`
@@ -292,12 +431,22 @@ CREATE TABLE `sessoes` (
   `ID_Sessao` int(11) NOT NULL AUTO_INCREMENT,
   `ID_Usuario` int(11) NOT NULL,
   `Inicio_Sessao` datetime NOT NULL,
-  `Fim_Sessao` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Fim_Sessao` datetime DEFAULT NULL,
   PRIMARY KEY (`ID_Sessao`),
   KEY `ID_Usuario` (`ID_Usuario`),
   CONSTRAINT `sessoes_ibfk_1` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuarios` (`ID_Usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sessoes`
+--
+
+LOCK TABLES `sessoes` WRITE;
+/*!40000 ALTER TABLE `sessoes` DISABLE KEYS */;
+INSERT INTO `sessoes` VALUES (96,1,'2017-05-10 13:38:26','2017-05-10 14:49:20'),(97,10,'2017-05-10 14:01:38','2017-05-10 14:49:58'),(98,11,'2017-05-10 14:38:12',NULL),(99,3,'2017-05-10 14:38:25',NULL),(100,1,'2017-05-10 14:49:39','2017-05-10 14:49:47'),(101,1,'2017-05-10 14:52:48','2017-05-10 14:54:53'),(102,10,'2017-05-10 14:53:12',NULL),(103,1,'2017-05-10 14:58:29','2017-05-10 15:20:31'),(105,1,'2017-05-10 15:18:22','2017-05-16 14:00:01'),(106,1,'2017-05-16 14:02:48','2017-05-16 14:05:40'),(107,1,'2017-05-16 14:06:31','2017-05-16 14:30:15'),(108,1,'2017-05-16 14:51:15','2017-05-16 14:52:52'),(109,1,'2017-05-16 15:10:25',NULL);
+/*!40000 ALTER TABLE `sessoes` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `sessoes_caixas`
@@ -319,6 +468,16 @@ CREATE TABLE `sessoes_caixas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `sessoes_caixas`
+--
+
+LOCK TABLES `sessoes_caixas` WRITE;
+/*!40000 ALTER TABLE `sessoes_caixas` DISABLE KEYS */;
+INSERT INTO `sessoes_caixas` VALUES (102,40.00,NULL,2),(103,50.00,NULL,1),(105,100.00,NULL,3),(106,100.00,112.74,4),(107,100.00,108.99,4);
+/*!40000 ALTER TABLE `sessoes_caixas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `telefones_fornecedores`
 --
 
@@ -334,6 +493,16 @@ CREATE TABLE `telefones_fornecedores` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `telefones_fornecedores`
+--
+
+LOCK TABLES `telefones_fornecedores` WRITE;
+/*!40000 ALTER TABLE `telefones_fornecedores` DISABLE KEYS */;
+INSERT INTO `telefones_fornecedores` VALUES (4,'(11) 4755-7885');
+/*!40000 ALTER TABLE `telefones_fornecedores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `unidades`
 --
 
@@ -346,6 +515,16 @@ CREATE TABLE `unidades` (
   PRIMARY KEY (`ID_Unidade`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `unidades`
+--
+
+LOCK TABLES `unidades` WRITE;
+/*!40000 ALTER TABLE `unidades` DISABLE KEYS */;
+INSERT INTO `unidades` VALUES (1,'Unidade São Paulo');
+/*!40000 ALTER TABLE `unidades` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `usuarios`
@@ -367,8 +546,18 @@ CREATE TABLE `usuarios` (
   KEY `ID_Funcao` (`ID_Funcao`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`ID_Unidade`) REFERENCES `unidades` (`ID_Unidade`),
   CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`ID_Funcao`) REFERENCES `funcoes_usuarios` (`ID_Funcao`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuarios`
+--
+
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'1','1','1',1,1,1),(3,'nome','login','senha',1,1,1),(10,'2','2','2',1,1,1),(11,'Alex','alex','12345',1,1,1);
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `vendas`
@@ -385,8 +574,18 @@ CREATE TABLE `vendas` (
   PRIMARY KEY (`ID_Venda`),
   KEY `ID_Sessao` (`ID_Sessao`),
   CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`ID_Sessao`) REFERENCES `sessoes` (`ID_Sessao`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vendas`
+--
+
+LOCK TABLES `vendas` WRITE;
+/*!40000 ALTER TABLE `vendas` DISABLE KEYS */;
+INSERT INTO `vendas` VALUES (94,103,'2017-05-10 15:01:39',1),(95,103,'2017-05-10 15:05:24',1),(96,103,'2017-05-10 15:07:32',0),(97,105,'2017-05-10 15:31:29',1),(98,105,'2017-05-10 15:41:17',1),(99,105,'2017-05-16 13:59:31',1),(100,106,'2017-05-16 14:05:11',1),(101,107,'2017-05-16 14:29:23',1);
+/*!40000 ALTER TABLE `vendas` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -397,4 +596,4 @@ CREATE TABLE `vendas` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-09 21:32:20
+-- Dump completed on 2017-05-16 17:26:39
