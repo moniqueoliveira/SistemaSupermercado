@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -24,11 +26,14 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.dominio.ItemVenda;
 import sistemasupermercado.dominio.PrecoProduto;
 import sistemasupermercado.dominio.Produto;
 import sistemasupermercado.dominio.SessaoCaixa;
 import sistemasupermercado.dominio.Venda;
+import sistemasupermercado.relatorios.GeradorDeNota;
+import sistemasupermercado.relatorios.GeradorDeRelatorios;
 import sistemasupermercado.servicos.ItemVendaServico;
 import sistemasupermercado.servicos.PrecoProdutoServico;
 import sistemasupermercado.servicos.ProdutoServico;
@@ -903,7 +908,13 @@ public class FormVenda extends javax.swing.JFrame {
     private void registrarPagamento() {
         FormPagamento formPagamento = new FormPagamento(this, true, venda, total);
         formPagamento.setVisible(true);
+        int idVenda = venda.getIdVenda();
         redefinirVenda();
+        try {
+            new GeradorDeNota().abrirNota(idVenda);
+        } catch (JRException ex) {
+            Logger.getLogger(FormPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void definirModeloDeTabela() {

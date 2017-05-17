@@ -59,6 +59,7 @@ public class ItemVendaServico {
     
     public void excluirItens(int idVenda) {
         try {
+            itemVendaDAO = new ItemVendaDAOImpl();
             verificarResultado(itemVendaDAO.excluirItens(idVenda));
             itemVendaDAO.fecharConexao();
         } catch(SQLException ex) {

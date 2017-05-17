@@ -5,12 +5,18 @@
  */
 package sistemasupermercado.visao;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.dominio.Sessao;
 import sistemasupermercado.dominio.SessaoCaixa;
+import sistemasupermercado.relatorios.GeradorDeRelatorioDeEntradaDeProdutos;
+import sistemasupermercado.relatorios.GeradorDeRelatorioDeEstoque;
+import sistemasupermercado.relatorios.GeradorDeRelatorioDeProdutosRetirados;
 import sistemasupermercado.relatorios.GeradorDeRelatorios;
 import sistemasupermercado.servicos.SessaoCaixaServico;
 import sistemasupermercado.servicos.SessaoServico;
@@ -28,11 +34,18 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
      */
     private FormMenuPrincipal() {
         initComponents();
+        URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
+        Image image = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(image);
     }
     
     public FormMenuPrincipal(Sessao sessao) {
         this.sessao = sessao;
+        
         initComponents();
+        URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
+        Image image = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(image);
     }
 
     /**
@@ -45,12 +58,13 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuVenda = new javax.swing.JMenu();
         jMenuItemIniciarCaixa = new javax.swing.JMenuItem();
         jMenuItemRealizarVenda = new javax.swing.JMenuItem();
         jMenuItemFinalizarCaixa = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        jMenuCaixas = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItemCadastroDeCaixas = new javax.swing.JMenuItem();
         jMenuEstoque = new javax.swing.JMenu();
@@ -66,36 +80,44 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItemCadastroCategorias = new javax.swing.JMenuItem();
         jMenuItemCadastroMotivos = new javax.swing.JMenuItem();
         jMenuItemCadastroUsuarios = new javax.swing.JMenuItem();
-        jMenuItemCadastroFuncoes = new javax.swing.JMenuItem();
         jMenuConsulta = new javax.swing.JMenu();
         jMenuItemConsultaUsuarios = new javax.swing.JMenuItem();
         jMenuItemConsultaFornecedores = new javax.swing.JMenuItem();
         jMenuItemConsultaProdutos = new javax.swing.JMenuItem();
+        jMenuItemConsultaVendas = new javax.swing.JMenuItem();
+        jMenuRelatorios = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuSair = new javax.swing.JMenu();
         jMenuItemEncerrarSessao = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Marketsoft");
         setExtendedState(6);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(221, 235, 255));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/logotipo.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
         );
 
         jMenuVenda.setText("Venda");
@@ -129,7 +151,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuVenda);
 
-        jMenu1.setText("Caixas");
+        jMenuCaixas.setText("Caixas");
 
         jMenuItem4.setText("Observar Caixas");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +159,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        jMenuCaixas.add(jMenuItem4);
 
         jMenuItemCadastroDeCaixas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemCadastroDeCaixas.setText("Adicionar Caixas");
@@ -146,9 +168,9 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
                 jMenuItemCadastroDeCaixasActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemCadastroDeCaixas);
+        jMenuCaixas.add(jMenuItemCadastroDeCaixas);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jMenuCaixas);
 
         jMenuEstoque.setText("Estoque");
 
@@ -247,14 +269,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuCadastro.add(jMenuItemCadastroUsuarios);
 
-        jMenuItemCadastroFuncoes.setText("Cadastro de Funções");
-        jMenuItemCadastroFuncoes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCadastroFuncoesActionPerformed(evt);
-            }
-        });
-        jMenuCadastro.add(jMenuItemCadastroFuncoes);
-
         jMenuBar1.add(jMenuCadastro);
 
         jMenuConsulta.setText("Consulta");
@@ -283,20 +297,33 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuConsulta.add(jMenuItemConsultaProdutos);
 
-        jMenuItem1.setText("Consulta de Vendas");
+        jMenuItemConsultaVendas.setText("Consulta de Vendas");
+        jMenuItemConsultaVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultaVendasActionPerformed(evt);
+            }
+        });
+        jMenuConsulta.add(jMenuItemConsultaVendas);
+
+        jMenuBar1.add(jMenuConsulta);
+
+        jMenuRelatorios.setText("Relatórios");
+
+        jMenuItem1.setText("Gerar Relatório de Entrada de Produtos");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenuConsulta.add(jMenuItem1);
-
-        jMenuBar1.add(jMenuConsulta);
-
-        jMenu4.setText("Relatórios");
+        jMenuRelatorios.add(jMenuItem1);
 
         jMenuItem17.setText("Gerar Relatório de Saída de Produtos");
-        jMenu4.add(jMenuItem17);
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenuRelatorios.add(jMenuItem17);
 
         jMenuItem18.setText("Gerar Relatório de Estoque");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
@@ -304,9 +331,9 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem18ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem18);
+        jMenuRelatorios.add(jMenuItem18);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(jMenuRelatorios);
 
         jMenuSair.setText("Sair");
 
@@ -399,12 +426,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         formCadastroUsuario.setVisible(true);
     }//GEN-LAST:event_jMenuItemCadastroUsuariosActionPerformed
 
-    private void jMenuItemCadastroFuncoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastroFuncoesActionPerformed
-        // TODO add your handling code here:
-        FormCadastroFuncao formCadastroFuncao = new FormCadastroFuncao(this, true);
-        formCadastroFuncao.setVisible(true);
-    }//GEN-LAST:event_jMenuItemCadastroFuncoesActionPerformed
-
     private void jMenuItemConsultaFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaFornecedoresActionPerformed
         // TODO add your handling code here:
         FormConsultaFornecedor formConsultaFornecedor = new FormConsultaFornecedor(this, true);
@@ -462,14 +483,29 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        SessaoCaixaServico sessaoCaixaServico = new SessaoCaixaServico();
-        //try {
-            sessaoCaixa = sessaoCaixaServico.verificarCaixaAberto(sessao);
-            if (sessaoCaixa != null) sessaoCaixa.setSessao(sessao);
-        //} catch(RuntimeException ex) {
-        //    JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
-        //            "Atenção", JOptionPane.WARNING_MESSAGE);
-        //}
+        switch (sessao.getUsuario().getFuncaoUsuario().getIdFuncao()){
+            case (1):
+                verificarCaixaAberto();
+                break;
+            case (2):
+                verificarCaixaAberto();
+                jMenuCadastro.setEnabled(false);
+                jMenuCaixas.setEnabled(false);
+                jMenuConsulta.setEnabled(false);
+                jMenuEstoque.setEnabled(false);
+                jMenuRelatorios.setEnabled(false);
+                break;
+            case (3):
+                jMenuCaixas.setEnabled(false);
+                jMenuVenda.setEnabled(false);
+                jMenuItemCadastroUsuarios.setEnabled(false);
+                jMenuItemConsultaVendas.setEnabled(false);
+                jMenuItemConsultaUsuarios.setEnabled(false);
+                jMenuRelatorios.setEnabled(false);
+                break;
+            default:
+                verificarCaixaAberto();
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void jMenuItemEncerrarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEncerrarSessaoActionPerformed
@@ -513,19 +549,61 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
         // TODO add your handling code here:
         
-        GeradorDeRelatorios g = new GeradorDeRelatorios();
+        GeradorDeRelatorioDeEstoque g = new GeradorDeRelatorioDeEstoque();
         try {
-            g.abrirRelatorioEstoque(1);
+            g.abrirRelatorioEstoque(sessao.getUsuario().getUnidade().getIdUnidade());
         } catch (JRException ex) {
             System.out.println(ex.getMessage());
         }
         
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemConsultaVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaVendasActionPerformed
         // TODO add your handling code here:
         FormConsultaVenda formConsultaVenda = new FormConsultaVenda(this, true, sessao.getUsuario().getUnidade());
         formConsultaVenda.setVisible(true);
+    }//GEN-LAST:event_jMenuItemConsultaVendasActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+
+        if (sessaoCaixa != null){
+            JOptionPane.showMessageDialog(this, "O caixa não foi encerrado.\nÉ necessário fechar o caixa antes de encerrar a sessão!",
+                    "Atenção", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+             int escolha = JOptionPane.showConfirmDialog(this, "Deseja realmente encerrar a sessão?.\n",
+                    "Atenção", JOptionPane.YES_NO_OPTION);
+            if (escolha == JOptionPane.YES_OPTION){
+                SessaoServico sessaoServico = new SessaoServico();
+                try {
+                    sessaoServico.encerrarSessao(sessao);
+                    System.exit(0);
+                } catch(RuntimeException ex) {
+                    JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
+                            "Atenção", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } 
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        // TODO add your handling code here:
+        GeradorDeRelatorioDeProdutosRetirados g = new GeradorDeRelatorioDeProdutosRetirados();
+        try {
+            g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade());
+        } catch (JRException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        GeradorDeRelatorioDeEntradaDeProdutos g = new GeradorDeRelatorioDeEntradaDeProdutos();
+        try {
+            g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade());
+        } catch (JRException ex) {
+            System.out.println(ex.getMessage());
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
@@ -564,10 +642,10 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCadastro;
+    private javax.swing.JMenu jMenuCaixas;
     private javax.swing.JMenu jMenuConsulta;
     private javax.swing.JMenu jMenuEstoque;
     private javax.swing.JMenuItem jMenuItem1;
@@ -577,7 +655,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemCadastroCategorias;
     private javax.swing.JMenuItem jMenuItemCadastroDeCaixas;
     private javax.swing.JMenuItem jMenuItemCadastroFornecedores;
-    private javax.swing.JMenuItem jMenuItemCadastroFuncoes;
     private javax.swing.JMenuItem jMenuItemCadastroMotivos;
     private javax.swing.JMenuItem jMenuItemCadastroPrecos;
     private javax.swing.JMenuItem jMenuItemCadastroProdutos;
@@ -588,14 +665,27 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemConsultaFornecedores;
     private javax.swing.JMenuItem jMenuItemConsultaProdutos;
     private javax.swing.JMenuItem jMenuItemConsultaUsuarios;
+    private javax.swing.JMenuItem jMenuItemConsultaVendas;
     private javax.swing.JMenuItem jMenuItemEncerrarSessao;
     private javax.swing.JMenuItem jMenuItemFinalizarCaixa;
     private javax.swing.JMenuItem jMenuItemIniciarCaixa;
     private javax.swing.JMenuItem jMenuItemRealizarVenda;
     private javax.swing.JMenuItem jMenuItemRegistrarEntradaProdutos;
     private javax.swing.JMenuItem jMenuItemRegistrarSaídaProdutos;
+    private javax.swing.JMenu jMenuRelatorios;
     private javax.swing.JMenu jMenuSair;
     private javax.swing.JMenu jMenuVenda;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+    public void verificarCaixaAberto() {
+        SessaoCaixaServico sessaoCaixaServico = new SessaoCaixaServico();
+            try {
+                sessaoCaixa = sessaoCaixaServico.verificarCaixaAberto(sessao);
+                if (sessaoCaixa != null) sessaoCaixa.setSessao(sessao);
+            } catch(RuntimeException ex) {
+                JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
+                        "Atenção", JOptionPane.WARNING_MESSAGE);
+            }
+    }
 }

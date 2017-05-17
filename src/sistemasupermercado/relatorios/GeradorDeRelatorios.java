@@ -12,12 +12,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.swing.JRViewer;
 import sistemasupermercado.conexao.ConnectionFactory;
- 
-/**
- * Classe com métodos utilitários para executar e abrir relatórios.
- *
- * @author David Buzatto
- */
+
 public class GeradorDeRelatorios {
  
     /**
@@ -34,11 +29,6 @@ public class GeradorDeRelatorios {
             InputStream inputStream,
             Map parametros,
             Connection conexao ) throws JRException {
- 
-        /*
-         * Cria um JasperPrint, que é a versão preenchida do relatório,
-         * usando uma conexão.
-         */
         JasperPrint print = JasperFillManager.fillReport(
                 inputStream, parametros, conexao );
  
@@ -58,23 +48,19 @@ public class GeradorDeRelatorios {
      */
     
     
-    public static void openReport(
+    /*public static void openReport(
             String titulo,
             InputStream inputStream,
             Map parametros,
             JRDataSource dataSource ) throws JRException {
  
-        /*
-         * Cria um JasperPrint, que é a versão preenchida do relatório,
-         * usando um datasource genérico.
-         */
         JasperPrint print = JasperFillManager.fillReport(
                 inputStream, parametros, dataSource );
  
         // abre o JasperPrint em um JFrame
         viewReportFrame( titulo, print );
  
-    }
+    }*/
 
 
  
@@ -114,18 +100,10 @@ public class GeradorDeRelatorios {
     
     public void abrirRelatorioClientes() throws JRException {
  
-    // note que estamos chamando o novo relatório
     InputStream inputStream = getClass().getResourceAsStream("report1.jasper");
-    // mapa de parâmetros do relatório
+
     Map parametros = new HashMap();
     ConnectionFactory conexao = new ConnectionFactory();
- 
-    /*
-     * Insere o parâmetro primeiroNome no mapa, com o valor F%
-     * ou seja, todos os clientes que tenham primeiro nome começando
-     * com a letra F.
-     */
-    
     
     
     parametros.put( "parameter1", 100 );
@@ -181,25 +159,25 @@ public class GeradorDeRelatorios {
     }
  
     
-    public void abrirRelatorioEstoque(Integer i) throws JRException {
+    /*public void abrirRelatorioEstoque(Integer i) throws JRException {
  
-    InputStream inputStream = getClass().getResourceAsStream("report2.jasper");
+        InputStream inputStream = getClass().getResourceAsStream("report2.jasper");
 
-    Map parametros = new HashMap();
-    ConnectionFactory conexao = new ConnectionFactory();
+        Map parametros = new HashMap();
+        ConnectionFactory conexao = new ConnectionFactory();
 
-    parametros.put( "parameter1", i);
-    
-    try {
- 
-        // abre o relatório
-        GeradorDeRelatorios.openReport( "Teste", inputStream, parametros,
-                conexao.getConnection());
- 
-    } catch ( JRException exc ) {
-        System.out.println(exc.getMessage());
-    }
-    }
+        parametros.put( "parameter1", i);
+
+        try {
+
+            // abre o relatório
+            GeradorDeRelatorios.openReport( "Teste", inputStream, parametros,
+                    conexao.getConnection());
+
+        } catch ( JRException exc ) {
+            System.out.println(exc.getMessage());
+        }
+    }*/
     
 }
  

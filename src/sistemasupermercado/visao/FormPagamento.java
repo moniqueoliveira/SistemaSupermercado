@@ -637,7 +637,7 @@ public class FormPagamento extends javax.swing.JDialog {
             return;
         }
         
-        if (troco.compareTo(new BigDecimal(txtDinheiro.getText().replaceAll(",", "."))) >= 0) {
+        if (!txtDinheiro.getText().equals("") && troco.compareTo(new BigDecimal(txtDinheiro.getText().replaceAll(",", "."))) >= 0) {
             JOptionPane.showMessageDialog(this, "O valor do troco deve ser menor que o valor pago em dinheiro!\n", 
                         "Atenção", JOptionPane.WARNING_MESSAGE);
             return;
@@ -661,12 +661,12 @@ public class FormPagamento extends javax.swing.JDialog {
             VendaServico vendaServico = new VendaServico();
             vendaServico.finalizarVenda(venda);
             pagamentoServico.inserir(pagamentoVenda);
-            try {
+            JOptionPane.showMessageDialog(this, "Venda finalizada com sucesso!", "Finalização de venda", JOptionPane.INFORMATION_MESSAGE);
+            /*try {
                 new GeradorDeRelatorios().abrirRelatorioClientes(venda.getIdVenda());
             } catch (JRException ex) {
                 Logger.getLogger(FormPagamento.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            JOptionPane.showMessageDialog(this, "Venda finalizada com sucesso!", "Finalização de venda", JOptionPane.INFORMATION_MESSAGE);
+            }*/
             dispose();
         } catch(RuntimeException ex) {
             JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
