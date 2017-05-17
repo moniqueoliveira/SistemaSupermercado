@@ -11,6 +11,7 @@ import java.util.List;
 import sistemasupermercado.dao.ItemVendaDAOImpl;
 import sistemasupermercado.dominio.Estoque;
 import sistemasupermercado.dominio.ItemVenda;
+import sistemasupermercado.dominio.Venda;
 import sistemasupermercado.exceptions.DadosInvalidosException;
 import sistemasupermercado.exceptions.EstoqueInsuficienteException;
 import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoException;
@@ -36,6 +37,21 @@ public class ItemVendaServico {
         try {
             verificarResultado(itemVendaDAO.alterar(itemVenda));
             itemVendaDAO.fecharConexao();
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao adicionar o item):\n" + ex.getMessage());
+        }
+    }
+    
+    public List<ItemVenda> listar(Venda venda) {
+        itemVendaDAO = new ItemVendaDAOImpl();
+        try {
+            List<ItemVenda> itens = itemVendaDAO.listar(venda.getIdVenda());
+            itemVendaDAO.fecharConexao();
+            for (ItemVenda item : itens) {
+                item.setProduto(new ProdutoServico().pesquisar(item.getProduto()));
+                item.setVenda(venda);
+            }
+            return itens;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException (Erro ao adicionar o item):\n" + ex.getMessage());
         }

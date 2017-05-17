@@ -15,13 +15,13 @@ public class PagamentoVenda {
     
     public BigDecimal obterTotal() {
         BigDecimal total = new BigDecimal(0);
-        total.add(dinheiro);
-        total.add(debito);
-        total.add(credito);
-        total.add(voucher);
-        total.add(cheque);
-        total.add(outros);
-        total.subtract(troco);
+        total = total.add(dinheiro);
+        total = total.add(debito);
+        total = total.add(credito);
+        total = total.add(voucher);
+        total = total.add(cheque);
+        total = total.add(outros);
+        total = total.subtract(troco);
         return total;
     }
 

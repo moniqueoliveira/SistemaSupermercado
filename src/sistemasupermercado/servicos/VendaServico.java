@@ -10,6 +10,7 @@ import sistemasupermercado.dao.VendaDAOImpl;
 import sistemasupermercado.dominio.Estoque;
 import sistemasupermercado.dominio.ItemVenda;
 import sistemasupermercado.dominio.Venda;
+import sistemasupermercado.exceptions.PesquisaNulaException;
 import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoException;
 import sistemasupermercado.interfaces.dao.VendaDAO;
 
@@ -32,16 +33,47 @@ public class VendaServico {
         }
     }
     
-    public List<Venda> listar(int idSessao) {
+    public Venda pesquisar(Venda venda) {
         vendaDAO = new VendaDAOImpl();
         try {
-            List<Venda> vendas = vendaDAO.listar(idSessao);
+            venda = vendaDAO.pesquisar(venda);
+            vendaDAO.fecharConexao();
+            verificarPesquisa(venda);
+            venda.setSessao(new SessaoServico().pesquisar(venda.getSessao()));
+            venda.setItens(new ItemVendaServico().listar(venda));
+            return venda;
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao pesquisar a venda):\n" + ex.getMessage());
+        }
+    }
+    
+    public List<Venda> listarVendasSessao(int idSessao) {
+        vendaDAO = new VendaDAOImpl();
+        try {
+            List<Venda> vendas = vendaDAO.listarVendasSessao(idSessao);
+            
             vendaDAO.fecharConexao();
             return vendas;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException (Erro ao listar as vendas):\n" + ex.getMessage());
         }
     }
+    
+    public List<Venda> listarVendasUnidade(int idUnidade) {
+        vendaDAO = new VendaDAOImpl();
+        try {
+            List<Venda> vendas = vendaDAO.listarVendasDoDia(idUnidade);
+            vendaDAO.fecharConexao();
+            for (Venda venda : vendas) {
+                venda.setSessao(new SessaoServico().pesquisar(venda.getSessao()));
+            }
+            return vendas;
+        } catch(SQLException ex) {
+            throw new RuntimeException("SQLException (Erro ao listar as vendas):\n" + ex.getMessage());
+        }
+    }
+    
+    
     
     public void finalizarVenda(Venda venda) {
         atualizarEstoque(venda.getItens());
@@ -92,6 +124,12 @@ public class VendaServico {
             vendaDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException (Erro ao cancelar a venda):\n" + ex.getMessage());
+        }
+    }
+
+    private void verificarPesquisa(Venda venda) {
+        if (venda == null){
+            throw new PesquisaNulaException("A pesquisa da venda não retornou resultados!");
         }
     }
 }

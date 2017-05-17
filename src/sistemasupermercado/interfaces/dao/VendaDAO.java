@@ -9,6 +9,8 @@ public interface VendaDAO extends DAO<Venda>{
     
     public Integer obterUltimoID() throws SQLException;
     
-    public List<Venda> listar(int idSessao) throws SQLException;
+    public List<Venda> listarVendasSessao(int idSessao) throws SQLException;
+    
+    public List<Venda> listarVendasDoDia(int idUnidade) throws SQLException;
     
 }

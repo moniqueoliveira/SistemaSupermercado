@@ -101,8 +101,16 @@ public class VendaDAOImpl implements VendaDAO {
     }
     
     @Override
-    public List<Venda> listar(int idSessao) throws SQLException {
+    public List<Venda> listarVendasSessao(int idSessao) throws SQLException {
         return listar("where id_sessao = " + idSessao + " and finalizada = 1");
+    }
+    
+    
+    @Override
+    public List<Venda> listarVendasDoDia(int idUnidade) throws SQLException {
+        String filtro = "v left join sessoes s on v.id_sessao = s.id_sessao left join usuarios us on "
+                + "us.id_usuario = s.id_usuario where datediff(curdate(), v.data) < 1 and us.id_unidade = " + idUnidade;
+        return listar(filtro);
     }
     
     @Override
@@ -118,5 +126,6 @@ public class VendaDAOImpl implements VendaDAO {
     public void fecharConexao() throws SQLException {
         this.conexao.close();
     }
+
     
 }

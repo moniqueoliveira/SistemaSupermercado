@@ -92,7 +92,11 @@ public class ItemVendaDAOImpl implements ItemVendaDAO {
     }
     
     @Override
-    public List<ItemVenda> listar(String filtro) throws SQLException {
+    public List<ItemVenda> listar(int idVenda) throws SQLException {
+        return listar("where id_venda = " + idVenda);
+    }
+    
+    private List<ItemVenda> listar(String filtro) throws SQLException {
         List<ItemVenda> itens = new ArrayList<>();
         String sql = "select * from itens_vendas " + filtro;
         PreparedStatement pstm = conexao.prepareStatement(sql);

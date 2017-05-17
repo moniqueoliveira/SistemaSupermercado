@@ -266,7 +266,7 @@ public class FormFechamentoDeCaixa extends javax.swing.JDialog {
         PagamentoServico pagamentoServico = new PagamentoServico();
         
         try {
-            List<Venda> vendas = vendaServico.listar(sessaoCaixa.getSessao().getIdSessao());
+            List<Venda> vendas = vendaServico.listarVendasSessao(sessaoCaixa.getSessao().getIdSessao());
             PagamentoVenda pagamentoVenda; 
             for (Venda venda : vendas) {
                 pagamentoVenda = new PagamentoVenda();
