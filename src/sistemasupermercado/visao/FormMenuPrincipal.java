@@ -463,13 +463,13 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         SessaoCaixaServico sessaoCaixaServico = new SessaoCaixaServico();
-        try {
+        //try {
             sessaoCaixa = sessaoCaixaServico.verificarCaixaAberto(sessao);
             if (sessaoCaixa != null) sessaoCaixa.setSessao(sessao);
-        } catch(RuntimeException ex) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
-                    "Atenção", JOptionPane.WARNING_MESSAGE);
-        }
+        //} catch(RuntimeException ex) {
+        //    JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
+        //            "Atenção", JOptionPane.WARNING_MESSAGE);
+        //}
     }//GEN-LAST:event_formWindowOpened
 
     private void jMenuItemEncerrarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEncerrarSessaoActionPerformed

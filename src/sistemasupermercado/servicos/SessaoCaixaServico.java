@@ -74,6 +74,11 @@ public class SessaoCaixaServico {
         try {
             sessaoCaixa = sessaoCaixaDAO.pesquisar(sessaoCaixa);
             sessaoCaixaDAO.fecharConexao();
+            if (sessaoCaixa != null) {
+                sessaoCaixa.setSessao(new SessaoServico().pesquisar(sessaoCaixa.getSessao()));
+                sessaoCaixa.getCaixa().setUnidade(sessaoCaixa.getSessao().getUsuario().getUnidade());
+                sessaoCaixa.setCaixa(new CaixaServico().pesquisar(sessaoCaixa.getCaixa()));
+            }
             return sessaoCaixa;
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException (Erro ao inserir o inicio de caixa):\n" + ex.getMessage());
