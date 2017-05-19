@@ -29,16 +29,34 @@
      itens_vendas.`Numero_Item` AS itens_vendas_Numero_Item,
      itens_vendas.`Quantidade` AS itens_vendas_Quantidade,
      itens_vendas.`Subtotal` AS itens_vendas_Subtotal,
-     itens_vendas.`Cancelado` AS itens_vendas_Cancelado
+     itens_vendas.`Cancelado` AS itens_vendas_Cancelado,
+     unidades.`ID_Unidade` AS unidades_ID_Unidade,
+     unidades.`Descricao` AS unidades_Descricao,
+     sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
+     sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
+     sessoes.`Inicio_Sessao` AS sessoes_Inicio_Sessao,
+     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao,
+     usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
+     usuarios.`Nome` AS usuarios_Nome,
+     usuarios.`Login` AS usuarios_Login,
+     usuarios.`Senha` AS usuarios_Senha,
+     usuarios.`ID_Unidade` AS usuarios_ID_Unidade,
+     usuarios.`ID_Funcao` AS usuarios_ID_Funcao,
+     usuarios.`Ativo` AS usuarios_Ativo
 FROM
      `produtos` produtos INNER JOIN `precos_produtos` precos_produtos ON produtos.`ID_Produto` = precos_produtos.`ID_Produto`
      INNER JOIN `itens_vendas` itens_vendas ON produtos.`ID_Produto` = itens_vendas.`ID_Produto`
      INNER JOIN `vendas` vendas ON itens_vendas.`ID_Venda` = vendas.`ID_Venda`
+     INNER JOIN `sessoes` sessoes ON vendas.`ID_Sessao` = sessoes.`ID_Sessao`
+     INNER JOIN `usuarios` usuarios ON sessoes.`ID_Usuario` = usuarios.`ID_Usuario`
+     INNER JOIN `unidades` unidades ON usuarios.`ID_Unidade` = unidades.`ID_Unidade`
+     INNER JOIN `precos_produtos` precos ON usuarios.`ID_Unidade` = unidades.`ID_Unidade`
+     AND precos_produtos.`ID_Unidade` = unidades.`ID_Unidade`
 WHERE
-     itens_vendas.`Cancelado` = 0 and vendas.`id_venda` = $P{parameter1}
-
+     itens_vendas.`Cancelado` = 0
+     and vendas.`id_venda` = $P{parameter1}
 GROUP BY
-itens_vendas.`numero_item`]]>
+     itens_vendas.`numero_item`]]>
 	</queryString>
 	<field name="vendas_ID_Venda" class="java.lang.Integer"/>
 	<field name="vendas_ID_Sessao" class="java.lang.Integer"/>
@@ -62,6 +80,19 @@ itens_vendas.`numero_item`]]>
 	<field name="itens_vendas_Quantidade" class="java.math.BigDecimal"/>
 	<field name="itens_vendas_Subtotal" class="java.math.BigDecimal"/>
 	<field name="itens_vendas_Cancelado" class="java.lang.Integer"/>
+	<field name="unidades_ID_Unidade" class="java.lang.Integer"/>
+	<field name="unidades_Descricao" class="java.lang.String"/>
+	<field name="sessoes_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
+	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<field name="usuarios_ID_Usuario" class="java.lang.Integer"/>
+	<field name="usuarios_Nome" class="java.lang.String"/>
+	<field name="usuarios_Login" class="java.lang.String"/>
+	<field name="usuarios_Senha" class="java.lang.String"/>
+	<field name="usuarios_ID_Unidade" class="java.lang.Integer"/>
+	<field name="usuarios_ID_Funcao" class="java.lang.Integer"/>
+	<field name="usuarios_Ativo" class="java.lang.Integer"/>
 	<background>
 		<band/>
 	</background>

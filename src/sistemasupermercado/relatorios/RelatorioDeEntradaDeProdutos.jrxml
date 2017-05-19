@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b2fd96f-368d-45de-ae40-c3030ef650aa">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="172"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.Integer"/>
+	<parameter name="mes" class="java.lang.String"/>
+	<parameter name="ano" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
@@ -46,7 +48,7 @@ FROM
      INNER JOIN `produtos` produtos ON entradas_produtos.`ID_Produto` = produtos.`ID_Produto`
      INNER JOIN `fornecedores` fornecedores ON entradas_produtos.`ID_Fornecedor` = fornecedores.`ID_Fornecedor`
 WHERE
-     unidades.`id_unidade` = $P{parameter1}]]>
+     unidades.`id_unidade` = $P{parameter1} and month(entradas_produtos.data) = $P{mes} and year(entrada_produtos.data) = '$P{ano}']]>
 	</queryString>
 	<field name="usuarios_ID_Usuario" class="java.lang.Integer"/>
 	<field name="usuarios_Nome" class="java.lang.String"/>

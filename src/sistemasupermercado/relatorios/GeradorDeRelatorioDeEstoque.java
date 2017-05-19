@@ -8,11 +8,12 @@ package sistemasupermercado.relatorios;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.conexao.ConnectionFactory;
 
 public class GeradorDeRelatorioDeEstoque extends GeradorDeRelatorios {
-    public void abrirRelatorioEstoque(Integer i) throws JRException {
+    public JFrame abrirRelatorioEstoque(Integer i) throws JRException {
  
         InputStream inputStream = getClass().getResourceAsStream("relatorioEstoque.jasper");
 
@@ -24,11 +25,12 @@ public class GeradorDeRelatorioDeEstoque extends GeradorDeRelatorios {
         try {
 
             // abre o relatório
-            GeradorDeRelatorios.openReport( "Relatório de Estoque", inputStream, parametros,
+            return new GeradorDeRelatorios().openReport( "Relatório de Estoque", inputStream, parametros,
                     conexao.getConnection());
 
         } catch ( JRException exc ) {
             System.out.println(exc.getMessage());
         }
+        return null;
     }
 }

@@ -15,6 +15,12 @@ import sistemasupermercado.conexao.ConnectionFactory;
 
 public class GeradorDeRelatorios {
  
+    
+    JFrame frameRelatorio;
+
+    public JFrame getFrameRelatorio() {
+        return frameRelatorio;
+    }
     /**
      * Abre um relatório usando uma conexão como datasource.
      *
@@ -24,7 +30,7 @@ public class GeradorDeRelatorios {
      * @param conexao Conexão utilizada para a execução da query.
      * @throws JRException Caso ocorra algum problema na execução do relatório
      */
-    public static void openReport(
+    public JFrame openReport(
             String titulo,
             InputStream inputStream,
             Map parametros,
@@ -33,7 +39,7 @@ public class GeradorDeRelatorios {
                 inputStream, parametros, conexao );
  
         // abre o JasperPrint em um JFrame
-        viewReportFrame( titulo, print );
+        return viewReportFrame( titulo, print );
  
     }
  
@@ -69,8 +75,9 @@ public class GeradorDeRelatorios {
      *
      * @param titulo Título do JFrame.
      * @param print JasperPrint do relatório.
+     * @return 
      */
-    private static void viewReportFrame( String titulo, JasperPrint print ) {
+    public JFrame viewReportFrame( String titulo, JasperPrint print ) {
  
         /*
          * Cria um JRViewer para exibir o relatório.
@@ -79,7 +86,7 @@ public class GeradorDeRelatorios {
         JRViewer viewer = new JRViewer( print );
  
         // cria o JFrame
-        JFrame frameRelatorio = new JFrame( titulo );
+        frameRelatorio = new JFrame( titulo );
  
         // adiciona o JRViewer no JFrame
         frameRelatorio.add( viewer, BorderLayout.CENTER );
@@ -93,8 +100,9 @@ public class GeradorDeRelatorios {
         // configura a operação padrão quando o JFrame for fechado.
         frameRelatorio.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
  
+        return frameRelatorio;
         // exibe o JFrame
-        frameRelatorio.setVisible(true);
+        //frameRelatorio.setVisible(true);
  
     }
     
@@ -113,7 +121,7 @@ public class GeradorDeRelatorios {
     try {
  
         // abre o relatório
-        GeradorDeRelatorios.openReport( "Teste", inputStream, parametros,
+        new GeradorDeRelatorios().openReport( "Teste", inputStream, parametros,
                 conexao.getConnection());
  
     } catch ( JRException exc ) {
@@ -147,7 +155,7 @@ public class GeradorDeRelatorios {
     try {
  
         // abre o relatório
-        GeradorDeRelatorios.openReport( "Teste", inputStream, parametros,
+        new GeradorDeRelatorios().openReport( "Teste", inputStream, parametros,
                 conexao.getConnection());
  
     } catch ( JRException exc ) {

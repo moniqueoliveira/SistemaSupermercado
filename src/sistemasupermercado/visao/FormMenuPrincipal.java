@@ -104,8 +104,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(221, 235, 255));
-
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/logotipo.png"))); // NOI18N
 
@@ -598,12 +596,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        GeradorDeRelatorioDeEntradaDeProdutos g = new GeradorDeRelatorioDeEntradaDeProdutos();
-        try {
-            g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade());
-        } catch (JRException ex) {
-            System.out.println(ex.getMessage());
-        }
+        FormGeradorDeRelatorioDeEntradas form = new FormGeradorDeRelatorioDeEntradas(this, true, sessao);
+        form.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**

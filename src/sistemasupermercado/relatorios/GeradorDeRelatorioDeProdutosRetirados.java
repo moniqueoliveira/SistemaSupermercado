@@ -8,6 +8,7 @@ package sistemasupermercado.relatorios;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.conexao.ConnectionFactory;
 
@@ -16,7 +17,7 @@ import sistemasupermercado.conexao.ConnectionFactory;
  * @author Monique
  */
 public class GeradorDeRelatorioDeProdutosRetirados extends GeradorDeRelatorios {
-        public void abrirRelatorio(Integer i) throws JRException {
+        public JFrame abrirRelatorio(Integer i) throws JRException {
  
     // note que estamos chamando o novo relatório
     InputStream inputStream = getClass().getResourceAsStream("RelatorioDeProdutosRetirados.jasper");
@@ -39,14 +40,14 @@ public class GeradorDeRelatorioDeProdutosRetirados extends GeradorDeRelatorios {
     try {
  
         // abre o relatório
-        GeradorDeRelatorios.openReport( "Relatório de Produtos Retirados", inputStream, parametros,
+        return new GeradorDeRelatorios().openReport( "Relatório de Produtos Retirados", inputStream, parametros,
                 conexao.getConnection());
  
     } catch ( JRException exc ) {
         System.out.println(exc.getMessage());
     }
     
-    
+    return null;
     
     }
 }

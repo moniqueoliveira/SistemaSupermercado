@@ -8,30 +8,32 @@ package sistemasupermercado.relatorios;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.conexao.ConnectionFactory;
 
-/**
- *
- * @author Monique
- */
 public class GeradorDeRelatorioDeEntradaDeProdutos extends GeradorDeRelatorios{
-    public void abrirRelatorio(Integer i) throws JRException {
+    public JFrame abrirRelatorio(Integer idUnidade, int mes, String ano) throws JRException {
 
-    InputStream inputStream = getClass().getResourceAsStream("RelatorioDeEntradaDeProdutos.jasper");
+        InputStream inputStream = getClass().getResourceAsStream("RelatorioDeEntradaDeProdutos.jasper");
 
-    Map parametros = new HashMap();
-    ConnectionFactory conexao = new ConnectionFactory();
+        Map parametros = new HashMap();
+        ConnectionFactory conexao = new ConnectionFactory();
 
-    parametros.put( "parameter1", i);
+        parametros.put( "parameter1", idUnidade);
+        parametros.put( "mes", mes);
+        parametros.put( "ano", ano);
 
-    try {
-        GeradorDeRelatorios.openReport( "Relatório de Produtos Retirados", inputStream, parametros,
-                conexao.getConnection());
- 
-    } catch ( JRException exc ) {
-        System.out.println(exc.getMessage());
-    }
+        JFrame jFrame;
+        try {
+            jFrame = new GeradorDeRelatorios().openReport( "Relatório de Entrada de Produtos", inputStream, parametros,
+                    conexao.getConnection());
+            return jFrame;
+
+        } catch ( JRException exc ) {
+            System.out.println(exc.getMessage());
+        }
+        return null;
     }
 
 }

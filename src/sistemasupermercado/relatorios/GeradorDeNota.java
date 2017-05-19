@@ -25,7 +25,7 @@ import sistemasupermercado.conexao.ConnectionFactory;
 public class GeradorDeNota{
     
   
-    private static void viewNota( String titulo, JasperPrint print ) {
+    public JFrame viewNota( String titulo, JasperPrint print ) {
 
         JRViewer viewer = new JRViewer( print );
  
@@ -49,12 +49,14 @@ public class GeradorDeNota{
         frameRelatorio.setAlwaysOnTop(true);
         frameRelatorio.setMaximumSize(new Dimension(300, 250));
         
+        return frameRelatorio;
+        
         // exibe o JFrame
-        frameRelatorio.setVisible(true);
+        //frameRelatorio.setVisible(true);
  
     }
     
-    public void abrirNota(Integer i) throws JRException {
+    public JFrame abrirNota(Integer i) throws JRException {
      
     // note que estamos chamando o novo relatório
     InputStream inputStream = getClass().getResourceAsStream("Nota.jasper");
@@ -66,15 +68,16 @@ public class GeradorDeNota{
     try {
  
         // abre o relatório
-        GeradorDeRelatorios.openReport( "Nota de Venda", inputStream, parametros,
+        return new GeradorDeRelatorios().openReport( "Nota de Venda", inputStream, parametros,
                 conexao.getConnection());
  
     } catch ( JRException exc ) {
         System.out.println(exc.getMessage());
     }
+    return null;
     }
     
-    public static void openReport(
+    public JFrame openReport(
             String titulo,
             InputStream inputStream,
             Map parametros,
@@ -83,7 +86,8 @@ public class GeradorDeNota{
                 inputStream, parametros, conexao );
  
         // abre o JasperPrint em um JFrame
-        viewNota( titulo, print );
+        return viewNota( titulo, print );
+        
  
     }
 }

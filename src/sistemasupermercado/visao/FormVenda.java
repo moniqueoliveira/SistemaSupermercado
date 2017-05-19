@@ -911,7 +911,7 @@ public class FormVenda extends javax.swing.JFrame {
         int idVenda = venda.getIdVenda();
         redefinirVenda();
         try {
-            new GeradorDeNota().abrirNota(idVenda);
+            new GeradorDeNota().abrirNota(idVenda).setVisible(true);
         } catch (JRException ex) {
             Logger.getLogger(FormPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
