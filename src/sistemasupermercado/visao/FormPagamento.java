@@ -34,6 +34,12 @@ public class FormPagamento extends javax.swing.JDialog {
     PagamentoVenda pagamentoVenda;
     Venda venda;
     
+    boolean pagamentoRegistrado;
+
+    public boolean isPagamentoRegistrado() {
+        return pagamentoRegistrado;
+    }
+    
     BigDecimal valorTotal = BigDecimal.ZERO;
     BigDecimal valorAPagar = BigDecimal.ZERO;
     BigDecimal troco = BigDecimal.ZERO;
@@ -91,6 +97,7 @@ public class FormPagamento extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pagamento");
+        setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png")));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -667,7 +674,9 @@ public class FormPagamento extends javax.swing.JDialog {
             } catch (JRException ex) {
                 Logger.getLogger(FormPagamento.class.getName()).log(Level.SEVERE, null, ex);
             }*/
+            pagamentoRegistrado = true;
             dispose();
+            
         } catch(RuntimeException ex) {
             JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
                         "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -675,10 +684,6 @@ public class FormPagamento extends javax.swing.JDialog {
         
     }
     
-    private void cancelarVenda() {
-        
-        
-    }
     
     private void atualizarTotal() {
         valorAPagar = valorTotal;
@@ -763,7 +768,7 @@ public class FormPagamento extends javax.swing.JDialog {
                     confirmarPagamento();
                     break;
                 case ("F3"):
-                    cancelarVenda();
+                    dispose();
             }
         }
     }

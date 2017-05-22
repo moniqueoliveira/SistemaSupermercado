@@ -66,7 +66,7 @@ public class ItemVendaDAOImpl implements ItemVendaDAO {
         pstm.setInt(1, idVenda);
         int result = pstm.executeUpdate();
         pstm.close();
-        return result == 1;
+        return result >= 1;
     }
     
     @Override

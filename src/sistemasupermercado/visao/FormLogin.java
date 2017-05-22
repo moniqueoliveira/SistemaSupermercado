@@ -7,6 +7,7 @@ package sistemasupermercado.visao;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import sistemasupermercado.dominio.Usuario;
 import sistemasupermercado.servicos.SessaoServico;
 import sistemasupermercado.servicos.UsuarioServico;
 import sistemasupermercado.visao.imagepanel.JImagePanel;
+import sistemasupermercado.visao.tabulacao.IndexedFocusTraversalPolicy;
 
 /**
  *
@@ -74,9 +76,14 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Login");
+        setTitle("Segurança");
         setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png")));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -91,6 +98,11 @@ public class FormLogin extends javax.swing.JFrame {
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsuarioActionPerformed(evt);
+            }
+        });
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyPressed(evt);
             }
         });
 
@@ -111,6 +123,11 @@ public class FormLogin extends javax.swing.JFrame {
 
         txtSenha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtSenha.setForeground(new java.awt.Color(102, 102, 102));
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyPressed(evt);
+            }
+        });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/logotipo2.png"))); // NOI18N
@@ -168,6 +185,12 @@ public class FormLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        if (txtUsuario.getText().equals("") || txtSenha.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Os campos usuário e senha são obrigatórios!",
+                    "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtUsuario.requestFocus();
+            return;
+        }
         
         Sessao sessao = new Sessao();
         
@@ -185,10 +208,29 @@ public class FormLogin extends javax.swing.JFrame {
             f.setVisible(true);
             dispose();
         } catch(RuntimeException e) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a inicialização da sessão.\n" + 
+            JOptionPane.showMessageDialog(this, "Não foi possível iniciar a sessão:\n" + 
                     e.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_TAB || evt.getKeyCode() == KeyEvent.VK_ENTER)
+            txtSenha.requestFocus();
+    }//GEN-LAST:event_txtUsuarioKeyPressed
+
+    private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_TAB)
+            btnEntrar.requestFocus();
+        else if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            btnEntrarActionPerformed(null);
+    }//GEN-LAST:event_txtSenhaKeyPressed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        definirOrdemDeTabulacao();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -235,4 +277,12 @@ public class FormLogin extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+    private void definirOrdemDeTabulacao() {
+        IndexedFocusTraversalPolicy policy = new IndexedFocusTraversalPolicy();
+        policy.addIndexedComponent(txtUsuario);
+        policy.addIndexedComponent(txtSenha);
+        policy.addIndexedComponent(btnEntrar);
+        setFocusTraversalPolicy(policy);
+    }
+
 }
