@@ -49,7 +49,7 @@ public class FormListaMotivoProdutoRetirado extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Motivos de Retirada de Produtos");
-        setIconImage(null);
+        setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png")));
         setIconImages(null);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {

@@ -5,11 +5,18 @@
  */
 package sistemasupermercado.visao;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.dominio.Sessao;
@@ -20,6 +27,7 @@ import sistemasupermercado.relatorios.GeradorDeRelatorioDeProdutosRetirados;
 import sistemasupermercado.relatorios.GeradorDeRelatorios;
 import sistemasupermercado.servicos.SessaoCaixaServico;
 import sistemasupermercado.servicos.SessaoServico;
+import sistemasupermercado.visao.imagepanel.JImagePanel;
 /**
  *
  * @author Monique
@@ -33,19 +41,35 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
      * Creates new form FormMenuPrincipal
      */
     private FormMenuPrincipal() {
+        definirImagemDeFundo();
         initComponents();
-        URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
-        Image image = Toolkit.getDefaultToolkit().getImage(url);
-        this.setIconImage(image);
+        
+        
     }
     
     public FormMenuPrincipal(Sessao sessao) {
         this.sessao = sessao;
-        
+        definirImagemDeFundo();
         initComponents();
-        URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
-        Image image = Toolkit.getDefaultToolkit().getImage(url);
-        this.setIconImage(image);
+        
+    }
+    
+    
+
+    private void definirImagemDeFundo() {
+        try {
+            JImagePanel panel = new JImagePanel(
+                    loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
+            //panel.setFillType(JImagePanel.FillType.CENTER);
+            this.setContentPane(panel);
+            //this.pack();
+        } catch (IOException ex) {
+            Logger.getLogger(FormMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private static BufferedImage loadImage(String file) throws IOException {
+        return ImageIO.read(new File(file));
     }
 
     /**
@@ -57,7 +81,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuVenda = new javax.swing.JMenu();
@@ -95,6 +118,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Marketsoft");
         setExtendedState(6);
+        setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png")));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -106,17 +130,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemasupermercado/imagens/logotipo.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
-        );
 
         jMenuVenda.setText("Venda");
 
@@ -351,11 +364,17 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(360, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(313, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -669,7 +688,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuRelatorios;
     private javax.swing.JMenu jMenuSair;
     private javax.swing.JMenu jMenuVenda;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
     public void verificarCaixaAberto() {
