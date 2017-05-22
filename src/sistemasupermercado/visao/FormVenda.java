@@ -323,6 +323,7 @@ public class FormVenda extends javax.swing.JFrame {
 
         tblItens.setAutoCreateRowSorter(true);
         tblItens.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tblItens.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tblItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -331,6 +332,7 @@ public class FormVenda extends javax.swing.JFrame {
 
             }
         ));
+        tblItens.setRowHeight(20);
         tblItens.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tblItensKeyPressed(evt);

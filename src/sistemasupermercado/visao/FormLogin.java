@@ -210,6 +210,7 @@ public class FormLogin extends javax.swing.JFrame {
         } catch(RuntimeException e) {
             JOptionPane.showMessageDialog(this, "Não foi possível iniciar a sessão:\n" + 
                     e.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtUsuario.requestFocus();
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 

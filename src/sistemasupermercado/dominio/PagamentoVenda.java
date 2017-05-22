@@ -5,13 +5,13 @@ import java.math.BigDecimal;
 
 public class PagamentoVenda {
     private Venda venda;
-    private BigDecimal dinheiro = BigDecimal.ZERO;
-    private BigDecimal debito = BigDecimal.ZERO;
-    private BigDecimal credito = BigDecimal.ZERO;
-    private BigDecimal voucher = BigDecimal.ZERO;
-    private BigDecimal cheque = BigDecimal.ZERO;
-    private BigDecimal outros = BigDecimal.ZERO;
-    private BigDecimal troco = BigDecimal.ZERO;
+    private BigDecimal dinheiro = new BigDecimal(0.00);
+    private BigDecimal debito = new BigDecimal(0.00);
+    private BigDecimal credito = new BigDecimal(0.00);
+    private BigDecimal voucher = new BigDecimal(0.00);
+    private BigDecimal cheque = new BigDecimal(0.00);
+    private BigDecimal outros = new BigDecimal(0.00);
+    private BigDecimal troco = new BigDecimal(0.00);
     
     public BigDecimal obterTotal() {
         BigDecimal total = new BigDecimal(0);

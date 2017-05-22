@@ -128,7 +128,6 @@ public class FormConsultaFornecedor extends javax.swing.JDialog {
 
         jLabel2.setText("ID:");
 
-        txtId.setEnabled(false);
         txtId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdKeyTyped(evt);
@@ -137,28 +136,21 @@ public class FormConsultaFornecedor extends javax.swing.JDialog {
 
         jLabel3.setText("Nome fantasia:");
 
-        txtNomeFantasia.setEnabled(false);
-
         jLabel5.setText("CNPJ:");
 
         jLabel4.setText("Razão social:");
 
-        txtRazaoSocial.setEnabled(false);
-
         bgAtivo.add(rbAtivo);
         rbAtivo.setText("Ativo");
-        rbAtivo.setEnabled(false);
 
         bgAtivo.add(rbInativo);
         rbInativo.setText("Inativo");
-        rbInativo.setEnabled(false);
 
         try {
             txtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtCnpj.setEnabled(false);
         txtCnpj.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCnpjKeyTyped(evt);
@@ -219,11 +211,8 @@ public class FormConsultaFornecedor extends javax.swing.JDialog {
 
         jLabel6.setText("Logradouro:");
 
-        txtLogradouro.setEnabled(false);
-
         jLabel7.setText("Número:");
 
-        txtNumero.setEnabled(false);
         txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNumeroKeyTyped(evt);
@@ -232,21 +221,14 @@ public class FormConsultaFornecedor extends javax.swing.JDialog {
 
         jLabel8.setText("Complemento:");
 
-        txtComplemento.setEnabled(false);
-
         jLabel9.setText("Bairro:");
-
-        txtBairro.setEnabled(false);
 
         jLabel10.setText("CEP:");
 
         jLabel11.setText("Cidade:");
 
-        txtCidade.setEnabled(false);
-
         jLabel12.setText("UF:");
 
-        txtUf.setEnabled(false);
         txtUf.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtUfKeyTyped(evt);
@@ -258,7 +240,6 @@ public class FormConsultaFornecedor extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtCep.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -543,7 +524,7 @@ public class FormConsultaFornecedor extends javax.swing.JDialog {
         preencherCmbPesquisaPor();
         definirModeloDasTabelas();
         preencherTblFornecedores("", "");
-        
+        bloquearEdicaoDeCampos();
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -816,6 +797,21 @@ public class FormConsultaFornecedor extends javax.swing.JDialog {
     private void limparTblTelefones() {
         DefaultTableModel dtm = (DefaultTableModel) tblTelefones.getModel();
         dtm.setRowCount(0);
+    }
+
+    private void bloquearEdicaoDeCampos() {
+        txtBairro.setEditable(false);
+        txtCep.setEditable(false);
+        txtCidade.setEditable(false);
+        txtCnpj.setEditable(false);
+        txtComplemento.setEditable(false);
+        txtId.setEditable(false);
+        txtLogradouro.setEditable(false);
+        txtNomeFantasia.setEditable(false);
+        txtNumero.setEditable(false);
+        txtRazaoSocial.setEditable(false);
+        txtUf.setEditable(false);
+        
     }
     
     /**

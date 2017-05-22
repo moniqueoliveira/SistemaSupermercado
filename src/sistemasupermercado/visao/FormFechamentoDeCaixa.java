@@ -31,7 +31,7 @@ public class FormFechamentoDeCaixa extends javax.swing.JDialog {
     
     //BigDecimal valorInicial = BigDecimal.ZERO;
     BigDecimal dinheiro = BigDecimal.ZERO;
-    BigDecimal debito = BigDecimal.ZERO;
+    BigDecimal debito = new BigDecimal(0.00);
     BigDecimal credito = BigDecimal.ZERO;
     BigDecimal cheque = BigDecimal.ZERO;
     BigDecimal voucher = BigDecimal.ZERO;
@@ -257,10 +257,12 @@ public class FormFechamentoDeCaixa extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+        bloquearEdcao();
         registrarAcoesDosAtalhos();
         VendaServico vendaServico = new VendaServico();
         PagamentoServico pagamentoServico = new PagamentoServico();
@@ -299,6 +301,8 @@ public class FormFechamentoDeCaixa extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
                        "Atenção", JOptionPane.WARNING_MESSAGE);
         }
+        
+        
         
     }//GEN-LAST:event_formWindowOpened
 
@@ -368,16 +372,19 @@ public class FormFechamentoDeCaixa extends javax.swing.JDialog {
     
     
     private void confirmarFechamento() {
+        int resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente fechar o caixa?", "Confirmação",
+                JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.NO_OPTION) return;
         SessaoCaixaServico sessaoCaixaServico = new SessaoCaixaServico();
         sessaoCaixa.setValorFechamento(total);
-        //try {
+        try {
             
             sessaoCaixaServico.fecharCaixa(sessaoCaixa);
             System.exit(0);
-        //} catch(RuntimeException ex) {
-        //    JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
-        //               "Atenção", JOptionPane.WARNING_MESSAGE);
-        //}
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+                       "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
         
         
     }
@@ -391,6 +398,15 @@ public class FormFechamentoDeCaixa extends javax.swing.JDialog {
         InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
         imapForm.put(KeyStroke.getKeyStroke("F2"), "acaoF2");
         imapForm.put(KeyStroke.getKeyStroke("F3"), "acaoF3");
+    }
+
+    private void bloquearEdcao() {
+        txtCheque.setEditable(false);
+        txtCredito.setEditable(false);
+        txtDebito.setEditable(false);
+        txtDinheiro.setEditable(false);
+        txtOutros.setEditable(false);
+        txtVoucher.setEditable(false);
     }
     
     /**

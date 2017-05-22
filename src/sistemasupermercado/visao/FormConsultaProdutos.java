@@ -90,6 +90,7 @@ public class FormConsultaProdutos extends javax.swing.JDialog {
         jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Produtos");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -329,6 +330,7 @@ public class FormConsultaProdutos extends javax.swing.JDialog {
         preencherTabela("", "");
         definirOrdemDeTabulação();
         registrarAcoesDosAtalhos();
+        bloquearEdicao();
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -521,6 +523,17 @@ public class FormConsultaProdutos extends javax.swing.JDialog {
         cmbPesquisarPor.addItem("Descrição reduzida");
         cmbPesquisarPor.addItem("Categoria");
         
+    }
+
+    private void bloquearEdicao() {
+        txtCategoria.setEditable(false);
+        txtCodigoDeBarras.setEditable(false);
+        txtDescricao.setEditable(false);
+        txtDescricaoReduzida.setEditable(false);
+        txtEstocavel.setEditable(false);
+        txtId.setEditable(false);
+        txtPreco.setEditable(false);
+        txtVendaFracionada.setEditable(false);
     }
     
     /**

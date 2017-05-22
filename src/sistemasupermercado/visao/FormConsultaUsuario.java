@@ -21,10 +21,6 @@ import sistemasupermercado.dominio.Usuario;
 import sistemasupermercado.servicos.UsuarioServico;
 import sistemasupermercado.visao.tabulacao.IndexedFocusTraversalPolicy;
 
-/**
- *
- * @author Monique
- */
 public class FormConsultaUsuario extends javax.swing.JDialog {
 
     Usuario usuario;
@@ -265,6 +261,7 @@ public class FormConsultaUsuario extends javax.swing.JDialog {
         preencherTabela("", "");
         definirOrdemDeTabulação();
         registrarAcoesDosAtalhos();
+        bloquearEdicao();
     }//GEN-LAST:event_formWindowOpened
 
     private void tblUsuariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblUsuariosKeyPressed
@@ -446,6 +443,14 @@ public class FormConsultaUsuario extends javax.swing.JDialog {
     private void limparTabela() {
         DefaultTableModel dtm =(DefaultTableModel) tblUsuarios.getModel();
         dtm.setRowCount(0);
+    }
+
+    private void bloquearEdicao() {
+        txtAtivo.setEditable(false);
+        txtFuncao.setEditable(false);
+        txtId.setEditable(false);
+        txtLogin.setEditable(false);
+        txtNome.setEditable(false);
     }
     
     /**

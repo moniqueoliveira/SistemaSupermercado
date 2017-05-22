@@ -20,6 +20,8 @@ public class AutenticacaoServico {
             throw new PesquisaNulaException("Usuário inexiste!");
         }
         
+        if (!usuarioPesquisa.isAtivo()) throw new PesquisaNulaException("Usuário inativo!");
+        
         if (!usuarioServico.validarSenha(usuario.getSenha(), usuarioPesquisa.getSenha()))    
             throw new PesquisaNulaException("Senha inválida!");
         return usuarioPesquisa;

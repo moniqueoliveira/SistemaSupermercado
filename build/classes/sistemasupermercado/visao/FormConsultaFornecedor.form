@@ -242,9 +242,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtId">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
               <Events>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtIdKeyTyped"/>
               </Events>
@@ -255,9 +252,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNomeFantasia">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
@@ -270,9 +264,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtRazaoSocial">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="rbAtivo">
               <Properties>
@@ -280,7 +271,6 @@
                   <ComponentRef name="bgAtivo"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Ativo"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="rbInativo">
@@ -289,7 +279,6 @@
                   <ComponentRef name="bgAtivo"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Inativo"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="txtCnpj">
@@ -297,7 +286,6 @@
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
                   <Format format="##.###.###/####-##" subtype="-1" type="5"/>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCnpjKeyTyped"/>
@@ -404,9 +392,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtLogradouro">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
@@ -414,9 +399,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNumero">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
               <Events>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNumeroKeyTyped"/>
               </Events>
@@ -427,9 +409,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtComplemento">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
               <Properties>
@@ -437,9 +416,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtBairro">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
@@ -452,9 +428,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCidade">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel12">
               <Properties>
@@ -462,9 +435,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtUf">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
               <Events>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtUfKeyTyped"/>
               </Events>
@@ -474,7 +444,6 @@
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
                   <Format format="#####-###" subtype="-1" type="5"/>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>

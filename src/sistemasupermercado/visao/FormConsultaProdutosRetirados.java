@@ -175,6 +175,7 @@ public class FormConsultaProdutosRetirados extends javax.swing.JDialog {
 
         jLabel10.setText("Observações:");
 
+        txtObservacao.setBackground(new java.awt.Color(240, 240, 240));
         txtObservacao.setColumns(20);
         txtObservacao.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         txtObservacao.setRows(5);
