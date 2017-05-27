@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a604475a-389c-4679-9b5c-57d08d62f803">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parameter1" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     truncate(sum(itens_vendas.`Quantidade`),0),
+     produtos.`ID_Produto` AS produtos_ID_Produto,
+     produtos.`Descricao` AS produtos_Descricao,
+     produtos.`Descricao_Reduzida` AS produtos_Descricao_Reduzida,
+     produtos.`Venda_Fracionada` AS produtos_Venda_Fracionada,
+     produtos.`ID_Categoria` AS produtos_ID_Categoria,
+     produtos.`Imagem` AS produtos_Imagem,
+     produtos.`Codigo_De_Barras` AS produtos_Codigo_De_Barras,
+     produtos.`Estocavel` AS produtos_Estocavel,
+     vendas.`ID_Venda` AS vendas_ID_Venda,
+     vendas.`ID_Sessao` AS vendas_ID_Sessao,
+     vendas.`Data` AS vendas_Data,
+     vendas.`Finalizada` AS vendas_Finalizada,
+     itens_vendas.`ID_Venda` AS itens_vendas_ID_Venda,
+     itens_vendas.`ID_Produto` AS itens_vendas_ID_Produto,
+     itens_vendas.`Numero_Item` AS itens_vendas_Numero_Item,
+     itens_vendas.`Quantidade` AS itens_vendas_Quantidade,
+     itens_vendas.`Subtotal` AS itens_vendas_Subtotal,
+     itens_vendas.`Cancelado` AS itens_vendas_Cancelado,
+     unidades.`ID_Unidade` AS unidades_ID_Unidade,
+     unidades.`Descricao` AS unidades_Descricao,
+     usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
+     usuarios.`Nome` AS usuarios_Nome,
+     usuarios.`Login` AS usuarios_Login,
+     usuarios.`Senha` AS usuarios_Senha,
+     usuarios.`ID_Unidade` AS usuarios_ID_Unidade,
+     usuarios.`ID_Funcao` AS usuarios_ID_Funcao,
+     usuarios.`Ativo` AS usuarios_Ativo,
+     sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
+     sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
+     sessoes.`Inicio_Sessao` AS sessoes_Inicio_Sessao,
+     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao,
+     categorias_produtos.`ID_Categoria` AS categorias_produtos_ID_Categoria,
+     categorias_produtos.`Descricao` AS categorias_produtos_Descricao,
+     (sum(itens_vendas.subtotal))
+FROM
+     `vendas` vendas INNER JOIN `itens_vendas` itens_vendas ON vendas.`ID_Venda` = itens_vendas.`ID_Venda`
+     INNER JOIN `produtos` produtos ON itens_vendas.`ID_Produto` = produtos.`ID_Produto`
+     INNER JOIN `categorias_produtos` categorias_produtos ON produtos.`ID_Categoria` = categorias_produtos.`ID_Categoria`
+     INNER JOIN `sessoes` sessoes ON vendas.`ID_Sessao` = sessoes.`ID_Sessao`
+     INNER JOIN `usuarios` usuarios ON sessoes.`ID_Usuario` = usuarios.`ID_Usuario`
+     INNER JOIN `unidades` unidades ON usuarios.`ID_Unidade` = unidades.`ID_Unidade`
+WHERE
+     unidades.`ID_Unidade` = $P{parameter1} and itens_vendas.cancelado != 1 and vendas.finalizada !=0
+GROUP BY
+     itens_vendas.id_produto
+order by
+     truncate(sum(itens_vendas.`Quantidade`),0) DESC]]>
+	</queryString>
+	<field name="truncate(sum(itens_vendas.`Quantidade`),0)" class="java.math.BigDecimal"/>
+	<field name="produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_Descricao" class="java.lang.String"/>
+	<field name="produtos_Descricao_Reduzida" class="java.lang.String"/>
+	<field name="produtos_Venda_Fracionada" class="java.lang.Boolean"/>
+	<field name="produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="produtos_Imagem" class="java.lang.Object"/>
+	<field name="produtos_Codigo_De_Barras" class="java.lang.String"/>
+	<field name="produtos_Estocavel" class="java.lang.Integer"/>
+	<field name="vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="vendas_ID_Sessao" class="java.lang.Integer"/>
+	<field name="vendas_Data" class="java.sql.Timestamp"/>
+	<field name="vendas_Finalizada" class="java.lang.Boolean"/>
+	<field name="itens_vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="itens_vendas_ID_Produto" class="java.lang.Integer"/>
+	<field name="itens_vendas_Numero_Item" class="java.lang.Integer"/>
+	<field name="itens_vendas_Quantidade" class="java.math.BigDecimal"/>
+	<field name="itens_vendas_Subtotal" class="java.math.BigDecimal"/>
+	<field name="itens_vendas_Cancelado" class="java.lang.Integer"/>
+	<field name="unidades_ID_Unidade" class="java.lang.Integer"/>
+	<field name="unidades_Descricao" class="java.lang.String"/>
+	<field name="usuarios_ID_Usuario" class="java.lang.Integer"/>
+	<field name="usuarios_Nome" class="java.lang.String"/>
+	<field name="usuarios_Login" class="java.lang.String"/>
+	<field name="usuarios_Senha" class="java.lang.String"/>
+	<field name="usuarios_ID_Unidade" class="java.lang.Integer"/>
+	<field name="usuarios_ID_Funcao" class="java.lang.Integer"/>
+	<field name="usuarios_Ativo" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
+	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<field name="categorias_produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="categorias_produtos_Descricao" class="java.lang.String"/>
+	<field name="(sum(itens_vendas.subtotal))" class="java.math.BigDecimal"/>
+	<group name="itens_vendas_ID_Produto">
+		<groupExpression><![CDATA[$F{itens_vendas_ID_Produto}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="129" y="29" width="287" height="23" forecolor="#3F83BF" uuid="6fb10027-c89d-48af-979a-dc867010f36d"/>
+				<textElement>
+					<font fontName="Tahoma" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Produtos Vendidos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="71" height="20" backcolor="#99C0FF" uuid="ff2c25e2-de99-4f56-abbc-3d019b5969b7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID do Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="71" y="0" width="139" height="20" backcolor="#99C0FF" uuid="d32346a1-cf03-4082-83e0-825445d9edbc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="336" y="0" width="103" height="20" backcolor="#99C0FF" uuid="9cc21075-6590-40da-945c-368e749108a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unidades Vendidas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="210" y="0" width="126" height="20" backcolor="#99C0FF" uuid="7723d0a5-c1fc-492c-b448-e04d87b7210d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="439" y="0" width="116" height="20" backcolor="#99C0FF" uuid="599f302d-5df7-4969-b946-669354fd7f17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="71" height="20" uuid="b7798b65-35ac-41cf-b4ad-01e0df248443"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{itens_vendas_ID_Produto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="0" width="126" height="20" uuid="cd92627a-ae8a-4376-86d6-7bf55d129b12"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{categorias_produtos_Descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="0" width="103" height="20" uuid="33a4b173-8e9f-4422-a7d9-d7b3a416a7c9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{truncate(sum(itens_vendas.`Quantidade`),0)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="439" y="0" width="116" height="20" uuid="51d62d99-e867-4cb6-b1d5-cd64ed0241ab"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{(sum(itens_vendas.subtotal))}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="71" y="0" width="139" height="20" uuid="5d2b8447-0ddf-4487-a6a2-6184c2288268"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produtos_Descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="34" width="100" height="20" uuid="eb61cf37-657a-4a30-b5dc-df6c51e9ce6c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="361" y="34" width="143" height="20" uuid="b9e0beea-a161-4cd2-8d96-a38d14d6ce79"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="504" y="34" width="51" height="20" uuid="31ebf1b6-1857-4850-8aaa-953cf4777905"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch"/>
+	</summary>
+</jasperReport>

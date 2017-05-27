@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="de8f2d6e-be59-481f-99a6-d63e3ea03ad2">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idUnidade" class="java.lang.Integer"/>
+	<parameter name="dia" class="java.lang.String"/>
+	<parameter name="mesMin" class="java.lang.String"/>
+	<parameter name="mesMax" class="java.lang.String"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<parameter name="funcionario" class="java.lang.String"/>
+	<parameter name="fornecedor" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     produtos.`ID_Produto` AS produtos_ID_Produto,
+     produtos.`Descricao` AS produtos_Descricao,
+     produtos.`Descricao_Reduzida` AS produtos_Descricao_Reduzida,
+     produtos.`Venda_Fracionada` AS produtos_Venda_Fracionada,
+     produtos.`ID_Categoria` AS produtos_ID_Categoria,
+     produtos.`Imagem` AS produtos_Imagem,
+     produtos.`Codigo_De_Barras` AS produtos_Codigo_De_Barras,
+     produtos.`Estocavel` AS produtos_Estocavel,
+     usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
+     usuarios.`Nome` AS usuarios_Nome,
+     usuarios.`Login` AS usuarios_Login,
+     usuarios.`Senha` AS usuarios_Senha,
+     usuarios.`ID_Unidade` AS usuarios_ID_Unidade,
+     usuarios.`ID_Funcao` AS usuarios_ID_Funcao,
+     usuarios.`Ativo` AS usuarios_Ativo,
+     sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
+     sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
+     sessoes.`Inicio_Sessao` AS sessoes_Inicio_Sessao,
+     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao,
+     unidades.`ID_Unidade` AS unidades_ID_Unidade,
+     unidades.`Descricao` AS unidades_Descricao,
+     produtos_retirados.`ID_Retirada` AS produtos_retirados_ID_Retirada,
+     produtos_retirados.`ID_Produto` AS produtos_retirados_ID_Produto,
+     produtos_retirados.`Quantidade` AS produtos_retirados_Quantidade,
+     produtos_retirados.`Data` AS produtos_retirados_Data,
+     produtos_retirados.`ID_Sessao` AS produtos_retirados_ID_Sessao,
+     produtos_retirados.`ID_Motivo` AS produtos_retirados_ID_Motivo,
+     produtos_retirados.`Observacao` AS produtos_retirados_Observacao,
+     motivos_produtos_retirados.`ID_Motivo` AS motivos_produtos_retirados_ID_Motivo,
+     motivos_produtos_retirados.`Descricao` AS motivos_produtos_retirados_Descricao,
+     fornecedores.`ID_Fornecedor` AS fornecedores_ID_Fornecedor,
+     fornecedores.`Nome_Fantasia` AS fornecedores_Nome_Fantasia,
+     fornecedores.`Razao_Social` AS fornecedores_Razao_Social,
+     fornecedores.`CNPJ` AS fornecedores_CNPJ,
+     fornecedores.`Ativo` AS fornecedores_Ativo,
+     entradas_produtos.`ID_Produto` AS entradas_produtos_ID_Produto,
+     entradas_produtos.`ID_Fornecedor` AS entradas_produtos_ID_Fornecedor,
+     entradas_produtos.`ID_Entrada` AS entradas_produtos_ID_Entrada,
+     entradas_produtos.`Quantidade` AS entradas_produtos_Quantidade,
+     entradas_produtos.`Valor_Unitario` AS entradas_produtos_Valor_Unitario,
+     entradas_produtos.`Data` AS entradas_produtos_Data,
+     entradas_produtos.`ID_Sessao` AS entradas_produtos_ID_Sessao
+FROM
+     `usuarios` usuarios INNER JOIN `sessoes` sessoes ON usuarios.`ID_Usuario` = sessoes.`ID_Usuario`
+     INNER JOIN `produtos_retirados` produtos_retirados ON sessoes.`ID_Sessao` = produtos_retirados.`ID_Sessao`
+     INNER JOIN `produtos` produtos ON produtos_retirados.`id_produto` = produtos.`id_produto`
+     INNER JOIN `motivos_produtos_retirados` motivos_produtos_retirados ON produtos_retirados.`ID_Motivo` = motivos_produtos_retirados.`ID_Motivo`
+     RIGHT OUTER JOIN `entradas_produtos` entradas_produtos ON produtos.`ID_Produto` = entradas_produtos.`ID_Produto`
+     LEFT OUTER JOIN `fornecedores` fornecedores ON entradas_produtos.`ID_Fornecedor` = fornecedores.`ID_Fornecedor`
+     INNER JOIN `unidades` unidades ON usuarios.`ID_Unidade` = unidades.`ID_Unidade`
+WHERE
+     unidades.`id_unidade` = $P{idUnidade}
+     and ((day(produtos_retirados.data) = $P{dia}
+     and month(produtos_retirados.data) = $P{mesMin}
+     and year(produtos_retirados.data) = $P{ano})
+     or (month(produtos_retirados.data) >= $P{mesMin}
+     and month(produtos_retirados.data) <= $P{mesMax}
+     and year(produtos_retirados.data) = $P{ano})
+     or (usuarios.nome LIKE $P{funcionario})
+     or (fornecedores.razao_social LIKE $P{fornecedor}
+     or fornecedores.nome_fantasia LIKE $P{fornecedor}))
+GROUP BY
+     produtos_retirados.id_retirada
+ORDER BY
+     produtos_retirados.data ASC]]>
+	</queryString>
+	<field name="produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_Descricao" class="java.lang.String"/>
+	<field name="produtos_Descricao_Reduzida" class="java.lang.String"/>
+	<field name="produtos_Venda_Fracionada" class="java.lang.Boolean"/>
+	<field name="produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="produtos_Imagem" class="java.lang.Object"/>
+	<field name="produtos_Codigo_De_Barras" class="java.lang.String"/>
+	<field name="produtos_Estocavel" class="java.lang.Integer"/>
+	<field name="usuarios_ID_Usuario" class="java.lang.Integer"/>
+	<field name="usuarios_Nome" class="java.lang.String"/>
+	<field name="usuarios_Login" class="java.lang.String"/>
+	<field name="usuarios_Senha" class="java.lang.String"/>
+	<field name="usuarios_ID_Unidade" class="java.lang.Integer"/>
+	<field name="usuarios_ID_Funcao" class="java.lang.Integer"/>
+	<field name="usuarios_Ativo" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
+	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<field name="unidades_ID_Unidade" class="java.lang.Integer"/>
+	<field name="unidades_Descricao" class="java.lang.String"/>
+	<field name="produtos_retirados_ID_Retirada" class="java.lang.Integer"/>
+	<field name="produtos_retirados_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_retirados_Quantidade" class="java.math.BigDecimal"/>
+	<field name="produtos_retirados_Data" class="java.sql.Timestamp"/>
+	<field name="produtos_retirados_ID_Sessao" class="java.lang.Integer"/>
+	<field name="produtos_retirados_ID_Motivo" class="java.lang.Integer"/>
+	<field name="produtos_retirados_Observacao" class="java.lang.String"/>
+	<field name="motivos_produtos_retirados_ID_Motivo" class="java.lang.Integer"/>
+	<field name="motivos_produtos_retirados_Descricao" class="java.lang.String"/>
+	<field name="fornecedores_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="fornecedores_Nome_Fantasia" class="java.lang.String"/>
+	<field name="fornecedores_Razao_Social" class="java.lang.String"/>
+	<field name="fornecedores_CNPJ" class="java.lang.String"/>
+	<field name="fornecedores_Ativo" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Entrada" class="java.lang.Integer"/>
+	<field name="entradas_produtos_Quantidade" class="java.math.BigDecimal"/>
+	<field name="entradas_produtos_Valor_Unitario" class="java.math.BigDecimal"/>
+	<field name="entradas_produtos_Data" class="java.sql.Timestamp"/>
+	<field name="entradas_produtos_ID_Sessao" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="235" y="26" width="291" height="25" forecolor="#3F83BF" uuid="b0ca69c0-b4f1-43c9-a089-c587fd68c016"/>
+				<textElement>
+					<font fontName="Tahoma" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Produtos Retirados]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="16" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="54" height="20" backcolor="#99C0FF" uuid="9aea813c-7d74-413a-ba3d-acd469154ceb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="54" y="0" width="96" height="20" backcolor="#99C0FF" uuid="a5daee6f-3d65-475f-8660-2b7f6ef08a67"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="150" y="0" width="61" height="20" backcolor="#99C0FF" uuid="11ebbe5b-194c-47b4-90dd-0d10f8986132"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="211" y="0" width="100" height="20" backcolor="#99C0FF" uuid="f5c1977c-7451-464d-9cc5-22d57a8813ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Retirada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="458" y="0" width="130" height="20" backcolor="#99C0FF" uuid="cea4c567-8b29-4011-a2d7-7b306aa416b9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo de Retirada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="688" y="0" width="114" height="20" backcolor="#99C0FF" uuid="50c52a22-4531-4e7f-b18f-f8277ed85819"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Funcionário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="588" y="0" width="100" height="20" backcolor="#99C0FF" uuid="ce36e1ee-63b5-4256-b0a4-5783ae256d75"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="311" y="0" width="147" height="20" backcolor="#99C0FF" uuid="8b23bf14-597c-4748-97e4-48fe4f6d8858"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fornecedor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="688" y="0" width="114" height="20" uuid="574e4171-f50b-42ee-a88d-c2c60edbca28"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{usuarios_Nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="458" y="0" width="130" height="20" uuid="03f450e9-3a1f-4031-9d38-02f4956f784b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{motivos_produtos_retirados_Descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="211" y="0" width="100" height="20" uuid="f80327f2-758f-4802-939e-c6438cadd0a7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produtos_retirados_Data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="61" height="20" uuid="4d56524d-e7d9-44bc-836a-efd199d3a200"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produtos_retirados_Quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="0" width="96" height="20" uuid="1d58f4a9-d3aa-4a59-91f6-60c86cc36c07"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="54" height="20" uuid="6ae1ecdb-7c33-497d-b462-179433729a73"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produtos_ID_Produto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="588" y="0" width="100" height="20" uuid="55853665-616d-4d7a-83c9-e3fe62a0fe17"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produtos_retirados_Observacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="0" width="147" height="20" uuid="72aad895-00a3-4dd4-a9c7-99975fdbb01a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fornecedores_Razao_Social}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

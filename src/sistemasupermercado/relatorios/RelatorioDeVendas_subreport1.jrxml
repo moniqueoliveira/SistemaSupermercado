@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeVendas_subreport1" language="groovy" pageWidth="595" pageHeight="841" orientation="Landscape" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b474e819-bd7d-4492-9bc0-ed4a81acd4b7">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idVenda" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     vendas.`ID_Venda` AS vendas_ID_Venda,
+     vendas.`ID_Sessao` AS vendas_ID_Sessao,
+     vendas.`Data` AS vendas_Data,
+     vendas.`Finalizada` AS vendas_Finalizada,
+     itens_vendas.`ID_Venda` AS itens_vendas_ID_Venda,
+     itens_vendas.`ID_Produto` AS itens_vendas_ID_Produto,
+     itens_vendas.`Numero_Item` AS itens_vendas_Numero_Item,
+     itens_vendas.`Quantidade` AS itens_vendas_Quantidade,
+     itens_vendas.`Subtotal` AS itens_vendas_Subtotal,
+     itens_vendas.`Cancelado` AS itens_vendas_Cancelado,
+     sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
+     sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
+     sessoes.`Inicio_Sessao` AS sessoes_Inicio_Sessao,
+     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao,
+     produtos.`ID_Produto` AS produtos_ID_Produto,
+     produtos.`Descricao` AS produtos_Descricao,
+     produtos.`Descricao_Reduzida` AS produtos_Descricao_Reduzida,
+     produtos.`Venda_Fracionada` AS produtos_Venda_Fracionada,
+     produtos.`ID_Categoria` AS produtos_ID_Categoria,
+     produtos.`Imagem` AS produtos_Imagem,
+     produtos.`Codigo_De_Barras` AS produtos_Codigo_De_Barras,
+     produtos.`Estocavel` AS produtos_Estocavel,
+     precos_produtos.`ID_Unidade` AS precos_produtos_ID_Unidade,
+     precos_produtos.`ID_Produto` AS precos_produtos_ID_Produto,
+     precos_produtos.`Valor` AS precos_produtos_Valor,
+     max(precos_produtos.`Data`) AS precos_produtos_Data
+FROM
+     `vendas` vendas INNER JOIN `itens_vendas` itens_vendas ON vendas.`ID_Venda` = itens_vendas.`ID_Venda`
+     INNER JOIN `sessoes` sessoes ON vendas.`ID_Sessao` = sessoes.`ID_Sessao`
+     INNER JOIN `produtos` produtos ON itens_vendas.`ID_Produto` = produtos.`ID_Produto`
+     INNER JOIN `precos_produtos` precos_produtos ON produtos.`ID_Produto` = precos_produtos.`ID_Produto`
+WHERE
+     vendas.id_venda = $P{idVenda}
+GROUP BY
+     itens_vendas.numero_item]]>
+	</queryString>
+	<field name="vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="vendas_ID_Sessao" class="java.lang.Integer"/>
+	<field name="vendas_Data" class="java.sql.Timestamp"/>
+	<field name="vendas_Finalizada" class="java.lang.Boolean"/>
+	<field name="itens_vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="itens_vendas_ID_Produto" class="java.lang.Integer"/>
+	<field name="itens_vendas_Numero_Item" class="java.lang.Integer"/>
+	<field name="itens_vendas_Quantidade" class="java.math.BigDecimal"/>
+	<field name="itens_vendas_Subtotal" class="java.math.BigDecimal"/>
+	<field name="itens_vendas_Cancelado" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
+	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<field name="produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_Descricao" class="java.lang.String"/>
+	<field name="produtos_Descricao_Reduzida" class="java.lang.String"/>
+	<field name="produtos_Venda_Fracionada" class="java.lang.Boolean"/>
+	<field name="produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="produtos_Imagem" class="java.lang.Object"/>
+	<field name="produtos_Codigo_De_Barras" class="java.lang.String"/>
+	<field name="produtos_Estocavel" class="java.lang.Integer"/>
+	<field name="precos_produtos_ID_Unidade" class="java.lang.Integer"/>
+	<field name="precos_produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="precos_produtos_Valor" class="java.math.BigDecimal"/>
+	<field name="precos_produtos_Data" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="68" height="21" backcolor="#B4CEF7" uuid="8a3c25a9-841f-4d6b-bbab-665e0c10b278"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="68" y="0" width="166" height="21" backcolor="#B4CEF7" uuid="298c2d77-fa93-41d0-8973-d95a78d8d88f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="234" y="0" width="93" height="21" backcolor="#B4CEF7" uuid="9e539450-0518-484d-b892-0f4204b0f095"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="432" y="0" width="123" height="21" backcolor="#B4CEF7" uuid="2473b5f5-83fe-4eac-b232-72d38d2a0079"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subtotal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="327" y="0" width="105" height="21" backcolor="#B4CEF7" uuid="8b4b151b-fa05-4f74-8556-ad62ae68ac72"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preço]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="432" y="0" width="123" height="20" uuid="0c191aea-3f83-4c06-afb3-c5572586c4c3"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itens_vendas_Subtotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="234" y="0" width="93" height="20" uuid="1a3e4724-ee95-4399-9793-ecc457f7332a"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itens_vendas_Quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="68" height="20" uuid="e969cbb1-9202-4613-978f-905f22ca965f"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itens_vendas_Numero_Item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="0" width="105" height="20" uuid="d8f75c15-6157-4ef0-9e85-ef79390aee2b"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precos_produtos_Valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="68" y="0" width="166" height="20" uuid="ee86d111-f605-42a6-bebe-c6ad0e1a221d"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="7">
+			<line>
+				<reportElement x="0" y="1" width="555" height="1" forecolor="#3380FF" uuid="b3bacfca-ed04-49bc-9387-f42a71167b58"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

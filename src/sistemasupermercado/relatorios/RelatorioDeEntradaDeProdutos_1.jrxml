@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b2fd96f-368d-45de-ae40-c3030ef650aa">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idUnidade" class="java.lang.String"/>
+	<parameter name="mesMin" class="java.lang.String"/>
+	<parameter name="mesMax" class="java.lang.String"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
+     usuarios.`Nome` AS usuarios_Nome,
+     usuarios.`Login` AS usuarios_Login,
+     usuarios.`Senha` AS usuarios_Senha,
+     usuarios.`ID_Unidade` AS usuarios_ID_Unidade,
+     usuarios.`ID_Funcao` AS usuarios_ID_Funcao,
+     usuarios.`Ativo` AS usuarios_Ativo,
+     fornecedores.`ID_Fornecedor` AS fornecedores_ID_Fornecedor,
+     fornecedores.`Nome_Fantasia` AS fornecedores_Nome_Fantasia,
+     fornecedores.`Razao_Social` AS fornecedores_Razao_Social,
+     fornecedores.`CNPJ` AS fornecedores_CNPJ,
+     fornecedores.`Ativo` AS fornecedores_Ativo,
+     unidades.`ID_Unidade` AS unidades_ID_Unidade,
+     unidades.`Descricao` AS unidades_Descricao,
+     produtos.`ID_Produto` AS produtos_ID_Produto,
+     produtos.`Descricao` AS produtos_Descricao,
+     produtos.`Descricao_Reduzida` AS produtos_Descricao_Reduzida,
+     produtos.`Venda_Fracionada` AS produtos_Venda_Fracionada,
+     produtos.`ID_Categoria` AS produtos_ID_Categoria,
+     produtos.`Imagem` AS produtos_Imagem,
+     produtos.`Codigo_De_Barras` AS produtos_Codigo_De_Barras,
+     produtos.`Estocavel` AS produtos_Estocavel,
+     entradas_produtos.`ID_Entrada` AS entradas_produtos_ID_Entrada,
+     entradas_produtos.`ID_Produto` AS entradas_produtos_ID_Produto,
+     entradas_produtos.`ID_Fornecedor` AS entradas_produtos_ID_Fornecedor,
+     entradas_produtos.`Quantidade` AS entradas_produtos_Quantidade,
+     entradas_produtos.`Valor_Unitario` AS entradas_produtos_Valor_Unitario,
+     entradas_produtos.`Data` AS entradas_produtos_Data,
+     entradas_produtos.`ID_Sessao` AS entradas_produtos_ID_Sessao,
+     sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
+     sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
+     sessoes.`Inicio_Sessao` AS sessoes_Inicio_Sessao,
+     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao
+FROM
+     `unidades` unidades INNER JOIN `usuarios` usuarios ON unidades.`ID_Unidade` = usuarios.`ID_Unidade`
+     INNER JOIN `sessoes` sessoes ON usuarios.`ID_Usuario` = sessoes.`ID_Usuario`
+     INNER JOIN `entradas_produtos` entradas_produtos ON sessoes.`ID_Sessao` = entradas_produtos.`ID_Sessao`
+     INNER JOIN `produtos` produtos ON entradas_produtos.`ID_Produto` = produtos.`ID_Produto`
+     INNER JOIN `fornecedores` fornecedores ON entradas_produtos.`ID_Fornecedor` = fornecedores.`ID_Fornecedor`
+WHERE
+     unidades.`id_unidade` = $P{idUnidade}
+     and (month(entradas_produtos.data) >= $P{mesMin}
+     and month(entradas_produtos.data) <= $P{mesMax}
+     and year(entradas_produtos.data) = $P{ano})
+ORDER BY
+     entradas_produtos.id_entrada ASC]]>
+	</queryString>
+	<field name="usuarios_ID_Usuario" class="java.lang.Integer"/>
+	<field name="usuarios_Nome" class="java.lang.String"/>
+	<field name="usuarios_Login" class="java.lang.String"/>
+	<field name="usuarios_Senha" class="java.lang.String"/>
+	<field name="usuarios_ID_Unidade" class="java.lang.Integer"/>
+	<field name="usuarios_ID_Funcao" class="java.lang.Integer"/>
+	<field name="usuarios_Ativo" class="java.lang.Integer"/>
+	<field name="fornecedores_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="fornecedores_Nome_Fantasia" class="java.lang.String"/>
+	<field name="fornecedores_Razao_Social" class="java.lang.String"/>
+	<field name="fornecedores_CNPJ" class="java.lang.String"/>
+	<field name="fornecedores_Ativo" class="java.lang.Integer"/>
+	<field name="unidades_ID_Unidade" class="java.lang.Integer"/>
+	<field name="unidades_Descricao" class="java.lang.String"/>
+	<field name="produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_Descricao" class="java.lang.String"/>
+	<field name="produtos_Descricao_Reduzida" class="java.lang.String"/>
+	<field name="produtos_Venda_Fracionada" class="java.lang.Boolean"/>
+	<field name="produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="produtos_Imagem" class="java.lang.Object"/>
+	<field name="produtos_Codigo_De_Barras" class="java.lang.String"/>
+	<field name="produtos_Estocavel" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Entrada" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="entradas_produtos_Quantidade" class="java.math.BigDecimal"/>
+	<field name="entradas_produtos_Valor_Unitario" class="java.math.BigDecimal"/>
+	<field name="entradas_produtos_Data" class="java.sql.Timestamp"/>
+	<field name="entradas_produtos_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
+	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="114" y="26" width="311" height="25" forecolor="#3F83BF" uuid="8a5a56ff-5bdd-49fb-81cf-512b76b8af8b"/>
+				<textElement>
+					<font fontName="Tahoma" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Entrada de Produtos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="44" height="27" backcolor="#99C0FF" uuid="78b01eb5-1fa3-4c01-9d7f-ad553fcac55e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Entrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="44" y="0" width="100" height="27" backcolor="#99C0FF" uuid="1124ab1c-32b5-499c-95e1-dd13f4a7e5de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="144" y="0" width="56" height="27" backcolor="#99C0FF" uuid="c278500c-4b38-48d6-8263-84a42606ec87"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="200" y="0" width="100" height="27" backcolor="#99C0FF" uuid="d3eba59d-035a-4926-81d6-0997bf6ca425"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Entrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="300" y="0" width="55" height="27" backcolor="#99C0FF" uuid="3a871c71-3ac3-45c4-ac4a-28c0d4da6ac9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Pago (unidade)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="355" y="0" width="100" height="27" backcolor="#99C0FF" uuid="f93a4751-10b3-4139-aa22-815f57b2eeb3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Funcionário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="455" y="0" width="100" height="27" backcolor="#99C0FF" uuid="5bdd022e-f62d-40ec-9204-6366fa4f6b1b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fornecedor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="44" height="20" uuid="170f5978-78f7-4b76-a9de-8af944275cab"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_produtos_ID_Entrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="0" width="100" height="20" uuid="dcf8d970-c283-49bf-bc65-b90998ec72ce"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="0" width="56" height="20" uuid="380c716c-deef-4f82-ae34-1688f0e8c5e7"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_produtos_Quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="20" uuid="88ba2098-71e1-40dc-88be-dadaad205fb7"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_produtos_Data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="55" height="20" uuid="d8efb5b9-04cb-40e9-97f4-d13a8f1c678a"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_produtos_Valor_Unitario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="0" width="100" height="20" uuid="296b863a-a391-4af1-b25d-c202c8582426"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_Nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="95ab7593-5e34-4711-ae77-cca62006b147"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fornecedores_Nome_Fantasia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="44" y="6" width="100" height="20" uuid="8cbaf278-d12d-48e1-8db1-412443980922"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="6" width="268" height="20" uuid="8d8f367a-a78c-4865-8af6-f65e70e2de90"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="6" width="40" height="20" uuid="b88c4026-fc2e-4cce-a32c-d6148a2def63"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch"/>
+	</summary>
+</jasperReport>

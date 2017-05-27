@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d161e776-5e63-4825-8681-19e8a9c3b6e8">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Monique\\Documents\\Estudos\\TCC\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idUsuario" class="java.lang.String"/>
+	<parameter name="idUnidade" class="java.lang.String"/>
+	<parameter name="dia" class="java.lang.String"/>
+	<parameter name="mesMin" class="java.lang.String"/>
+	<parameter name="mesMax" class="java.lang.String"/>
+	<parameter name="ano" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     max(sessoes.`Inicio_Sessao`) AS sessoes_Inicio_Sessao,
+     max(sessoes.`Fim_Sessao`) AS sessoes_Fim_Sessao,
+     if(usuarios.ativo=1,"Ativo","Inativo") AS status,
+     usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
+     usuarios.`Nome` AS usuarios_Nome,
+     usuarios.`Login` AS usuarios_Login,
+     usuarios.`Senha` AS usuarios_Senha,
+     usuarios.`ID_Unidade` AS usuarios_ID_Unidade,
+     usuarios.`ID_Funcao` AS usuarios_ID_Funcao,
+     usuarios.`Ativo` AS usuarios_Ativo,
+     unidades.`ID_Unidade` AS unidades_ID_Unidade,
+     unidades.`Descricao` AS unidades_Descricao,
+     funcoes_usuarios.`ID_Funcao` AS funcoes_usuarios_ID_Funcao,
+     funcoes_usuarios.`Descricao` AS funcoes_usuarios_Descricao,
+     sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
+     sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
+     unidades_A.`ID_Unidade` AS unidades_A_ID_Unidade,
+     unidades_A.`Descricao` AS unidades_A_Descricao,
+     sessoes.`Inicio_Sessao` AS Inicio_Sessao,
+     sessoes.`Fim_Sessao` AS Fim_Sessao,
+     if($P{mesMax}=0 and $P{dia}!=0, concat($P{dia}," de"), case when $P{mesMin} = 1 then "Janeiro a" when $P{mesMin}=2 then "Fevereiro a" when $P{mesMin}=3 then "Março a" when $P{mesMin}=4 then "Abril a" when $P{mesMin}=5 then "Maio a" when $P{mesMin}=6 then "Junho a" when $P{mesMin}=7 then "Julho a" when $P{mesMin}=8 then "Agosto a" when $P{mesMin}=9 then "Setembro a" when $P{mesMin} = 10 then "Outubro a" when $P{mesMin}=11 then "Novembro a" when $P{mesMin}=12 then "Dezembro a" else "Janeiro a" end) as data_1,
+     case when $P{mesMax} = 1 then "Janeiro de" when $P{mesMax}=2 then "Fevereiro de" when $P{mesMax}=3 then "Março de" when $P{mesMax}=4 then "Abril de" when $P{mesMax}=5 then "Maio de" when $P{mesMax}=6 then "Junho de" when $P{mesMax}=7 then "Julho de" when $P{mesMax}=8 then "Agosto de" when $P{mesMax}=9 then "Setembro de" when $P{mesMax} = 10 then "Outubro de" when $P{mesMax}=11 then "Novembro de" when $P{mesMax}=12 then "Dezembro" else monthname(curdate()) end as data_2
+FROM
+     `unidades` unidades INNER JOIN `usuarios` usuarios ON unidades.`ID_Unidade` = usuarios.`ID_Unidade`
+     INNER JOIN `funcoes_usuarios` funcoes_usuarios ON usuarios.`ID_Funcao` = funcoes_usuarios.`ID_Funcao`
+     INNER JOIN `sessoes` sessoes ON usuarios.`ID_Usuario` = sessoes.`ID_Usuario`
+     INNER JOIN `unidades` unidades_A ON usuarios.`ID_Unidade` = unidades_A.`ID_Unidade`
+WHERE
+     unidades.id_unidade = $P{idUnidade}  and (
+     usuarios.id_usuario = $P{idUsuario} or( 
+     day(sessoes.inicio_sessao) = $P{dia} and month(sessoes.inicio_sessao) = $P{mesMin} and year(sessoes.inicio_sessao) = $P{ano} and $P{idUsuario} =0) or
+     (month(sessoes.inicio_sessao) >= $P{mesMin} and month(sessoes.fim_sessao) <= $P{mesMax} and year(sessoes.inicio_sessao) = $P{ano} and $P{idUsuario} = 0) or
+      (day(sessoes.inicio_sessao) = $P{dia} and month(sessoes.inicio_sessao) = $P{mesMin} and year(sessoes.inicio_sessao) = $P{ano} and usuarios.id_usuario = $P{idUsuario}) or (
+      month(sessoes.inicio_sessao) >= $P{mesMin} and month(sessoes.fim_sessao) <= $P{mesMax} and year(sessoes.inicio_sessao) = $P{ano} and usuarios.id_usuario = $P{idUsuario})
+     )
+GROUP BY
+     usuarios.id_usuario]]>
+	</queryString>
+	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="usuarios_ID_Usuario" class="java.lang.Integer"/>
+	<field name="usuarios_Nome" class="java.lang.String"/>
+	<field name="usuarios_Login" class="java.lang.String"/>
+	<field name="usuarios_Senha" class="java.lang.String"/>
+	<field name="usuarios_ID_Unidade" class="java.lang.Integer"/>
+	<field name="usuarios_ID_Funcao" class="java.lang.Integer"/>
+	<field name="usuarios_Ativo" class="java.lang.Integer"/>
+	<field name="unidades_ID_Unidade" class="java.lang.Integer"/>
+	<field name="unidades_Descricao" class="java.lang.String"/>
+	<field name="funcoes_usuarios_ID_Funcao" class="java.lang.Integer"/>
+	<field name="funcoes_usuarios_Descricao" class="java.lang.String"/>
+	<field name="sessoes_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
+	<field name="unidades_A_ID_Unidade" class="java.lang.Integer"/>
+	<field name="unidades_A_Descricao" class="java.lang.String"/>
+	<field name="Inicio_Sessao" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fim_Sessao" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data_1" class="java.lang.String"/>
+	<field name="data_2" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="286" y="25" width="197" height="25" forecolor="#3F83BF" uuid="5cdf07f7-9c0c-4605-ad36-cf12b93c7c08"/>
+				<textElement>
+					<font fontName="Tahoma" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Usuários]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="54" y="59" width="66" height="20" uuid="f67b91ad-d15d-4ae0-8b8b-0df521f8e01b"/>
+				<textFieldExpression><![CDATA[$F{data_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="59" width="54" height="20" uuid="53d9ac35-f340-4850-a27f-df9b013e82ba"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="59" width="73" height="20" uuid="b95ab3c6-20e6-4712-aefd-09106759cebd"/>
+				<textFieldExpression><![CDATA[$F{data_2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="196" y="59" width="100" height="20" uuid="fcf4037e-8565-407d-83e4-bdcc7abd4266"/>
+				<textFieldExpression><![CDATA[$P{ano}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="120" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="21" width="65" height="20" backcolor="#DFE7F5" uuid="0c160002-1e06-4f7f-9aed-07b7c20a6c72"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{usuarios_ID_Usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="65" y="21" width="173" height="20" backcolor="#DFE7F5" uuid="b7a9a072-b78c-4265-9e31-9a239b41b2ea"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{usuarios_Nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="238" y="21" width="115" height="20" backcolor="#DFE7F5" uuid="4d3e7626-fa49-475d-bae3-6a9265d1149f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{funcoes_usuarios_Descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="493" y="21" width="156" height="20" backcolor="#DFE7F5" uuid="356dc640-05a9-4d53-8a84-813e4e421558"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{sessoes_Inicio_Sessao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="649" y="21" width="153" height="20" backcolor="#DFE7F5" uuid="b193eb19-d4ba-4cb5-b269-3f5609be167c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{sessoes_Fim_Sessao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="353" y="21" width="140" height="20" backcolor="#DFE7F5" uuid="b1700b40-e7ba-4545-a8e1-272a0bdd17ec"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="48" width="802" height="21" uuid="16164e08-ef59-432f-9bf1-3e2cccee2efd"/>
+				<subreportParameter name="mesMin">
+					<subreportParameterExpression><![CDATA[$P{mesMin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUnidade">
+					<subreportParameterExpression><![CDATA[$F{unidades_ID_Unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUsuario">
+					<subreportParameterExpression><![CDATA[$F{usuarios_ID_Usuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dia">
+					<subreportParameterExpression><![CDATA[$P{dia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mesMax">
+					<subreportParameterExpression><![CDATA[$P{mesMax}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeUsuarios_Vendas.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="69" width="802" height="24" uuid="b7babb74-e79a-4b6a-acde-819905ced81d"/>
+				<subreportParameter name="mesMin">
+					<subreportParameterExpression><![CDATA[$P{mesMin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUnidade">
+					<subreportParameterExpression><![CDATA[$F{unidades_ID_Unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUsuario">
+					<subreportParameterExpression><![CDATA[$F{usuarios_ID_Usuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dia">
+					<subreportParameterExpression><![CDATA[$P{dia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mesMax">
+					<subreportParameterExpression><![CDATA[$P{mesMax}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeUsuarios_Retiradas.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="93" width="802" height="23" uuid="269bf7aa-9c5c-49dd-8862-1084360d197a"/>
+				<subreportParameter name="mesMin">
+					<subreportParameterExpression><![CDATA[$P{mesMin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUsuario">
+					<subreportParameterExpression><![CDATA[$F{usuarios_ID_Usuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUnidade">
+					<subreportParameterExpression><![CDATA[$F{unidades_ID_Unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dia">
+					<subreportParameterExpression><![CDATA[$P{dia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mesMax">
+					<subreportParameterExpression><![CDATA[$P{mesMax}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeUsuarios_Entradas.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="65" height="20" backcolor="#99C0FF" uuid="ddd95385-5a5f-4622-80b4-ca4f15229580"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Usuário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="65" y="0" width="173" height="20" backcolor="#99C0FF" uuid="999e1e58-e966-4e51-b49c-38b48fafdda0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="238" y="0" width="115" height="20" backcolor="#99C0FF" uuid="b98b2b5d-de5b-48c4-9309-592f5cc73e2f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Função]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="493" y="0" width="156" height="20" backcolor="#99C0FF" uuid="f9247319-03fe-4d30-839c-a939c4aa0777"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Início Ultima Sessão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="649" y="0" width="153" height="20" backcolor="#99C0FF" uuid="ceb41fa9-47e8-4644-ad3b-8375dad413e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fim Ultima Sessão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="353" y="0" width="140" height="20" backcolor="#99C0FF" uuid="72ae2c16-8461-47e0-b1c8-d6553210d861"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<break type="Column">
+				<reportElement positionType="Float" x="0" y="118" width="100" height="1" uuid="dfc6f9aa-afd1-4e6d-a8a6-1593bdd3b993"/>
+			</break>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="81" y="6" width="100" height="20" uuid="26db8743-02ed-40c6-994b-9e75725ee320"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="649" y="6" width="80" height="20" uuid="224d149c-e97d-43bc-82d7-f7d7af6246d7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="729" y="6" width="40" height="20" uuid="d9de40e0-7b10-4841-9c15-b19cc2c8b741"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>

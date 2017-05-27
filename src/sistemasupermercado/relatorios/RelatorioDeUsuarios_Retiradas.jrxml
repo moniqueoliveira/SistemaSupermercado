@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeVendas_Retiradas" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5db42182-9639-4f6a-8917-a46c99b2d8d3">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idUnidade" class="java.lang.String"/>
+	<parameter name="idUsuario" class="java.lang.String"/>
+	<parameter name="dia" class="java.lang.String"/>
+	<parameter name="mesMin" class="java.lang.String"/>
+	<parameter name="mesMax" class="java.lang.String"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     produtos_retirados.`ID_Retirada` AS produtos_retirados_ID_Retirada,
+     produtos_retirados.`ID_Produto` AS produtos_retirados_ID_Produto,
+     produtos_retirados.`Quantidade` AS produtos_retirados_Quantidade,
+     produtos_retirados.`Data` AS produtos_retirados_Data,
+     produtos_retirados.`ID_Sessao` AS produtos_retirados_ID_Sessao,
+     produtos_retirados.`ID_Motivo` AS produtos_retirados_ID_Motivo,
+     produtos_retirados.`Observacao` AS produtos_retirados_Observacao,
+     motivos_produtos_retirados.`ID_Motivo` AS motivos_produtos_retirados_ID_Motivo,
+     motivos_produtos_retirados.`Descricao` AS motivos_produtos_retirados_Descricao,
+     usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
+     usuarios.`Nome` AS usuarios_Nome,
+     usuarios.`Login` AS usuarios_Login,
+     usuarios.`Senha` AS usuarios_Senha,
+     usuarios.`ID_Unidade` AS usuarios_ID_Unidade,
+     usuarios.`ID_Funcao` AS usuarios_ID_Funcao,
+     usuarios.`Ativo` AS usuarios_Ativo,
+     unidades.`ID_Unidade` AS unidades_ID_Unidade,
+     unidades.`Descricao` AS unidades_Descricao,
+     produtos.`ID_Produto` AS produtos_ID_Produto,
+     produtos.`Descricao` AS produtos_Descricao,
+     produtos.`Descricao_Reduzida` AS produtos_Descricao_Reduzida,
+     produtos.`Venda_Fracionada` AS produtos_Venda_Fracionada,
+     produtos.`ID_Categoria` AS produtos_ID_Categoria,
+     produtos.`Imagem` AS produtos_Imagem,
+     produtos.`Codigo_De_Barras` AS produtos_Codigo_De_Barras,
+     produtos.`Estocavel` AS produtos_Estocavel,
+     sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
+     sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
+     sessoes.`Inicio_Sessao` AS sessoes_Inicio_Sessao,
+     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao,
+     row_count() as qtd_retiradas
+FROM
+     `motivos_produtos_retirados` motivos_produtos_retirados INNER JOIN `produtos_retirados` produtos_retirados ON motivos_produtos_retirados.`ID_Motivo` = produtos_retirados.`ID_Motivo`
+     INNER JOIN `produtos` produtos ON produtos_retirados.`ID_Produto` = produtos.`ID_Produto`
+     INNER JOIN `sessoes` sessoes ON produtos_retirados.`ID_Sessao` = sessoes.`ID_Sessao`
+     INNER JOIN `usuarios` usuarios ON sessoes.`ID_Usuario` = usuarios.`ID_Usuario`
+     INNER JOIN `unidades` unidades ON usuarios.`ID_Unidade` = unidades.`ID_Unidade`
+WHERE
+     usuarios.id_usuario = $P{idUsuario} and unidades.id_unidade = $P{idUnidade}  and ((day(produtos_retirados.data) = $P{dia} and month(produtos_retirados.data)=$P{mesMin} and year(produtos_retirados.data)=$P{ano}) or (month(produtos_retirados.data)>= $P{mesMin} and month(produtos_retirados.data)<=$P{mesMax} and year(produtos_retirados.data)=$P{ano}))
+GROUP BY
+     produtos_retirados.id_produto
+ORDER BY
+     produtos_retirados.id_retirada]]>
+	</queryString>
+	<field name="produtos_retirados_ID_Retirada" class="java.lang.Integer"/>
+	<field name="produtos_retirados_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_retirados_Quantidade" class="java.math.BigDecimal"/>
+	<field name="produtos_retirados_Data" class="java.sql.Timestamp"/>
+	<field name="produtos_retirados_ID_Sessao" class="java.lang.Integer"/>
+	<field name="produtos_retirados_ID_Motivo" class="java.lang.Integer"/>
+	<field name="produtos_retirados_Observacao" class="java.lang.String"/>
+	<field name="motivos_produtos_retirados_ID_Motivo" class="java.lang.Integer"/>
+	<field name="motivos_produtos_retirados_Descricao" class="java.lang.String"/>
+	<field name="usuarios_ID_Usuario" class="java.lang.Integer"/>
+	<field name="usuarios_Nome" class="java.lang.String"/>
+	<field name="usuarios_Login" class="java.lang.String"/>
+	<field name="usuarios_Senha" class="java.lang.String"/>
+	<field name="usuarios_ID_Unidade" class="java.lang.Integer"/>
+	<field name="usuarios_ID_Funcao" class="java.lang.Integer"/>
+	<field name="usuarios_Ativo" class="java.lang.Integer"/>
+	<field name="unidades_ID_Unidade" class="java.lang.Integer"/>
+	<field name="unidades_Descricao" class="java.lang.String"/>
+	<field name="produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_Descricao" class="java.lang.String"/>
+	<field name="produtos_Descricao_Reduzida" class="java.lang.String"/>
+	<field name="produtos_Venda_Fracionada" class="java.lang.Boolean"/>
+	<field name="produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="produtos_Imagem" class="java.lang.Object"/>
+	<field name="produtos_Codigo_De_Barras" class="java.lang.String"/>
+	<field name="produtos_Estocavel" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
+	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<field name="qtd_retiradas" class="java.lang.Long"/>
+	<variable name="qtd_retiradas_1" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{qtd_retiradas}]]></variableExpression>
+	</variable>
+	<variable name="qtd_retiradas_2" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{qtd_retiradas}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="21">
+			<staticText>
+				<reportElement x="0" y="0" width="110" height="20" uuid="36b2e174-72f5-4aaa-94d3-18299ed3f88c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Retiradas de Produtos:]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="110" y="0" width="100" height="20" uuid="906ae391-840e-472b-b00a-c37328034d9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{qtd_retiradas_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="5eb79244-7e0f-41ea-83b6-4a9a5f28d03f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ID Retirada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="100" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="6333efe2-05b9-4731-a8b2-7f7b650eaa16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="300" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="a8710222-ecca-41f6-ada8-3c4947a855e9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="200" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="4001e247-d014-47af-ab2d-ea9cd9e5fcbd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="400" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="f5e9b04b-4d8d-4283-8e0e-ce574863ad7f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Motivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="500" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="eaa14677-989a-49ac-a93f-58ced4b2e0bb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ID Sessão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="600" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="b17f3828-bad7-47ea-bde4-c620d11201fa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Início Sessão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="700" y="0" width="102" height="20" backcolor="#B4CEF7" uuid="bc266ee2-4e26-4cf5-8b18-ec9082480077"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fim Sessão]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="f3508233-e695-4a75-a41a-039803593e4f"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_retirados_ID_Retirada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="4e379318-738b-4e4a-bfca-cef029b12455"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="20" uuid="d7092f40-2d5f-42da-b937-067c294c65e3"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_retirados_Data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="20" uuid="a8b54ac0-6355-46d6-8144-d158e4e70457"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_retirados_Quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="100" height="20" uuid="7cc0a229-6698-4a4a-92b2-aaa721673da9"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivos_produtos_retirados_Descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="0" width="100" height="20" uuid="c0281d2a-3681-42a8-80c5-6109cff0f289"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sessoes_ID_Sessao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="600" y="0" width="100" height="20" uuid="c2a854b1-63ba-4938-8dd2-658428d90b9d"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sessoes_Inicio_Sessao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="0" width="102" height="20" uuid="acfe6b6e-c959-430d-a453-922834bafbd0"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sessoes_Fim_Sessao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band>
+			<line>
+				<reportElement x="0" y="-1" width="802" height="1" forecolor="#3380FF" uuid="5f02cd10-aba8-4cd8-ae40-a8cd2ce22aa9"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

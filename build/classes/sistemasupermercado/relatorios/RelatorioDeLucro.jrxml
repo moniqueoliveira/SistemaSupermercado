@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6bb27812-7a00-4226-855e-8b1ab74c548d">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     sum(itens_vendas.subtotal) AS valor_recebido,
+     sum(itens_vendas.quantidade) AS qtd_vendida,
+     truncate(sum(entradas_produtos.quantidade)*sum(entradas_produtos.valor_unitario),2) AS valor_pago,
+     sum(entradas_produtos.quantidade) AS qtd_comprada,
+     truncate(((sum(itens_vendas.subtotal))-((sum(entradas_produtos.quantidade))*(sum(entradas_produtos.valor_unitario)))),2) AS lucro,
+     produtos.`ID_Produto` AS produtos_ID_Produto,
+     produtos.`Descricao` AS produtos_Descricao,
+     produtos.`Descricao_Reduzida` AS produtos_Descricao_Reduzida,
+     produtos.`Venda_Fracionada` AS produtos_Venda_Fracionada,
+     produtos.`ID_Categoria` AS produtos_ID_Categoria,
+     produtos.`Imagem` AS produtos_Imagem,
+     produtos.`Codigo_De_Barras` AS produtos_Codigo_De_Barras,
+     produtos.`Estocavel` AS produtos_Estocavel,
+     vendas.`ID_Venda` AS vendas_ID_Venda,
+     vendas.`ID_Sessao` AS vendas_ID_Sessao,
+     vendas.`Data` AS vendas_Data,
+     vendas.`Finalizada` AS vendas_Finalizada,
+     itens_vendas.`ID_Venda` AS itens_vendas_ID_Venda,
+     itens_vendas.`ID_Produto` AS itens_vendas_ID_Produto,
+     itens_vendas.`Numero_Item` AS itens_vendas_Numero_Item,
+     itens_vendas.`Quantidade` AS itens_vendas_Quantidade,
+     itens_vendas.`Subtotal` AS itens_vendas_Subtotal,
+     itens_vendas.`Cancelado` AS itens_vendas_Cancelado,
+     estoques.`ID_Unidade` AS estoques_ID_Unidade,
+     estoques.`ID_Produto` AS estoques_ID_Produto,
+     estoques.`Quantidade` AS estoques_Quantidade,
+     estoques.`Valor_Total` AS estoques_Valor_Total,
+     entradas_produtos.`ID_Entrada` AS entradas_produtos_ID_Entrada,
+     entradas_produtos.`ID_Produto` AS entradas_produtos_ID_Produto,
+     entradas_produtos.`ID_Fornecedor` AS entradas_produtos_ID_Fornecedor,
+     entradas_produtos.`Quantidade` AS entradas_produtos_Quantidade,
+     entradas_produtos.`Valor_Unitario` AS entradas_produtos_Valor_Unitario,
+     entradas_produtos.`Data` AS entradas_produtos_Data,
+     entradas_produtos.`ID_Sessao` AS entradas_produtos_ID_Sessao,
+     categorias_produtos.`ID_Categoria` AS categorias_produtos_ID_Categoria,
+     categorias_produtos.`Descricao` AS categorias_produtos_Descricao,
+     fornecedores.`ID_Fornecedor` AS fornecedores_ID_Fornecedor,
+     fornecedores.`Nome_Fantasia` AS fornecedores_Nome_Fantasia,
+     fornecedores.`Razao_Social` AS fornecedores_Razao_Social,
+     fornecedores.`CNPJ` AS fornecedores_CNPJ,
+     fornecedores.`Ativo` AS fornecedores_Ativo,
+     sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
+     sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
+     sessoes.`Inicio_Sessao` AS sessoes_Inicio_Sessao,
+     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao,
+     produtos_retirados.`ID_Retirada` AS produtos_retirados_ID_Retirada,
+     produtos_retirados.`ID_Produto` AS produtos_retirados_ID_Produto,
+     produtos_retirados.`Quantidade` AS produtos_retirados_Quantidade,
+     produtos_retirados.`Data` AS produtos_retirados_Data,
+     produtos_retirados.`ID_Sessao` AS produtos_retirados_ID_Sessao,
+     produtos_retirados.`ID_Motivo` AS produtos_retirados_ID_Motivo,
+     produtos_retirados.`Observacao` AS produtos_retirados_Observacao
+FROM
+     `vendas` vendas INNER JOIN `itens_vendas` itens_vendas ON vendas.`ID_Venda` = itens_vendas.`ID_Venda`
+     INNER JOIN `produtos` produtos ON itens_vendas.`ID_Produto` = produtos.`ID_Produto`
+     INNER JOIN `estoques` estoques ON produtos.`ID_Produto` = estoques.`ID_Produto`
+     RIGHT OUTER JOIN `entradas_produtos` entradas_produtos ON produtos.`ID_Produto` = entradas_produtos.`ID_Produto`
+     INNER JOIN `categorias_produtos` categorias_produtos ON produtos.`ID_Categoria` = categorias_produtos.`ID_Categoria`
+     INNER JOIN `produtos_retirados` produtos_retirados ON produtos.`ID_Produto` = produtos_retirados.`ID_Produto`
+     INNER JOIN `sessoes` sessoes ON produtos_retirados.`ID_Sessao` = sessoes.`ID_Sessao`
+     AND entradas_produtos.`ID_Sessao` = sessoes.`ID_Sessao`
+     AND sessoes.`ID_Sessao` = vendas.`ID_Sessao`
+     LEFT OUTER JOIN `fornecedores` fornecedores ON entradas_produtos.`ID_Fornecedor` = fornecedores.`ID_Fornecedor`
+WHERE
+     itens_vendas.cancelado = 0
+     and vendas.finalizada = 1
+GROUP BY
+     itens_vendas.id_produto]]>
+	</queryString>
+	<field name="valor_recebido" class="java.math.BigDecimal"/>
+	<field name="qtd_vendida" class="java.math.BigDecimal"/>
+	<field name="valor_pago" class="java.math.BigDecimal"/>
+	<field name="qtd_comprada" class="java.math.BigDecimal"/>
+	<field name="lucro" class="java.math.BigDecimal"/>
+	<field name="produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_Descricao" class="java.lang.String"/>
+	<field name="produtos_Descricao_Reduzida" class="java.lang.String"/>
+	<field name="produtos_Venda_Fracionada" class="java.lang.Boolean"/>
+	<field name="produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="produtos_Imagem" class="java.lang.Object"/>
+	<field name="produtos_Codigo_De_Barras" class="java.lang.String"/>
+	<field name="produtos_Estocavel" class="java.lang.Integer"/>
+	<field name="vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="vendas_ID_Sessao" class="java.lang.Integer"/>
+	<field name="vendas_Data" class="java.sql.Timestamp"/>
+	<field name="vendas_Finalizada" class="java.lang.Boolean"/>
+	<field name="itens_vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="itens_vendas_ID_Produto" class="java.lang.Integer"/>
+	<field name="itens_vendas_Numero_Item" class="java.lang.Integer"/>
+	<field name="itens_vendas_Quantidade" class="java.math.BigDecimal"/>
+	<field name="itens_vendas_Subtotal" class="java.math.BigDecimal"/>
+	<field name="itens_vendas_Cancelado" class="java.lang.Integer"/>
+	<field name="estoques_ID_Unidade" class="java.lang.Integer"/>
+	<field name="estoques_ID_Produto" class="java.lang.Integer"/>
+	<field name="estoques_Quantidade" class="java.math.BigDecimal"/>
+	<field name="estoques_Valor_Total" class="java.math.BigDecimal"/>
+	<field name="entradas_produtos_ID_Entrada" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="entradas_produtos_Quantidade" class="java.math.BigDecimal"/>
+	<field name="entradas_produtos_Valor_Unitario" class="java.math.BigDecimal"/>
+	<field name="entradas_produtos_Data" class="java.sql.Timestamp"/>
+	<field name="entradas_produtos_ID_Sessao" class="java.lang.Integer"/>
+	<field name="categorias_produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="categorias_produtos_Descricao" class="java.lang.String"/>
+	<field name="fornecedores_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="fornecedores_Nome_Fantasia" class="java.lang.String"/>
+	<field name="fornecedores_Razao_Social" class="java.lang.String"/>
+	<field name="fornecedores_CNPJ" class="java.lang.String"/>
+	<field name="fornecedores_Ativo" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
+	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<field name="produtos_retirados_ID_Retirada" class="java.lang.Integer"/>
+	<field name="produtos_retirados_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_retirados_Quantidade" class="java.math.BigDecimal"/>
+	<field name="produtos_retirados_Data" class="java.sql.Timestamp"/>
+	<field name="produtos_retirados_ID_Sessao" class="java.lang.Integer"/>
+	<field name="produtos_retirados_ID_Motivo" class="java.lang.Integer"/>
+	<field name="produtos_retirados_Observacao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="126" y="29" width="283" height="23" forecolor="#3F83BF" uuid="18ae4013-f35b-4060-9140-a95bfd5e6d8c"/>
+				<textElement>
+					<font fontName="Tahoma" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Lucro por Produto]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="26" height="20" backcolor="#99C0FF" uuid="b5c02273-9539-4b85-ba57-f027b3a8175d"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="26" y="0" width="104" height="20" backcolor="#99C0FF" uuid="b78ecd39-07ed-49fc-8304-6b9280b74ac2"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="130" y="0" width="100" height="20" backcolor="#99C0FF" uuid="2fc0dcf3-f600-4ca3-bc0d-f73f3693a8e3"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Vendido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="230" y="0" width="60" height="20" backcolor="#99C0FF" uuid="9b1864b8-aa6a-495f-8a7b-907e52f62b0b"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qtd Vendida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="290" y="0" width="100" height="20" backcolor="#99C0FF" uuid="1d187cb6-74f5-49fe-9ca9-1f39f63d5d67"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="390" y="0" width="76" height="20" backcolor="#99C0FF" uuid="ff7669b7-d88c-479c-bec8-3b0293eac6c0"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qtd Comprada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="466" y="0" width="89" height="20" backcolor="#99C0FF" uuid="040f264b-619a-4f68-9a85-e49287b1d3bb"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lucro Obtido]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="26" height="20" uuid="c4d3d85f-17b6-4991-b8cf-c5fc50e1c01f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{entradas_produtos_ID_Produto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="0" width="104" height="20" uuid="6de556cf-b0c5-48f2-a880-7f9e7644fa7b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="0" width="100" height="20" uuid="7c505099-e501-4c95-b032-1868f1bdca9e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{valor_recebido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="60" height="20" uuid="443973ed-6222-4e8d-a933-8d9bb4d8ea7a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{qtd_vendida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="0" width="117" height="20" uuid="f1578239-eaf7-4939-bfe7-ba01afa7f8a2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{valor_pago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="407" y="0" width="59" height="20" uuid="59eac5ca-73ba-4f32-976b-5586de85fe75"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{qtd_comprada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="466" y="0" width="89" height="20" uuid="0a6b050e-a83c-4726-9a45-cde66df2008f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{lucro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="43" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

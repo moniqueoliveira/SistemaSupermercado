@@ -21,7 +21,7 @@ public class ProdutoServico {
             verificarResultado(produtoDAO.inserir(produto));
             produtoDAO.fecharConexao();
         } catch(SQLException ex) {
-            throw new RuntimeException("SQLException: " + ex.getMessage());
+            throw new RuntimeException("ID já cadastrado no sistema!\n");
         }
     }
     
