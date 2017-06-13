@@ -20,7 +20,7 @@ public class EstoqueDAOImpl implements EstoqueDAO {
     
     @Override
     public boolean inserir(Estoque obj) throws SQLException {
-        String sql = "insert into estoques values (?, ?, ?, ?)";
+        String sql = "insert into estoques(id_unidade, id_produto, quantidade, valor_total) values (?, ?, ?, ?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
         pstm.setInt(1, obj.getUnidade().getIdUnidade());
         pstm.setInt(2, obj.getProduto().getIdProduto());
@@ -83,9 +83,12 @@ public class EstoqueDAOImpl implements EstoqueDAO {
                         + "produtos.codigo_de_barras like '%" + texto + "%' and estoques.id_unidade = " + idUnidade;
                 break;
             case ("Categoria"):
-                filtro += "left join produtos on estoques.id_produto = produtos.id_produto left join "
+                filtro = "left join produtos on estoques.id_produto = produtos.id_produto left join "
                         + "categorias_produtos on categorias_produtos.id_categoria = produtos.id_categoria "
                         + "where categorias_produtos.descricao like '%" + texto + "%' and estoques.id_unidade = " + idUnidade;
+                break;
+            default:
+                filtro = "where id_unidade = " + idUnidade;
         }
         return listar(filtro);
     }

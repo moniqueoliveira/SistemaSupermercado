@@ -62,8 +62,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private void definirImagemDeFundo() {
         try {
             JImagePanel panel = new JImagePanel(
-                    //loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
-                    loadImage("C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
+                    loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
+                    //loadImage("C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
 //panel.setFillType(JImagePanel.FillType.CENTER);
             this.setContentPane(panel);
             //this.pack();
@@ -512,7 +512,9 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
             FormVenda formVenda = new FormVenda(sessaoCaixa);
+            this.setEnabled(false);
             formVenda.setVisible(true);
+            this.setEnabled(true);
         }
         
     }//GEN-LAST:event_jMenuItemRealizarVendaActionPerformed
@@ -729,6 +731,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         try {
             f.abrirRelatorio().setVisible(true);
+            
         } catch (JRException ex) {
             Logger.getLogger(FormMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -112,6 +112,11 @@ public class ProdutoRetiradoDAOImpl implements ProdutoRetiradoDAO {
                         + "left join sessoes s on pr.id_sessao = s.id_sessao left join usuarios us on "
                         + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
                         + "where p.descricao like '%" + texto + "%' and un.id_unidade = " + idUnidade;
+                break;
+            default:
+                filtro = "pr left join sessoes s on pr.id_sessao = s.id_sessao left join usuarios us on "
+                        + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
+                        + "where un.id_unidade = " + idUnidade;
         }        
         return listar(filtro);
     }

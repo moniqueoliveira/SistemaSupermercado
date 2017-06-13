@@ -6,6 +6,7 @@ import java.awt.Container;
 import java.awt.FocusTraversalPolicy;
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -103,8 +104,8 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
         lblNomeFantasia = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         lblCnpj = new javax.swing.JLabel();
-        txtQuantidade = new javax.swing.JFormattedTextField();
         txtValor = new javax.swing.JFormattedTextField();
+        txtQuantidade = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Entrada de Produtos em Estoque");
@@ -358,13 +359,6 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
                     .addComponent(lblNomeFantasia, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        txtQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-        txtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtQuantidadeKeyTyped(evt);
-            }
-        });
-
         txtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtValor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -390,8 +384,8 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtQuantidade)
-                            .addComponent(txtValor))
+                            .addComponent(txtValor)
+                            .addComponent(txtQuantidade))
                         .addGap(18, 18, 18)
                         .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -408,7 +402,8 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -483,8 +478,8 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
             
             txtIdFornecedor.requestFocus();
         } catch(RuntimeException ex) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
-                        "Atenção", JOptionPane.WARNING_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
+            //            "Atenção", JOptionPane.WARNING_MESSAGE);
             redefinirProduto();
         }
     }//GEN-LAST:event_btnPesquisarProdutoActionPerformed
@@ -510,8 +505,8 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
             
             txtQuantidade.requestFocus();
         } catch (RuntimeException ex) {
-            JOptionPane.showMessageDialog(this, "Não foi possível concluir a pesquisa.\n" + ex.getMessage(), 
-                    "Atenção", JOptionPane.WARNING_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Não foi possível concluir a pesquisa.\n" + ex.getMessage(), 
+            //        "Atenção", JOptionPane.WARNING_MESSAGE);
             redefinirFornecedor();
         }
     }//GEN-LAST:event_btnPesquisarFornecedorActionPerformed
@@ -535,8 +530,8 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
         entradaProduto.setFornecedor(fornecedor);
         entradaProduto.setProduto(produto);
         entradaProduto.setSessao(sessao);
-        entradaProduto.setValorUnitario(new BigDecimal(txtValor.getText().replaceAll(",", ".")));
-        entradaProduto.setQuantidade(new BigDecimal(txtQuantidade.getText().replaceAll(",", ".")));
+        entradaProduto.setValorUnitario(new BigDecimal(txtValor.getText().replaceAll(",", ".")).setScale(2, RoundingMode.HALF_UP));
+        entradaProduto.setQuantidade(new BigDecimal(txtQuantidade.getText().replaceAll(",", ".")).setScale(4, RoundingMode.HALF_UP));
         
         try {
             entradaProdutoServico.inserir(entradaProduto);
@@ -614,14 +609,6 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
             redefinirFornecedor();
         }
     }//GEN-LAST:event_txtIdFornecedorFocusLost
-
-    private void txtQuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantidadeKeyTyped
-        // TODO add your handling code here:
-        String caracteres="0987654321,";
-        if(!caracteres.contains(evt.getKeyChar() + "")){
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtQuantidadeKeyTyped
 
     private void txtValorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorKeyTyped
         // TODO add your handling code here:
@@ -712,7 +699,7 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
     private javax.swing.JLabel lblRazaoSocial;
     private javax.swing.JTextField txtIdFornecedor;
     private javax.swing.JTextField txtIdProduto;
-    private javax.swing.JFormattedTextField txtQuantidade;
+    private javax.swing.JTextField txtQuantidade;
     private javax.swing.JFormattedTextField txtValor;
     // End of variables declaration//GEN-END:variables
 

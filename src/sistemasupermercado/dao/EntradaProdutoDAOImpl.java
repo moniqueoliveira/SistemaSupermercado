@@ -120,6 +120,10 @@ public class EntradaProdutoDAOImpl implements EntradaProdutoDAO {
                         + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
                         + "where p.descricao like '%" + texto + "%'un.id_unidade = " + idUnidade;
                 break;
+            default:
+                filtro = "ep left join sessoes s on ep.id_sessao = s.id_sessao left join usuarios us on "
+                        + "s.id_usuario = us.id_usuario left join unidades un on us.id_unidade = un.id_unidade "
+                        + "where un.id_unidade = " + idUnidade;
         }
         return listar(filtro);
     }

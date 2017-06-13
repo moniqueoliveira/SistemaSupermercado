@@ -423,8 +423,8 @@ public class FormRegistroProdutoRetirado extends javax.swing.JDialog {
 
             txtQuantidade.requestFocus();
         } catch(RuntimeException ex) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
-                "Atenção", JOptionPane.WARNING_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
+            //    "Atenção", JOptionPane.WARNING_MESSAGE);
             redefinirProduto();
         }
     }//GEN-LAST:event_btnPesquisarProdutoActionPerformed

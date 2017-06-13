@@ -60,7 +60,7 @@ public class ItemVendaServico {
     public void excluirItens(int idVenda) {
         try {
             itemVendaDAO = new ItemVendaDAOImpl();
-            verificarResultado(itemVendaDAO.excluirItens(idVenda));
+            itemVendaDAO.excluirItens(idVenda);
             itemVendaDAO.fecharConexao();
         } catch(SQLException ex) {
             throw new RuntimeException("SQLException (Erro ao excluir os itens):\n" + ex.getMessage());

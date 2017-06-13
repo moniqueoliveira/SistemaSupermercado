@@ -11,7 +11,7 @@
 	<parameter name="idProduto" class="java.lang.String"/>
 	<parameter name="funcionario" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C://Users//Monique//Documents//Estudos//TCC//SistemaSupermercado//src//sistemasupermercado//relatorios//"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="tipoPesquisa" class="java.lang.String"/>
 	<queryString>

@@ -99,11 +99,15 @@ public class VendaServico {
 
                 Estoque estoqueAuxiliar = estoqueServico.pesquisar(estoque);
                 estoque.setQuantidade(estoqueAuxiliar.getQuantidade().subtract(itemVenda.getQuantidade()));
-                BigDecimal valorUnitarioMedio = estoqueAuxiliar.getValorTotal().divide(estoqueAuxiliar.getQuantidade(), RoundingMode.HALF_UP);
-
-                BigDecimal valorTotalRetirado = itemVenda.getQuantidade().multiply(valorUnitarioMedio);
-                estoque.setValorTotal(estoqueAuxiliar.getValorTotal().subtract(valorTotalRetirado));
-
+                
+                // Verifica se o produto acabou - caso tenha acabado não há necessidade de calcular o valor em estoque
+                if (estoque.getQuantidade().compareTo(BigDecimal.ZERO) == 0){
+                    estoque.setValorTotal(BigDecimal.ZERO);
+                } else {
+                    BigDecimal valorUnitarioMedio = estoqueAuxiliar.getValorTotal().divide(estoqueAuxiliar.getQuantidade(), RoundingMode.HALF_UP);
+                    BigDecimal valorTotalRetirado = itemVenda.getQuantidade().multiply(valorUnitarioMedio);
+                    estoque.setValorTotal(estoqueAuxiliar.getValorTotal().subtract(valorTotalRetirado));
+                }
 
                 estoqueServico.alterar(estoque);
             }

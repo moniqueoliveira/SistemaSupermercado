@@ -20,7 +20,7 @@ public class EstoqueServico {
             verificarResultado(estoqueDAO.inserir(estoque));
             estoqueDAO.fecharConexao();
         } catch(SQLException ex) {
-            throw new RuntimeException("SQLException: " + ex.getMessage());
+            throw new RuntimeException("SQLException (Estoque): " + ex.getMessage());
         }
     }
     

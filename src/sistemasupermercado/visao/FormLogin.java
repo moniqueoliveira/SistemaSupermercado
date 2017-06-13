@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.repo.InputStreamResource;
 import sistemasupermercado.dominio.Sessao;
 import sistemasupermercado.dominio.Usuario;
 import sistemasupermercado.servicos.SessaoServico;
@@ -40,13 +41,14 @@ public class FormLogin extends javax.swing.JFrame {
         /*URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
         Image image = java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png"));
         this.setIconImage(image);*/
+        
     }
     
     private void definirImagemDeFundo() {
         try {
             JImagePanel panel = new JImagePanel(
-                    //loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
-                    loadImage("C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
+                    loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
+                    //loadImage("C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
             //panel.setFillType(JImagePanel.FillType.CENTER);
             this.setContentPane(panel);
             //this.pack();

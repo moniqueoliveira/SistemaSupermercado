@@ -18,10 +18,6 @@ import javax.swing.table.DefaultTableModel;
 import sistemasupermercado.dominio.Produto;
 import sistemasupermercado.servicos.ProdutoServico;
 
-/**
- *
- * @author Monique
- */
 public class FormListaProdutos extends javax.swing.JDialog {
 
     Produto produto;

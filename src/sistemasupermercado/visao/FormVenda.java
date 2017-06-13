@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,8 +93,8 @@ public class FormVenda extends javax.swing.JFrame {
     private void definirImagemDeFundo() {
         try {
             JImagePanel panel = new JImagePanel(
-                    //loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
-                    loadImage("C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
+                    loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
+                    //loadImage("C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
             //panel.setFillType(JImagePanel.FillType.CENTER);
             this.setContentPane(panel);
             //this.pack();
@@ -573,6 +575,9 @@ public class FormVenda extends javax.swing.JFrame {
             case (KeyEvent.VK_F1):
                 cancelarItem();
                 break;
+            case (KeyEvent.VK_DELETE):
+                cancelarItem();
+                break;
             case (KeyEvent.VK_F2):
                 cancelarVenda();
                 break;
@@ -721,7 +726,8 @@ public class FormVenda extends javax.swing.JFrame {
             return;
         }
         
-        BigDecimal subtotal = itemVenda.getQuantidade().multiply(precoProduto.getValor());
+        BigDecimal subtotal = itemVenda.getQuantidade().multiply(precoProduto.getValor()).setScale(2, RoundingMode.HALF_UP);
+        //System.out.println(subtotal.scale());
         itemVenda.setSubtotal(subtotal);
         
         try {
@@ -777,6 +783,9 @@ public class FormVenda extends javax.swing.JFrame {
                     itemVendaServico.alterar(item);
                     tblItens.setValueAt("Sim", tblItens.getSelectedRow(), 6);
                     atualizarTotal(new BigDecimal(tblItens.getValueAt(tblItens.getSelectedRow(), 5).toString().replaceAll(",", ".")).negate());
+                    quantidadeItens--;
+                    lblQuantidadeItens.setText("QUANTIDADE DE ITENS: " + quantidadeItens);
+                    txtProduto.requestFocus();
                     break;
                 }
             }
@@ -794,9 +803,10 @@ public class FormVenda extends javax.swing.JFrame {
             vendaServico.cancelar(venda);
             redefinirVenda();
         } catch(RuntimeException ex) {
+            redefinir();
             JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
                        "Atenção", JOptionPane.WARNING_MESSAGE);
-            redefinir();
+            
         }
     }
     
@@ -972,7 +982,7 @@ public class FormVenda extends javax.swing.JFrame {
         form.setVisible(true);
         if (form.getObjetoSelecionado() != null) {
             txtProduto.setText(form.getObjetoSelecionado().getIdProduto().toString());
-            txtQuantidade.requestFocus();
+            //txtQuantidade.requestFocus();
             pesquisarProduto();
         }
     }
@@ -1049,6 +1059,7 @@ public class FormVenda extends javax.swing.JFrame {
                     break;
                 case ("F4"):
                     listarProdutos();
+                    break;
                 case ("F5"):
                     sair();
             }

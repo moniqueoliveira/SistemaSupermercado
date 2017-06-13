@@ -449,7 +449,10 @@ public class FormConsultaProdutos extends javax.swing.JDialog {
             precoProduto.setProduto(produto);
             precoProduto.setUnidade(unidade);
             precoProduto = precoProdutoServico.pesquisarPrecoAtual(precoProduto);
-            txtPreco.setText(precoProduto.getValor().toString().replaceAll("\\.", ","));
+            if (precoProduto != null)
+                txtPreco.setText(precoProduto.getValor().toString().replaceAll("\\.", ","));
+            else
+                txtPreco.setText("Não definido");
             
         } catch(RuntimeException ex) {
             JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 

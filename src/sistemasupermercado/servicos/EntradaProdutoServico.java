@@ -27,7 +27,7 @@ public class EntradaProdutoServico {
             entradaProdutoDAO.fecharConexao();
             atualizarEstoque(entradaProduto);
         } catch(SQLException ex) {
-            throw new RuntimeException("SQLException: " + ex.getMessage());
+            throw new RuntimeException("SQLException (Entrada de produtos): " + ex.getMessage());
         }
     }
     

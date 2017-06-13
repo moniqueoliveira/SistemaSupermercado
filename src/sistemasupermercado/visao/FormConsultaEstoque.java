@@ -21,10 +21,7 @@ import sistemasupermercado.dominio.Unidade;
 import sistemasupermercado.servicos.EstoqueServico;
 import sistemasupermercado.visao.tabulacao.IndexedFocusTraversalPolicy;
 
-/**
- *
- * @author Monique
- */
+
 public class FormConsultaEstoque extends javax.swing.JDialog {
 
     Estoque estoque;
@@ -254,8 +251,8 @@ public class FormConsultaEstoque extends javax.swing.JDialog {
                 tblEstoque.setValueAt(estoques.get(i).getProduto().getDescricaoReduzida(), i, 2);
                 tblEstoque.setValueAt(estoques.get(i).getProduto().getCodigoDeBarras(), i, 3);
                 tblEstoque.setValueAt(estoques.get(i).getProduto().getCategoria().toString(), i, 4);
-                tblEstoque.setValueAt(estoques.get(i).getQuantidade(), i, 5);
-                tblEstoque.setValueAt(estoques.get(i).getValorTotal(), i, 6);
+                tblEstoque.setValueAt(estoques.get(i).getQuantidade().toString().replaceAll("\\.", ","), i, 5);
+                tblEstoque.setValueAt(estoques.get(i).getValorTotal().toString().replaceAll("\\.", ","), i, 6);
             }
         } catch(RuntimeException ex) {
             JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
