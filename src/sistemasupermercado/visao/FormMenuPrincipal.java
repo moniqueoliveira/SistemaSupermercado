@@ -32,10 +32,7 @@ import sistemasupermercado.relatorios.GeradorDeRelatorios;
 import sistemasupermercado.servicos.SessaoCaixaServico;
 import sistemasupermercado.servicos.SessaoServico;
 import sistemasupermercado.visao.imagepanel.JImagePanel;
-/**
- *
- * @author Monique
- */
+
 public class FormMenuPrincipal extends javax.swing.JFrame {
 
     Sessao sessao; 
@@ -148,12 +145,12 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         lblHora.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblHora.setForeground(new java.awt.Color(255, 255, 255));
         lblHora.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblHora.setText("Hora:");
+        lblHora.setText("15:35:26");
 
         lblData.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblData.setForeground(new java.awt.Color(255, 255, 255));
         lblData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblData.setText("Data:");
+        lblData.setText("26/05/2017");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
@@ -604,7 +601,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        definirDataEHora();
+        //definirDataEHora();
         definirUsuario();
         switch (sessao.getUsuario().getFuncaoUsuario().getIdFuncao()){
             case (1):

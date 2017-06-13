@@ -401,7 +401,7 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Hora:"/>
+        <Property name="text" type="java.lang.String" value="15:35:26"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblData">
@@ -413,7 +413,7 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Data:"/>
+        <Property name="text" type="java.lang.String" value="26/05/2017"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
