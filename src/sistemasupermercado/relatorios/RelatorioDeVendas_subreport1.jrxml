@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeVendas_subreport1" language="groovy" pageWidth="595" pageHeight="841" orientation="Landscape" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b474e819-bd7d-4492-9bc0-ed4a81acd4b7">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idVenda" class="java.lang.String">
@@ -41,7 +41,7 @@ FROM
      INNER JOIN `produtos` produtos ON itens_vendas.`ID_Produto` = produtos.`ID_Produto`
      INNER JOIN `precos_produtos` precos_produtos ON produtos.`ID_Produto` = precos_produtos.`ID_Produto`
 WHERE
-     vendas.id_venda = $P{idVenda}
+     vendas.id_venda = $P{idVenda} and precos_produtos.data = (SELECT max(precos_produtos.data) FROM `precos_produtos` WHERE precos_produtos.id_produto=produtos.id_produto) and itens_vendas.cancelado != 1
 GROUP BY
      itens_vendas.numero_item]]>
 	</queryString>
@@ -77,40 +77,46 @@ GROUP BY
 	<columnHeader>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="68" height="21" backcolor="#B4CEF7" uuid="8a3c25a9-841f-4d6b-bbab-665e0c10b278"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement mode="Opaque" x="0" y="0" width="68" height="21" backcolor="#C9DBF7" uuid="8a3c25a9-841f-4d6b-bbab-665e0c10b278"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Numero Item]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="68" y="0" width="166" height="21" backcolor="#B4CEF7" uuid="298c2d77-fa93-41d0-8973-d95a78d8d88f"/>
+				<reportElement mode="Opaque" x="68" y="0" width="166" height="21" backcolor="#C9DBF7" uuid="298c2d77-fa93-41d0-8973-d95a78d8d88f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="234" y="0" width="93" height="21" backcolor="#B4CEF7" uuid="9e539450-0518-484d-b892-0f4204b0f095"/>
+				<reportElement mode="Opaque" x="234" y="0" width="93" height="21" backcolor="#C9DBF7" uuid="9e539450-0518-484d-b892-0f4204b0f095"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Quantidade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="432" y="0" width="123" height="21" backcolor="#B4CEF7" uuid="2473b5f5-83fe-4eac-b232-72d38d2a0079"/>
+				<reportElement mode="Opaque" x="432" y="0" width="123" height="21" backcolor="#C9DBF7" uuid="2473b5f5-83fe-4eac-b232-72d38d2a0079"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Subtotal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="327" y="0" width="105" height="21" backcolor="#B4CEF7" uuid="8b4b151b-fa05-4f74-8556-ad62ae68ac72"/>
+				<reportElement mode="Opaque" x="327" y="0" width="105" height="21" backcolor="#C9DBF7" uuid="8b4b151b-fa05-4f74-8556-ad62ae68ac72"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Preço]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="1" height="21" forecolor="#3380FF" uuid="900bfd26-f0bc-4b3e-9bf4-6892eb161d64"/>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="21" forecolor="#3380FF" uuid="9decabec-23a0-40d7-93c6-63389d68a512"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -130,7 +136,7 @@ GROUP BY
 				<textFieldExpression><![CDATA[$F{itens_vendas_Quantidade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="68" height="20" uuid="e969cbb1-9202-4613-978f-905f22ca965f"/>
+				<reportElement x="1" y="0" width="67" height="20" uuid="e969cbb1-9202-4613-978f-905f22ca965f"/>
 				<textElement textAlignment="Center">
 					<font size="10"/>
 				</textElement>
@@ -150,12 +156,18 @@ GROUP BY
 				</textElement>
 				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="992ba730-7c4c-4626-87f8-a368638ddb55"/>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="20" forecolor="#3380FF" uuid="8cdac195-94b4-4176-ab80-1e874da2a0d9"/>
+			</line>
 		</band>
 	</detail>
 	<summary>
 		<band height="7">
 			<line>
-				<reportElement x="0" y="1" width="555" height="1" forecolor="#3380FF" uuid="b3bacfca-ed04-49bc-9387-f42a71167b58"/>
+				<reportElement x="0" y="0" width="555" height="1" forecolor="#3380FF" uuid="b3bacfca-ed04-49bc-9387-f42a71167b58"/>
 			</line>
 		</band>
 	</summary>

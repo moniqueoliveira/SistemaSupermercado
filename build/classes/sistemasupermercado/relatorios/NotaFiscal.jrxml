@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="288" pageHeight="792" columnWidth="284" leftMargin="2" rightMargin="2" topMargin="20" bottomMargin="0" uuid="980a2e0a-b60d-412c-9ab0-ed113144edfa">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="54"/>
+	<parameter name="idVenda" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     vendas.`ID_Venda` AS vendas_ID_Venda,
+     vendas.`ID_Sessao` AS vendas_ID_Sessao,
+     vendas.`Data` AS vendas_Data,
+     vendas.`Finalizada` AS vendas_Finalizada,
+     produtos.`ID_Produto` AS produtos_ID_Produto,
+     produtos.`Descricao` AS produtos_Descricao,
+     produtos.`Descricao_Reduzida` AS produtos_Descricao_Reduzida,
+     produtos.`Venda_Fracionada` AS produtos_Venda_Fracionada,
+     produtos.`ID_Categoria` AS produtos_ID_Categoria,
+     produtos.`Imagem` AS produtos_Imagem,
+     produtos.`Codigo_De_Barras` AS produtos_Codigo_De_Barras,
+     produtos.`Estocavel` AS produtos_Estocavel,
+     precos_produtos.`ID_Unidade` AS precos_produtos_ID_Unidade,
+     precos_produtos.`ID_Produto` AS precos_produtos_ID_Produto,
+     precos_produtos.`Valor` AS precos_produtos_Valor,
+     precos_produtos.`Data` AS precos_produtos_Data,
+     pagamentos_vendas.`ID_Venda` AS pagamentos_vendas_ID_Venda,
+     pagamentos_vendas.`Dinheiro` AS pagamentos_vendas_Dinheiro,
+     pagamentos_vendas.`Debito` AS pagamentos_vendas_Debito,
+     pagamentos_vendas.`Credito` AS pagamentos_vendas_Credito,
+     pagamentos_vendas.`Voucher` AS pagamentos_vendas_Voucher,
+     pagamentos_vendas.`Cheque` AS pagamentos_vendas_Cheque,
+     pagamentos_vendas.`Outros` AS pagamentos_vendas_Outros,
+     pagamentos_vendas.`Troco` AS pagamentos_vendas_Troco,
+     itens_vendas.`ID_Venda` AS itens_vendas_ID_Venda,
+     itens_vendas.`ID_Produto` AS itens_vendas_ID_Produto,
+     itens_vendas.`Numero_Item` AS itens_vendas_Numero_Item,
+     itens_vendas.`Quantidade` AS itens_vendas_Quantidade,
+     itens_vendas.`Subtotal` AS itens_vendas_Subtotal,
+     itens_vendas.`Cancelado` AS itens_vendas_Cancelado,
+     caixas.`Numero_Caixa` AS caixas_Numero_Caixa,
+     caixas.`ID_Unidade` AS caixas_ID_Unidade,
+     caixas.`Aberto` AS caixas_Aberto,
+     unidades.`ID_Unidade` AS unidades_ID_Unidade,
+     unidades.`Descricao` AS unidades_Descricao
+FROM
+     `produtos` produtos INNER JOIN `precos_produtos` precos_produtos ON produtos.`ID_Produto` = precos_produtos.`ID_Produto`
+     INNER JOIN `itens_vendas` itens_vendas ON produtos.`ID_Produto` = itens_vendas.`ID_Produto`
+     INNER JOIN `vendas` vendas ON itens_vendas.`ID_Venda` = vendas.`ID_Venda`
+     INNER JOIN `pagamentos_vendas` pagamentos_vendas ON vendas.`ID_Venda` = pagamentos_vendas.`ID_Venda`
+     INNER JOIN `unidades` unidades ON precos_produtos.`ID_Unidade` = unidades.`ID_Unidade`
+     INNER JOIN `caixas` caixas ON unidades.`ID_Unidade` = caixas.`ID_Unidade`
+WHERE
+     itens_vendas.id_venda = $P{idVenda} and
+     itens_vendas.cancelado!= 1
+     and precos_produtos.data = (SELECT max(precos_produtos.data) FROM `precos_produtos` WHERE precos_produtos.id_produto=produtos.id_produto)
+GROUP BY
+     itens_vendas.id_produto
+ORDER BY
+     itens_vendas.numero_item ASC]]>
+	</queryString>
+	<field name="vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="vendas_ID_Sessao" class="java.lang.Integer"/>
+	<field name="vendas_Data" class="java.sql.Timestamp"/>
+	<field name="vendas_Finalizada" class="java.lang.Boolean"/>
+	<field name="produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_Descricao" class="java.lang.String"/>
+	<field name="produtos_Descricao_Reduzida" class="java.lang.String"/>
+	<field name="produtos_Venda_Fracionada" class="java.lang.Boolean"/>
+	<field name="produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="produtos_Imagem" class="java.lang.Object"/>
+	<field name="produtos_Codigo_De_Barras" class="java.lang.String"/>
+	<field name="produtos_Estocavel" class="java.lang.Integer"/>
+	<field name="precos_produtos_ID_Unidade" class="java.lang.Integer"/>
+	<field name="precos_produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="precos_produtos_Valor" class="java.math.BigDecimal"/>
+	<field name="precos_produtos_Data" class="java.sql.Timestamp"/>
+	<field name="pagamentos_vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="pagamentos_vendas_Dinheiro" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Debito" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Credito" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Voucher" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Cheque" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Outros" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Troco" class="java.math.BigDecimal"/>
+	<field name="itens_vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="itens_vendas_ID_Produto" class="java.lang.Integer"/>
+	<field name="itens_vendas_Numero_Item" class="java.lang.Integer"/>
+	<field name="itens_vendas_Quantidade" class="java.math.BigDecimal"/>
+	<field name="itens_vendas_Subtotal" class="java.math.BigDecimal"/>
+	<field name="itens_vendas_Cancelado" class="java.lang.Integer"/>
+	<field name="caixas_Numero_Caixa" class="java.lang.Integer"/>
+	<field name="caixas_ID_Unidade" class="java.lang.Integer"/>
+	<field name="caixas_Aberto" class="java.lang.Integer"/>
+	<field name="unidades_ID_Unidade" class="java.lang.Integer"/>
+	<field name="unidades_Descricao" class="java.lang.String"/>
+	<variable name="itens_vendas_Subtotal_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{itens_vendas_Subtotal}]]></variableExpression>
+	</variable>
+	<variable name="itens_vendas_Subtotal_2" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{itens_vendas_Subtotal}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="88" y="4" width="98" height="20" uuid="013aaf7d-1850-4cd8-8665-8efe9b230428"/>
+				<textElement textAlignment="Center">
+					<font size="14" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Nota Fiscal]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="75" splitType="Stretch">
+			<textField>
+				<reportElement x="137" y="52" width="100" height="16" uuid="4a2fc20a-b3c3-41cd-9256-8d658dfbe358"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{caixas_Numero_Caixa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="137" y="36" width="100" height="16" uuid="315fcc22-3ee7-44a0-ba96-07db7bb814fa"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{unidades_Descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="137" y="20" width="100" height="16" uuid="908fac08-b9fa-4b87-901b-8897cc4c7b38"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vendas_Data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="137" y="4" width="100" height="16" uuid="a31ecd83-bc67-497d-b41a-1a7a17649bbf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vendas_ID_Venda}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="47" y="36" width="42" height="16" uuid="eddab0ad-5d15-4d71-91b5-23a7fd111c79"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Unidade:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="20" width="42" height="16" uuid="4ec2370e-356c-4fa6-9bf5-d4e92d3e9f3b"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="52" width="42" height="16" uuid="0485074f-d40e-4af6-aa6c-004df1c26a52"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Caixa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="4" width="90" height="16" uuid="7db4fb66-9b9d-4275-b79b-d969d0b77352"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Numero:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<line>
+				<reportElement x="-2" y="27" width="288" height="1" uuid="1937097c-49d8-4c05-b395-73cddb3eb8ea"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="79" y="0" width="74" height="27" backcolor="#E5E5E5" uuid="7cad216a-0243-4de0-9fcb-5aef142f26f3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="-2" y="0" width="81" height="27" backcolor="#E5E5E5" uuid="14546a2e-3819-4ede-b96a-07c4f71a007f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código de Barras]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="224" y="0" width="62" height="27" backcolor="#E5E5E5" uuid="54ee344f-d327-4e2e-93e1-fc1c34dc5d28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subtotal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="180" y="0" width="44" height="27" backcolor="#E5E5E5" uuid="bff3652c-931b-4a98-8e01-92f0fdf779db"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preço UN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="153" y="0" width="27" height="27" backcolor="#E5E5E5" uuid="a7ff3fbb-568a-415b-9d3c-7827bd0ce813"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QTD]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="79" height="32" uuid="2c8052ed-7ffa-42aa-baea-8219ae0c5845"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_Codigo_De_Barras}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="0" width="74" height="32" uuid="0657b2be-b2e6-4e8e-9be6-c5f25952e8f9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="0" width="27" height="32" uuid="3760bf11-6ce6-45c0-9291-b820133f49ec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itens_vendas_Quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="44" height="32" uuid="8342aa11-6700-48b7-ae72-e39f04fff0ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precos_produtos_Valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="224" y="0" width="60" height="32" uuid="61ff2c74-8e38-462e-9006-79ae47f43aa6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itens_vendas_Subtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="9" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="-2" y="3" width="226" height="20" backcolor="#E5E5E5" uuid="05b133bb-eea7-4021-aad8-af1706994c82"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[ Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="224" y="3" width="62" height="20" backcolor="#E5E5E5" uuid="71f0c0c8-5da9-44c3-aa82-88b0a0ae8d6f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{itens_vendas_Subtotal_2}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-2" y="2" width="288" height="1" uuid="40ea3361-735e-41f2-84c7-6f18cffd15c0"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeProdutosRetirados_Estoque" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2c75138c-aa00-45f1-852f-1235c9e76f1d">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idUnidade" class="java.lang.String"/>
+	<parameter name="idProduto" class="java.lang.String"/>
+	<parameter name="tipoPesquisa" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     estoques.`ID_Unidade` AS estoques_ID_Unidade,
+     estoques.`ID_Produto` AS estoques_ID_Produto,
+     estoques.`Quantidade` AS estoques_Quantidade,
+     estoques.`Valor_Total` AS estoques_Valor_Total,
+     produtos.`ID_Produto` AS produtos_ID_Produto,
+     produtos.`Descricao` AS produtos_Descricao,
+     produtos.`Descricao_Reduzida` AS produtos_Descricao_Reduzida,
+     produtos.`Venda_Fracionada` AS produtos_Venda_Fracionada,
+     produtos.`ID_Categoria` AS produtos_ID_Categoria,
+     produtos.`Imagem` AS produtos_Imagem,
+     produtos.`Codigo_De_Barras` AS produtos_Codigo_De_Barras,
+     produtos.`Estocavel` AS produtos_Estocavel,
+     usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
+     usuarios.`Nome` AS usuarios_Nome,
+     usuarios.`Login` AS usuarios_Login,
+     usuarios.`Senha` AS usuarios_Senha,
+     usuarios.`ID_Unidade` AS usuarios_ID_Unidade,
+     usuarios.`ID_Funcao` AS usuarios_ID_Funcao,
+     usuarios.`Ativo` AS usuarios_Ativo,
+     unidades.`ID_Unidade` AS unidades_ID_Unidade,
+     unidades.`Descricao` AS unidades_Descricao
+FROM
+     `produtos` produtos INNER JOIN `estoques` estoques ON produtos.`ID_Produto` = estoques.`ID_Produto`
+     INNER JOIN `unidades` unidades ON estoques.`ID_Unidade` = unidades.`ID_Unidade`
+     INNER JOIN `usuarios` usuarios ON unidades.`ID_Unidade` = usuarios.`ID_Unidade`
+WHERE
+     unidades.id_unidade=$P{idUnidade} and produtos.id_produto=$P{idProduto} and ($P{tipoPesquisa}=11 or $P{tipoPesquisa}=10)
+GROUP BY
+     produtos.id_produto]]>
+	</queryString>
+	<field name="estoques_ID_Unidade" class="java.lang.Integer"/>
+	<field name="estoques_ID_Produto" class="java.lang.Integer"/>
+	<field name="estoques_Quantidade" class="java.math.BigDecimal"/>
+	<field name="estoques_Valor_Total" class="java.math.BigDecimal"/>
+	<field name="produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_Descricao" class="java.lang.String"/>
+	<field name="produtos_Descricao_Reduzida" class="java.lang.String"/>
+	<field name="produtos_Venda_Fracionada" class="java.lang.Boolean"/>
+	<field name="produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="produtos_Imagem" class="java.lang.Object"/>
+	<field name="produtos_Codigo_De_Barras" class="java.lang.String"/>
+	<field name="produtos_Estocavel" class="java.lang.Integer"/>
+	<field name="usuarios_ID_Usuario" class="java.lang.Integer"/>
+	<field name="usuarios_Nome" class="java.lang.String"/>
+	<field name="usuarios_Login" class="java.lang.String"/>
+	<field name="usuarios_Senha" class="java.lang.String"/>
+	<field name="usuarios_ID_Unidade" class="java.lang.Integer"/>
+	<field name="usuarios_ID_Funcao" class="java.lang.Integer"/>
+	<field name="usuarios_Ativo" class="java.lang.Integer"/>
+	<field name="unidades_ID_Unidade" class="java.lang.Integer"/>
+	<field name="unidades_Descricao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="704" height="21" backcolor="#DFE7F5" uuid="1c00897f-51a9-47ac-97cd-29691851a14a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Total em estoque:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="704" y="0" width="98" height="1" forecolor="#4C4C4C" uuid="fa5b059d-891e-4aff-9176-4c25a0426b30"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement positionType="Float" mode="Opaque" x="704" y="1" width="98" height="20" backcolor="#DFE7F5" uuid="b97359bb-3009-42cb-8a8d-fb1ee10091dc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estoques_Quantidade}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="20" width="802" height="1" forecolor="#3380FF" uuid="928a7a36-cfc9-492b-855d-5c5e05e4dfff"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

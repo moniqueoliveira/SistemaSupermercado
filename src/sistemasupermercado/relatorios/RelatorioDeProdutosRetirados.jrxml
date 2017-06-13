@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="de8f2d6e-be59-481f-99a6-d63e3ea03ad2">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="de8f2d6e-be59-481f-99a6-d63e3ea03ad2">
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="parameter1" class="java.lang.Integer"/>
+	<parameter name="idUnidade" class="java.lang.Integer"/>
+	<parameter name="dia" class="java.lang.String"/>
+	<parameter name="mesMin" class="java.lang.String"/>
+	<parameter name="mesMax" class="java.lang.String"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<parameter name="idProduto" class="java.lang.String"/>
+	<parameter name="funcionario" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipoPesquisa" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      produtos.`ID_Produto` AS produtos_ID_Produto,
@@ -35,14 +45,55 @@
      produtos_retirados.`ID_Motivo` AS produtos_retirados_ID_Motivo,
      produtos_retirados.`Observacao` AS produtos_retirados_Observacao,
      motivos_produtos_retirados.`ID_Motivo` AS motivos_produtos_retirados_ID_Motivo,
-     motivos_produtos_retirados.`Descricao` AS motivos_produtos_retirados_Descricao
+     motivos_produtos_retirados.`Descricao` AS motivos_produtos_retirados_Descricao,
+     estoques.`ID_Unidade` AS estoques_ID_Unidade,
+     estoques.`ID_Produto` AS estoques_ID_Produto,
+     estoques.`Quantidade` AS estoques_Quantidade,
+     estoques.`Valor_Total` AS estoques_Valor_Total,
+     categorias_produtos.`ID_Categoria` AS categorias_produtos_ID_Categoria,
+     categorias_produtos.`Descricao` AS categorias_produtos_Descricao,
+     sum(produtos_retirados.quantidade) as qtd_registros,
+     if($P{tipoPesquisa} = 1, concat("Produto com ID/Descrição ",$P{idProduto}, " retirados no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}, " pelo funcionário com ID/Nome ", $P{funcionario}),
+     if($P{tipoPesquisa} = 2, concat("Produtos retirados pelo funcionário ", $P{funcionario}, " no dia ",$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 3, concat("Produtos com ID/Descrição ",$P{idProduto} , "retirados no dia ",$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 4, concat("Produtos retirados no dia ", $P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 5, concat("Produto com ID/Descrição ",$P{idProduto}, " retirados no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}," pelo funcionário com ID/Nome ", $P{funcionario}),
+     if($P{tipoPesquisa} = 6, concat("Produtos retirados pelo funcionário ",$P{funcionario} ," no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 7, concat("Produto com ID/Descrição ", $P{idProduto}, " retirados no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 8, concat("Produtos retirados no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 9, concat("Todas as unidades de produtos retirados pelo funcionário com ID/Nome " , $P{funcionario}),
+     if($P{tipoPesquisa} = 10, concat("Todas as unidades do produto com ID/Descrição " , $P{idProduto}," retiradas de estoque"),
+     if($P{tipoPesquisa} = 11, "Todas as unidades de produtos retiradas de estoque", ""
+     ))))))))))) as pesquisa
 FROM
      `usuarios` usuarios INNER JOIN `sessoes` sessoes ON usuarios.`ID_Usuario` = sessoes.`ID_Usuario`
-     INNER JOIN `unidades` unidades ON usuarios.`ID_Unidade` = unidades.`ID_Unidade`
      INNER JOIN `produtos_retirados` produtos_retirados ON sessoes.`ID_Sessao` = produtos_retirados.`ID_Sessao`
-     INNER JOIN `produtos` produtos ON produtos_retirados.`ID_Produto` = produtos.`ID_Produto`
+     INNER JOIN `produtos` produtos ON produtos_retirados.`id_produto` = produtos.`id_produto`
      INNER JOIN `motivos_produtos_retirados` motivos_produtos_retirados ON produtos_retirados.`ID_Motivo` = motivos_produtos_retirados.`ID_Motivo`
-where unidades.`id_unidade` = $P{parameter1}]]>
+     INNER JOIN `estoques` estoques ON produtos.`ID_Produto` = estoques.`ID_Produto`
+     INNER JOIN `categorias_produtos` categorias_produtos ON produtos.`ID_Categoria` = categorias_produtos.`ID_Categoria`
+     INNER JOIN `unidades` unidades ON estoques.`ID_Unidade` = unidades.`ID_Unidade`
+     AND usuarios.`ID_Unidade` = unidades.`ID_Unidade`
+WHERE
+     unidades.id_unidade = $P{idUnidade} and(
+     (day(produtos_retirados.data)=$P{dia} and month(produtos_retirados.data)=$P{mesMin} and year(produtos_retirados.data)=$P{ano} and (usuarios.id_usuario = $P{funcionario} or usuarios.nome=$P{funcionario}) and (produtos.id_produto=$P{idProduto} or produtos.descricao= $P{idProduto}) and $P{tipoPesquisa} = 1) or
+     (day(produtos_retirados.data)=$P{dia} and month(produtos_retirados.data)=$P{mesMin} and year(produtos_retirados.data)=$P{ano} and (usuarios.id_usuario = $P{funcionario} or usuarios.nome=$P{funcionario}) and $P{tipoPesquisa} = 2) or
+     (day(produtos_retirados.data)=$P{dia} and month(produtos_retirados.data)=$P{mesMin} and year(produtos_retirados.data)=$P{ano} and (produtos.id_produto=$P{idProduto} or produtos.descricao= $P{idProduto}) and $P{tipoPesquisa} = 3) or
+     (day(produtos_retirados.data)=$P{dia} and month(produtos_retirados.data)=$P{mesMin} and year(produtos_retirados.data)=$P{ano} and $P{tipoPesquisa} = 4) or
+     (month(produtos_retirados.data)>=$P{mesMin} and month(produtos_retirados.data)<=$P{mesMax} and year(produtos_retirados.data)=$P{ano} and (usuarios.id_usuario = $P{funcionario} or usuarios.nome=$P{funcionario}) and (produtos.id_produto=$P{idProduto} or produtos.descricao= $P{idProduto}) and $P{tipoPesquisa} = 5) or
+     (month(produtos_retirados.data)>=$P{mesMin} and month(produtos_retirados.data)<=$P{mesMax} and year(produtos_retirados.data)=$P{ano} and (usuarios.id_usuario = $P{funcionario} or usuarios.nome=$P{funcionario}) and $P{tipoPesquisa} = 6) or
+     (month(produtos_retirados.data)>=$P{mesMin} and month(produtos_retirados.data)<=$P{mesMax} and year(produtos_retirados.data)=$P{ano} and (produtos.id_produto=$P{idProduto} or produtos.descricao= $P{idProduto}) and $P{tipoPesquisa} = 7) or
+     (month(produtos_retirados.data)>=$P{mesMin} and month(produtos_retirados.data)<=$P{mesMax} and year(produtos_retirados.data)=$P{ano} and $P{tipoPesquisa} = 8) or
+     ((usuarios.id_usuario = $P{funcionario} or usuarios.nome=$P{funcionario}) and $P{tipoPesquisa}=9)
+     or
+     ((produtos.id_produto=$P{idProduto} or produtos.descricao= $P{idProduto}) and $P{tipoPesquisa}=10)
+     or
+     ($P{tipoPesquisa}=11)
+     )
+GROUP BY
+     produtos.id_produto
+ORDER BY
+     produtos_retirados.id_produto ASC]]>
 	</queryString>
 	<field name="produtos_ID_Produto" class="java.lang.Integer"/>
 	<field name="produtos_Descricao" class="java.lang.String"/>
@@ -74,110 +125,231 @@ where unidades.`id_unidade` = $P{parameter1}]]>
 	<field name="produtos_retirados_Observacao" class="java.lang.String"/>
 	<field name="motivos_produtos_retirados_ID_Motivo" class="java.lang.Integer"/>
 	<field name="motivos_produtos_retirados_Descricao" class="java.lang.String"/>
+	<field name="estoques_ID_Unidade" class="java.lang.Integer"/>
+	<field name="estoques_ID_Produto" class="java.lang.Integer"/>
+	<field name="estoques_Quantidade" class="java.math.BigDecimal"/>
+	<field name="estoques_Valor_Total" class="java.math.BigDecimal"/>
+	<field name="categorias_produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="categorias_produtos_Descricao" class="java.lang.String"/>
+	<field name="qtd_registros" class="java.math.BigDecimal"/>
+	<field name="pesquisa" class="java.lang.String"/>
+	<variable name="qtd_registros_3" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtd_registros}]]></variableExpression>
+	</variable>
+	<variable name="produtos_ID_Produto_1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{produtos_ID_Produto}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="125" splitType="Stretch">
 			<staticText>
-				<reportElement x="163" y="37" width="238" height="25" uuid="b0ca69c0-b4f1-43c9-a089-c587fd68c016"/>
+				<reportElement x="235" y="26" width="291" height="25" forecolor="#3F83BF" uuid="b0ca69c0-b4f1-43c9-a089-c587fd68c016"/>
 				<textElement>
-					<font size="16"/>
+					<font fontName="Tahoma" size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Relatório de Produtos Retirados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="104" width="178" height="20" uuid="7a45858b-c701-44e6-bbda-f28556381b47"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade de produtos retirados:]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="444" y="104" width="100" height="20" uuid="188139e9-cff3-4b05-91c2-f97faef0d48a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{qtd_registros_3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="84" width="709" height="20" uuid="903d45d0-f07c-4062-96ff-e138deb9c9a4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pesquisa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="84" width="93" height="20" uuid="768b91f5-6c09-472b-8526-2af916390ce9"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Tipo do relatório:]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="192" y="104" width="100" height="20" uuid="7cff7ee1-b5f0-4309-870b-c841f9c80901"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{produtos_ID_Produto_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="292" y="104" width="152" height="20" uuid="f8462cf2-23d0-49dd-9056-f2a581b0a6d4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de unidades retiradas:]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="20" splitType="Stretch"/>
+		<band height="16" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="69" splitType="Stretch">
-			<staticText>
-				<reportElement mode="Opaque" x="1" y="49" width="54" height="20" backcolor="#F0F0F0" uuid="9aea813c-7d74-413a-ba3d-acd469154ceb"/>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
+		<band height="20" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="154" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="72" y="20" width="359" height="20" backcolor="#DFE7F5" uuid="f2af7333-f3d2-4b4d-aec5-10559cad5937"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="false"/>
 				</textElement>
-				<text><![CDATA[ID]]></text>
+				<textFieldExpression><![CDATA[$F{produtos_Descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="431" y="20" width="181" height="20" backcolor="#DFE7F5" uuid="0b854b9e-b431-4f43-9d3d-8e7ecbb5503c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_Codigo_De_Barras}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="60" width="802" height="40" uuid="f4e41cfe-adae-467f-a331-83574f75d6dc"/>
+				<subreportParameter name="tipoPesquisa">
+					<subreportParameterExpression><![CDATA[$P{tipoPesquisa}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idProduto">
+					<subreportParameterExpression><![CDATA[$F{produtos_ID_Produto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mesMin">
+					<subreportParameterExpression><![CDATA[$P{mesMin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUnidade">
+					<subreportParameterExpression><![CDATA[$F{unidades_ID_Unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nomeFuncionario">
+					<subreportParameterExpression><![CDATA[$F{usuarios_Nome}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idFuncionario">
+					<subreportParameterExpression><![CDATA[$F{usuarios_ID_Usuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dia">
+					<subreportParameterExpression><![CDATA[$P{dia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mesMax">
+					<subreportParameterExpression><![CDATA[$P{mesMax}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeProdutosRetirados_Retiradas.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="20" width="72" height="20" backcolor="#DFE7F5" uuid="d0228e27-69c8-431e-af51-87ad256ca310"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_ID_Produto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="72" height="20" backcolor="#99C0FF" uuid="e05a8e9f-95b3-4b89-b921-c83b64fa7cc2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="55" y="49" width="75" height="20" backcolor="#F0F0F0" uuid="a5daee6f-3d65-475f-8660-2b7f6ef08a67"/>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
+				<reportElement mode="Opaque" x="72" y="0" width="362" height="20" backcolor="#99C0FF" uuid="799f0bdc-03a8-4541-814d-6fdab0ee05b9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="130" y="49" width="81" height="20" backcolor="#F0F0F0" uuid="11ebbe5b-194c-47b4-90dd-0d10f8986132"/>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
+				<reportElement mode="Opaque" x="431" y="0" width="183" height="20" backcolor="#99C0FF" uuid="390f2b24-9440-4b2d-8324-6ef42ec4670b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Quantidade]]></text>
+				<text><![CDATA[Codigo de Barras]]></text>
 			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="100" width="802" height="20" uuid="1f925efd-ad16-47ba-8a75-35a79551aaea"/>
+				<subreportParameter name="tipoPesquisa">
+					<subreportParameterExpression><![CDATA[$P{tipoPesquisa}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idProduto">
+					<subreportParameterExpression><![CDATA[$F{produtos_ID_Produto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUnidade">
+					<subreportParameterExpression><![CDATA[$F{unidades_ID_Unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeProdutosRetirados_Vendidos.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="40" width="802" height="20" uuid="630d544a-3ac8-4f9c-bc1b-01e415614a65"/>
+				<subreportParameter name="tipoPesquisa">
+					<subreportParameterExpression><![CDATA[$P{tipoPesquisa}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idProduto">
+					<subreportParameterExpression><![CDATA[$F{produtos_ID_Produto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUnidade">
+					<subreportParameterExpression><![CDATA[$F{unidades_ID_Unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeProdutosRetirados_Entradas.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement mode="Opaque" x="612" y="20" width="190" height="20" backcolor="#DFE7F5" uuid="64af1a17-2b1f-4cd4-9be3-4f73b64be3e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categorias_produtos_Descricao}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="211" y="49" width="100" height="20" backcolor="#F0F0F0" uuid="f5c1977c-7451-464d-9cc5-22d57a8813ca"/>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
+				<reportElement mode="Opaque" x="612" y="0" width="190" height="20" backcolor="#99C0FF" uuid="ac2953f2-b4f5-47f3-8532-59109f2a8f16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Data de Retirada]]></text>
+				<text><![CDATA[Categoria]]></text>
 			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="310" y="49" width="132" height="20" backcolor="#F0F0F0" uuid="cea4c567-8b29-4011-a2d7-7b306aa416b9"/>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Motivo de Retirada]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="442" y="49" width="114" height="20" backcolor="#F0F0F0" uuid="50c52a22-4531-4e7f-b18f-f8277ed85819"/>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Usuário]]></text>
-			</staticText>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="24" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="2" width="54" height="20" uuid="6ae1ecdb-7c33-497d-b462-179433729a73"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{produtos_ID_Produto}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="54" y="2" width="75" height="20" uuid="1d58f4a9-d3aa-4a59-91f6-60c86cc36c07"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="140" y="2" width="54" height="20" uuid="4d56524d-e7d9-44bc-836a-efd199d3a200"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{produtos_retirados_Quantidade}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="210" y="2" width="100" height="20" uuid="f80327f2-758f-4802-939e-c6438cadd0a7"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{produtos_retirados_Data}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="309" y="2" width="132" height="20" uuid="03f450e9-3a1f-4031-9d38-02f4956f784b"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{motivos_produtos_retirados_Descricao}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="441" y="2" width="114" height="20" uuid="574e4171-f50b-42ee-a88d-c2c60edbca28"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{usuarios_Nome}]]></textFieldExpression>
-			</textField>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="120" width="802" height="20" uuid="786e06dd-9ec3-4184-81d5-f609c5c0fa5b"/>
+				<subreportParameter name="tipoPesquisa">
+					<subreportParameterExpression><![CDATA[$P{tipoPesquisa}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idProduto">
+					<subreportParameterExpression><![CDATA[$F{produtos_ID_Produto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUnidade">
+					<subreportParameterExpression><![CDATA[$F{unidades_ID_Unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeProdutosRetirados_Estoque.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="12" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="26" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="54" y="5" width="124" height="20" uuid="26241778-4358-4253-b89c-39453b48741b"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="668" y="5" width="80" height="20" uuid="2fd7253a-f50b-42a4-b8fd-f6d175914bf6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="748" y="6" width="40" height="20" uuid="409a40c3-1d9a-4745-98bd-92d6ff29bcd1"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="21" splitType="Stretch"/>
 	</summary>
 </jasperReport>

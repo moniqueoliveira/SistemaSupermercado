@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeFornecedores_Emails" language="groovy" pageWidth="802" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7926c74c-0a22-4c8e-9193-9dbfd980da2f">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idFornecedor" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     emails_fornecedores.`ID_Fornecedor` AS emails_fornecedores_ID_Fornecedor,
+     emails_fornecedores.`Email` AS emails_fornecedores_Email,
+     fornecedores.`ID_Fornecedor` AS fornecedores_ID_Fornecedor,
+     fornecedores.`Nome_Fantasia` AS fornecedores_Nome_Fantasia,
+     fornecedores.`Razao_Social` AS fornecedores_Razao_Social,
+     fornecedores.`CNPJ` AS fornecedores_CNPJ,
+     fornecedores.`Ativo` AS fornecedores_Ativo
+FROM
+     `fornecedores` fornecedores INNER JOIN `emails_fornecedores` emails_fornecedores ON fornecedores.`ID_Fornecedor` = emails_fornecedores.`ID_Fornecedor`
+WHERE
+     fornecedores.id_fornecedor = $P{idFornecedor}]]>
+	</queryString>
+	<field name="emails_fornecedores_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="emails_fornecedores_Email" class="java.lang.String"/>
+	<field name="fornecedores_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="fornecedores_Nome_Fantasia" class="java.lang.String"/>
+	<field name="fornecedores_Razao_Social" class="java.lang.String"/>
+	<field name="fornecedores_CNPJ" class="java.lang.String"/>
+	<field name="fornecedores_Ativo" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="20" backcolor="#C9DBF7" uuid="2b0001cd-7504-49be-87e4-5c0b6631efb5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Emails]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="802" height="19" uuid="1789a6a1-0261-4061-a42a-2a4fe094556e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{emails_fornecedores_Email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

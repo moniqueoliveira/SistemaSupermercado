@@ -91,7 +91,8 @@ public class FormVenda extends javax.swing.JFrame {
     private void definirImagemDeFundo() {
         try {
             JImagePanel panel = new JImagePanel(
-                    loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
+                    //loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
+                    loadImage("C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
             //panel.setFillType(JImagePanel.FillType.CENTER);
             this.setContentPane(panel);
             //this.pack();
@@ -156,6 +157,8 @@ public class FormVenda extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Venda");
+        setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png")));
+        setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);

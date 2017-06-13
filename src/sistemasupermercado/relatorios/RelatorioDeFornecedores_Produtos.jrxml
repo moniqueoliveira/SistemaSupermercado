@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeFornecedores_Produtos" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5b56632d-b09b-4075-8e30-68fe6ec74b59">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idFornecedor" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     fornecedores.`ID_Fornecedor` AS fornecedores_ID_Fornecedor,
+     fornecedores.`Nome_Fantasia` AS fornecedores_Nome_Fantasia,
+     fornecedores.`Razao_Social` AS fornecedores_Razao_Social,
+     fornecedores.`CNPJ` AS fornecedores_CNPJ,
+     fornecedores.`Ativo` AS fornecedores_Ativo,
+     produtos.`ID_Produto` AS produtos_ID_Produto,
+     produtos.`Descricao` AS produtos_Descricao,
+     produtos.`Descricao_Reduzida` AS produtos_Descricao_Reduzida,
+     produtos.`Venda_Fracionada` AS produtos_Venda_Fracionada,
+     produtos.`ID_Categoria` AS produtos_ID_Categoria,
+     produtos.`Imagem` AS produtos_Imagem,
+     produtos.`Codigo_De_Barras` AS produtos_Codigo_De_Barras,
+     produtos.`Estocavel` AS produtos_Estocavel,
+     entradas_produtos.`ID_Entrada` AS entradas_produtos_ID_Entrada,
+     entradas_produtos.`ID_Produto` AS entradas_produtos_ID_Produto,
+     entradas_produtos.`ID_Fornecedor` AS entradas_produtos_ID_Fornecedor,
+     entradas_produtos.`Quantidade` AS entradas_produtos_Quantidade,
+     entradas_produtos.`Valor_Unitario` AS entradas_produtos_Valor_Unitario,
+     entradas_produtos.`Data` AS entradas_produtos_Data,
+     entradas_produtos.`ID_Sessao` AS entradas_produtos_ID_Sessao,
+     categorias_produtos.`ID_Categoria` AS categorias_produtos_ID_Categoria,
+     categorias_produtos.`Descricao` AS categorias_produtos_Descricao,
+     sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
+     sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
+     sessoes.`Inicio_Sessao` AS sessoes_Inicio_Sessao,
+     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao
+FROM
+     `produtos` produtos INNER JOIN `entradas_produtos` entradas_produtos ON produtos.`ID_Produto` = entradas_produtos.`ID_Produto`
+     INNER JOIN `fornecedores` fornecedores ON entradas_produtos.`ID_Fornecedor` = fornecedores.`ID_Fornecedor`
+     INNER JOIN `sessoes` sessoes ON entradas_produtos.`ID_Sessao` = sessoes.`ID_Sessao`
+     INNER JOIN `categorias_produtos` categorias_produtos ON produtos.`ID_Categoria` = categorias_produtos.`ID_Categoria`
+WHERE
+     fornecedores.id_fornecedor = $P{idFornecedor}
+GROUP BY
+     produtos.id_produto]]>
+	</queryString>
+	<field name="fornecedores_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="fornecedores_Nome_Fantasia" class="java.lang.String"/>
+	<field name="fornecedores_Razao_Social" class="java.lang.String"/>
+	<field name="fornecedores_CNPJ" class="java.lang.String"/>
+	<field name="fornecedores_Ativo" class="java.lang.Integer"/>
+	<field name="produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="produtos_Descricao" class="java.lang.String"/>
+	<field name="produtos_Descricao_Reduzida" class="java.lang.String"/>
+	<field name="produtos_Venda_Fracionada" class="java.lang.Boolean"/>
+	<field name="produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="produtos_Imagem" class="java.lang.Object"/>
+	<field name="produtos_Codigo_De_Barras" class="java.lang.String"/>
+	<field name="produtos_Estocavel" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Entrada" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Produto" class="java.lang.Integer"/>
+	<field name="entradas_produtos_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="entradas_produtos_Quantidade" class="java.math.BigDecimal"/>
+	<field name="entradas_produtos_Valor_Unitario" class="java.math.BigDecimal"/>
+	<field name="entradas_produtos_Data" class="java.sql.Timestamp"/>
+	<field name="entradas_produtos_ID_Sessao" class="java.lang.Integer"/>
+	<field name="categorias_produtos_ID_Categoria" class="java.lang.Integer"/>
+	<field name="categorias_produtos_Descricao" class="java.lang.String"/>
+	<field name="sessoes_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
+	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="20">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="20" backcolor="#C9DBF7" uuid="3ef84547-b26b-42cb-81d3-94a7e89ec618"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produtos Fornecidos]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="222" height="20" backcolor="#C9DBF7" uuid="1d7ff01c-6903-46e2-9dcd-14463c407375"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="391" y="0" width="213" height="20" backcolor="#C9DBF7" uuid="bc255adb-fd9f-425c-991b-deadda51d7de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria do Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="604" y="0" width="198" height="20" backcolor="#C9DBF7" uuid="e664ae92-12c0-4d4f-8a54-5326eeac11b2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade Fornecida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="222" y="0" width="169" height="20" backcolor="#C9DBF7" uuid="df615ac4-8ff3-418a-9169-6bd25616fb78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo De Barras]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="222" height="20" uuid="660af4b1-1521-46d4-8b5e-413bfe0b3176"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{produtos_Descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="391" y="0" width="213" height="20" uuid="6c614ae1-0e7d-4678-8b52-99d98cb2862b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{categorias_produtos_Descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="604" y="0" width="198" height="20" uuid="7184b11f-fc60-49a2-b6c2-0ebf4cafdaf7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{entradas_produtos_Quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="222" y="0" width="169" height="20" uuid="5363bbee-7d27-4fdb-8cfe-b2f459bce2e0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{produtos_Codigo_De_Barras}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

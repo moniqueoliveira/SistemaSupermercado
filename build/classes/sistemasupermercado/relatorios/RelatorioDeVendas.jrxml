@@ -4,16 +4,19 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="unidade" class="java.lang.String"/>
+	<parameter name="dia" class="java.lang.String"/>
 	<parameter name="mesMin" class="java.lang.String"/>
 	<parameter name="mesMax" class="java.lang.String"/>
 	<parameter name="ano" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Monique\\Documents\\Estudos\\TCC\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="idVenda" class="java.lang.String"/>
+	<parameter name="vendedor" class="java.lang.String"/>
+	<parameter name="tipoPesquisa" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-     sum(pagamentos_vendas.dinheiro+pagamentos_vendas.`Credito`+pagamentos_vendas.`Debito`+pagamentos_vendas.`Voucher`+pagamentos_vendas.`Cheque`+pagamentos_vendas.`Outros`) AS total_venda,
+     truncate(sum(pagamentos_vendas.dinheiro+pagamentos_vendas.`Credito`+pagamentos_vendas.`Debito`+pagamentos_vendas.`Voucher`+pagamentos_vendas.`Cheque`+pagamentos_vendas.`Outros`)/(count(itens_vendas.id_produto)),2) AS total_venda,
      sum(itens_vendas.subtotal) AS valor_venda,
      vendas.`ID_Venda` AS vendas_ID_Venda,
      vendas.`ID_Sessao` AS vendas_ID_Sessao,
@@ -49,7 +52,15 @@
      itens_vendas.`Numero_Item` AS itens_vendas_Numero_Item,
      itens_vendas.`Quantidade` AS itens_vendas_Quantidade,
      itens_vendas.`Subtotal` AS itens_vendas_Subtotal,
-     itens_vendas.`Cancelado` AS itens_vendas_Cancelado
+     itens_vendas.`Cancelado` AS itens_vendas_Cancelado,
+     if($P{tipoPesquisa} = 1, concat("Vendas do funcionário com ID/Nome ",$P{vendedor}, " no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 2, concat("Vendas do dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}), 
+     if($P{tipoPesquisa} = 3, concat("Vendas do funcionário com ID/Nome ",$P{vendedor}, " no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 4, concat("Vendas no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 5, concat("Todas as vendas do funcionário com ID/Nome " , $P{vendedor}),
+     if($P{tipoPesquisa} = 6, concat("Venda de ID " , $P{idVenda}),
+     if($P{tipoPesquisa} = 7, "Todas as vendas realizadas", ""
+     ))))))) as pesquisa
 FROM
      `unidades` unidades INNER JOIN `usuarios` usuarios ON unidades.`ID_Unidade` = usuarios.`ID_Unidade`
      INNER JOIN `sessoes` sessoes ON usuarios.`ID_Usuario` = sessoes.`ID_Usuario`
@@ -59,12 +70,16 @@ FROM
      INNER JOIN `itens_vendas` itens_vendas ON vendas.`ID_Venda` = itens_vendas.`ID_Venda`
 WHERE
      unidades.id_unidade = $P{unidade} and (
-     (Month(vendas.data) >= $P{mesMin}
-     and month(vendas.data) <= $P{mesMax}
-     and year(vendas.data) = $P{ano})
-     or 
-     (vendas.id_venda = $P{idVenda})
-     )
+     (day(vendas.data) = $P{dia} and month(vendas.data) = $P{mesMin} and year(vendas.data) = $P{ano} and (usuarios.nome = $P{vendedor}
+or usuarios.id_usuario = $P{vendedor}) and $P{tipoPesquisa} = 1)
+     or (day(vendas.data) = $P{dia} and month(vendas.data) = $P{mesMin} and year(vendas.data) = $P{ano} and $P{tipoPesquisa} = 2)
+     or (Month(vendas.data) >= $P{mesMin} and month(vendas.data) <= $P{mesMax} and year(vendas.data) = $P{ano} and (usuarios.nome = $P{vendedor}
+or usuarios.id_usuario = $P{vendedor}) and $P{tipoPesquisa} = 3)
+     or (Month(vendas.data) >= $P{mesMin} and month(vendas.data) <= $P{mesMax} and year(vendas.data) = $P{ano} and $P{tipoPesquisa} = 4)
+     or ((usuarios.nome = $P{vendedor} or usuarios.id_usuario = $P{vendedor}) and $P{tipoPesquisa} =5)
+     or (vendas.id_venda = $P{idVenda} and $P{tipoPesquisa} = 6)
+     or ($P{tipoPesquisa}=7)
+     ) and itens_vendas.cancelado != 1
 GROUP BY
      vendas.id_venda]]>
 	</queryString>
@@ -105,11 +120,15 @@ GROUP BY
 	<field name="itens_vendas_Quantidade" class="java.math.BigDecimal"/>
 	<field name="itens_vendas_Subtotal" class="java.math.BigDecimal"/>
 	<field name="itens_vendas_Cancelado" class="java.lang.Integer"/>
+	<field name="pesquisa" class="java.lang.String"/>
+	<variable name="vendas_ID_Venda_1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{vendas_ID_Venda}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="124" splitType="Stretch">
 			<staticText>
 				<reportElement x="175" y="26" width="186" height="27" forecolor="#3F83BF" uuid="03e417c0-7af1-4ab6-9eb1-32b0fb9a27ba"/>
 				<textElement>
@@ -117,91 +136,72 @@ GROUP BY
 				</textElement>
 				<text><![CDATA[Relatório de Vendas]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="13" y="109" width="175" height="15" uuid="6a42ee0a-527e-44e8-837c-b34c816c01d0"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade de vendas encontradas:]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="188" y="109" width="100" height="15" uuid="178368de-4866-4f41-87ae-66484c7e07a0"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$V{vendas_ID_Venda_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="89" width="453" height="20" uuid="36fe8be0-f42f-43bf-a6e4-730e06b67955"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pesquisa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="89" width="100" height="20" uuid="12697e19-b2b1-4b56-8dfb-2cbee0eba3b2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Tipo do relatório:]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="49" height="20" uuid="c3527b9c-b0e8-44f0-8fb5-755e8496f6b7"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Período:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="49" y="0" width="20" height="20" uuid="c025b577-f86c-4d76-b80d-b0ca0b2baf0c"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Mês]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="69" y="0" width="15" height="20" uuid="5b8b1250-2e1e-4afe-90ce-953196f12cc9"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$P{mesMin}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="84" y="0" width="13" height="20" uuid="228cb7fe-75e7-4793-b22c-6131277d7688"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[a]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="97" y="0" width="16" height="20" uuid="1e06ff4c-eeda-420a-aa4a-c46cb7a2d0cf"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$P{mesMax}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="113" y="0" width="13" height="20" uuid="1b7c0dad-1ad7-4d86-9c3d-99e17e76b78a"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[de]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="126" y="0" width="36" height="20" uuid="b9d7c571-1f9f-409f-9c22-127c59cea1ee"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$P{ano}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="28" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="29" splitType="Stretch"/>
+		<band height="7" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="62" splitType="Stretch">
+		<band height="92" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="20" width="49" height="20" backcolor="#DFE7F5" uuid="69ebc5f1-74d1-438a-8e8a-75d364636e08"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="0" y="20" width="58" height="20" backcolor="#DFE7F5" uuid="69ebc5f1-74d1-438a-8e8a-75d364636e08"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{vendas_ID_Venda}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="49" y="20" width="48" height="20" backcolor="#DFE7F5" uuid="b50c7a71-c553-4d4b-907a-1bf48824d5ba"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="58" y="20" width="55" height="20" backcolor="#DFE7F5" uuid="b50c7a71-c553-4d4b-907a-1bf48824d5ba"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{vendas_ID_Sessao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="132" y="20" width="85" height="20" backcolor="#DFE7F5" uuid="49d0c84e-81ae-467b-82de-de1cb971f21b"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="156" y="20" width="85" height="20" backcolor="#DFE7F5" uuid="49d0c84e-81ae-467b-82de-de1cb971f21b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{usuarios_Nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="407" y="20" width="78" height="20" backcolor="#DFE7F5" uuid="0b333902-8807-49ed-b423-55a9146576cc"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{total_venda}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement mode="Opaque" x="485" y="20" width="70" height="20" backcolor="#DFE7F5" uuid="5d1117ae-da84-403d-a6cf-dec552f5673d"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{pagamentos_vendas_Troco}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="97" y="20" width="35" height="20" backcolor="#DFE7F5" uuid="d035427f-7314-4aa3-a8bf-aefac7fd9c23"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="113" y="20" width="43" height="20" backcolor="#DFE7F5" uuid="d035427f-7314-4aa3-a8bf-aefac7fd9c23"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{sessoes_caixas_numero_caixa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="317" y="20" width="90" height="20" backcolor="#DFE7F5" uuid="8074fa07-bdb1-4e25-8599-23fa7f929da6"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="341" y="20" width="78" height="20" backcolor="#DFE7F5" uuid="8074fa07-bdb1-4e25-8599-23fa7f929da6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{valor_venda}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="0" y="40" width="555" height="16" uuid="936c1c71-9575-4d8b-96ef-380b62f3387a"/>
+				<reportElement positionType="Float" x="0" y="56" width="555" height="16" uuid="936c1c71-9575-4d8b-96ef-380b62f3387a"/>
 				<subreportParameter name="idVenda">
 					<subreportParameterExpression><![CDATA[$F{vendas_ID_Venda}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -209,66 +209,88 @@ GROUP BY
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeVendas_subreport1.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement mode="Opaque" x="217" y="20" width="100" height="20" backcolor="#DFE7F5" uuid="5068a440-b5f5-4d19-9b7e-05390aa63d09"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="241" y="20" width="100" height="20" backcolor="#DFE7F5" uuid="5068a440-b5f5-4d19-9b7e-05390aa63d09"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{vendas_Data}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="49" height="20" backcolor="#99C0FF" uuid="e175403f-1542-41e1-8a76-1d31977231f7"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font isBold="false"/>
+				<reportElement mode="Opaque" x="0" y="0" width="58" height="20" backcolor="#99C0FF" uuid="e175403f-1542-41e1-8a76-1d31977231f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID Venda]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="132" y="0" width="85" height="20" backcolor="#99C0FF" uuid="be41f3b5-4d57-4048-ac5b-0a621f717a39"/>
+				<reportElement mode="Opaque" x="156" y="0" width="85" height="20" backcolor="#99C0FF" uuid="be41f3b5-4d57-4048-ac5b-0a621f717a39"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nome Vendedor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="217" y="0" width="100" height="20" backcolor="#99C0FF" uuid="0a372fbb-0811-4fc9-8a21-19e8b3d0366b"/>
+				<reportElement mode="Opaque" x="241" y="0" width="100" height="20" backcolor="#99C0FF" uuid="0a372fbb-0811-4fc9-8a21-19e8b3d0366b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data da Venda]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="407" y="0" width="78" height="20" backcolor="#99C0FF" uuid="b9cb5dce-65fb-43e1-9c00-cdace391ba3a"/>
+				<reportElement mode="Opaque" x="419" y="0" width="66" height="20" backcolor="#99C0FF" uuid="b9cb5dce-65fb-43e1-9c00-cdace391ba3a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Pago]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="485" y="0" width="70" height="20" backcolor="#99C0FF" uuid="c620f6a2-4035-4039-947b-7857bb4847d6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Troco]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="97" y="0" width="35" height="20" backcolor="#99C0FF" uuid="0be83f26-b39b-4769-8e87-6e87f6345842"/>
+				<reportElement mode="Opaque" x="113" y="0" width="43" height="20" backcolor="#99C0FF" uuid="0be83f26-b39b-4769-8e87-6e87f6345842"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Caixa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="49" y="0" width="48" height="20" backcolor="#99C0FF" uuid="eeca490a-0cd3-4092-938a-821faa90f5f0"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font isBold="false"/>
+				<reportElement mode="Opaque" x="58" y="0" width="55" height="20" backcolor="#99C0FF" uuid="eeca490a-0cd3-4092-938a-821faa90f5f0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID Sessao]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="317" y="0" width="90" height="20" backcolor="#99C0FF" uuid="c2bf95c1-0d06-4e34-8f20-6a96e4d32363"/>
+				<reportElement mode="Opaque" x="341" y="0" width="78" height="20" backcolor="#99C0FF" uuid="c2bf95c1-0d06-4e34-8f20-6a96e4d32363"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Venda]]></text>
 			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="40" width="555" height="16" uuid="7dd4e586-1f99-480c-9933-c47f67075fba"/>
+				<subreportParameter name="idVenda">
+					<subreportParameterExpression><![CDATA[$F{vendas_ID_Venda}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeVendas_Pagamentos.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" forecolor="#3380FF" uuid="56ee1eac-d594-441c-8326-5b5deff6aab4"/>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="40" forecolor="#3380FF" uuid="1a05d605-87b9-4bbb-8a8e-c9db05b0b06c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="40" forecolor="#3380FF" uuid="f4a3c7a8-862f-4865-b494-30257f26f98b"/>
+			</line>
+			<textField>
+				<reportElement mode="Opaque" x="419" y="20" width="66" height="20" backcolor="#DFE7F5" uuid="38fcbe97-5baa-4bdb-b797-6c9306b56115"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total_venda}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

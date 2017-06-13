@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeUsuarios_Entradas" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a7807119-9c3a-4ddf-8ccb-48c485165460">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="6.0"/>
+	<property name="ireport.x" value="1671"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idUsuario" class="java.lang.String"/>
 	<parameter name="idUnidade" class="java.lang.String"/>
@@ -52,7 +52,11 @@ FROM
      INNER JOIN `produtos` produtos ON entradas_produtos.`ID_Produto` = produtos.`ID_Produto`
      INNER JOIN `fornecedores` fornecedores ON entradas_produtos.`ID_Fornecedor` = fornecedores.`ID_Fornecedor`
 WHERE
-      usuarios.id_usuario = $P{idUsuario} and unidades.id_unidade = $P{idUnidade}  and ((day(entradas_produtos.data) = $P{dia} and month(entradas_produtos.data)=$P{mesMin} and year(entradas_produtos.data)=$P{ano}) or (month(entradas_produtos.data)>= $P{mesMin} and month(entradas_produtos.data)<=$P{mesMax} and year(entradas_produtos.data)=$P{ano}))
+      (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and day(entradas_produtos.data)=$P{dia} and month(entradas_produtos.data)=$P{mesMin} and year(entradas_produtos.data)=$P{ano}) or
+
+     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and month(entradas_produtos.data)>=$P{mesMin} and month(entradas_produtos.data)<=$P{mesMax} and year(entradas_produtos.data)=$P{ano} and $P{dia} =0) or
+
+     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and $P{dia}=0 and $P{mesMin} =0)
 GROUP BY
      entradas_produtos.id_entrada
 ORDER BY
@@ -117,66 +121,78 @@ ORDER BY
 				</textElement>
 				<textFieldExpression><![CDATA[$V{qtd_entradas_2}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="f103b137-50f3-474c-ab4e-847a5218f3e8"/>
+			</line>
+			<line>
+				<reportElement x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="ab49e745-1368-4832-bf4e-7a3868593c9b"/>
+			</line>
 		</band>
 	</title>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="e40cce80-681f-41aa-8a77-d6b09125b5b2"/>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="e40cce80-681f-41aa-8a77-d6b09125b5b2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[ID Entrada]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="100" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="c9d857e4-80ae-48b2-84d2-4fff054ef709"/>
+				<reportElement mode="Opaque" x="100" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="c9d857e4-80ae-48b2-84d2-4fff054ef709"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="200" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="c365fd12-2b1e-4a51-976a-72c4a0924330"/>
+				<reportElement mode="Opaque" x="200" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="c365fd12-2b1e-4a51-976a-72c4a0924330"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Quantidade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="300" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="075081c0-85f3-44c3-9956-d3c067dddef4"/>
+				<reportElement mode="Opaque" x="300" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="075081c0-85f3-44c3-9956-d3c067dddef4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="400" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="a9678691-338d-404e-bec6-ae5d172c4e60"/>
+				<reportElement mode="Opaque" x="400" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="a9678691-338d-404e-bec6-ae5d172c4e60"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Fornecedor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="500" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="11d73ce2-9049-4afd-8c84-33fee7acd00e"/>
+				<reportElement mode="Opaque" x="500" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="11d73ce2-9049-4afd-8c84-33fee7acd00e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[ID Sessão]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="600" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="4f3648bf-7c22-487e-889b-34c495b846d2"/>
+				<reportElement mode="Opaque" x="600" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="4f3648bf-7c22-487e-889b-34c495b846d2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Início Sessão]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="700" y="0" width="102" height="20" backcolor="#B4CEF7" uuid="f9a1aee6-12e9-41ec-ba76-8c36c073f7e5"/>
+				<reportElement mode="Opaque" x="700" y="0" width="102" height="20" backcolor="#C9DBF7" uuid="f9a1aee6-12e9-41ec-ba76-8c36c073f7e5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Fim Sessão]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="a04eeb2f-898b-44c1-bd9d-3cad96a86ea2"/>
+			</line>
+			<line>
+				<reportElement x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="8692e2e4-d15e-4fd9-bc1b-08194fcdba66"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -237,12 +253,18 @@ ORDER BY
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sessoes_Fim_Sessao}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="21" forecolor="#3380FF" uuid="45494ec4-49ca-4a94-b1c9-22590a28dcde"/>
+			</line>
+			<line>
+				<reportElement x="801" y="0" width="1" height="21" forecolor="#3380FF" uuid="852c96d5-29a7-4596-a01c-f5c8f7af67a3"/>
+			</line>
 		</band>
 	</detail>
 	<summary>
-		<band height="3" splitType="Stretch">
+		<band splitType="Stretch">
 			<line>
-				<reportElement x="0" y="1" width="800" height="1" forecolor="#3380FF" uuid="8e6dc64a-5bf4-4204-9ff1-b122cd3880b9"/>
+				<reportElement x="0" y="-1" width="801" height="1" forecolor="#3380FF" uuid="8e6dc64a-5bf4-4204-9ff1-b122cd3880b9"/>
 			</line>
 		</band>
 	</summary>

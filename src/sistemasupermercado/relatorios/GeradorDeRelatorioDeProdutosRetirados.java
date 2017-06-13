@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemasupermercado.relatorios;
 
 import java.io.InputStream;
@@ -12,12 +7,9 @@ import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.conexao.ConnectionFactory;
 
-/**
- *
- * @author Monique
- */
+
 public class GeradorDeRelatorioDeProdutosRetirados extends GeradorDeRelatorios {
-        public JFrame abrirRelatorio(Integer i) throws JRException {
+        public JFrame abrirRelatorio(int idUnidade, String funcionario,  String produto, String dia, int mesMin, int mesMax, String ano, int tipoPesquisa) throws JRException {
  
     // note que estamos chamando o novo relatório
     InputStream inputStream = getClass().getResourceAsStream("RelatorioDeProdutosRetirados.jasper");
@@ -33,7 +25,15 @@ public class GeradorDeRelatorioDeProdutosRetirados extends GeradorDeRelatorios {
     
     
     
-    parametros.put( "parameter1", i);
+    parametros.put( "idUnidade", idUnidade);
+    parametros.put( "idProduto", produto);
+    parametros.put( "funcionario", funcionario);
+    parametros.put( "dia", dia);
+    parametros.put( "mesMin", mesMin);
+    parametros.put( "mesMax", mesMax);
+    parametros.put( "ano", ano);
+    parametros.put( "tipoPesquisa", tipoPesquisa);
+    
     // outros possíveis parâmetros aqui...
  
     

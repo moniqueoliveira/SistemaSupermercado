@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d161e776-5e63-4825-8681-19e8a9c3b6e8">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Monique\\Documents\\Estudos\\TCC\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="idUsuario" class="java.lang.String"/>
 	<parameter name="idUnidade" class="java.lang.String"/>
@@ -14,8 +14,10 @@
 	<parameter name="ano" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="tipoPesquisa" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
+     count(*) as qtd_encontrada,
      max(sessoes.`Inicio_Sessao`) AS sessoes_Inicio_Sessao,
      max(sessoes.`Fim_Sessao`) AS sessoes_Fim_Sessao,
      if(usuarios.ativo=1,"Ativo","Inativo") AS status,
@@ -36,24 +38,35 @@
      unidades_A.`Descricao` AS unidades_A_Descricao,
      sessoes.`Inicio_Sessao` AS Inicio_Sessao,
      sessoes.`Fim_Sessao` AS Fim_Sessao,
-     if($P{mesMax}=0 and $P{dia}!=0, concat($P{dia}," de"), case when $P{mesMin} = 1 then "Janeiro a" when $P{mesMin}=2 then "Fevereiro a" when $P{mesMin}=3 then "Março a" when $P{mesMin}=4 then "Abril a" when $P{mesMin}=5 then "Maio a" when $P{mesMin}=6 then "Junho a" when $P{mesMin}=7 then "Julho a" when $P{mesMin}=8 then "Agosto a" when $P{mesMin}=9 then "Setembro a" when $P{mesMin} = 10 then "Outubro a" when $P{mesMin}=11 then "Novembro a" when $P{mesMin}=12 then "Dezembro a" else "Janeiro a" end) as data_1,
-     case when $P{mesMax} = 1 then "Janeiro de" when $P{mesMax}=2 then "Fevereiro de" when $P{mesMax}=3 then "Março de" when $P{mesMax}=4 then "Abril de" when $P{mesMax}=5 then "Maio de" when $P{mesMax}=6 then "Junho de" when $P{mesMax}=7 then "Julho de" when $P{mesMax}=8 then "Agosto de" when $P{mesMax}=9 then "Setembro de" when $P{mesMax} = 10 then "Outubro de" when $P{mesMax}=11 then "Novembro de" when $P{mesMax}=12 then "Dezembro" else monthname(curdate()) end as data_2
+     if(($P{mesMax}=0 or $P{tipoPesquisa} =2 or $P{tipoPesquisa}=1) and $P{dia}!=0, concat($P{dia}," de"), case when $P{mesMin} = 1 then "Janeiro a" when $P{mesMin}=2 then "Fevereiro a" when $P{mesMin}=3 then "Março a" when $P{mesMin}=4 then "Abril a" when $P{mesMin}=5 then "Maio a" when $P{mesMin}=6 then "Junho a" when $P{mesMin}=7 then "Julho a" when $P{mesMin}=8 then "Agosto a" when $P{mesMin}=9 then "Setembro a" when $P{mesMin} = 10 then "Outubro a" when $P{mesMin}=11 then "Novembro a" when $P{mesMin}=12 then "Dezembro a" else "-" end) as data_1,
+     case when $P{mesMax} = 1 then "Janeiro de" when $P{mesMax}=2 then "Fevereiro de" when $P{mesMax}=3 then "Março de" when $P{mesMax}=4 then "Abril de" when $P{mesMax}=5 then "Maio de" when $P{mesMax}=6 then "Junho de" when $P{mesMax}=7 then "Julho de" when $P{mesMax}=8 then "Agosto de" when $P{mesMax}=9 then "Setembro de" when $P{mesMax} = 10 then "Outubro de" when $P{mesMax}=11 then "Novembro de" when $P{mesMax}=12 then "Dezembro de" else case when $P{mesMin} = 1 then "Janeiro de" when $P{mesMin}=2 then "Fevereiro de" when $P{mesMin}=3 then "Março de" when $P{mesMin}=4 then "Abril de" when $P{mesMin}=5 then "Maio de" when $P{mesMin}=6 then "Junho de" when $P{mesMin}=7 then "Julho de" when $P{mesMin}=8 then "Agosto de" when $P{mesMin}=9 then "Setembro de" when $P{mesMin} = 10 then "Outubro de" when $P{mesMin}=11 then "Novembro de" when $P{mesMin}=12 then "Dezembro de" else "-" end end as data_2,
+
+     if($P{tipoPesquisa} = 1, concat("Funcionário com ID/Nome ",$P{idUsuario}, " no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 2, concat("Sessões e ações de funcionários no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}), 
+     if($P{tipoPesquisa} = 3, concat("Sessões e ações do funcionário com ID/Nome ",$P{idUsuario}, " no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 4, concat("Sessões e ações de funcionários no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 5, concat("Todas as sessões e ações do funcionário com ID/Nome " , $P{idUsuario}),
+     if($P{tipoPesquisa} = 6, "Todas as sessões e ações de todos os funcionários", ""
+     )))))) as pesquisa
 FROM
      `unidades` unidades INNER JOIN `usuarios` usuarios ON unidades.`ID_Unidade` = usuarios.`ID_Unidade`
      INNER JOIN `funcoes_usuarios` funcoes_usuarios ON usuarios.`ID_Funcao` = funcoes_usuarios.`ID_Funcao`
      INNER JOIN `sessoes` sessoes ON usuarios.`ID_Usuario` = sessoes.`ID_Usuario`
      INNER JOIN `unidades` unidades_A ON usuarios.`ID_Unidade` = unidades_A.`ID_Unidade`
+
 WHERE
-     unidades.id_unidade = $P{idUnidade}  and (
-     usuarios.id_usuario = $P{idUsuario} or( 
-     day(sessoes.inicio_sessao) = $P{dia} and month(sessoes.inicio_sessao) = $P{mesMin} and year(sessoes.inicio_sessao) = $P{ano} and $P{idUsuario} =0) or
-     (month(sessoes.inicio_sessao) >= $P{mesMin} and month(sessoes.fim_sessao) <= $P{mesMax} and year(sessoes.inicio_sessao) = $P{ano} and $P{idUsuario} = 0) or
-      (day(sessoes.inicio_sessao) = $P{dia} and month(sessoes.inicio_sessao) = $P{mesMin} and year(sessoes.inicio_sessao) = $P{ano} and usuarios.id_usuario = $P{idUsuario}) or (
-      month(sessoes.inicio_sessao) >= $P{mesMin} and month(sessoes.fim_sessao) <= $P{mesMax} and year(sessoes.inicio_sessao) = $P{ano} and usuarios.id_usuario = $P{idUsuario})
+     unidades.id_unidade = $P{idUnidade} and (
+       (day(sessoes.inicio_sessao)=$P{dia} and month(sessoes.inicio_sessao)=$P{mesMin} and year(sessoes.inicio_sessao)=$P{ano} and (usuarios.id_usuario=$P{idUsuario} or usuarios.nome=$P{idUsuario}) and $P{tipoPesquisa}=1)       
+       or (day(sessoes.inicio_sessao)=$P{dia} and month(sessoes.inicio_sessao)=$P{mesMin} and year(sessoes.inicio_sessao)=$P{ano} and $P{tipoPesquisa}=2)
+       or (month(sessoes.inicio_sessao)>=$P{mesMin} and month(sessoes.inicio_sessao)<=$P{mesMax} and year(sessoes.inicio_sessao)=$P{ano} and (usuarios.id_usuario=$P{idUsuario} or usuarios.nome=$P{idUsuario}) and $P{tipoPesquisa}=3)
+       or (month(sessoes.inicio_sessao)>=$P{mesMin} and month(sessoes.inicio_sessao)<=$P{mesMax} and year(sessoes.inicio_sessao)=$P{ano}  and $P{tipoPesquisa}=4)
+      or ((usuarios.id_usuario=$P{idUsuario} or usuarios.nome=$P{idUsuario}) and $P{tipoPesquisa}=5)
+      or ($P{tipoPesquisa}=6)
      )
 GROUP BY
      usuarios.id_usuario]]>
 	</queryString>
+	<field name="qtd_encontrada" class="java.lang.Long"/>
 	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
 	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
 	<field name="status" class="java.lang.String"/>
@@ -80,11 +93,15 @@ GROUP BY
 	</field>
 	<field name="data_1" class="java.lang.String"/>
 	<field name="data_2" class="java.lang.String"/>
+	<field name="pesquisa" class="java.lang.String"/>
+	<variable name="usuarios_ID_Usuario_2" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{usuarios_ID_Usuario}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="146" splitType="Stretch">
 			<staticText>
 				<reportElement x="286" y="25" width="197" height="25" forecolor="#3F83BF" uuid="5cdf07f7-9c0c-4605-ad36-cf12b93c7c08"/>
 				<textElement>
@@ -92,25 +109,30 @@ GROUP BY
 				</textElement>
 				<text><![CDATA[Relatório de Usuários]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="1" y="126" width="218" height="20" uuid="736a95a6-1c21-4d02-a5e6-835aaff7f685"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade de registros encontrados:]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="218" y="126" width="100" height="20" uuid="28ab544e-a234-4cb2-846c-87b959afb452"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{usuarios_ID_Usuario_2}]]></textFieldExpression>
+			</textField>
 			<textField>
-				<reportElement x="54" y="59" width="66" height="20" uuid="f67b91ad-d15d-4ae0-8b8b-0df521f8e01b"/>
-				<textFieldExpression><![CDATA[$F{data_1}]]></textFieldExpression>
+				<reportElement x="98" y="106" width="703" height="20" uuid="efee1244-8abf-4e15-abd7-ffe381dc3244"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pesquisa}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="59" width="54" height="20" uuid="53d9ac35-f340-4850-a27f-df9b013e82ba"/>
-				<textElement>
-					<font size="11" isBold="true"/>
+				<reportElement x="0" y="106" width="98" height="20" uuid="7468dde5-c35c-40bb-8565-535b356d71df"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Período:]]></text>
+				<text><![CDATA[ Tipo do relatório:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="120" y="59" width="73" height="20" uuid="b95ab3c6-20e6-4712-aefd-09106759cebd"/>
-				<textFieldExpression><![CDATA[$F{data_2}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="196" y="59" width="100" height="20" uuid="fcf4037e-8565-407d-83e4-bdcc7abd4266"/>
-				<textFieldExpression><![CDATA[$P{ano}]]></textFieldExpression>
-			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -120,39 +142,39 @@ GROUP BY
 		<band height="25" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="120" splitType="Stretch">
+		<band height="133" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="21" width="65" height="20" backcolor="#DFE7F5" uuid="0c160002-1e06-4f7f-9aed-07b7c20a6c72"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="0" y="20" width="65" height="21" backcolor="#DFE7F5" uuid="0c160002-1e06-4f7f-9aed-07b7c20a6c72"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{usuarios_ID_Usuario}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="65" y="21" width="173" height="20" backcolor="#DFE7F5" uuid="b7a9a072-b78c-4265-9e31-9a239b41b2ea"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="65" y="20" width="173" height="21" backcolor="#DFE7F5" uuid="b7a9a072-b78c-4265-9e31-9a239b41b2ea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{usuarios_Nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="238" y="21" width="115" height="20" backcolor="#DFE7F5" uuid="4d3e7626-fa49-475d-bae3-6a9265d1149f"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="238" y="20" width="115" height="21" backcolor="#DFE7F5" uuid="4d3e7626-fa49-475d-bae3-6a9265d1149f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{funcoes_usuarios_Descricao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="493" y="21" width="156" height="20" backcolor="#DFE7F5" uuid="356dc640-05a9-4d53-8a84-813e4e421558"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="493" y="20" width="156" height="21" backcolor="#DFE7F5" uuid="356dc640-05a9-4d53-8a84-813e4e421558"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{sessoes_Inicio_Sessao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="649" y="21" width="153" height="20" backcolor="#DFE7F5" uuid="b193eb19-d4ba-4cb5-b269-3f5609be167c"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="649" y="20" width="153" height="21" backcolor="#DFE7F5" uuid="b193eb19-d4ba-4cb5-b269-3f5609be167c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{sessoes_Fim_Sessao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="353" y="21" width="140" height="20" backcolor="#DFE7F5" uuid="b1700b40-e7ba-4545-a8e1-272a0bdd17ec"/>
-				<textElement textAlignment="Center"/>
+				<reportElement mode="Opaque" x="353" y="20" width="140" height="21" backcolor="#DFE7F5" uuid="b1700b40-e7ba-4545-a8e1-272a0bdd17ec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="0" y="48" width="802" height="21" uuid="16164e08-ef59-432f-9bf1-3e2cccee2efd"/>
+				<reportElement x="0" y="41" width="802" height="21" isRemoveLineWhenBlank="true" uuid="16164e08-ef59-432f-9bf1-3e2cccee2efd"/>
 				<subreportParameter name="mesMin">
 					<subreportParameterExpression><![CDATA[$P{mesMin}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -175,7 +197,7 @@ GROUP BY
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeUsuarios_Vendas.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="69" width="802" height="24" uuid="b7babb74-e79a-4b6a-acde-819905ced81d"/>
+				<reportElement positionType="Float" x="0" y="62" width="802" height="24" isRemoveLineWhenBlank="true" uuid="b7babb74-e79a-4b6a-acde-819905ced81d"/>
 				<subreportParameter name="mesMin">
 					<subreportParameterExpression><![CDATA[$P{mesMin}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -198,7 +220,7 @@ GROUP BY
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeUsuarios_Retiradas.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="93" width="802" height="23" uuid="269bf7aa-9c5c-49dd-8862-1084360d197a"/>
+				<reportElement positionType="Float" x="0" y="86" width="802" height="23" uuid="269bf7aa-9c5c-49dd-8862-1084360d197a"/>
 				<subreportParameter name="mesMin">
 					<subreportParameterExpression><![CDATA[$P{mesMin}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -221,7 +243,7 @@ GROUP BY
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeUsuarios_Entradas.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="65" height="20" backcolor="#99C0FF" uuid="ddd95385-5a5f-4622-80b4-ca4f15229580"/>
+				<reportElement mode="Opaque" x="0" y="0" width="66" height="20" backcolor="#99C0FF" uuid="ddd95385-5a5f-4622-80b4-ca4f15229580"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -262,9 +284,18 @@ GROUP BY
 				</textElement>
 				<text><![CDATA[Status]]></text>
 			</staticText>
-			<break type="Column">
-				<reportElement positionType="Float" x="0" y="118" width="100" height="1" uuid="dfc6f9aa-afd1-4e6d-a8a6-1593bdd3b993"/>
-			</break>
+			<line>
+				<reportElement x="801" y="0" width="1" height="41" forecolor="#3380FF" uuid="3ce8068b-2544-4028-9ac6-f6c5f5b15a72"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" forecolor="#3380FF" uuid="a3e9eddf-ba6c-45f5-82ae-1e7d166a2dee"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="41" forecolor="#3380FF" uuid="b0d2daf9-73d6-4db6-b574-485a94cdeb52"/>
+			</line>
+			<line>
+				<reportElement x="1" y="40" width="800" height="1" forecolor="#3380FF" uuid="d6a4ad71-330e-410e-bdc6-d557c8c42596"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
@@ -272,8 +303,8 @@ GROUP BY
 	</columnFooter>
 	<pageFooter>
 		<band height="26" splitType="Stretch">
-			<textField pattern="dd/MM/yyyy HH.mm.ss">
-				<reportElement x="81" y="6" width="100" height="20" uuid="26db8743-02ed-40c6-994b-9e75725ee320"/>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="81" y="6" width="137" height="20" uuid="26db8743-02ed-40c6-994b-9e75725ee320"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>

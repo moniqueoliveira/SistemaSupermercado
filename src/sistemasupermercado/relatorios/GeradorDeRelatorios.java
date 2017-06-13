@@ -1,6 +1,8 @@
 package sistemasupermercado.relatorios;
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -100,6 +102,11 @@ public class GeradorDeRelatorios {
         // configura a operação padrão quando o JFrame for fechado.
         frameRelatorio.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
  
+            
+        URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
+        Image image = java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png"));
+        frameRelatorio.setIconImage(image);
+                    
         return frameRelatorio;
         // exibe o JFrame
         //frameRelatorio.setVisible(true);

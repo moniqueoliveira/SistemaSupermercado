@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeVendas_Pagamentos" language="groovy" pageWidth="595" pageHeight="841" orientation="Landscape" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6b1f852b-9266-4cea-96ed-dd638bd2de48">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="1008"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idVenda" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     pagamentos_vendas.`ID_Venda` AS pagamentos_vendas_ID_Venda,
+     pagamentos_vendas.`Dinheiro` AS pagamentos_vendas_Dinheiro,
+     pagamentos_vendas.`Debito` AS pagamentos_vendas_Debito,
+     pagamentos_vendas.`Credito` AS pagamentos_vendas_Credito,
+     pagamentos_vendas.`Voucher` AS pagamentos_vendas_Voucher,
+     pagamentos_vendas.`Cheque` AS pagamentos_vendas_Cheque,
+     pagamentos_vendas.`Outros` AS pagamentos_vendas_Outros,
+     pagamentos_vendas.`Troco` AS pagamentos_vendas_Troco,
+     vendas.`ID_Venda` AS vendas_ID_Venda,
+     vendas.`ID_Sessao` AS vendas_ID_Sessao,
+     vendas.`Data` AS vendas_Data,
+     vendas.`Finalizada` AS vendas_Finalizada
+FROM
+     `vendas` vendas INNER JOIN `pagamentos_vendas` pagamentos_vendas ON vendas.`ID_Venda` = pagamentos_vendas.`ID_Venda`
+WHERE
+     vendas.id_venda = $P{idVenda}]]>
+	</queryString>
+	<field name="pagamentos_vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="pagamentos_vendas_Dinheiro" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Debito" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Credito" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Voucher" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Cheque" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Outros" class="java.math.BigDecimal"/>
+	<field name="pagamentos_vendas_Troco" class="java.math.BigDecimal"/>
+	<field name="vendas_ID_Venda" class="java.lang.Integer"/>
+	<field name="vendas_ID_Sessao" class="java.lang.Integer"/>
+	<field name="vendas_Data" class="java.sql.Timestamp"/>
+	<field name="vendas_Finalizada" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="42">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="21" width="90" height="21" backcolor="#C9DBF7" uuid="5814fad2-ebac-4175-980e-9e62abc3572e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dinheiro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="90" y="21" width="110" height="21" backcolor="#C9DBF7" uuid="4a917daa-e303-46d5-a7c2-46fcefcd67df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cartão de Débito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="200" y="21" width="110" height="21" backcolor="#C9DBF7" uuid="c3148fac-3a2e-4272-987b-caa766c30a23"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cartão de Crédito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="310" y="21" width="83" height="21" backcolor="#C9DBF7" uuid="6ae97931-bac4-4fa9-aec6-cdfdb2633ef6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Voucher]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="393" y="21" width="79" height="21" backcolor="#C9DBF7" uuid="5e4e7420-c896-4152-9ed2-30b5be52086f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cheque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="472" y="21" width="83" height="21" backcolor="#C9DBF7" uuid="7601549f-1a9a-4487-bd5a-6811fb3ec5af"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Outros]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="21" backcolor="#C9DBF7" uuid="1f9be864-5de7-4ee0-81cb-13511c9ab787"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pagamento]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="1" height="42" forecolor="#3380FF" uuid="d6fdddb4-0203-4902-ada6-bca7c4e86f25"/>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="42" forecolor="#3380FF" uuid="dd6f07de-027c-464f-8763-72d86ae96f90"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="90" height="20" uuid="82c5b391-32d8-43a7-96ae-0c17d6afb94e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pagamentos_vendas_Dinheiro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="110" height="20" uuid="6ff6c84c-dd1b-4b39-9725-528779263f90"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pagamentos_vendas_Debito}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="110" height="20" uuid="c2306ca9-6949-4845-b628-4a7ae819b03f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pagamentos_vendas_Credito}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="83" height="20" uuid="74a93703-29be-40d4-a7a0-29b6459a3ee2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pagamentos_vendas_Voucher}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="0" width="79" height="20" uuid="3ea0b1c6-3ff0-4467-9171-ae8a1cadee48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pagamentos_vendas_Cheque}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="0" width="83" height="20" uuid="86f9e128-b824-4e0c-9770-2df5d4fd2e6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pagamentos_vendas_Outros}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="8e8d3e70-ef99-422b-bc67-807ccca82997"/>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="20" forecolor="#3380FF" uuid="2689b651-0f1f-43da-aee8-130571a66f47"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

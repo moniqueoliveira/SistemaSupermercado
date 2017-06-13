@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3039981f-1916-4b54-b827-65cf13623f09">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     fornecedores.`ID_Fornecedor` AS fornecedores_ID_Fornecedor,
+     fornecedores.`Nome_Fantasia` AS fornecedores_Nome_Fantasia,
+     fornecedores.`Razao_Social` AS fornecedores_Razao_Social,
+     fornecedores.`CNPJ` AS fornecedores_CNPJ,
+     fornecedores.`Ativo` AS fornecedores_Ativo,
+     enderecos_fornecedores.`ID_Fornecedor` AS enderecos_fornecedores_ID_Fornecedor,
+     enderecos_fornecedores.`Logradouro` AS enderecos_fornecedores_Logradouro,
+     enderecos_fornecedores.`Numero` AS enderecos_fornecedores_Numero,
+     enderecos_fornecedores.`CEP` AS enderecos_fornecedores_CEP,
+     enderecos_fornecedores.`Complemento` AS enderecos_fornecedores_Complemento,
+     enderecos_fornecedores.`Bairro` AS enderecos_fornecedores_Bairro,
+     enderecos_fornecedores.`Cidade` AS enderecos_fornecedores_Cidade,
+     enderecos_fornecedores.`UF` AS enderecos_fornecedores_UF,
+     emails_fornecedores.`ID_Fornecedor` AS emails_fornecedores_ID_Fornecedor,
+     emails_fornecedores.`Email` AS emails_fornecedores_Email,
+     telefones_fornecedores.`ID_Fornecedor` AS telefones_fornecedores_ID_Fornecedor,
+     telefones_fornecedores.`Telefone` AS telefones_fornecedores_Telefone,
+     if(fornecedores.ativo = 1, "Ativo", "Inativo") as status_fornecedor
+FROM
+     `fornecedores` fornecedores INNER JOIN `enderecos_fornecedores` enderecos_fornecedores ON fornecedores.`ID_Fornecedor` = enderecos_fornecedores.`ID_Fornecedor`
+     INNER JOIN `emails_fornecedores` emails_fornecedores ON fornecedores.`ID_Fornecedor` = emails_fornecedores.`ID_Fornecedor`
+     INNER JOIN `telefones_fornecedores` telefones_fornecedores ON fornecedores.`ID_Fornecedor` = telefones_fornecedores.`ID_Fornecedor`
+GROUP BY
+     fornecedores.id_fornecedor]]>
+	</queryString>
+	<field name="fornecedores_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="fornecedores_Nome_Fantasia" class="java.lang.String"/>
+	<field name="fornecedores_Razao_Social" class="java.lang.String"/>
+	<field name="fornecedores_CNPJ" class="java.lang.String"/>
+	<field name="fornecedores_Ativo" class="java.lang.Integer"/>
+	<field name="enderecos_fornecedores_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="enderecos_fornecedores_Logradouro" class="java.lang.String"/>
+	<field name="enderecos_fornecedores_Numero" class="java.lang.Integer"/>
+	<field name="enderecos_fornecedores_CEP" class="java.lang.String"/>
+	<field name="enderecos_fornecedores_Complemento" class="java.lang.String"/>
+	<field name="enderecos_fornecedores_Bairro" class="java.lang.String"/>
+	<field name="enderecos_fornecedores_Cidade" class="java.lang.String"/>
+	<field name="enderecos_fornecedores_UF" class="java.lang.String"/>
+	<field name="emails_fornecedores_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="emails_fornecedores_Email" class="java.lang.String"/>
+	<field name="telefones_fornecedores_ID_Fornecedor" class="java.lang.Integer"/>
+	<field name="telefones_fornecedores_Telefone" class="java.lang.String"/>
+	<field name="status_fornecedor" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="281" y="32" width="243" height="24" forecolor="#3F83BF" uuid="c97b5de7-63a0-423a-9922-c777f21a84ae"/>
+				<textElement>
+					<font fontName="Tahoma" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Fornecedores]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="452" y="0" width="182" height="20" backcolor="#99C0FF" uuid="55da390a-e676-4c0c-8132-56c34a8f94c3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CNPJ]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="60" width="802" height="20" uuid="cbfa9aa1-9807-4361-9387-c88136be32b3"/>
+				<subreportParameter name="idFornecedor">
+					<subreportParameterExpression><![CDATA[$F{fornecedores_ID_Fornecedor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeFornecedores_Emails.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="80" width="802" height="20" uuid="7b860153-84bc-48c2-871a-3132f3810cd0"/>
+				<subreportParameter name="idFornecedor">
+					<subreportParameterExpression><![CDATA[$F{fornecedores_ID_Fornecedor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeFornecedores_Produtos.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement mode="Opaque" x="233" y="20" width="219" height="20" backcolor="#DFE7F5" uuid="8e0def63-8848-442e-8e16-d37190b32352"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fornecedores_Razao_Social}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="452" y="20" width="182" height="20" backcolor="#DFE7F5" uuid="a65cb8e1-3be1-46f5-ab53-e4cfedde4af1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fornecedores_CNPJ}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="40" width="802" height="20" uuid="62f6ab74-7ed9-4258-99c1-e83adce195af"/>
+				<subreportParameter name="idFornecedor">
+					<subreportParameterExpression><![CDATA[$F{fornecedores_ID_Fornecedor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioDeFornecedores_Telefones.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement mode="Opaque" x="634" y="0" width="168" height="20" backcolor="#99C0FF" uuid="1d6ce43d-a108-46d7-a4ef-70059e88ed8d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="233" height="20" backcolor="#99C0FF" uuid="2a6adeef-9b23-43e3-a197-09d3080b334c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome Fantasia]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="0" y="100" width="802" height="1" forecolor="#3380FF" uuid="92c343fc-2c5b-46af-bd9e-25fc2f949514"/>
+			</line>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="20" width="233" height="20" backcolor="#DFE7F5" uuid="64ad0d04-689d-427d-b52a-080992c987df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fornecedores_Nome_Fantasia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="233" y="0" width="219" height="20" backcolor="#99C0FF" uuid="b4bfa6be-b885-4495-96a6-c8e539ec3e7b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Razao Social]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="634" y="20" width="168" height="20" backcolor="#DFE7F5" uuid="a26a3caa-1ade-4c92-8697-da82aaab5300"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{status_fornecedor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="47" y="34" width="186" height="20" uuid="149ed054-ded6-453b-bb30-9dd3b41b5b28"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="561" y="34" width="147" height="20" uuid="2cd21c1e-a2f0-4b3c-ab64-6366f8adfbaa"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="708" y="34" width="40" height="20" uuid="eb065a6b-3191-48dc-be01-7cd8e48b1184"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

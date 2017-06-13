@@ -7,7 +7,9 @@ package sistemasupermercado.relatorios;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +50,11 @@ public class GeradorDeNota{
         frameRelatorio.setLocationRelativeTo(null);
         frameRelatorio.setAlwaysOnTop(true);
         frameRelatorio.setMaximumSize(new Dimension(300, 250));
+            
+        URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
+        Image image = java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png"));
+        frameRelatorio.setIconImage(image);
+                    
         
         return frameRelatorio;
         
@@ -59,12 +66,12 @@ public class GeradorDeNota{
     public JFrame abrirNota(Integer i) throws JRException {
      
     // note que estamos chamando o novo relatório
-    InputStream inputStream = getClass().getResourceAsStream("Nota.jasper");
+    InputStream inputStream = getClass().getResourceAsStream("NotaFiscal.jasper");
     // mapa de parâmetros do relatório
     Map parametros = new HashMap();
     ConnectionFactory conexao = new ConnectionFactory();
 
-    parametros.put( "parameter1", i);
+    parametros.put( "idVenda", i);
     try {
  
         // abre o relatório

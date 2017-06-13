@@ -3,7 +3,14 @@
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="parameter1" class="java.lang.Integer"/>
+	<parameter name="idUnidade" class="java.lang.Integer"/>
+	<parameter name="dia" class="java.lang.String"/>
+	<parameter name="mesMin" class="java.lang.String"/>
+	<parameter name="mesMax" class="java.lang.String"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<parameter name="idProduto" class="java.lang.String"/>
+	<parameter name="categoria" class="java.lang.String"/>
+	<parameter name="tipoPesquisa" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      truncate(sum(itens_vendas.`Quantidade`),0),
@@ -40,7 +47,17 @@
      sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao,
      categorias_produtos.`ID_Categoria` AS categorias_produtos_ID_Categoria,
      categorias_produtos.`Descricao` AS categorias_produtos_Descricao,
-     (sum(itens_vendas.subtotal))
+     (sum(itens_vendas.subtotal)),
+     if($P{tipoPesquisa} = 1, concat("Produto com ID/Descrição ",$P{idProduto}, " vendidos no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 2, concat("Produtos da categoria  ", $P{categoria}, " vendidos no dia ",$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 3, concat("Produtos vendidos no dia ",$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 4, concat("Produto com ID/Descrição ",$P{idProduto}, " vendidos no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 5, concat("Produtos da categoria ",$P{categoria}, " vendidos no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 6, concat("Produtos vendidos no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 7, concat("Todas as unidades vendidas do produto " , $P{idProduto}),
+     if($P{tipoPesquisa} = 8, concat("Todas as unidades vendidas de produtos da categoria " , $P{categoria}),
+     if($P{tipoPesquisa} = 9, "Todas os produtos vendidos", ""
+     ))))))))) as pesquisa
 FROM
      `vendas` vendas INNER JOIN `itens_vendas` itens_vendas ON vendas.`ID_Venda` = itens_vendas.`ID_Venda`
      INNER JOIN `produtos` produtos ON itens_vendas.`ID_Produto` = produtos.`ID_Produto`
@@ -49,7 +66,17 @@ FROM
      INNER JOIN `usuarios` usuarios ON sessoes.`ID_Usuario` = usuarios.`ID_Usuario`
      INNER JOIN `unidades` unidades ON usuarios.`ID_Unidade` = unidades.`ID_Unidade`
 WHERE
-     unidades.`ID_Unidade` = $P{parameter1} and itens_vendas.cancelado != 1 and vendas.finalizada !=0
+     itens_vendas.cancelado != 1 and vendas.finalizada !=0 and(
+     (unidades.id_unidade = $P{idUnidade} and day(vendas.data)=$P{dia} and month(vendas.data)=$P{mesMin} and year(vendas.data)=$P{ano} and (produtos.id_produto = $P{idProduto} or produtos.descricao = $P{idProduto}) and $P{tipoPesquisa}=1) or
+     (unidades.id_unidade = $P{idUnidade} and day(vendas.data)=$P{dia} and month(vendas.data)=$P{mesMin} and year(vendas.data)=$P{ano} and  categorias_produtos.descricao = $P{categoria} and $P{tipoPesquisa}=2) or
+     (unidades.id_unidade = $P{idUnidade} and day(vendas.data)=$P{dia} and month(vendas.data)=$P{mesMin} and year(vendas.data)=$P{ano} and $P{tipoPesquisa}=3) or
+     (unidades.`ID_Unidade` = $P{idUnidade} and month(vendas.data) >= $P{mesMin} and month(vendas.data)<=$P{mesMax} and year(vendas.data)=$P{ano} and (produtos.id_produto = $P{idProduto} or produtos.descricao = $P{idProduto}) and $P{tipoPesquisa}=4) or
+     (unidades.`ID_Unidade` = $P{idUnidade} and month(vendas.data) >= $P{mesMin} and month(vendas.data)<=$P{mesMax} and year(vendas.data)=$P{ano} and categorias_produtos.descricao = $P{categoria} and $P{tipoPesquisa}=5) or
+     (unidades.`ID_Unidade` = $P{idUnidade} and month(vendas.data) >= $P{mesMin} and month(vendas.data)<=$P{mesMax} and year(vendas.data)=$P{ano}  and $P{tipoPesquisa}=6) or
+     (unidades.`ID_Unidade` = $P{idUnidade} and (produtos.id_produto = $P{idProduto} or produtos.descricao = $P{idProduto}) and $P{tipoPesquisa}=7) or
+     (unidades.`ID_Unidade` = $P{idUnidade} and categorias_produtos.descricao = $P{categoria} and $P{tipoPesquisa}=8) or
+     (unidades.`ID_Unidade` = $P{idUnidade} and $P{tipoPesquisa}=9)
+     )
 GROUP BY
      itens_vendas.id_produto
 order by
@@ -90,6 +117,10 @@ order by
 	<field name="categorias_produtos_ID_Categoria" class="java.lang.Integer"/>
 	<field name="categorias_produtos_Descricao" class="java.lang.String"/>
 	<field name="(sum(itens_vendas.subtotal))" class="java.math.BigDecimal"/>
+	<field name="pesquisa" class="java.lang.String"/>
+	<variable name="produtos_ID_Produto_1" class="java.lang.Integer" resetType="Page" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{produtos_ID_Produto}]]></variableExpression>
+	</variable>
 	<group name="itens_vendas_ID_Produto">
 		<groupExpression><![CDATA[$F{itens_vendas_ID_Produto}]]></groupExpression>
 	</group>
@@ -97,13 +128,36 @@ order by
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="116" splitType="Stretch">
 			<staticText>
 				<reportElement x="129" y="29" width="287" height="23" forecolor="#3F83BF" uuid="6fb10027-c89d-48af-979a-dc867010f36d"/>
 				<textElement>
 					<font fontName="Tahoma" size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Relatório de Produtos Vendidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="96" width="191" height="20" uuid="cac999c8-4e21-4c60-a5d1-cd18e00383d7"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produtos vendidos encontrados:]]></text>
+			</staticText>
+			<textField evaluationTime="Page">
+				<reportElement x="191" y="96" width="100" height="20" uuid="28f6d2cb-6b10-43f3-8b3e-e83b7928c341"/>
+				<textFieldExpression><![CDATA[$V{produtos_ID_Produto_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="76" width="455" height="20" uuid="c1b365cd-2963-4e99-bcac-eb14ebb13bf9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pesquisa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="76" width="100" height="20" uuid="73be9695-0684-4dc3-a74a-24b134888e6b"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo do relatório:]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -145,35 +199,35 @@ order by
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Valor Total]]></text>
+				<text><![CDATA[Valor Vendido]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="27" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="71" height="20" uuid="b7798b65-35ac-41cf-b4ad-01e0df248443"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{itens_vendas_ID_Produto}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="210" y="0" width="126" height="20" uuid="cd92627a-ae8a-4376-86d6-7bf55d129b12"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{categorias_produtos_Descricao}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="336" y="0" width="103" height="20" uuid="33a4b173-8e9f-4422-a7d9-d7b3a416a7c9"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{truncate(sum(itens_vendas.`Quantidade`),0)}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="439" y="0" width="116" height="20" uuid="51d62d99-e867-4cb6-b1d5-cd64ed0241ab"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{(sum(itens_vendas.subtotal))}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="71" y="0" width="139" height="20" uuid="5d2b8447-0ddf-4487-a6a2-6184c2288268"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{produtos_Descricao}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -183,8 +237,8 @@ order by
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
-			<textField pattern="dd/MM/yyyy HH.mm.ss">
-				<reportElement x="0" y="34" width="100" height="20" uuid="eb61cf37-657a-4a30-b5dc-df6c51e9ce6c"/>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="29" y="34" width="100" height="20" uuid="eb61cf37-657a-4a30-b5dc-df6c51e9ce6c"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeUsuarios_Vendas" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7114d8a1-8b4f-451e-b811-601d75486a07">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="6.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idUsuario" class="java.lang.String"/>
@@ -39,7 +39,12 @@ FROM
      INNER JOIN `sessoes_caixas` sessoes_caixas ON sessoes.`ID_Sessao` = sessoes_caixas.`ID_Sessao`
      INNER JOIN `unidades` unidades ON usuarios.`ID_Unidade` = unidades.`ID_Unidade`
 WHERE
-     usuarios.id_usuario = $P{idUsuario} and unidades.id_unidade = $P{idUnidade}  and ((day(vendas.data) = $P{dia} and month(vendas.data)=$P{mesMin} and year(vendas.data)=$P{ano}) or (month(vendas.data)>= $P{mesMin} and month(vendas.data)<=$P{mesMax} and year(vendas.data)=$P{ano}))
+      vendas.finalizada = 1 and (
+     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and day(vendas.data)=$P{dia} and month(vendas.data)=$P{mesMin} and year(vendas.data)=$P{ano}) or
+
+     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and month(vendas.data)>=$P{mesMin} and month(vendas.data)<=$P{mesMax} and year(vendas.data)=$P{ano} and $P{dia}=0) or
+
+     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and $P{dia}=0 and $P{mesMin}=0))
      
 GROUP BY
      vendas.id_venda]]>
@@ -89,66 +94,78 @@ GROUP BY
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{qtd_vendas_2}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="2eb0fbdc-dfb8-4123-8b00-8e385ff89a53"/>
+			</line>
+			<line>
+				<reportElement x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="dbbe3e0b-dc66-4620-a473-6e8a6097255c"/>
+			</line>
 		</band>
 	</title>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="3b21b6e7-aa1f-4f76-bac4-2a97a223d37e"/>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="3b21b6e7-aa1f-4f76-bac4-2a97a223d37e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[ID Venda]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="100" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="46d264d2-edbb-43a3-a398-adc979b5c3e0"/>
+				<reportElement mode="Opaque" x="100" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="46d264d2-edbb-43a3-a398-adc979b5c3e0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="502" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="66edab95-8409-4afb-9fa6-b859e5fd73b5"/>
+				<reportElement mode="Opaque" x="502" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="66edab95-8409-4afb-9fa6-b859e5fd73b5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[ID Sessão]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="602" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="768e9a0d-b26d-4956-a059-bfe01cbefbbc"/>
+				<reportElement mode="Opaque" x="602" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="768e9a0d-b26d-4956-a059-bfe01cbefbbc"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Início da Sessão]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="702" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="422685d5-ba90-4b67-90ec-121873bcc61a"/>
+				<reportElement mode="Opaque" x="702" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="422685d5-ba90-4b67-90ec-121873bcc61a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Fim da Sessão]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="200" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="dbab4c75-a7b3-42d1-8980-1ad400928800"/>
+				<reportElement mode="Opaque" x="200" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="dbab4c75-a7b3-42d1-8980-1ad400928800"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Número do Caixa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="300" y="0" width="100" height="20" backcolor="#B4CEF7" uuid="69530d88-178d-4492-975c-dffe9ac13203"/>
+				<reportElement mode="Opaque" x="300" y="0" width="100" height="20" backcolor="#C9DBF7" uuid="69530d88-178d-4492-975c-dffe9ac13203"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[$ Inicial em Caixa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="400" y="0" width="102" height="20" backcolor="#B4CEF7" uuid="3e7ee0c2-ee0c-4903-b3e4-b01b7f8bc458"/>
+				<reportElement mode="Opaque" x="400" y="0" width="102" height="20" backcolor="#C9DBF7" uuid="3e7ee0c2-ee0c-4903-b3e4-b01b7f8bc458"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[$ Final em Caixa]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="4fbf6b88-4613-4185-8db4-51e696750ca9"/>
+			</line>
+			<line>
+				<reportElement x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="62ea243d-1649-497d-94e2-8180967a7bca"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -209,12 +226,18 @@ GROUP BY
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sessoes_caixas_Valor_Fechamento}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="36d62d06-2b47-4bdf-9d97-dfedd6504853"/>
+			</line>
+			<line>
+				<reportElement x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="ed225fca-91f7-4cd2-8f6f-dac30bda3ed1"/>
+			</line>
 		</band>
 	</detail>
 	<summary>
-		<band height="2">
+		<band height="1">
 			<line>
-				<reportElement x="0" y="1" width="802" height="1" forecolor="#3380FF" uuid="1499e4fe-c823-4c9b-a7d1-9b7fee9818d4"/>
+				<reportElement x="0" y="0" width="802" height="1" forecolor="#3380FF" uuid="4c5967e9-4870-4aab-a9d6-d459273b238e"/>
 			</line>
 		</band>
 	</summary>

@@ -25,14 +25,16 @@ import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.dominio.Sessao;
 import sistemasupermercado.dominio.SessaoCaixa;
-import sistemasupermercado.relatorios.GeradorDeRelatorioDeEntradaDeProdutos;
-import sistemasupermercado.relatorios.GeradorDeRelatorioDeEstoque;
+import sistemasupermercado.relatorios.GeradorDeRelatorioDeFornecedores;
 import sistemasupermercado.relatorios.GeradorDeRelatorioDeProdutosRetirados;
 import sistemasupermercado.relatorios.GeradorDeRelatorios;
 import sistemasupermercado.servicos.SessaoCaixaServico;
 import sistemasupermercado.servicos.SessaoServico;
 import sistemasupermercado.visao.imagepanel.JImagePanel;
-
+/**
+ *
+ * @author Monique
+ */
 public class FormMenuPrincipal extends javax.swing.JFrame {
 
     Sessao sessao; 
@@ -60,8 +62,9 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private void definirImagemDeFundo() {
         try {
             JImagePanel panel = new JImagePanel(
-                    loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
-            //panel.setFillType(JImagePanel.FillType.CENTER);
+                    //loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
+                    loadImage("C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
+//panel.setFillType(JImagePanel.FillType.CENTER);
             this.setContentPane(panel);
             //this.pack();
         } catch (IOException ex) {
@@ -82,6 +85,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem3 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         lblHora = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
@@ -121,10 +125,14 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItemConsultaVendas = new javax.swing.JMenuItem();
         jMenuRelatorios = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuSair = new javax.swing.JMenu();
         jMenuItemEncerrarSessao = new javax.swing.JMenuItem();
+
+        jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Marketsoft");
@@ -145,12 +153,12 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         lblHora.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblHora.setForeground(new java.awt.Color(255, 255, 255));
         lblHora.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblHora.setText("15:35:26");
+        lblHora.setText("Hora:");
 
         lblData.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblData.setForeground(new java.awt.Color(255, 255, 255));
         lblData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblData.setText("26/05/2017");
+        lblData.setText("Data:");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
@@ -373,13 +381,21 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         jMenuRelatorios.setText("Relatórios");
 
-        jMenuItem1.setText("Gerar Relatório de Entrada de Produtos");
+        jMenuItem1.setText("Gerar Relatório de Fornecedores");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         jMenuRelatorios.add(jMenuItem1);
+
+        jMenuItem5.setText("Gerar Relatório de Produtos Vendidos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenuRelatorios.add(jMenuItem5);
 
         jMenuItem17.setText("Gerar Relatório de Saída de Produtos");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
@@ -389,13 +405,21 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuRelatorios.add(jMenuItem17);
 
-        jMenuItem18.setText("Gerar Relatório de Estoque");
-        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem2.setText("Gerar Relatório de Vendas");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem18ActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenuRelatorios.add(jMenuItem18);
+        jMenuRelatorios.add(jMenuItem2);
+
+        jMenuItem6.setText("Gerar Relatório de Usuários");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenuRelatorios.add(jMenuItem6);
 
         jMenuBar1.add(jMenuRelatorios);
 
@@ -601,7 +625,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        //definirDataEHora();
+        definirDataEHora();
         definirUsuario();
         switch (sessao.getUsuario().getFuncaoUsuario().getIdFuncao()){
             case (1):
@@ -666,18 +690,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         formObservarCaixas.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
-        // TODO add your handling code here:
-        
-        GeradorDeRelatorioDeEstoque g = new GeradorDeRelatorioDeEstoque();
-        try {
-            g.abrirRelatorioEstoque(sessao.getUsuario().getUnidade().getIdUnidade());
-        } catch (JRException ex) {
-            System.out.println(ex.getMessage());
-        }
-        
-    }//GEN-LAST:event_jMenuItem18ActionPerformed
-
     private void jMenuItemConsultaVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaVendasActionPerformed
         // TODO add your handling code here:
         FormConsultaVenda formConsultaVenda = new FormConsultaVenda(this, true, sessao.getUsuario().getUnidade());
@@ -707,20 +719,38 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         // TODO add your handling code here:
-        GeradorDeRelatorioDeProdutosRetirados g = new GeradorDeRelatorioDeProdutosRetirados();
-        try {
-            g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade());
-        } catch (JRException ex) {
-            System.out.println(ex.getMessage());
-        }
-        
+        FormGeradorDeRelatorioDeProdutosRetirados f = new FormGeradorDeRelatorioDeProdutosRetirados(this, true, sessao);
+        f.setVisible(true);
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        FormGeradorDeRelatorioDeEntradas form = new FormGeradorDeRelatorioDeEntradas(this, true, sessao);
-        form.setVisible(true);
+        GeradorDeRelatorioDeFornecedores f = new GeradorDeRelatorioDeFornecedores();
+
+        try {
+            f.abrirRelatorio().setVisible(true);
+        } catch (JRException ex) {
+            Logger.getLogger(FormMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        FormGeradorDeRelatorioDeVendas form = new FormGeradorDeRelatorioDeVendas(this, true, sessao);
+        form.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        FormGeradorDeRelatorioDeProdutosVendidos form = new FormGeradorDeRelatorioDeProdutosVendidos(this, true, sessao);
+        form.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        FormGeradorDeRelatorioDeUsuarios form = new FormGeradorDeRelatorioDeUsuarios(this, true, sessao);
+        form.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -770,8 +800,11 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuEstoque;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItemCadastroCategorias;
     private javax.swing.JMenuItem jMenuItemCadastroDeCaixas;
     private javax.swing.JMenuItem jMenuItemCadastroFornecedores;
