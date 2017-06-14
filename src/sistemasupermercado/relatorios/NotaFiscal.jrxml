@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="288" pageHeight="792" columnWidth="284" leftMargin="2" rightMargin="2" topMargin="20" bottomMargin="0" uuid="980a2e0a-b60d-412c-9ab0-ed113144edfa">
-	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.zoom" value="2.2578957202151093"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="54"/>
+	<property name="ireport.y" value="11"/>
 	<parameter name="idVenda" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -51,7 +51,7 @@ FROM
 WHERE
      itens_vendas.id_venda = $P{idVenda} and
      itens_vendas.cancelado!= 1
-     and precos_produtos.data = (SELECT max(precos_produtos.data) FROM `precos_produtos` WHERE precos_produtos.id_produto=produtos.id_produto)
+     and precos_produtos.data = (SELECT max(precos_produtos.data) FROM `precos_produtos` WHERE precos_produtos.id_produto=produtos.id_produto and precos_produtos.id_unidade=unidades.id_unidade)
 GROUP BY
      itens_vendas.id_produto
 ORDER BY
@@ -217,7 +217,7 @@ ORDER BY
 			<textField>
 				<reportElement x="153" y="0" width="27" height="32" uuid="3760bf11-6ce6-45c0-9291-b820133f49ec"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{itens_vendas_Quantidade}]]></textFieldExpression>
 			</textField>

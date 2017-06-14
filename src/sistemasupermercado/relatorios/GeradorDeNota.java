@@ -75,8 +75,11 @@ public class GeradorDeNota{
     try {
  
         // abre o relatório
-        return new GeradorDeRelatorios().openReport( "Nota de Venda", inputStream, parametros,
+        JFrame notaFiscal = new GeradorDeRelatorios().openReport( "Nota de Venda", inputStream, parametros,
                 conexao.getConnection());
+        notaFiscal.setExtendedState(0);
+        notaFiscal.setLocationRelativeTo(null);
+        return notaFiscal;
  
     } catch ( JRException exc ) {
         System.out.println(exc.getMessage());
