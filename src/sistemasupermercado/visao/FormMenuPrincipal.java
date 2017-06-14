@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.dominio.Sessao;
 import sistemasupermercado.dominio.SessaoCaixa;
+import sistemasupermercado.relatorios.GeradorDeRelatorioDeEstoque;
 import sistemasupermercado.relatorios.GeradorDeRelatorioDeFornecedores;
 import sistemasupermercado.relatorios.GeradorDeRelatorioDeProdutosRetirados;
 import sistemasupermercado.relatorios.GeradorDeRelatorios;
@@ -63,8 +64,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         try {
             JImagePanel panel = new JImagePanel(
                     loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
-                    //loadImage("C:\\Program Files\\MarketSoft\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
-//panel.setFillType(JImagePanel.FillType.CENTER);
+            //panel.setFillType(JImagePanel.FillType.CENTER);
             this.setContentPane(panel);
             //this.pack();
         } catch (IOException ex) {
@@ -126,8 +126,10 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuRelatorios = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuSair = new javax.swing.JMenu();
         jMenuItemEncerrarSessao = new javax.swing.JMenuItem();
@@ -397,6 +399,14 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuRelatorios.add(jMenuItem5);
 
+        jMenuItem8.setText("Gerar Relatório de Entrada de Produtos");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenuRelatorios.add(jMenuItem8);
+
         jMenuItem17.setText("Gerar Relatório de Saída de Produtos");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -412,6 +422,14 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuRelatorios.add(jMenuItem2);
+
+        jMenuItem7.setText("Gerar Relatório de Estoque");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenuRelatorios.add(jMenuItem7);
 
         jMenuItem6.setText("Gerar Relatório de Usuários");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -512,9 +530,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
             FormVenda formVenda = new FormVenda(sessaoCaixa);
-            this.setEnabled(false);
             formVenda.setVisible(true);
-            this.setEnabled(true);
         }
         
     }//GEN-LAST:event_jMenuItemRealizarVendaActionPerformed
@@ -731,7 +747,6 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         try {
             f.abrirRelatorio().setVisible(true);
-            
         } catch (JRException ex) {
             Logger.getLogger(FormMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -754,6 +769,23 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         FormGeradorDeRelatorioDeUsuarios form = new FormGeradorDeRelatorioDeUsuarios(this, true, sessao);
         form.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        GeradorDeRelatorioDeEstoque f = new GeradorDeRelatorioDeEstoque();
+
+        try {
+            f.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade()).setVisible(true);
+        } catch (JRException ex) {
+            Logger.getLogger(FormMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        FormGeradorDeRelatorioDeEntradasDeProdutos form = new FormGeradorDeRelatorioDeEntradasDeProdutos(this, true, sessao);
+        form.setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -808,6 +840,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItemCadastroCategorias;
     private javax.swing.JMenuItem jMenuItemCadastroDeCaixas;
     private javax.swing.JMenuItem jMenuItemCadastroFornecedores;

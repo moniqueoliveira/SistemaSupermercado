@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b2fd96f-368d-45de-ae40-c3030ef650aa">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="parameter1" class="java.lang.Integer"/>
-	<parameter name="mes" class="java.lang.String"/>
+	<parameter name="idUnidade" class="java.lang.String"/>
+	<parameter name="dia" class="java.lang.String"/>
+	<parameter name="mesMin" class="java.lang.String"/>
+	<parameter name="mesMax" class="java.lang.String"/>
 	<parameter name="ano" class="java.lang.String"/>
+	<parameter name="funcionario" class="java.lang.String"/>
+	<parameter name="fornecedor" class="java.lang.String"/>
+	<parameter name="produto" class="java.lang.String"/>
+	<parameter name="tipoPesquisa" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
@@ -48,7 +54,22 @@ FROM
      INNER JOIN `produtos` produtos ON entradas_produtos.`ID_Produto` = produtos.`ID_Produto`
      INNER JOIN `fornecedores` fornecedores ON entradas_produtos.`ID_Fornecedor` = fornecedores.`ID_Fornecedor`
 WHERE
-     unidades.`id_unidade` = $P{parameter1} and month(entradas_produtos.data) = $P{mes} and year(entrada_produtos.data) = '$P{ano}']]>
+     unidades.`id_unidade` = $P{idUnidade} and(
+     (day(entradas_produtos.data)=$P{dia} and month(entradas_produtos.data)=$P{mesMin} and year(entradas_produtos.data)=$P{ano} and (usuarios.id_usuario=$P{funcionario} or usuarios.nome=$P{funcionario}) and $P{tipoPesquisa}=1) or
+     (day(entradas_produtos.data)=$P{dia} and month(entradas_produtos.data)=$P{mesMin} and year(entradas_produtos.data)=$P{ano} and (fornecedores.razao_social=$P{fornecedor} or fornecedores.nome_fantasia=$P{fornecedor}) and $P{tipoPesquisa}=2) or
+     (day(entradas_produtos.data)=$P{dia} and month(entradas_produtos.data)=$P{mesMin} and year(entradas_produtos.data)=$P{ano} and (produtos.descricao=$P{produto} or produtos.id_produto=$P{produto}) and $P{tipoPesquisa}=3) or
+     (day(entradas_produtos.data)=$P{dia} and month(entradas_produtos.data)=$P{mesMin} and year(entradas_produtos.data)=$P{ano} and $P{tipoPesquisa}=4) or
+     (month(entradas_produtos.data) >= $P{mesMin} and month(entradas_produtos.data) <= $P{mesMax} and year(entradas_produtos.data) = $P{ano} and (usuarios.id_usuario=$P{funcionario} or usuarios.nome=$P{funcionario}) and $P{tipoPesquisa}=5) or
+     (month(entradas_produtos.data) >= $P{mesMin} and month(entradas_produtos.data) <= $P{mesMax} and year(entradas_produtos.data) = $P{ano} and (fornecedores.razao_social=$P{fornecedor} or fornecedores.nome_fantasia=$P{fornecedor}) and $P{tipoPesquisa}=6) or
+     (month(entradas_produtos.data) >= $P{mesMin} and month(entradas_produtos.data) <= $P{mesMax} and year(entradas_produtos.data) = $P{ano} and (produtos.descricao=$P{produto} or produtos.id_produto=$P{produto}) and $P{tipoPesquisa}=7) or
+     (month(entradas_produtos.data) >= $P{mesMin} and month(entradas_produtos.data) <= $P{mesMax} and year(entradas_produtos.data) = $P{ano} and $P{tipoPesquisa}=8) or
+     ((usuarios.id_usuario=$P{funcionario} or usuarios.nome=$P{funcionario}) and $P{tipoPesquisa}=9) or
+     ((fornecedores.razao_social=$P{fornecedor} or fornecedores.nome_fantasia=$P{fornecedor}) and $P{tipoPesquisa}=10) or
+     ((produtos.descricao=$P{produto} or produtos.id_produto=$P{produto}) and $P{tipoPesquisa}=11) or
+     ($P{tipoPesquisa}=12)
+     )
+ORDER BY
+     entradas_produtos.id_entrada ASC]]>
 	</queryString>
 	<field name="usuarios_ID_Usuario" class="java.lang.Integer"/>
 	<field name="usuarios_Nome" class="java.lang.String"/>
@@ -83,17 +104,32 @@ WHERE
 	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
 	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
 	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<variable name="entradas_produtos_ID_Entrada_1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{entradas_produtos_ID_Entrada}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="156" y="27" width="252" height="25" uuid="8a5a56ff-5bdd-49fb-81cf-512b76b8af8b"/>
+				<reportElement x="114" y="26" width="311" height="25" forecolor="#3F83BF" uuid="8a5a56ff-5bdd-49fb-81cf-512b76b8af8b"/>
 				<textElement>
-					<font size="16"/>
+					<font fontName="Tahoma" size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Relatório de Entrada de Produtos]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="176" y="59" width="100" height="20" uuid="9879e117-bdc2-4801-9d7f-d5a76651b902"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{entradas_produtos_ID_Entrada_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="59" width="176" height="20" uuid="c2e96743-2627-405c-bc50-ac4fea8e234e"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entradas de produtos encontradas:]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -101,82 +137,107 @@ WHERE
 		<band height="25" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="33" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<staticText>
-				<reportElement x="13" y="0" width="33" height="27" uuid="78b01eb5-1fa3-4c01-9d7f-ad553fcac55e"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[ID]]></text>
+				<reportElement mode="Opaque" x="0" y="0" width="44" height="27" backcolor="#99C0FF" uuid="78b01eb5-1fa3-4c01-9d7f-ad553fcac55e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Entrada]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="59" y="0" width="70" height="27" uuid="1124ab1c-32b5-499c-95e1-dd13f4a7e5de"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement mode="Opaque" x="44" y="0" width="100" height="27" backcolor="#99C0FF" uuid="1124ab1c-32b5-499c-95e1-dd13f4a7e5de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="129" y="0" width="71" height="27" uuid="c278500c-4b38-48d6-8263-84a42606ec87"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement mode="Opaque" x="144" y="0" width="56" height="27" backcolor="#99C0FF" uuid="c278500c-4b38-48d6-8263-84a42606ec87"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Quantidade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="0" width="100" height="27" uuid="d3eba59d-035a-4926-81d6-0997bf6ca425"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement mode="Opaque" x="200" y="0" width="100" height="27" backcolor="#99C0FF" uuid="d3eba59d-035a-4926-81d6-0997bf6ca425"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Data de Entrada]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="300" y="0" width="55" height="27" uuid="3a871c71-3ac3-45c4-ac4a-28c0d4da6ac9"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Valor Unitário]]></text>
+				<reportElement mode="Opaque" x="300" y="0" width="55" height="27" backcolor="#99C0FF" uuid="3a871c71-3ac3-45c4-ac4a-28c0d4da6ac9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Pago (unidade)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="0" width="100" height="27" uuid="f93a4751-10b3-4139-aa22-815f57b2eeb3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement mode="Opaque" x="355" y="0" width="100" height="27" backcolor="#99C0FF" uuid="f93a4751-10b3-4139-aa22-815f57b2eeb3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Funcionário]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="455" y="0" width="100" height="27" uuid="5bdd022e-f62d-40ec-9204-6366fa4f6b1b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement mode="Opaque" x="455" y="0" width="100" height="27" backcolor="#99C0FF" uuid="5bdd022e-f62d-40ec-9204-6366fa4f6b1b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Fornecedor]]></text>
 			</staticText>
-			<line>
-				<reportElement x="-18" y="27" width="592" height="1" uuid="33513786-4da6-476f-84d2-7a3f991657c8"/>
-			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="27" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<textField>
-				<reportElement x="13" y="2" width="33" height="20" uuid="170f5978-78f7-4b76-a9de-8af944275cab"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="0" y="0" width="44" height="20" uuid="170f5978-78f7-4b76-a9de-8af944275cab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{entradas_produtos_ID_Entrada}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="59" y="2" width="70" height="20" uuid="dcf8d970-c283-49bf-bc65-b90998ec72ce"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="44" y="0" width="100" height="20" uuid="dcf8d970-c283-49bf-bc65-b90998ec72ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="129" y="2" width="71" height="20" uuid="380c716c-deef-4f82-ae34-1688f0e8c5e7"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="144" y="0" width="56" height="20" uuid="380c716c-deef-4f82-ae34-1688f0e8c5e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{entradas_produtos_Quantidade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="200" y="2" width="100" height="20" uuid="88ba2098-71e1-40dc-88be-dadaad205fb7"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="200" y="0" width="100" height="20" uuid="88ba2098-71e1-40dc-88be-dadaad205fb7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{entradas_produtos_Data}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="300" y="2" width="55" height="20" uuid="d8efb5b9-04cb-40e9-97f4-d13a8f1c678a"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="300" y="0" width="55" height="20" uuid="d8efb5b9-04cb-40e9-97f4-d13a8f1c678a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{entradas_produtos_Valor_Unitario}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="355" y="0" width="100" height="20" uuid="296b863a-a391-4af1-b25d-c202c8582426"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{usuarios_Nome}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="455" y="0" width="100" height="20" uuid="95ab7593-5e34-4711-ae77-cca62006b147"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{fornecedores_Nome_Fantasia}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -187,13 +248,13 @@ WHERE
 	<pageFooter>
 		<band height="26" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="6" width="100" height="20" uuid="8cbaf278-d12d-48e1-8db1-412443980922"/>
+				<reportElement x="44" y="6" width="132" height="20" uuid="8cbaf278-d12d-48e1-8db1-412443980922"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="247" y="6" width="268" height="20" uuid="8d8f367a-a78c-4865-8af6-f65e70e2de90"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement x="515" y="6" width="40" height="20" uuid="b88c4026-fc2e-4cce-a32c-d6148a2def63"/>

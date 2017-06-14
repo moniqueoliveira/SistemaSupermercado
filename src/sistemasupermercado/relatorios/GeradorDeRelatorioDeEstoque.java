@@ -13,14 +13,14 @@ import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.conexao.ConnectionFactory;
 
 public class GeradorDeRelatorioDeEstoque extends GeradorDeRelatorios {
-    public JFrame abrirRelatorioEstoque(Integer i) throws JRException {
+    public JFrame abrirRelatorio(Integer i) throws JRException {
  
         InputStream inputStream = getClass().getResourceAsStream("relatorioEstoque.jasper");
 
         Map parametros = new HashMap();
         ConnectionFactory conexao = new ConnectionFactory();
 
-        parametros.put( "parameter1", i);
+        parametros.put( "idUnidade", i);
 
         try {
 

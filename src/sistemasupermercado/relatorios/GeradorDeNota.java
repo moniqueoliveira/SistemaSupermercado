@@ -7,9 +7,7 @@ package sistemasupermercado.relatorios;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.io.InputStream;
-import java.net.URL;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,11 +48,6 @@ public class GeradorDeNota{
         frameRelatorio.setLocationRelativeTo(null);
         frameRelatorio.setAlwaysOnTop(true);
         frameRelatorio.setMaximumSize(new Dimension(300, 250));
-            
-        URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
-        Image image = java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png"));
-        frameRelatorio.setIconImage(image);
-                    
         
         return frameRelatorio;
         
@@ -63,7 +56,7 @@ public class GeradorDeNota{
  
     }
     
-    public JFrame abrirNota(Integer i) throws JRException {
+    public JFrame abrirNota( int unidade, int venda) throws JRException {
      
     // note que estamos chamando o novo relatório
     InputStream inputStream = getClass().getResourceAsStream("NotaFiscal.jasper");
@@ -71,15 +64,13 @@ public class GeradorDeNota{
     Map parametros = new HashMap();
     ConnectionFactory conexao = new ConnectionFactory();
 
-    parametros.put( "idVenda", i);
+    parametros.put( "idVenda", venda);
+    parametros.put( "idUnidade", unidade);
     try {
  
         // abre o relatório
-        JFrame notaFiscal = new GeradorDeRelatorios().openReport( "Nota de Venda", inputStream, parametros,
+        return new GeradorDeRelatorios().openReport( "Nota de Venda", inputStream, parametros,
                 conexao.getConnection());
-        notaFiscal.setExtendedState(0);
-        notaFiscal.setLocationRelativeTo(null);
-        return notaFiscal;
  
     } catch ( JRException exc ) {
         System.out.println(exc.getMessage());

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeVendas_subreport1" language="groovy" pageWidth="595" pageHeight="841" orientation="Landscape" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b474e819-bd7d-4492-9bc0-ed4a81acd4b7">
-	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idVenda" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="idUnidade" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
+     max(precos_produtos.`Data`) AS precos_produtos_Data,
      vendas.`ID_Venda` AS vendas_ID_Venda,
      vendas.`ID_Sessao` AS vendas_ID_Sessao,
      vendas.`Data` AS vendas_Data,
@@ -34,17 +36,23 @@
      precos_produtos.`ID_Unidade` AS precos_produtos_ID_Unidade,
      precos_produtos.`ID_Produto` AS precos_produtos_ID_Produto,
      precos_produtos.`Valor` AS precos_produtos_Valor,
-     max(precos_produtos.`Data`) AS precos_produtos_Data
+     unidades.`ID_Unidade` AS unidades_ID_Unidade,
+     unidades.`Descricao` AS unidades_Descricao,
+     truncate(itens_vendas.subtotal/itens_vendas.quantidade,2) as preco_unidade
 FROM
      `vendas` vendas INNER JOIN `itens_vendas` itens_vendas ON vendas.`ID_Venda` = itens_vendas.`ID_Venda`
      INNER JOIN `sessoes` sessoes ON vendas.`ID_Sessao` = sessoes.`ID_Sessao`
      INNER JOIN `produtos` produtos ON itens_vendas.`ID_Produto` = produtos.`ID_Produto`
      INNER JOIN `precos_produtos` precos_produtos ON produtos.`ID_Produto` = precos_produtos.`ID_Produto`
+     INNER JOIN `unidades` unidades ON precos_produtos.`ID_Unidade` = unidades.`ID_Unidade`
 WHERE
-     vendas.id_venda = $P{idVenda} and precos_produtos.data = (SELECT max(precos_produtos.data) FROM `precos_produtos` WHERE precos_produtos.id_produto=produtos.id_produto) and itens_vendas.cancelado != 1
+     vendas.id_venda = $P{idVenda}
+     and precos_produtos.data = ( SELECT max(precos_produtos.data) FROM `precos_produtos` INNER JOIN `unidades` ON `precos_produtos`.`id_unidade` = `unidades`.`id_unidade` WHERE precos_produtos.id_produto = produtos.id_produto and unidades.id_unidade = $P{idUnidade} )
+     and itens_vendas.cancelado!= 1
 GROUP BY
      itens_vendas.numero_item]]>
 	</queryString>
+	<field name="precos_produtos_Data" class="java.sql.Timestamp"/>
 	<field name="vendas_ID_Venda" class="java.lang.Integer"/>
 	<field name="vendas_ID_Sessao" class="java.lang.Integer"/>
 	<field name="vendas_Data" class="java.sql.Timestamp"/>
@@ -70,7 +78,9 @@ GROUP BY
 	<field name="precos_produtos_ID_Unidade" class="java.lang.Integer"/>
 	<field name="precos_produtos_ID_Produto" class="java.lang.Integer"/>
 	<field name="precos_produtos_Valor" class="java.math.BigDecimal"/>
-	<field name="precos_produtos_Data" class="java.sql.Timestamp"/>
+	<field name="unidades_ID_Unidade" class="java.lang.Integer"/>
+	<field name="unidades_Descricao" class="java.lang.String"/>
+	<field name="preco_unidade" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -98,7 +108,7 @@ GROUP BY
 				<text><![CDATA[Quantidade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="432" y="0" width="123" height="21" backcolor="#C9DBF7" uuid="2473b5f5-83fe-4eac-b232-72d38d2a0079"/>
+				<reportElement mode="Opaque" x="432" y="0" width="122" height="21" backcolor="#C9DBF7" uuid="2473b5f5-83fe-4eac-b232-72d38d2a0079"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -122,7 +132,7 @@ GROUP BY
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="432" y="0" width="123" height="20" uuid="0c191aea-3f83-4c06-afb3-c5572586c4c3"/>
+				<reportElement x="432" y="0" width="122" height="20" uuid="0c191aea-3f83-4c06-afb3-c5572586c4c3"/>
 				<textElement textAlignment="Center">
 					<font size="10"/>
 				</textElement>
@@ -143,13 +153,6 @@ GROUP BY
 				<textFieldExpression><![CDATA[$F{itens_vendas_Numero_Item}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="327" y="0" width="105" height="20" uuid="d8f75c15-6157-4ef0-9e85-ef79390aee2b"/>
-				<textElement textAlignment="Center">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{precos_produtos_Valor}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="68" y="0" width="166" height="20" uuid="ee86d111-f605-42a6-bebe-c6ad0e1a221d"/>
 				<textElement textAlignment="Center">
 					<font size="10"/>
@@ -162,6 +165,11 @@ GROUP BY
 			<line>
 				<reportElement x="554" y="0" width="1" height="20" forecolor="#3380FF" uuid="8cdac195-94b4-4176-ab80-1e874da2a0d9"/>
 			</line>
+			<textField>
+				<reportElement x="327" y="0" width="105" height="20" uuid="d77515e8-65d0-415a-8290-d78a1279ce4e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{preco_unidade}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<summary>

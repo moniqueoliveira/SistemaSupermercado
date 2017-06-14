@@ -9,7 +9,7 @@
 	<parameter name="mesMax" class="java.lang.String"/>
 	<parameter name="ano" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C://Users//Monique//Documents//Estudos//TCC//SistemaSupermercado//src//sistemasupermercado//relatorios//"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\Monique\\Documents\\Estudos\\TCC\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="idVenda" class="java.lang.String"/>
 	<parameter name="vendedor" class="java.lang.String"/>
@@ -202,6 +202,9 @@ GROUP BY
 			</textField>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="56" width="555" height="16" uuid="936c1c71-9575-4d8b-96ef-380b62f3387a"/>
+				<subreportParameter name="idUnidade">
+					<subreportParameterExpression><![CDATA[$F{unidades_ID_Unidade}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="idVenda">
 					<subreportParameterExpression><![CDATA[$F{vendas_ID_Venda}]]></subreportParameterExpression>
 				</subreportParameter>

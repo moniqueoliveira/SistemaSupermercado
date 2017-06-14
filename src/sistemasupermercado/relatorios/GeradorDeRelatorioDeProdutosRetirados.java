@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sistemasupermercado.relatorios;
 
 import java.io.InputStream;
@@ -7,7 +12,10 @@ import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.conexao.ConnectionFactory;
 
-
+/**
+ *
+ * @author Monique
+ */
 public class GeradorDeRelatorioDeProdutosRetirados extends GeradorDeRelatorios {
         public JFrame abrirRelatorio(int idUnidade, String funcionario,  String produto, String dia, int mesMin, int mesMax, String ano, int tipoPesquisa) throws JRException {
  

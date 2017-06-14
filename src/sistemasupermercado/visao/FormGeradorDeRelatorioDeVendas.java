@@ -339,13 +339,6 @@ public class FormGeradorDeRelatorioDeVendas extends javax.swing.JDialog {
                 venda = "0";
             }else venda = txtVenda.getText();
         }
-        System.out.println(dia);
-        System.out.println(mesMin);
-        System.out.println(mesMax);
-        System.out.println(ano);
-        System.out.println(vendedor);
-        System.out.println(venda);
-        System.out.println(tipoPesquisa);
         
         dispose();
 

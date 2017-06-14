@@ -5,9 +5,7 @@
  */
 package sistemasupermercado.relatorios;
 
-import java.awt.Image;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
@@ -15,26 +13,28 @@ import net.sf.jasperreports.engine.JRException;
 import sistemasupermercado.conexao.ConnectionFactory;
 
 public class GeradorDeRelatorioDeEntradaDeProdutos extends GeradorDeRelatorios{
-    public JFrame abrirRelatorio(Integer idUnidade, int mes, String ano) throws JRException {
+    public JFrame abrirRelatorio(int idUnidade, String funcionario, String fornecedor, String produto, String dia, int mesMin, int mesMax, String ano, int tipoPesquisa) throws JRException {
 
         InputStream inputStream = getClass().getResourceAsStream("RelatorioDeEntradaDeProdutos.jasper");
 
         Map parametros = new HashMap();
         ConnectionFactory conexao = new ConnectionFactory();
 
-        parametros.put( "parameter1", idUnidade);
-        parametros.put( "mes", mes);
+        parametros.put( "idUnidade", idUnidade);
+        parametros.put( "funcionario", funcionario);
+        parametros.put( "fornecedor", fornecedor);
+        parametros.put( "produto", produto);
+        parametros.put( "dia", dia);
+        parametros.put( "mesMin", mesMin);
+        parametros.put( "mesMax", mesMax);
         parametros.put( "ano", ano);
+        parametros.put( "tipoPesquisa", tipoPesquisa);
+        
 
         JFrame jFrame;
         try {
             jFrame = new GeradorDeRelatorios().openReport( "Relatório de Entrada de Produtos", inputStream, parametros,
                     conexao.getConnection());
-            
-            URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
-            Image image = java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png"));
-            jFrame.setIconImage(image);
-                    
             return jFrame;
 
         } catch ( JRException exc ) {

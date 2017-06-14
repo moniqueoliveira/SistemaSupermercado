@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="288" pageHeight="792" columnWidth="284" leftMargin="2" rightMargin="2" topMargin="20" bottomMargin="0" uuid="980a2e0a-b60d-412c-9ab0-ed113144edfa">
-	<property name="ireport.zoom" value="2.2578957202151093"/>
+	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="11"/>
+	<property name="ireport.y" value="198"/>
 	<parameter name="idVenda" class="java.lang.String"/>
+	<parameter name="idUnidade" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      vendas.`ID_Venda` AS vendas_ID_Venda,
@@ -40,18 +41,40 @@
      caixas.`ID_Unidade` AS caixas_ID_Unidade,
      caixas.`Aberto` AS caixas_Aberto,
      unidades.`ID_Unidade` AS unidades_ID_Unidade,
-     unidades.`Descricao` AS unidades_Descricao
+     unidades.`Descricao` AS unidades_Descricao,
+     usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
+     usuarios.`Nome` AS usuarios_Nome,
+     usuarios.`Login` AS usuarios_Login,
+     usuarios.`Senha` AS usuarios_Senha,
+     usuarios.`ID_Unidade` AS usuarios_ID_Unidade,
+     usuarios.`ID_Funcao` AS usuarios_ID_Funcao,
+     usuarios.`Ativo` AS usuarios_Ativo,
+     sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
+     sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
+     sessoes.`Inicio_Sessao` AS sessoes_Inicio_Sessao,
+     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao,
+     sessoes_caixas.`ID_Sessao` AS sessoes_caixas_ID_Sessao,
+     sessoes_caixas.`Valor_Inicial_Caixa` AS sessoes_caixas_Valor_Inicial_Caixa,
+     sessoes_caixas.`Valor_Fechamento` AS sessoes_caixas_Valor_Fechamento,
+     sessoes_caixas.`numero_caixa` AS sessoes_caixas_numero_caixa,
+     truncate(itens_vendas.subtotal/itens_vendas.quantidade,2) as preco_unidade
 FROM
      `produtos` produtos INNER JOIN `precos_produtos` precos_produtos ON produtos.`ID_Produto` = precos_produtos.`ID_Produto`
      INNER JOIN `itens_vendas` itens_vendas ON produtos.`ID_Produto` = itens_vendas.`ID_Produto`
      INNER JOIN `vendas` vendas ON itens_vendas.`ID_Venda` = vendas.`ID_Venda`
      INNER JOIN `pagamentos_vendas` pagamentos_vendas ON vendas.`ID_Venda` = pagamentos_vendas.`ID_Venda`
-     INNER JOIN `unidades` unidades ON precos_produtos.`ID_Unidade` = unidades.`ID_Unidade`
-     INNER JOIN `caixas` caixas ON unidades.`ID_Unidade` = caixas.`ID_Unidade`
+     INNER JOIN `sessoes` sessoes ON vendas.`ID_Sessao` = sessoes.`ID_Sessao`
+     INNER JOIN `usuarios` usuarios ON sessoes.`ID_Usuario` = usuarios.`ID_Usuario`
+     INNER JOIN `sessoes_caixas` sessoes_caixas ON sessoes.`ID_Sessao` = sessoes_caixas.`ID_Sessao`
+     INNER JOIN `caixas` caixas ON sessoes_caixas.`numero_caixa` = caixas.`Numero_Caixa`
+     INNER JOIN `unidades` unidades ON caixas.`ID_Unidade` = unidades.`ID_Unidade`
+     AND usuarios.`ID_Unidade` = unidades.`ID_Unidade`
+     AND precos_produtos.`ID_Unidade` = unidades.`ID_Unidade`
 WHERE
-     itens_vendas.id_venda = $P{idVenda} and
-     itens_vendas.cancelado!= 1
-     and precos_produtos.data = (SELECT max(precos_produtos.data) FROM `precos_produtos` WHERE precos_produtos.id_produto=produtos.id_produto and precos_produtos.id_unidade=unidades.id_unidade)
+     itens_vendas.id_venda = $P{idVenda}
+     and itens_vendas.cancelado != 1
+     and precos_produtos.data = ( SELECT max(precos_produtos.data) FROM `precos_produtos` INNER JOIN `unidades` ON `precos_produtos`.`id_unidade` = `unidades`.`id_unidade` WHERE precos_produtos.id_produto = produtos.id_produto and unidades.id_unidade = $P{idUnidade} )
+     and caixas.id_unidade = $P{idUnidade}
 GROUP BY
      itens_vendas.id_produto
 ORDER BY
@@ -92,6 +115,22 @@ ORDER BY
 	<field name="caixas_Aberto" class="java.lang.Integer"/>
 	<field name="unidades_ID_Unidade" class="java.lang.Integer"/>
 	<field name="unidades_Descricao" class="java.lang.String"/>
+	<field name="usuarios_ID_Usuario" class="java.lang.Integer"/>
+	<field name="usuarios_Nome" class="java.lang.String"/>
+	<field name="usuarios_Login" class="java.lang.String"/>
+	<field name="usuarios_Senha" class="java.lang.String"/>
+	<field name="usuarios_ID_Unidade" class="java.lang.Integer"/>
+	<field name="usuarios_ID_Funcao" class="java.lang.Integer"/>
+	<field name="usuarios_Ativo" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
+	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<field name="sessoes_caixas_ID_Sessao" class="java.lang.Integer"/>
+	<field name="sessoes_caixas_Valor_Inicial_Caixa" class="java.math.BigDecimal"/>
+	<field name="sessoes_caixas_Valor_Fechamento" class="java.math.BigDecimal"/>
+	<field name="sessoes_caixas_numero_caixa" class="java.lang.Integer"/>
+	<field name="preco_unidade" class="java.math.BigDecimal"/>
 	<variable name="itens_vendas_Subtotal_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{itens_vendas_Subtotal}]]></variableExpression>
 	</variable>
@@ -217,16 +256,9 @@ ORDER BY
 			<textField>
 				<reportElement x="153" y="0" width="27" height="32" uuid="3760bf11-6ce6-45c0-9291-b820133f49ec"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{itens_vendas_Quantidade}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="180" y="0" width="44" height="32" uuid="8342aa11-6700-48b7-ae72-e39f04fff0ad"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{precos_produtos_Valor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{itens_vendas_Quantidade}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="224" y="0" width="60" height="32" uuid="61ff2c74-8e38-462e-9006-79ae47f43aa6"/>
@@ -234,6 +266,13 @@ ORDER BY
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{itens_vendas_Subtotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="44" height="32" uuid="aab47e53-b161-46a9-92c1-0eb09af7c50a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{preco_unidade}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

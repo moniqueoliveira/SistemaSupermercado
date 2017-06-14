@@ -5,9 +5,7 @@
  */
 package sistemasupermercado.relatorios;
 
-import java.awt.Image;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
@@ -26,11 +24,6 @@ public class GeradorDeRelatorioDeFornecedores extends GeradorDeRelatorios{
         try {
             jFrame = new GeradorDeRelatorios().openReport( "Relatório de Fornecedores", inputStream, parametros,
                     conexao.getConnection());
-            
-            URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
-            Image image = java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png"));
-            jFrame.setIconImage(image);
-                    
             return jFrame;
 
         } catch ( JRException exc ) {
