@@ -45,9 +45,11 @@ public class GeradorDeNota{
         //frameRelatorio.setSize(dmnsn);
         frameRelatorio.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
  
+        frameRelatorio.setSize(100, 200);
         frameRelatorio.setLocationRelativeTo(null);
-        frameRelatorio.setAlwaysOnTop(true);
-        frameRelatorio.setMaximumSize(new Dimension(300, 250));
+        //frameRelatorio.setAlwaysOnTop(true);
+        //frameRelatorio.setMaximumSize(new Dimension(300, 250));
+        frameRelatorio.setExtendedState(0);
         
         return frameRelatorio;
         

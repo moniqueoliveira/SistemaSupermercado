@@ -63,7 +63,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private void definirImagemDeFundo() {
         try {
             JImagePanel panel = new JImagePanel(
-                    loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
+                    //loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
+                    loadImage("C:\\Users\\Monique\\Documents\\Estudos\\TCC\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
             //panel.setFillType(JImagePanel.FillType.CENTER);
             this.setContentPane(panel);
             //this.pack();

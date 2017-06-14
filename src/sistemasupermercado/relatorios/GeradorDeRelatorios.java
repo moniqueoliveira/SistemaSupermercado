@@ -94,10 +94,11 @@ public class GeradorDeRelatorios {
         frameRelatorio.add( viewer, BorderLayout.CENTER );
  
         // configura o tamanho padrão do JFrame
-        frameRelatorio.setSize( 500, 500 );
+        frameRelatorio.setSize(500, 500);
  
         // maximiza o JFrame para ocupar a tela toda.
-        frameRelatorio.setExtendedState( JFrame.MAXIMIZED_BOTH );
+        frameRelatorio.setExtendedState(0);
+        frameRelatorio.setLocationRelativeTo(null);
  
         // configura a operação padrão quando o JFrame for fechado.
         frameRelatorio.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
