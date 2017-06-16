@@ -19,6 +19,8 @@ public class GeradorDeRelatorioDeFornecedores extends GeradorDeRelatorios{
 
         Map parametros = new HashMap();
         ConnectionFactory conexao = new ConnectionFactory();
+        
+        parametros.put("SUBREPORT_DIR", this.getClass().getResource("/sistemasupermercado/relatorios/"));
 
         JFrame jFrame;
         try {
@@ -27,9 +29,8 @@ public class GeradorDeRelatorioDeFornecedores extends GeradorDeRelatorios{
             return jFrame;
 
         } catch ( JRException exc ) {
-            System.out.println(exc.getMessage());
+            throw exc;
         }
-        return null;
     }
 
 }

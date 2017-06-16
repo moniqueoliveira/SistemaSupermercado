@@ -41,6 +41,7 @@ public class GeradorDeRelatorioDeProdutosRetirados extends GeradorDeRelatorios {
     parametros.put( "mesMax", mesMax);
     parametros.put( "ano", ano);
     parametros.put( "tipoPesquisa", tipoPesquisa);
+     parametros.put("SUBREPORT_DIR", this.getClass().getResource("/sistemasupermercado/relatorios/"));
     
     // outros possíveis parâmetros aqui...
  
@@ -52,10 +53,8 @@ public class GeradorDeRelatorioDeProdutosRetirados extends GeradorDeRelatorios {
                 conexao.getConnection());
  
     } catch ( JRException exc ) {
-        System.out.println(exc.getMessage());
+        throw new RuntimeException(exc.getMessage());
     }
-    
-    return null;
     
     }
 }

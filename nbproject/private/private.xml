@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/relatorios/RelatorioDeProdutosVendidos.jrxml</file>
             <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/relatorios/GeradorDeRelatorioDeEntradaDeProdutos.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormGeradorDeRelatorioDeProdutosVendidos.java</file>
             <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/dao/EstoqueDAOImpl.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/relatorios/GeradorDeRelatorios.java</file>
             <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormLogin.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/relatorios/GeradorDeNota.java</file>
             <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormVenda.java</file>
+            <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormConsultaUsuario.java</file>
             <file>file:/C:/Users/Monique/Documents/Estudos/TCC/SistemaSupermercado/src/sistemasupermercado/visao/FormMenuPrincipal.java</file>
         </group>
     </open-files>

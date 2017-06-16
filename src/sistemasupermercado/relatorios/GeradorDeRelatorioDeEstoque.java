@@ -29,8 +29,7 @@ public class GeradorDeRelatorioDeEstoque extends GeradorDeRelatorios {
                     conexao.getConnection());
 
         } catch ( JRException exc ) {
-            System.out.println(exc.getMessage());
+            throw exc;
         }
-        return null;
     }
 }

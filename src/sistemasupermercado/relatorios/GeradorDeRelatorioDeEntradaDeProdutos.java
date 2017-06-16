@@ -38,9 +38,8 @@ public class GeradorDeRelatorioDeEntradaDeProdutos extends GeradorDeRelatorios{
             return jFrame;
 
         } catch ( JRException exc ) {
-            System.out.println(exc.getMessage());
+            throw new RuntimeException(exc.getMessage());
         }
-        return null;
     }
 
 }

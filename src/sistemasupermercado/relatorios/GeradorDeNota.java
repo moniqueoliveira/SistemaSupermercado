@@ -71,13 +71,16 @@ public class GeradorDeNota{
     try {
  
         // abre o relatório
-        return new GeradorDeRelatorios().openReport( "Nota de Venda", inputStream, parametros,
+        JFrame nota = new GeradorDeRelatorios().openReport( "Nota de Venda", inputStream, parametros,
                 conexao.getConnection());
+        nota.setExtendedState(0);
+        nota.setSize(500, 500);
+        nota.setLocationRelativeTo(null);
+        return nota;
  
     } catch ( JRException exc ) {
-        System.out.println(exc.getMessage());
+        throw exc;
     }
-    return null;
     }
     
     public JFrame openReport(

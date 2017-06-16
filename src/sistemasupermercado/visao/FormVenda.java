@@ -89,19 +89,17 @@ public class FormVenda extends javax.swing.JFrame {
     private void definirImagemDeFundo() {
         try {
             JImagePanel panel = new JImagePanel(
-                    //loadImage(this.getClass().getResource("/sistemasupermercado/imagens/background.png").getFile()));
-                    loadImage("C:\\Users\\Monique\\Documents\\Estudos\\TCC\\SistemaSupermercado\\src\\sistemasupermercado\\imagens\\background.png"));
-            //panel.setFillType(JImagePanel.FillType.CENTER);
+                    ImageIO.read(this.getClass().getResource("/sistemasupermercado/imagens/background.png")));
             this.setContentPane(panel);
             //this.pack();
         } catch (IOException ex) {
-            Logger.getLogger(FormMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Ocorreu um erro ao carregar a imagem de plano de fundo: \n" + ex.getMessage());
         }
     }
     
-    private static BufferedImage loadImage(String file) throws IOException {
+    /*private static BufferedImage loadImage(String file) throws IOException {
         return ImageIO.read(new File(file));
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -931,7 +929,8 @@ public class FormVenda extends javax.swing.JFrame {
             try {
                 new GeradorDeNota().abrirNota(sessaoCaixa.getSessao().getUsuario().getUnidade().getIdUnidade(),idVenda).setVisible(true);
             } catch (JRException ex) {
-                Logger.getLogger(FormPagamento.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
+                    "Atenção", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

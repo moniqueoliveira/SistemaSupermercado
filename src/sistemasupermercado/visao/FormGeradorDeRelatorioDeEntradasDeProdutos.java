@@ -354,7 +354,8 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
         try {
             g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade(), usuario, fornecedor, produto, dia,  mesMin, mesMax, ano, tipoPesquisa).setVisible(true);
         } catch (JRException ex) {
-            Logger.getLogger(FormGeradorDeRelatorioDeEntradasDeProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
+                    "Atenção", JOptionPane.WARNING_MESSAGE);
         }
         
         

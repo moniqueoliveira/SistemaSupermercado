@@ -27,6 +27,7 @@ public class GeradorDeRelatorioDeUsuarios extends GeradorDeRelatorios{
         parametros.put( "mesMax", mesMax);
         parametros.put( "ano", ano);
         parametros.put( "tipoPesquisa", tipoPesquisa);
+         parametros.put("SUBREPORT_DIR", this.getClass().getResource("/sistemasupermercado/relatorios/"));
 
         JFrame jFrame;
         try {
@@ -35,9 +36,8 @@ public class GeradorDeRelatorioDeUsuarios extends GeradorDeRelatorios{
             return jFrame;
 
         } catch ( JRException exc ) {
-            System.out.println(exc.getMessage());
+            throw new RuntimeException(exc.getMessage());
         }
-        return null;
     }
 
 }

@@ -94,10 +94,10 @@ public class GeradorDeRelatorios {
         frameRelatorio.add( viewer, BorderLayout.CENTER );
  
         // configura o tamanho padrão do JFrame
-        frameRelatorio.setSize(500, 500);
+        //frameRelatorio.setSize(500, 500);
  
         // maximiza o JFrame para ocupar a tela toda.
-        frameRelatorio.setExtendedState(0);
+        frameRelatorio.setExtendedState(6);
         frameRelatorio.setLocationRelativeTo(null);
  
         // configura a operação padrão quando o JFrame for fechado.
@@ -133,7 +133,7 @@ public class GeradorDeRelatorios {
                 conexao.getConnection());
  
     } catch ( JRException exc ) {
-        System.out.println(exc.getMessage());
+        throw new RuntimeException(exc.getMessage());
     }
     
     
