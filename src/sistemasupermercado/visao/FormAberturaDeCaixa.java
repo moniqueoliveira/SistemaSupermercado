@@ -8,6 +8,7 @@ package sistemasupermercado.visao;
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
 import java.util.Vector;
+import javafx.scene.input.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.DefaultComboBoxModel;
@@ -84,9 +85,18 @@ public class FormAberturaDeCaixa extends javax.swing.JDialog {
 
         jLabel1.setText("Número do caixa:");
 
+        cmbNumeroCaixa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbNumeroCaixaKeyPressed(evt);
+            }
+        });
+
         jLabel3.setText("Valor em caixa (R$):");
 
         txtValor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtValorKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtValorKeyTyped(evt);
             }
@@ -216,6 +226,20 @@ public class FormAberturaDeCaixa extends javax.swing.JDialog {
         registrarAcoesDosAtalhos();
         definirOrdemDeTabulação();
     }//GEN-LAST:event_formWindowOpened
+
+    private void cmbNumeroCaixaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbNumeroCaixaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            txtValor.requestFocus();
+        }
+    }//GEN-LAST:event_cmbNumeroCaixaKeyPressed
+
+    private void txtValorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnAbrirCaixaActionPerformed(null);
+        }
+    }//GEN-LAST:event_txtValorKeyPressed
 
     /**
      * @param args the command line arguments

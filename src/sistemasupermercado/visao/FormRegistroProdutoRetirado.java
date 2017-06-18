@@ -6,6 +6,7 @@
 package sistemasupermercado.visao;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.util.Vector;
 import javax.swing.AbstractAction;
@@ -120,6 +121,9 @@ public class FormRegistroProdutoRetirado extends javax.swing.JDialog {
             }
         });
         txtIdProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdProdutoKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdProdutoKeyTyped(evt);
             }
@@ -224,6 +228,9 @@ public class FormRegistroProdutoRetirado extends javax.swing.JDialog {
 
         txtQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtQuantidadeKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtQuantidadeKeyTyped(evt);
             }
@@ -252,11 +259,22 @@ public class FormRegistroProdutoRetirado extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Motivo:");
 
+        cmbMotivo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbMotivoKeyPressed(evt);
+            }
+        });
+
         jLabel4.setText("Observação:");
 
         txtObservacao.setColumns(20);
         txtObservacao.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         txtObservacao.setRows(5);
+        txtObservacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtObservacaoKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtObservacao);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -476,6 +494,30 @@ public class FormRegistroProdutoRetirado extends javax.swing.JDialog {
         sessao.setUsuario(1);
         sessao.getUsuario().setUnidade(1);*/
     }//GEN-LAST:event_formWindowOpened
+
+    private void txtIdProdutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdProdutoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            txtQuantidade.requestFocus();
+    }//GEN-LAST:event_txtIdProdutoKeyPressed
+
+    private void cmbMotivoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbMotivoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            txtObservacao.requestFocus();
+    }//GEN-LAST:event_cmbMotivoKeyPressed
+
+    private void txtObservacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtObservacaoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            txtIdProduto.requestFocus();
+    }//GEN-LAST:event_txtObservacaoKeyPressed
+
+    private void txtQuantidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantidadeKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            cmbMotivo.requestFocus();
+    }//GEN-LAST:event_txtQuantidadeKeyPressed
 
     /**
      * @param args the command line arguments

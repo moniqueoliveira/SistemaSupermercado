@@ -90,6 +90,9 @@ public class FormCadastroCaixa extends javax.swing.JDialog {
         });
 
         txtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtQuantidadeKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtQuantidadeKeyTyped(evt);
             }
@@ -242,6 +245,13 @@ public class FormCadastroCaixa extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtQuantidadeKeyTyped
+
+    private void txtQuantidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantidadeKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnAdicionarActionPerformed(null);
+        }
+    }//GEN-LAST:event_txtQuantidadeKeyPressed
 
     /**
      * @param args the command line arguments

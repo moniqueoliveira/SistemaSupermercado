@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.FocusTraversalPolicy;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -182,6 +183,9 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
             }
         });
         txtIdProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdProdutoKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdProdutoKeyTyped(evt);
             }
@@ -291,6 +295,9 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
             }
         });
         txtIdFornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdFornecedorKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdFornecedorKeyTyped(evt);
             }
@@ -361,6 +368,9 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
 
         txtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtValor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtValorKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtValorKeyTyped(evt);
             }
@@ -617,6 +627,24 @@ public class FormRegistroEntradaProduto extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtValorKeyTyped
+
+    private void txtIdProdutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdProdutoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            txtIdFornecedor.requestFocus();
+    }//GEN-LAST:event_txtIdProdutoKeyPressed
+
+    private void txtIdFornecedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdFornecedorKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            txtQuantidade.requestFocus();
+    }//GEN-LAST:event_txtIdFornecedorKeyPressed
+
+    private void txtValorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            txtIdProduto.requestFocus();
+    }//GEN-LAST:event_txtValorKeyPressed
 
     /**
      * @param args the command line arguments

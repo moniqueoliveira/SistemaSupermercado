@@ -56,7 +56,7 @@
      if($P{tipoPesquisa} = 6, concat("Produtos vendidos no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
      if($P{tipoPesquisa} = 7, concat("Todas as unidades vendidas do produto " , $P{idProduto}),
      if($P{tipoPesquisa} = 8, concat("Todas as unidades vendidas de produtos da categoria " , $P{categoria}),
-     if($P{tipoPesquisa} = 9, "Todas os produtos vendidos", ""
+     if($P{tipoPesquisa} = 9, "Todos os produtos vendidos", ""
      ))))))))) as pesquisa
 FROM
      `vendas` vendas INNER JOIN `itens_vendas` itens_vendas ON vendas.`ID_Venda` = itens_vendas.`ID_Venda`
