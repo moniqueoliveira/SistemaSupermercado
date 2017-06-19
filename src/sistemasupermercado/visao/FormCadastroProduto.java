@@ -78,7 +78,7 @@ public class FormCadastroProduto extends javax.swing.JDialog {
         btnIncluir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        txtCodigoDeBarras = new javax.swing.JFormattedTextField();
+        txtCodigoDeBarras = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         cmbPesquisarPor = new javax.swing.JComboBox<>();
@@ -177,11 +177,11 @@ public class FormCadastroProduto extends javax.swing.JDialog {
             }
         });
 
-        try {
-            txtCodigoDeBarras.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtCodigoDeBarras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoDeBarrasKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -201,7 +201,8 @@ public class FormCadastroProduto extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDescricaoReduzida)
                             .addComponent(txtDescricao)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,7 +218,6 @@ public class FormCadastroProduto extends javax.swing.JDialog {
                                 .addComponent(rbEstocavelSim)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rbEstocavelNao))
-                            .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtCodigoDeBarras)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -560,6 +560,14 @@ public class FormCadastroProduto extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtIdKeyTyped
 
+    private void txtCodigoDeBarrasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoDeBarrasKeyTyped
+        // TODO add your handling code here:
+        String caracteres="0987654321";
+        if(!caracteres.contains(evt.getKeyChar() + "") || txtCodigoDeBarras.getText().length() == 13){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoDeBarrasKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -636,7 +644,7 @@ public class FormCadastroProduto extends javax.swing.JDialog {
     private javax.swing.JRadioButton rbVendaFracionadaNao;
     private javax.swing.JRadioButton rbVendaFracionadaSim;
     private javax.swing.JTable tblProdutos;
-    private javax.swing.JFormattedTextField txtCodigoDeBarras;
+    private javax.swing.JTextField txtCodigoDeBarras;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtDescricaoReduzida;
     private javax.swing.JTextField txtId;

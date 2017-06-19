@@ -122,7 +122,8 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtDescricaoReduzida" max="32767" attributes="0"/>
                                   <Component id="txtDescricao" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Component id="cmbCategoria" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="txtId" pref="423" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btnPesquisar" min="-2" pref="25" max="-2" attributes="0"/>
@@ -139,7 +140,6 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="rbEstocavelNao" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="cmbCategoria" max="32767" attributes="0"/>
                                   <Component id="txtCodigoDeBarras" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -348,12 +348,10 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="txtCodigoDeBarras">
-              <Properties>
-                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-                  <Format format="##########" subtype="-1" type="5"/>
-                </Property>
-              </Properties>
+            <Component class="javax.swing.JTextField" name="txtCodigoDeBarras">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCodigoDeBarrasKeyTyped"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

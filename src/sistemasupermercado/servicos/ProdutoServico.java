@@ -86,14 +86,14 @@ public class ProdutoServico {
     private void validarDados(Produto produto) {
         StringBuilder mensagem = new StringBuilder();
         if (produto.getCategoria() == null) mensagem.append("Categoria\n");
-        if (produto.getCodigoDeBarras().equals("")) mensagem.append("Código de barras\n");
+        if (produto.getCodigoDeBarras().length() < 13) mensagem.append("Código de barras\n");
         if (produto.getDescricao().equals("")) mensagem.append("Descricão\n");
         if (produto.getDescricaoReduzida().equals("")) mensagem.append("Descricão reduzida\n");
         
         
         if (mensagem.length() > 1)
             throw new DadosInvalidosException("O(s) seguinte(s) dado(s) estão sem preenchimento ou foram preenchidos"
-                    + "incorretamente:\n" + mensagem);
+                    + " incorretamente:\n" + mensagem);
     }
 
     private void verificarResultado(boolean result) {
