@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeFornecedores_Produtos" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5b56632d-b09b-4075-8e30-68fe6ec74b59">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="152"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idFornecedor" class="java.lang.String"/>
 	<queryString>
@@ -22,7 +22,7 @@
      entradas_produtos.`ID_Entrada` AS entradas_produtos_ID_Entrada,
      entradas_produtos.`ID_Produto` AS entradas_produtos_ID_Produto,
      entradas_produtos.`ID_Fornecedor` AS entradas_produtos_ID_Fornecedor,
-     entradas_produtos.`Quantidade` AS entradas_produtos_Quantidade,
+     truncate(entradas_produtos.`Quantidade`,2) AS entradas_produtos_Quantidade,
      entradas_produtos.`Valor_Unitario` AS entradas_produtos_Valor_Unitario,
      entradas_produtos.`Data` AS entradas_produtos_Data,
      entradas_produtos.`ID_Sessao` AS entradas_produtos_ID_Sessao,
@@ -80,6 +80,12 @@ GROUP BY
 				</textElement>
 				<text><![CDATA[Produtos Fornecidos]]></text>
 			</staticText>
+			<line>
+				<reportElement positionType="Float" x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="76da1f03-d6b3-419a-a23b-e4bdfa7cfc98"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="0e0e4916-e976-4bd7-bb7d-10da9c3655b5"/>
+			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -112,6 +118,12 @@ GROUP BY
 				</textElement>
 				<text><![CDATA[Codigo De Barras]]></text>
 			</staticText>
+			<line>
+				<reportElement positionType="Float" x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="94ddcfee-ce90-4677-abe6-c5284417fe42"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="caa0f8ce-545b-4c86-88b9-70c5deae622d"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -136,6 +148,12 @@ GROUP BY
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{produtos_Codigo_De_Barras}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement positionType="Float" x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="b256c457-c1c0-447d-a26c-11ddefa8f851"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="c1fcf7f9-9680-4486-9779-776d75ac8abf"/>
+			</line>
 		</band>
 	</detail>
 </jasperReport>

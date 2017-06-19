@@ -114,10 +114,17 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
 
         lblFuncionario.setText("Digite o nome ou ID do funcionário:");
 
-        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não utilizar filtros", "Data", "Período", "Produto", "Produto e data", "Produto e período", "ID/Nome de usuário", "ID/Nome de usuário e data", "ID/Nome de usuário e período", "ID/Nome de usuário , data e produto", "ID/Nome de usuário , período e produto" }));
+        txtFuncionario.setAutoscrolls(false);
+
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não utilizar filtros", "Data", "Mês", "Período", "Produto", "Produto e data", "Produto e período", "ID/Nome de usuário", "ID/Nome de usuário e data", "ID/Nome de usuário e período", "ID/Nome de usuário , data e produto", "ID/Nome de usuário , período e produto" }));
         cmbFiltro.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbFiltroItemStateChanged(evt);
+            }
+        });
+        cmbFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFiltroActionPerformed(evt);
             }
         });
 
@@ -132,14 +139,6 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblFuncionario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblProduto)
-                        .addGap(25, 25, 25)
-                        .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblMeses)
@@ -161,7 +160,16 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnConfirmar)))
+                        .addComponent(btnConfirmar))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(lblProduto)
+                            .addGap(25, 25, 25)
+                            .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(lblFuncionario)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -171,7 +179,7 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                     .addComponent(jLabel1)
                     .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFuncionario))
@@ -193,7 +201,7 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblano))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -325,14 +333,18 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 produto = "0";
             }else produto = txtProduto.getText();
         }
+        
+        if(cmbFiltro.getSelectedIndex()==2){
+                mesMax=mesMin;
+            }
+        
         dispose();
         
         GeradorDeRelatorioDeProdutosRetirados g = new GeradorDeRelatorioDeProdutosRetirados();
         try {
             g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade(), usuario, produto, dia,  mesMin, mesMax, ano, tipoPesquisa).setVisible(true);
         } catch (JRException ex) {
-           JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
-                    "Atenção", JOptionPane.WARNING_MESSAGE);
+            Logger.getLogger(FormGeradorDeRelatorioDeProdutosRetirados.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -379,7 +391,7 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
 
         switch(cmbFiltro.getSelectedIndex()){
             case (0): //nenhum filtro
-                tipoPesquisa=6;
+                tipoPesquisa=11;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(false);
                 lblMeses.setVisible(false);
@@ -407,8 +419,24 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 cmbMesMin.setVisible(true);
                 txtProduto.setVisible(false);
                 lblProduto.setVisible(false);
+                break;                
+            case (2)://mes
+                tipoPesquisa=8;
+                lblFuncionario.setVisible(false);
+                lblMes2.setVisible(false);
+                lblMeses.setVisible(true);
+                lblano.setVisible(true);
+                lbldia.setVisible(false);
+                txtFuncionario.setVisible(false);
+                cmbAno.setVisible(true);
+                cmbDia.setVisible(false);
+                cmbMesMax.setVisible(false);
+                cmbMesMin.setVisible(true);
+                txtProduto.setVisible(false);
+                lblProduto.setVisible(false);
+                lblMeses.setText("Selecione o mês:");
                 break;
-            case (2)://periodo
+            case (3)://periodo
                 tipoPesquisa=8;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(true);
@@ -424,7 +452,7 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 lblProduto.setVisible(false);
                 lblMeses.setText("Selecione os meses:");
                 break;
-            case (3)://produto
+            case (4)://produto
                 tipoPesquisa=10;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(false);
@@ -439,7 +467,7 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 txtProduto.setVisible(true);
                 lblProduto.setVisible(true);
                 break;
-            case (4)://produto e dia
+            case (5)://produto e dia
                 tipoPesquisa=3;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(false);
@@ -455,8 +483,8 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 lblProduto.setVisible(true);
                 lblMeses.setText("Selecione o mês:");
                 break;
-            case (5)://produto e periodo
-                tipoPesquisa=6;
+            case (6)://produto e periodo
+                tipoPesquisa=7;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(true);
                 lblMeses.setVisible(true);
@@ -471,8 +499,8 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 lblProduto.setVisible(true);
                 lblMeses.setText("Selecione os meses:");
                 break;                
-            case (6): //funcionario
-                tipoPesquisa=5;
+            case (7): //funcionario
+                tipoPesquisa=9;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(false);
                 lblMeses.setVisible(false);
@@ -486,7 +514,7 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 txtProduto.setVisible(false);
                 lblProduto.setVisible(false);
                 break;
-            case (7)://data e funcionario
+            case (8)://data e funcionario
                 tipoPesquisa=1;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(false);
@@ -502,8 +530,8 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 lblProduto.setVisible(false);
                 lblMeses.setText("Selecione o mês:");
                 break;
-            case (8)://periodo e funcionario
-                tipoPesquisa=3;
+            case (9)://periodo e funcionario
+                tipoPesquisa=6;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(true);
                 lblMeses.setVisible(true);
@@ -518,7 +546,7 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 lblProduto.setVisible(false);
                 lblMeses.setText("Selecione os meses:");
                 break;
-            case (9)://funcionario produto e data
+            case (10)://funcionario produto e data
                 tipoPesquisa=1;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(false);
@@ -534,7 +562,7 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
                 lblProduto.setVisible(true);
                 lblMeses.setText("Selecione o mês:");
                 break;        
-            case (10)://funcionario produto e periodo
+            case (11)://funcionario produto e periodo
                 tipoPesquisa=5;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(true);
@@ -554,6 +582,10 @@ public class FormGeradorDeRelatorioDeProdutosRetirados extends javax.swing.JDial
         
         
     }//GEN-LAST:event_cmbFiltroItemStateChanged
+
+    private void cmbFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbFiltroActionPerformed
 
     /**
      * @param args the command line arguments

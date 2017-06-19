@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="648" pageHeight="842" columnWidth="608" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="718af943-035f-4666-b732-5f2d25054c3b">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="198"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
@@ -20,7 +20,7 @@
      produtos.`Estocavel` AS produtos_Estocavel,
      estoques.`ID_Unidade` AS estoques_ID_Unidade,
      estoques.`ID_Produto` AS estoques_ID_Produto,
-     estoques.`Quantidade` AS estoques_Quantidade,
+     truncate(estoques.`Quantidade`,2) AS estoques_Quantidade,
      estoques.`Valor_Total` AS estoques_Valor_Total,
      unidades.`ID_Unidade` AS unidades_ID_Unidade,
      unidades.`Descricao` AS unidades_Descricao

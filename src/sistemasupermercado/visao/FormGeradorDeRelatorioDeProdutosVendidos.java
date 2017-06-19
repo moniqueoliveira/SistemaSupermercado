@@ -115,7 +115,7 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
 
         lblCategoria.setText("Selecione a categoria:");
 
-        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não utilizar filtros", "Data", "Período", "Produto", "Produto e data", "Produto e período", "Categoria", "Categoria e data", "Categoria e período" }));
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não utilizar filtros", "Data", "Mês", "Período", "Produto", "Produto e data", "Produto e período", "Categoria", "Categoria e data", "Categoria e período" }));
         cmbFiltro.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbFiltroItemStateChanged(evt);
@@ -132,41 +132,41 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblProduto)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnConfirmar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCategoria)
+                            .addComponent(lbldia)
+                            .addComponent(lblano)
+                            .addComponent(lblMeses))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnConfirmar))
+                                .addGap(70, 70, 70)
+                                .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(76, 76, 76))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblMeses)
-                                    .addComponent(lblano)
-                                    .addComponent(lbldia))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(cmbMesMin, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblMes2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cmbMesMax, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(cmbMesMin, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(lblMes2)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(cmbMesMax, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(cmbAno, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addContainerGap(137, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblProduto)
-                            .addComponent(lblCategoria))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(163, Short.MAX_VALUE))))
+                                    .addComponent(cmbAno, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,7 +175,7 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                     .addComponent(jLabel1)
                     .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblProduto))
@@ -197,7 +197,7 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblano))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,121 +220,6 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        // TODO add your handling code here:
-        
-        if(tipoPesquisa==9){
-            dia="0";
-            ano="0";
-            mesMin=0;
-            mesMax=0;
-            categoria="0";
-            produto="0";
-        }else {
-            switch(cmbMesMin.getSelectedIndex()){
-                case (0):
-                    mesMin =1;
-                    break;
-                case (1):
-                    mesMin =2;
-                    break;
-                case (2):
-                    mesMin =3;
-                    break;
-                case (3):
-                    mesMin =4;
-                    break;
-                case (4):
-                    mesMin =5;
-                    break;
-                case (5):
-                    mesMin =6;
-                    break;
-                case (6):
-                    mesMin =7;
-                    break;
-                case (7):
-                    mesMin =8;
-                    break;
-                case (8):
-                    mesMin =9;
-                    break;
-                case (9):
-                    mesMin =10;
-                    break;
-                case (10):
-                    mesMin =11;
-                    break;
-                case (11):
-                    mesMin =12;
-                    break;
-                default:
-                    mesMin=0;
-            }
-
-            switch(cmbMesMax.getSelectedIndex()){
-                case (0):
-                    mesMax =1;
-                    break;
-                case (1):
-                    mesMax =2;
-                    break;
-                case (2):
-                    mesMax =3;
-                    break;
-                case (3):
-                    mesMax =4;
-                    break;
-                case (4):
-                    mesMax =5;
-                    break;
-                case (5):
-                    mesMax =6;
-                    break;
-                case (6):
-                    mesMax =7;
-                    break;
-                case (7):
-                    mesMax =8;
-                    break;
-                case (8):
-                    mesMax =9;
-                    break;
-                case (9):
-                    mesMax =10;
-                    break;
-                case (10):
-                    mesMax =11;
-                    break;
-                case (11):
-                    mesMax =12;
-                    break;
-                default:
-                    mesMax = 0;   
-            }
-
-            ano = cmbAno.getSelectedItem().toString();
-
-            dia = cmbDia.getSelectedItem().toString();
-            categoria = cmbCategoria.getSelectedItem().toString();
-            
-            if(txtProduto.getText().equals("")){
-                produto = "0";
-            }else produto = txtProduto.getText();
-        }
-        dispose();
-        
-        GeradorDeRelatorioDeProdutosVendidos g = new GeradorDeRelatorioDeProdutosVendidos();
-        try {
-            g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade(), produto, categoria, dia,  mesMin, mesMax, ano, tipoPesquisa).setVisible(true);
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
-                    "Atenção", JOptionPane.WARNING_MESSAGE);
-        }
-        
-        
-    }//GEN-LAST:event_btnConfirmarActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         preencherCmbAno();
@@ -354,24 +239,6 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
         cmbMesMin.setVisible(false);
     }//GEN-LAST:event_formWindowOpened
 
-    private void cmbDiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDiaItemStateChanged
-        // TODO add your handling code here:
-        /*if(cmbDia.getSelectedItem() == "Não pesquisar por dia" || cmbDia.getSelectedIndex()==0){
-            cmbMesMax.setVisible(true);
-            lblMes2.setVisible(true);
-            lblMeses.setText("Selecione os meses:");
-        }else {
-            dia = cmbDia.getSelectedItem().toString();
-            cmbMesMax.setVisible(false);
-            lblMes2.setVisible(false);
-            lblMeses.setText("Selecione o mês:");
-              }*/
-    }//GEN-LAST:event_cmbDiaItemStateChanged
-
-    private void cmbDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbDiaActionPerformed
-
     private void cmbFiltroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbFiltroItemStateChanged
         // TODO add your handling code here:
 
@@ -390,7 +257,7 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                 cmbDia.setVisible(false);
                 cmbMesMax.setVisible(false);
                 cmbMesMin.setVisible(false);
-                break;
+            break;
             case (1)://dia
                 tipoPesquisa=3;
                 lblCategoria.setVisible(false);
@@ -405,8 +272,25 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                 cmbMesMin.setVisible(true);
                 txtProduto.setVisible(false);
                 lblProduto.setVisible(false);
+                lblMeses.setText("Selecione o mês:");
+            break;
+            case (2)://mes
+                tipoPesquisa=6;
+                lblCategoria.setVisible(false);
+                lblMes2.setVisible(false);
+                lblMeses.setVisible(true);
+                lblano.setVisible(true);
+                lbldia.setVisible(false);
+                cmbCategoria.setVisible(false);
+                cmbAno.setVisible(true);
+                cmbDia.setVisible(false);
+                cmbMesMax.setVisible(false);
+                cmbMesMin.setVisible(true);
+                txtProduto.setVisible(false);
+                lblProduto.setVisible(false);
+                lblMeses.setText("Selecione o mês:");
                 break;
-            case (2)://periodo
+            case (3)://periodo
                 tipoPesquisa=6;
                 lblCategoria.setVisible(false);
                 lblMes2.setVisible(true);
@@ -422,7 +306,7 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                 lblProduto.setVisible(false);
                 lblMeses.setText("Selecione os meses:");
                 break;
-            case (3)://produto
+            case (4)://produto
                 tipoPesquisa=7;
                 lblCategoria.setVisible(false);
                 lblMes2.setVisible(false);
@@ -437,7 +321,7 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                 txtProduto.setVisible(true);
                 lblProduto.setVisible(true);
                 break;
-            case (4)://produto e dia
+            case (5)://produto e dia
                 tipoPesquisa=1;
                 lblCategoria.setVisible(false);
                 lblMes2.setVisible(false);
@@ -453,7 +337,7 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                 lblProduto.setVisible(true);
                 lblMeses.setText("Selecione o mês:");
                 break;
-            case (5)://produto e periodo
+            case (6)://produto e periodo
                 tipoPesquisa=4;
                 lblCategoria.setVisible(false);
                 lblMes2.setVisible(true);
@@ -468,8 +352,8 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                 txtProduto.setVisible(true);
                 lblProduto.setVisible(true);
                 lblMeses.setText("Selecione os meses:");
-                break;                
-            case (6): //categoria
+                 break;
+            case (7): //categoria
                 tipoPesquisa=8;
                 lblCategoria.setVisible(true);
                 lblMes2.setVisible(false);
@@ -483,8 +367,8 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                 cmbMesMin.setVisible(false);
                 txtProduto.setVisible(false);
                 lblProduto.setVisible(false);
-                break;
-            case (7)://data e categoria
+                 break;
+            case (8)://data e categoria
                 tipoPesquisa=2;
                 lblCategoria.setVisible(true);
                 lblMes2.setVisible(false);
@@ -499,8 +383,8 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                 txtProduto.setVisible(false);
                 lblProduto.setVisible(false);
                 lblMeses.setText("Selecione o mês:");
-                break;
-            case (8)://periodo e categoria
+            break;
+            case (9)://periodo e categoria
                 tipoPesquisa=5;
                 lblCategoria.setVisible(true);
                 lblMes2.setVisible(true);
@@ -517,9 +401,143 @@ public class FormGeradorDeRelatorioDeProdutosVendidos extends javax.swing.JDialo
                 lblMeses.setText("Selecione os meses:");
                 break;
         }
-        
-        
+
     }//GEN-LAST:event_cmbFiltroItemStateChanged
+
+    private void cmbDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbDiaActionPerformed
+
+    private void cmbDiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDiaItemStateChanged
+        // TODO add your handling code here:
+        /*if(cmbDia.getSelectedItem() == "Não pesquisar por dia" || cmbDia.getSelectedIndex()==0){
+            cmbMesMax.setVisible(true);
+            lblMes2.setVisible(true);
+            lblMeses.setText("Selecione os meses:");
+        }else {
+            dia = cmbDia.getSelectedItem().toString();
+            cmbMesMax.setVisible(false);
+            lblMes2.setVisible(false);
+            lblMeses.setText("Selecione o mês:");
+        }*/
+    }//GEN-LAST:event_cmbDiaItemStateChanged
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        // TODO add your handling code here:
+
+        if(tipoPesquisa==9){
+            dia="0";
+            ano="0";
+            mesMin=0;
+            mesMax=0;
+            categoria="0";
+            produto="0";
+        }else {
+            switch(cmbMesMin.getSelectedIndex()){
+                case (0):
+                mesMin =1;
+                break;
+                case (1):
+                mesMin =2;
+                break;
+                case (2):
+                mesMin =3;
+                break;
+                case (3):
+                mesMin =4;
+                break;
+                case (4):
+                mesMin =5;
+                break;
+                case (5):
+                mesMin =6;
+                break;
+                case (6):
+                mesMin =7;
+                break;
+                case (7):
+                mesMin =8;
+                break;
+                case (8):
+                mesMin =9;
+                break;
+                case (9):
+                mesMin =10;
+                break;
+                case (10):
+                mesMin =11;
+                break;
+                case (11):
+                mesMin =12;
+                break;
+                default:
+                mesMin=0;
+            }
+
+            switch(cmbMesMax.getSelectedIndex()){
+                case (0):
+                mesMax =1;
+                break;
+                case (1):
+                mesMax =2;
+                break;
+                case (2):
+                mesMax =3;
+                break;
+                case (3):
+                mesMax =4;
+                break;
+                case (4):
+                mesMax =5;
+                break;
+                case (5):
+                mesMax =6;
+                break;
+                case (6):
+                mesMax =7;
+                break;
+                case (7):
+                mesMax =8;
+                break;
+                case (8):
+                mesMax =9;
+                break;
+                case (9):
+                mesMax =10;
+                break;
+                case (10):
+                mesMax =11;
+                break;
+                case (11):
+                mesMax =12;
+                break;
+                default:
+                mesMax = 0;
+            }
+
+            ano = cmbAno.getSelectedItem().toString();
+
+            dia = cmbDia.getSelectedItem().toString();
+            categoria = cmbCategoria.getSelectedItem().toString();
+
+            if(txtProduto.getText().equals("")){
+                produto = "0";
+            }else produto = txtProduto.getText();
+            
+            if(cmbFiltro.getSelectedIndex()==2){
+                mesMax=mesMin;
+            }
+        }
+        dispose();
+
+        GeradorDeRelatorioDeProdutosVendidos g = new GeradorDeRelatorioDeProdutosVendidos();
+        try {
+            g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade(), produto, categoria, dia,  mesMin, mesMax, ano, tipoPesquisa).setVisible(true);
+        } catch (JRException ex) {
+            Logger.getLogger(FormGeradorDeRelatorioDeProdutosVendidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**
      * @param args the command line arguments

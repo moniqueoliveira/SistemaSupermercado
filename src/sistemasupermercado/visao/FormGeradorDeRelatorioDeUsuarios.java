@@ -111,7 +111,7 @@ public class FormGeradorDeRelatorioDeUsuarios extends javax.swing.JDialog {
 
         lblFuncionario.setText("Digite o nome ou ID do funcionário:");
 
-        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não utilizar filtros", "Data", "Período", "ID/Nome de usuário", "ID/Nome de usuário e data", "ID/Nome de usuário e período" }));
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não utilizar filtros", "Data", "Mês", "Período", "ID/Nome de usuário", "ID/Nome de usuário e data", "ID/Nome de usuário e período" }));
         cmbFiltro.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbFiltroItemStateChanged(evt);
@@ -169,7 +169,7 @@ public class FormGeradorDeRelatorioDeUsuarios extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbldia))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbMesMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMes2)
@@ -179,7 +179,7 @@ public class FormGeradorDeRelatorioDeUsuarios extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblano))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -307,6 +307,10 @@ public class FormGeradorDeRelatorioDeUsuarios extends javax.swing.JDialog {
             if(txtFuncionario.getText().equals("")){
                 usuario = "0";
             }else usuario = txtFuncionario.getText();
+            
+            if(cmbFiltro.getSelectedIndex()==2){
+                mesMax=mesMin;
+            }
         }
         dispose();
         
@@ -314,8 +318,7 @@ public class FormGeradorDeRelatorioDeUsuarios extends javax.swing.JDialog {
         try {
             g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade(), usuario, dia,  mesMin, mesMax, ano, tipoPesquisa).setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
-                    "Atenção", JOptionPane.WARNING_MESSAGE);
+            Logger.getLogger(FormGeradorDeRelatorioDeUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -386,8 +389,23 @@ public class FormGeradorDeRelatorioDeUsuarios extends javax.swing.JDialog {
                 cmbDia.setVisible(true);
                 cmbMesMax.setVisible(false);
                 cmbMesMin.setVisible(true);
+                lblMeses.setText("Selecione o mês:");
                 break;
-            case (2):
+            case (2)://mes
+                tipoPesquisa=4;
+                lblFuncionario.setVisible(false);
+                lblMes2.setVisible(false);
+                lblMeses.setVisible(true);
+                lblano.setVisible(true);
+                lbldia.setVisible(false);
+                txtFuncionario.setVisible(false);
+                cmbAno.setVisible(true);
+                cmbDia.setVisible(false);
+                cmbMesMax.setVisible(false);
+                cmbMesMin.setVisible(true);
+                lblMeses.setText("Selecione o mês:");
+                break;
+            case (3):
                 tipoPesquisa=4;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(true);
@@ -401,7 +419,7 @@ public class FormGeradorDeRelatorioDeUsuarios extends javax.swing.JDialog {
                 cmbMesMin.setVisible(true);
                 lblMeses.setText("Selecione os meses:");
                 break;
-            case (3):
+            case (4):
                 tipoPesquisa=5;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(false);
@@ -414,7 +432,7 @@ public class FormGeradorDeRelatorioDeUsuarios extends javax.swing.JDialog {
                 cmbMesMax.setVisible(false);
                 cmbMesMin.setVisible(false);
                 break;
-            case (4):
+            case (5):
                 tipoPesquisa=1;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(false);
@@ -428,7 +446,7 @@ public class FormGeradorDeRelatorioDeUsuarios extends javax.swing.JDialog {
                 cmbMesMin.setVisible(true);
                 lblMeses.setText("Selecione o mês:");
                 break;
-            case (5):
+            case (6):
                 tipoPesquisa=3;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(true);

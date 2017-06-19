@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d161e776-5e63-4825-8681-19e8a9c3b6e8">
-	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[
-]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\Monique\\Documents\\Estudos\\TCC\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="idUsuario" class="java.lang.String"/>
 	<parameter name="idUnidade" class="java.lang.String"/>
@@ -44,8 +43,8 @@
 
      if($P{tipoPesquisa} = 1, concat("Funcionário com ID/Nome ",$P{idUsuario}, " no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
      if($P{tipoPesquisa} = 2, concat("Sessões e ações de funcionários no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}), 
-     if($P{tipoPesquisa} = 3, concat("Sessões e ações do funcionário com ID/Nome ",$P{idUsuario}, " no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
-     if($P{tipoPesquisa} = 4, concat("Sessões e ações de funcionários no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+     if($P{tipoPesquisa} = 3, if($P{mesMin}=$P{mesMax}, concat("Sessões e ações do funcionário com ID/Nome ",$P{idUsuario}," no mês de ",case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ", $P{ano}) , concat("Sessões e ações do funcionário com ID/Nome ",$P{idUsuario}, " no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano})),
+     if($P{tipoPesquisa} = 4, if($P{mesMin}=$P{mesMax}, concat("Sessões e ações de funcionários no mês de ",case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ", $P{ano}) , concat("Sessões e ações de funcionários no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano})),
      if($P{tipoPesquisa} = 5, concat("Todas as sessões e ações do funcionário com ID/Nome " , $P{idUsuario}),
      if($P{tipoPesquisa} = 6, "Todas as sessões e ações de todos os funcionários", ""
      )))))) as pesquisa
@@ -176,6 +175,9 @@ GROUP BY
 			</textField>
 			<subreport>
 				<reportElement x="0" y="41" width="802" height="21" isRemoveLineWhenBlank="true" uuid="16164e08-ef59-432f-9bf1-3e2cccee2efd"/>
+				<subreportParameter name="tipoPesquisa">
+					<subreportParameterExpression><![CDATA[$P{tipoPesquisa}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="mesMin">
 					<subreportParameterExpression><![CDATA[$P{mesMin}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -199,6 +201,9 @@ GROUP BY
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="62" width="802" height="24" isRemoveLineWhenBlank="true" uuid="b7babb74-e79a-4b6a-acde-819905ced81d"/>
+				<subreportParameter name="tipoPesquisa">
+					<subreportParameterExpression><![CDATA[$P{tipoPesquisa}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="mesMin">
 					<subreportParameterExpression><![CDATA[$P{mesMin}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -222,6 +227,9 @@ GROUP BY
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="86" width="802" height="23" uuid="269bf7aa-9c5c-49dd-8862-1084360d197a"/>
+				<subreportParameter name="tipoPesquisa">
+					<subreportParameterExpression><![CDATA[$P{tipoPesquisa}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="mesMin">
 					<subreportParameterExpression><![CDATA[$P{mesMin}]]></subreportParameterExpression>
 				</subreportParameter>

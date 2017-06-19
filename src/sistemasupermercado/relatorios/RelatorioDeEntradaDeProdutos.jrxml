@@ -46,7 +46,20 @@
      sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
      sessoes.`ID_Usuario` AS sessoes_ID_Usuario,
      sessoes.`Inicio_Sessao` AS sessoes_Inicio_Sessao,
-     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao
+     sessoes.`Fim_Sessao` AS sessoes_Fim_Sessao,
+      if($P{tipoPesquisa} = 1, concat("Entradas de produtos feitas pelo funcionário com ID/Nome ", $P{funcionario}, " no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+      if($P{tipoPesquisa} = 2, concat("Entradas de produtos pelo fornecedor ", $P{fornecedor}, " no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+      if($P{tipoPesquisa} = 3, concat("Entradas do produto com ID/Descrição ", $P{produto}, " feitas no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+      if($P{tipoPesquisa} = 4, concat("Todas as entradas de produtos feitas no dia " ,$P{dia}," de ", case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ",$P{ano}),
+      if($P{tipoPesquisa}=5, if($P{mesMin}=$P{mesMax}, concat("Todas as entradas de produtos do mês de ",case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ", $P{ano}, " feitas pelo funcionário com ID/Nome " , $P{funcionario}) , concat("Entradas de produtos feitas pelo funcionário com ID/Nome " ,$P{funcionario} ," feitas no período de ",case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano})),
+       if($P{tipoPesquisa}=6, if($P{mesMin}=$P{mesMax}, concat("Todas as entradas de produtos do mês de ",case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ", $P{ano}, " com o fornecedor " , $P{fornecedor}) , concat("Entradas de produtos com o fornecedor " ,$P{fornecedor} ," feitas no período de ",case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano})),
+        if($P{tipoPesquisa}=7, if($P{mesMin}=$P{mesMax}, concat("Todas as entradas do produto com ID/Descrição " ,$P{produto} ," no mês de ",case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ", $P{ano}), concat("Todas as entradas do produto com ID/Descrição ", $P{produto}," feitas no período de ",case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano})),
+     if($P{tipoPesquisa}=8, if($P{mesMin}=$P{mesMax}, concat("Todas as entradas de produtos do mês de ",case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end, " de ", $P{ano}) , concat("Entradas de produtos no período de " ,case when $P{mesMin} = 1 then "Janeiro" when $P{mesMin}=2 then "Fevereiro" when $P{mesMin}=3 then "Março" when $P{mesMin}=4 then "Abril" when $P{mesMin}=5 then "Maio" when $P{mesMin}=6 then "Junho" when $P{mesMin}=7 then "Julho" when $P{mesMin}=8 then "Agosto" when $P{mesMin}=9 then "Setembro" when $P{mesMin} = 10 then "Outubro" when $P{mesMin}=11 then "Novembro" when $P{mesMin}=12 then "Dezembro" else "-" end," à ", case when $P{mesMax} = 1 then "Janeiro" when $P{mesMax}=2 then "Fevereiro" when $P{mesMax}=3 then "Março" when $P{mesMax}=4 then "Abril" when $P{mesMax}=5 then "Maio" when $P{mesMax}=6 then "Junho" when $P{mesMax}=7 then "Julho" when $P{mesMax}=8 then "Agosto" when $P{mesMax}=9 then "Setembro" when $P{mesMax} = 10 then "Outubro" when $P{mesMax}=11 then "Novembro" when $P{mesMax}=12 then "Dezembro" else "-" end, " de ",$P{ano})),
+      if($P{tipoPesquisa}=9, concat("Todas as entradas de produtos feitas pelo funcionário com ID/Nome ", $P{funcionario}),
+      if($P{tipoPesquisa}=10, concat("Todas as entradas de produtos com o fornecedor ", $P{fornecedor}),
+      if($P{tipoPesquisa}=11, concat("Todas as entradas do produto com ID/Descrição ", $P{produto}),
+      if($P{tipoPesquisa}=12, "Todas as entradas de produtos", ""
+)))))))))))) as pesquisa
 FROM
      `unidades` unidades INNER JOIN `usuarios` usuarios ON unidades.`ID_Unidade` = usuarios.`ID_Unidade`
      INNER JOIN `sessoes` sessoes ON usuarios.`ID_Usuario` = sessoes.`ID_Usuario`
@@ -104,6 +117,7 @@ ORDER BY
 	<field name="sessoes_ID_Usuario" class="java.lang.Integer"/>
 	<field name="sessoes_Inicio_Sessao" class="java.sql.Timestamp"/>
 	<field name="sessoes_Fim_Sessao" class="java.sql.Timestamp"/>
+	<field name="pesquisa" class="java.lang.String"/>
 	<variable name="entradas_produtos_ID_Entrada_1" class="java.lang.Integer" calculation="DistinctCount">
 		<variableExpression><![CDATA[$F{entradas_produtos_ID_Entrada}]]></variableExpression>
 	</variable>
@@ -111,7 +125,7 @@ ORDER BY
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="111" splitType="Stretch">
 			<staticText>
 				<reportElement x="114" y="26" width="311" height="25" forecolor="#3F83BF" uuid="8a5a56ff-5bdd-49fb-81cf-512b76b8af8b"/>
 				<textElement>
@@ -120,16 +134,28 @@ ORDER BY
 				<text><![CDATA[Relatório de Entrada de Produtos]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement x="176" y="59" width="100" height="20" uuid="9879e117-bdc2-4801-9d7f-d5a76651b902"/>
+				<reportElement x="187" y="79" width="100" height="20" uuid="9879e117-bdc2-4801-9d7f-d5a76651b902"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{entradas_produtos_ID_Entrada_1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="59" width="176" height="20" uuid="c2e96743-2627-405c-bc50-ac4fea8e234e"/>
+				<reportElement x="11" y="79" width="176" height="20" uuid="c2e96743-2627-405c-bc50-ac4fea8e234e"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Entradas de produtos encontradas:]]></text>
+				<text><![CDATA[ Entradas de produtos encontradas:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="92" y="59" width="463" height="20" uuid="b933c40a-86f8-4178-add0-1cb587f65c19"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pesquisa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="59" width="89" height="20" uuid="58b5f14f-bcc4-49e1-a090-8a6d0b41d7af"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de relatório:]]></text>
 			</staticText>
 		</band>
 	</title>

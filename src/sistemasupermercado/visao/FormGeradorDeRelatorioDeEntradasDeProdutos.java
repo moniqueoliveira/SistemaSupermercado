@@ -117,7 +117,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
 
         lblFuncionario.setText("Digite o nome ou ID do funcionário:");
 
-        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não utilizar filtros", "Data", "Período", "Produto", "Produto e data", "Produto e período", "Fornecedor", "Fornecedor e data", "Fornecedor e período", "ID/Nome de usuário", "ID/Nome de usuário e data", "ID/Nome de usuário e período" }));
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não utilizar filtros", "Data", "Mês", "Período", "Produto", "Produto e data", "Produto e período", "Fornecedor", "Fornecedor e data", "Fornecedor e período", "ID/Nome de usuário", "ID/Nome de usuário e data", "ID/Nome de usuário e período" }));
         cmbFiltro.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbFiltroItemStateChanged(evt);
@@ -171,9 +171,9 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                             .addComponent(lblFuncionario))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                            .addComponent(txtFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFornecedor)
-                            .addComponent(txtProduto))))
+                            .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
@@ -346,7 +346,10 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
             if(txtFornecedor.getText().equals("")){
                 fornecedor = "0";
             }else fornecedor = txtFornecedor.getText();
-
+            
+            if(cmbFiltro.getSelectedIndex()==2){
+                mesMax=mesMin;
+            }
         }
         dispose();
         
@@ -354,8 +357,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
         try {
             g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade(), usuario, fornecedor, produto, dia,  mesMin, mesMax, ano, tipoPesquisa).setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
-                    "Atenção", JOptionPane.WARNING_MESSAGE);
+            Logger.getLogger(FormGeradorDeRelatorioDeEntradasDeProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -427,7 +429,26 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                 txtFornecedor.setVisible(false);
                 lblFornecedor.setVisible(false);
                 break;
-            case (2)://periodo
+                
+            case (2)://mes
+                tipoPesquisa=8;
+                lblFuncionario.setVisible(false);
+                lblMes2.setVisible(false);
+                lblMeses.setVisible(true);
+                lblano.setVisible(true);
+                lbldia.setVisible(false);
+                txtFuncionario.setVisible(false);
+                cmbAno.setVisible(true);
+                cmbDia.setVisible(false);
+                cmbMesMax.setVisible(false);
+                cmbMesMin.setVisible(true);
+                txtProduto.setVisible(false);
+                lblProduto.setVisible(false);
+                lblMeses.setText("Selecione o mês:");
+                txtFornecedor.setVisible(false);
+                lblFornecedor.setVisible(false);
+                break;
+            case (3)://periodo
                 tipoPesquisa=8;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(true);
@@ -445,7 +466,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                 txtFornecedor.setVisible(false);
                 lblFornecedor.setVisible(false);
                 break;
-            case (3)://produto
+            case (4)://produto
                 tipoPesquisa=11;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(false);
@@ -462,7 +483,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                 txtFornecedor.setVisible(false);
                 lblFornecedor.setVisible(false);
                 break;
-            case (4)://produto e dia
+            case (5)://produto e dia
                 tipoPesquisa=3;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(false);
@@ -480,7 +501,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                 lblFornecedor.setVisible(false);
                 lblMeses.setText("Selecione o mês:");
                 break;
-            case (5)://produto e periodo
+            case (6)://produto e periodo
                 tipoPesquisa=7;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(true);
@@ -498,7 +519,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                 lblFornecedor.setVisible(false);
                 lblMeses.setText("Selecione os meses:");
                 break;                
-            case (6): //fornecedor
+            case (7): //fornecedor
                 tipoPesquisa=10;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(false);
@@ -515,7 +536,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                 txtFornecedor.setVisible(true);
                 lblFornecedor.setVisible(true);
                 break;
-            case (7)://data e fornecedor
+            case (8)://data e fornecedor
                 tipoPesquisa=2;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(false);
@@ -533,7 +554,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                 lblFornecedor.setVisible(true);
                 lblMeses.setText("Selecione o mês:");
                 break;
-            case (8)://periodo e fornecedor
+            case (9)://periodo e fornecedor
                 tipoPesquisa=6;
                 lblFuncionario.setVisible(false);
                 lblMes2.setVisible(true);
@@ -551,7 +572,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                 lblFornecedor.setVisible(true);
                 lblMeses.setText("Selecione os meses:");
                 break;
-            case (9)://funcionario
+            case (10)://funcionario
                 tipoPesquisa=9;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(false);
@@ -568,7 +589,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                 txtFornecedor.setVisible(false);
                 lblFornecedor.setVisible(false);
                 break;        
-            case (10)://funcionario e dia
+            case (11)://funcionario e dia
                 tipoPesquisa=1;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(false);
@@ -586,7 +607,7 @@ public class FormGeradorDeRelatorioDeEntradasDeProdutos extends javax.swing.JDia
                 lblFornecedor.setVisible(false);
                 lblMeses.setText("Selecione o mês:");
                 break;
-                case (11)://funcionario e periodo
+             case (12)://funcionario e periodo
                 tipoPesquisa=5;
                 lblFuncionario.setVisible(true);
                 lblMes2.setVisible(true);

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3039981f-1916-4b54-b827-65cf13623f09">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="337"/>
+	<property name="ireport.y" value="80"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\Monique\\Documents\\Estudos\\TCC\\SistemaSupermercado\\src\\sistemasupermercado\\relatorios\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -55,7 +55,7 @@ GROUP BY
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="71" splitType="Stretch">
 			<staticText>
 				<reportElement x="281" y="32" width="243" height="24" forecolor="#3F83BF" uuid="c97b5de7-63a0-423a-9922-c777f21a84ae"/>
 				<textElement>
@@ -66,13 +66,13 @@ GROUP BY
 		</band>
 	</title>
 	<pageHeader>
-		<band height="21" splitType="Stretch"/>
+		<band height="10" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="27" splitType="Stretch"/>
+		<band height="10" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="105" splitType="Stretch">
 			<staticText>
 				<reportElement mode="Opaque" x="452" y="0" width="182" height="20" backcolor="#99C0FF" uuid="55da390a-e676-4c0c-8132-56c34a8f94c3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -148,29 +148,38 @@ GROUP BY
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{status_fornecedor}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement positionType="Float" x="802" y="0" width="1" height="40" forecolor="#3380FF" uuid="e89565bd-f0eb-418b-8c42-65bbd364ab62"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="0" width="802" height="1" forecolor="#3380FF" uuid="324e0f41-6db3-436a-876a-4ec3822c511f"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="0" width="1" height="40" forecolor="#3380FF" uuid="e63e701b-5c16-44ea-b162-5f54f63177b2"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="10" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="47" y="34" width="186" height="20" uuid="149ed054-ded6-453b-bb30-9dd3b41b5b28"/>
+				<reportElement x="47" y="1" width="186" height="20" uuid="149ed054-ded6-453b-bb30-9dd3b41b5b28"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="561" y="34" width="147" height="20" uuid="2cd21c1e-a2f0-4b3c-ab64-6366f8adfbaa"/>
+				<reportElement x="561" y="1" width="147" height="20" uuid="2cd21c1e-a2f0-4b3c-ab64-6366f8adfbaa"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="708" y="34" width="40" height="20" uuid="eb065a6b-3191-48dc-be01-7cd8e48b1184"/>
+				<reportElement x="708" y="1" width="40" height="20" uuid="eb065a6b-3191-48dc-be01-7cd8e48b1184"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="10" splitType="Stretch"/>
 	</summary>
 </jasperReport>

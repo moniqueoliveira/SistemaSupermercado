@@ -755,6 +755,7 @@ public class FormCadastroFornecedor extends javax.swing.JDialog {
                     JOptionPane.INFORMATION_MESSAGE);
             
             txtTelefone.requestFocus();
+            redefinir();
         } catch(RuntimeException ex) {
             JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(), 
                         "Atenção", JOptionPane.WARNING_MESSAGE);

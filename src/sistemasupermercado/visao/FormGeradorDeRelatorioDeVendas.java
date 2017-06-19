@@ -116,7 +116,7 @@ public class FormGeradorDeRelatorioDeVendas extends javax.swing.JDialog {
 
         lblVendedor.setText("Digite o ID ou nome do vendedor:");
 
-        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não utilizar filtros", "Data", "Período", "ID Venda", "Vendedor", "Vendedor e data", "Vendedor e período" }));
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não utilizar filtros", "Data", "Mês", "Período", "ID Venda", "Vendedor", "Vendedor e data", "Vendedor e período" }));
         cmbFiltro.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbFiltroItemStateChanged(evt);
@@ -131,41 +131,41 @@ public class FormGeradorDeRelatorioDeVendas extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnConfirmar))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMeses)
-                            .addComponent(lblano)
-                            .addComponent(lbldia))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnConfirmar))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblMeses)
+                                .addComponent(lblano)
+                                .addComponent(lbldia))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(cmbMesMin, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblMes2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cmbMesMax, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cmbAno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblVenda)
+                                .addComponent(lblVendedor))
+                            .addGap(18, 18, 18)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(cmbMesMin, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(lblMes2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(cmbMesMax, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(cmbAno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblVenda)
-                            .addComponent(lblVendedor))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +174,7 @@ public class FormGeradorDeRelatorioDeVendas extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmar))
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblVenda))
@@ -205,15 +205,14 @@ public class FormGeradorDeRelatorioDeVendas extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -340,6 +339,10 @@ public class FormGeradorDeRelatorioDeVendas extends javax.swing.JDialog {
             if(txtVenda.getText().equals("")){
                 venda = "0";
             }else venda = txtVenda.getText();
+            
+            if(cmbFiltro.getSelectedIndex()==2){
+                mesMax=mesMin;
+            }
         }
         
         dispose();
@@ -348,8 +351,7 @@ public class FormGeradorDeRelatorioDeVendas extends javax.swing.JDialog {
         try {
             g.abrirRelatorio(sessao.getUsuario().getUnidade().getIdUnidade(), vendedor, venda, dia,  mesMin, mesMax, ano, tipoPesquisa).setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, "Ocorreu uma falha durante a execução.\n" + ex.getMessage(),
-                    "Atenção", JOptionPane.WARNING_MESSAGE);
+            Logger.getLogger(FormGeradorDeRelatorioDeVendas.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnConfirmarActionPerformed
@@ -359,114 +361,130 @@ public class FormGeradorDeRelatorioDeVendas extends javax.swing.JDialog {
 
         switch(cmbFiltro.getSelectedIndex()){
             case (0): //nenhum filtro
-            tipoPesquisa=7;
-            lblVendedor.setVisible(false);
-            lblMes2.setVisible(false);
-            lblMeses.setVisible(false);
-            lblano.setVisible(false);
-            lbldia.setVisible(false);
-            txtVendedor.setVisible(false);
-            txtVenda.setVisible(false);
-            lblVenda.setVisible(false);
-            cmbAno.setVisible(false);
-            cmbDia.setVisible(false);
-            cmbMesMax.setVisible(false);
-            cmbMesMin.setVisible(false);
+                tipoPesquisa=7;
+                lblVendedor.setVisible(false);
+                lblMes2.setVisible(false);
+                lblMeses.setVisible(false);
+                lblano.setVisible(false);
+                lbldia.setVisible(false);
+                txtVendedor.setVisible(false);
+                txtVenda.setVisible(false);
+                lblVenda.setVisible(false);
+                cmbAno.setVisible(false);
+                cmbDia.setVisible(false);
+                cmbMesMax.setVisible(false);
+                cmbMesMin.setVisible(false);
             break;
             case (1)://dia
-            tipoPesquisa=2;
-            lblVendedor.setVisible(false);
-            lblMes2.setVisible(false);
-            lblMeses.setVisible(true);
-            lblano.setVisible(true);
-            lbldia.setVisible(true);
-            txtVendedor.setVisible(false);
-            cmbAno.setVisible(true);
-            cmbDia.setVisible(true);
-            cmbMesMax.setVisible(false);
-            cmbMesMin.setVisible(true);
-            txtVenda.setVisible(false);
-            lblVenda.setVisible(false);
-            lblMeses.setText("Selecione o mês:");
-            break;
-            case (2)://periodo
-            tipoPesquisa=4;
-            lblVendedor.setVisible(false);
-            lblMes2.setVisible(true);
-            lblMeses.setVisible(true);
-            lblano.setVisible(true);
-            lbldia.setVisible(false);
-            txtVendedor.setVisible(false);
-            cmbAno.setVisible(true);
-            cmbDia.setVisible(false);
-            cmbMesMax.setVisible(true);
-            cmbMesMin.setVisible(true);
-            txtVenda.setVisible(false);
-            lblVenda.setVisible(false);
-            lblMeses.setText("Selecione os meses:");
-            break;
-            case (3)://id venda
-            tipoPesquisa=6;
-            lblVendedor.setVisible(false);
-            lblMes2.setVisible(false);
-            lblMeses.setVisible(false);
-            lblano.setVisible(false);
-            lbldia.setVisible(false);
-            txtVendedor.setVisible(false);
-            cmbAno.setVisible(false);
-            cmbDia.setVisible(false);
-            cmbMesMax.setVisible(false);
-            cmbMesMin.setVisible(false);
-            txtVenda.setVisible(true);
-            lblVenda.setVisible(true);
-            break;
-            case (4)://vendedor
-            tipoPesquisa=5;
-            lblVendedor.setVisible(true);
-            lblMes2.setVisible(false);
-            lblMeses.setVisible(false);
-            lblano.setVisible(false);
-            lbldia.setVisible(false);
-            txtVendedor.setVisible(true);
-            cmbAno.setVisible(false);
-            cmbDia.setVisible(false);
-            cmbMesMax.setVisible(false);
-            cmbMesMin.setVisible(false);
-            txtVenda.setVisible(false);
-            lblVenda.setVisible(false);
-            break;
-            case (5)://vendedor e data
-            tipoPesquisa=1;
-            lblVendedor.setVisible(true);
-            lblMes2.setVisible(false);
-            lblMeses.setVisible(true);
-            lblano.setVisible(true);
-            lbldia.setVisible(true);
-            txtVendedor.setVisible(true);
-            cmbAno.setVisible(true);
-            cmbDia.setVisible(true);
-            cmbMesMax.setVisible(false);
-            cmbMesMin.setVisible(true);
-            txtVenda.setVisible(false);
-            lblVenda.setVisible(false);
-            lblMeses.setText("Selecione o mês:");
-            break;
-            case (6): //vendedor e periodo
-            tipoPesquisa=3;
-            lblVendedor.setVisible(true);
-            lblMes2.setVisible(true);
-            lblMeses.setVisible(true);
-            lblano.setVisible(true);
-            lbldia.setVisible(false);
-            txtVendedor.setVisible(true);
-            cmbAno.setVisible(true);
-            cmbDia.setVisible(false);
-            cmbMesMax.setVisible(true);
-            cmbMesMin.setVisible(true);
-            txtVenda.setVisible(false);
-            lblVenda.setVisible(false);
-            lblMeses.setText("Selecione os meses:");
-            break;
+                tipoPesquisa=2;
+                lblVendedor.setVisible(false);
+                lblMes2.setVisible(false);
+                lblMeses.setVisible(true);
+                lblano.setVisible(true);
+                lbldia.setVisible(true);
+                txtVendedor.setVisible(false);
+                cmbAno.setVisible(true);
+                cmbDia.setVisible(true);
+                cmbMesMax.setVisible(false);
+                cmbMesMin.setVisible(true);
+                txtVenda.setVisible(false);
+                lblVenda.setVisible(false);
+                lblMeses.setText("Selecione o mês:");
+                 break;
+            case (2)://mes
+                tipoPesquisa=4;
+                lblVendedor.setVisible(false);
+                lblMes2.setVisible(false);
+                lblMeses.setVisible(true);
+                lblano.setVisible(true);
+                lbldia.setVisible(false);
+                txtVendedor.setVisible(false);
+                cmbAno.setVisible(true);
+                cmbDia.setVisible(false);
+                cmbMesMax.setVisible(false);
+                cmbMesMin.setVisible(true);
+                txtVenda.setVisible(false);
+                lblVenda.setVisible(false);
+                lblMeses.setText("Selecione o mês:");
+                break;
+            case (3)://periodo
+                tipoPesquisa=4;
+                lblVendedor.setVisible(false);
+                lblMes2.setVisible(true);
+                lblMeses.setVisible(true);
+                lblano.setVisible(true);
+                lbldia.setVisible(false);
+                txtVendedor.setVisible(false);
+                cmbAno.setVisible(true);
+                cmbDia.setVisible(false);
+                cmbMesMax.setVisible(true);
+                cmbMesMin.setVisible(true);
+                txtVenda.setVisible(false);
+                lblVenda.setVisible(false);
+                lblMeses.setText("Selecione os meses:");
+                break;
+            case (4)://id venda
+                tipoPesquisa=6;
+                lblVendedor.setVisible(false);
+                lblMes2.setVisible(false);
+                lblMeses.setVisible(false);
+                lblano.setVisible(false);
+                lbldia.setVisible(false);
+                txtVendedor.setVisible(false);
+                cmbAno.setVisible(false);
+                cmbDia.setVisible(false);
+                cmbMesMax.setVisible(false);
+                cmbMesMin.setVisible(false);
+                txtVenda.setVisible(true);
+                lblVenda.setVisible(true);
+                break;
+            case (5)://vendedor
+                tipoPesquisa=5;
+                lblVendedor.setVisible(true);
+                lblMes2.setVisible(false);
+                lblMeses.setVisible(false);
+                lblano.setVisible(false);
+                lbldia.setVisible(false);
+                txtVendedor.setVisible(true);
+                cmbAno.setVisible(false);
+                cmbDia.setVisible(false);
+                cmbMesMax.setVisible(false);
+                cmbMesMin.setVisible(false);
+                txtVenda.setVisible(false);
+                lblVenda.setVisible(false);
+               break;
+            case (6)://vendedor e data
+                tipoPesquisa=1;
+                lblVendedor.setVisible(true);
+                lblMes2.setVisible(false);
+                lblMeses.setVisible(true);
+                lblano.setVisible(true);
+                lbldia.setVisible(true);
+                txtVendedor.setVisible(true);
+                cmbAno.setVisible(true);
+                cmbDia.setVisible(true);
+                cmbMesMax.setVisible(false);
+                cmbMesMin.setVisible(true);
+                txtVenda.setVisible(false);
+                lblVenda.setVisible(false);
+                lblMeses.setText("Selecione o mês:");
+                break;
+            case (7): //vendedor e periodo
+                tipoPesquisa=3;
+                lblVendedor.setVisible(true);
+                lblMes2.setVisible(true);
+                lblMeses.setVisible(true);
+                lblano.setVisible(true);
+                lbldia.setVisible(false);
+                txtVendedor.setVisible(true);
+                cmbAno.setVisible(true);
+                cmbDia.setVisible(false);
+                cmbMesMax.setVisible(true);
+                cmbMesMin.setVisible(true);
+                txtVenda.setVisible(false);
+                lblVenda.setVisible(false);
+                lblMeses.setText("Selecione os meses:");
+                break;
         }
 
     }//GEN-LAST:event_cmbFiltroItemStateChanged

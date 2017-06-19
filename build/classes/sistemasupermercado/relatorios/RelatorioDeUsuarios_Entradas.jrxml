@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeUsuarios_Entradas" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a7807119-9c3a-4ddf-8ccb-48c485165460">
-	<property name="ireport.zoom" value="6.0"/>
-	<property name="ireport.x" value="1671"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idUsuario" class="java.lang.String"/>
 	<parameter name="idUnidade" class="java.lang.String"/>
@@ -9,6 +9,7 @@
 	<parameter name="mesMin" class="java.lang.String"/>
 	<parameter name="mesMax" class="java.lang.String"/>
 	<parameter name="ano" class="java.lang.String"/>
+	<parameter name="tipoPesquisa" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      usuarios.`ID_Usuario` AS usuarios_ID_Usuario,
@@ -27,7 +28,7 @@
      entradas_produtos.`ID_Entrada` AS entradas_produtos_ID_Entrada,
      entradas_produtos.`ID_Produto` AS entradas_produtos_ID_Produto,
      entradas_produtos.`ID_Fornecedor` AS entradas_produtos_ID_Fornecedor,
-     entradas_produtos.`Quantidade` AS entradas_produtos_Quantidade,
+     truncate(entradas_produtos.`Quantidade`,2) AS entradas_produtos_Quantidade,
      entradas_produtos.`Valor_Unitario` AS entradas_produtos_Valor_Unitario,
      entradas_produtos.`Data` AS entradas_produtos_Data,
      entradas_produtos.`ID_Sessao` AS entradas_produtos_ID_Sessao,
@@ -52,11 +53,11 @@ FROM
      INNER JOIN `produtos` produtos ON entradas_produtos.`ID_Produto` = produtos.`ID_Produto`
      INNER JOIN `fornecedores` fornecedores ON entradas_produtos.`ID_Fornecedor` = fornecedores.`ID_Fornecedor`
 WHERE
-      (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and day(entradas_produtos.data)=$P{dia} and month(entradas_produtos.data)=$P{mesMin} and year(entradas_produtos.data)=$P{ano}) or
+      (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and day(entradas_produtos.data)=$P{dia} and month(entradas_produtos.data)=$P{mesMin} and year(entradas_produtos.data)=$P{ano} and ($P{tipoPesquisa}=2 or $P{tipoPesquisa}=1)) or
 
-     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and month(entradas_produtos.data)>=$P{mesMin} and month(entradas_produtos.data)<=$P{mesMax} and year(entradas_produtos.data)=$P{ano} and $P{dia} =0) or
+     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and month(entradas_produtos.data)>=$P{mesMin} and month(entradas_produtos.data)<=$P{mesMax} and year(entradas_produtos.data)=$P{ano} and ($P{tipoPesquisa}=3 or $P{tipoPesquisa}=4)) or
 
-     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and $P{dia}=0 and $P{mesMin} =0)
+     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and ($P{tipoPesquisa}=5 or $P{tipoPesquisa}=6))
 GROUP BY
      entradas_produtos.id_entrada
 ORDER BY

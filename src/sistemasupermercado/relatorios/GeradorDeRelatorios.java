@@ -98,13 +98,14 @@ public class GeradorDeRelatorios {
  
         // maximiza o JFrame para ocupar a tela toda.
         frameRelatorio.setExtendedState(6);
+        
+        frameRelatorio.setSize(1000, 1000);
         frameRelatorio.setLocationRelativeTo(null);
- 
         // configura a operação padrão quando o JFrame for fechado.
         frameRelatorio.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
  
             
-        URL url = this.getClass().getResource("/sistemasupermercado/imagens/icone.png");
+        URL url = this.getClass().getResource("/sistemassupermercado/imagens/icone.png");
         Image image = java.awt.Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/sistemasupermercado/imagens/icone.png"));
         frameRelatorio.setIconImage(image);
                     

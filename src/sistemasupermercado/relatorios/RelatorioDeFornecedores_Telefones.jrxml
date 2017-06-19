@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeFornecedores_Telefones" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="17974b17-081a-4033-b390-ea31ef19c663">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="1821"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idFornecedor" class="java.lang.String"/>
 	<queryString>
@@ -37,6 +37,12 @@ WHERE
 				</textElement>
 				<text><![CDATA[Telefones]]></text>
 			</staticText>
+			<line>
+				<reportElement positionType="Float" x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="270277f2-3b1a-47ea-abe8-6a8e78992eca"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="133a5cb1-988b-465b-96c0-9c4bb208a803"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -46,6 +52,12 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{telefones_fornecedores_Telefone}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="39a9022c-0114-49f2-b50d-d73ae99112f1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="f18c55c0-281b-433c-b2a4-0163f1c81923"/>
+			</line>
 		</band>
 	</detail>
 </jasperReport>

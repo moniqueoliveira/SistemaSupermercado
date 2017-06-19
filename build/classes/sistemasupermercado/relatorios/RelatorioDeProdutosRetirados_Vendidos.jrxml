@@ -39,7 +39,7 @@
      usuarios.`Ativo` AS usuarios_Ativo,
      unidades.`ID_Unidade` AS unidades_ID_Unidade,
      unidades.`Descricao` AS unidades_Descricao,
-     sum(itens_vendas.quantidade) as qtd_vendido
+     truncate(sum(itens_vendas.quantidade),2) as qtd_vendido
 FROM
      `vendas` vendas INNER JOIN `itens_vendas` itens_vendas ON vendas.`ID_Venda` = itens_vendas.`ID_Venda`
      INNER JOIN `produtos` produtos ON itens_vendas.`ID_Produto` = produtos.`ID_Produto`

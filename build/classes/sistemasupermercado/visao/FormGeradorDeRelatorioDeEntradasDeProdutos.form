@@ -99,9 +99,9 @@
                           </Group>
                           <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtFuncionario" pref="263" max="32767" attributes="0"/>
+                              <Component id="txtFuncionario" min="-2" pref="263" max="-2" attributes="0"/>
                               <Component id="txtFornecedor" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtProduto" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtProduto" alignment="0" min="-2" pref="263" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -295,19 +295,20 @@
         <Component class="javax.swing.JComboBox" name="cmbFiltro">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="12">
+              <StringArray count="13">
                 <StringItem index="0" value="N&#xe3;o utilizar filtros"/>
                 <StringItem index="1" value="Data"/>
-                <StringItem index="2" value="Per&#xed;odo"/>
-                <StringItem index="3" value="Produto"/>
-                <StringItem index="4" value="Produto e data"/>
-                <StringItem index="5" value="Produto e per&#xed;odo"/>
-                <StringItem index="6" value="Fornecedor"/>
-                <StringItem index="7" value="Fornecedor e data"/>
-                <StringItem index="8" value="Fornecedor e per&#xed;odo"/>
-                <StringItem index="9" value="ID/Nome de usu&#xe1;rio"/>
-                <StringItem index="10" value="ID/Nome de usu&#xe1;rio e data"/>
-                <StringItem index="11" value="ID/Nome de usu&#xe1;rio e per&#xed;odo"/>
+                <StringItem index="2" value="M&#xea;s"/>
+                <StringItem index="3" value="Per&#xed;odo"/>
+                <StringItem index="4" value="Produto"/>
+                <StringItem index="5" value="Produto e data"/>
+                <StringItem index="6" value="Produto e per&#xed;odo"/>
+                <StringItem index="7" value="Fornecedor"/>
+                <StringItem index="8" value="Fornecedor e data"/>
+                <StringItem index="9" value="Fornecedor e per&#xed;odo"/>
+                <StringItem index="10" value="ID/Nome de usu&#xe1;rio"/>
+                <StringItem index="11" value="ID/Nome de usu&#xe1;rio e data"/>
+                <StringItem index="12" value="ID/Nome de usu&#xe1;rio e per&#xed;odo"/>
               </StringArray>
             </Property>
           </Properties>

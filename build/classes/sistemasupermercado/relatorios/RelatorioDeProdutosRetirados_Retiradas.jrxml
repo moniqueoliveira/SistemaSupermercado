@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeProdutosRetirados_Retiradas" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d4129c86-a0b9-4b13-8e81-7515824b23bb">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="152"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idUnidade" class="java.lang.String"/>
 	<parameter name="idProduto" class="java.lang.String"/>
@@ -24,7 +24,7 @@
      produtos.`Estocavel` AS produtos_Estocavel,
      produtos_retirados.`ID_Retirada` AS produtos_retirados_ID_Retirada,
      produtos_retirados.`ID_Produto` AS produtos_retirados_ID_Produto,
-     produtos_retirados.`Quantidade` AS produtos_retirados_Quantidade,
+     truncate(produtos_retirados.`Quantidade`,2) AS produtos_retirados_Quantidade,
      produtos_retirados.`Data` AS produtos_retirados_Data,
      produtos_retirados.`ID_Sessao` AS produtos_retirados_ID_Sessao,
      produtos_retirados.`ID_Motivo` AS produtos_retirados_ID_Motivo,

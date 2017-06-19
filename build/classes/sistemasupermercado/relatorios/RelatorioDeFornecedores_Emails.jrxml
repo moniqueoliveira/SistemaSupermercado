@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeFornecedores_Emails" language="groovy" pageWidth="802" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7926c74c-0a22-4c8e-9193-9dbfd980da2f">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="999"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idFornecedor" class="java.lang.String"/>
 	<queryString>
@@ -31,21 +31,33 @@ WHERE
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="802" height="20" backcolor="#C9DBF7" uuid="2b0001cd-7504-49be-87e4-5c0b6631efb5"/>
+				<reportElement mode="Opaque" x="0" y="0" width="801" height="20" backcolor="#C9DBF7" uuid="2b0001cd-7504-49be-87e4-5c0b6631efb5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Emails]]></text>
 			</staticText>
+			<line>
+				<reportElement positionType="Float" x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="954d3df9-83fe-4148-adaa-56ec6874a74e"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="801" y="0" width="1" height="20" forecolor="#3380FF" uuid="71b0fd96-56f6-4eb2-8ee6-f4c33c1031dd"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="19" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="802" height="19" uuid="1789a6a1-0261-4061-a42a-2a4fe094556e"/>
+				<reportElement x="1" y="0" width="801" height="19" uuid="1789a6a1-0261-4061-a42a-2a4fe094556e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{emails_fornecedores_Email}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="0" width="1" height="19" forecolor="#3380FF" uuid="3c8316de-2277-42d7-9fcd-eb106073d8aa"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="801" y="0" width="1" height="19" forecolor="#3380FF" uuid="efe09382-d311-4680-b736-5e80e860373e"/>
+			</line>
 		</band>
 	</detail>
 </jasperReport>

@@ -34,7 +34,7 @@
      itens_vendas.`ID_Venda` AS itens_vendas_ID_Venda,
      itens_vendas.`ID_Produto` AS itens_vendas_ID_Produto,
      itens_vendas.`Numero_Item` AS itens_vendas_Numero_Item,
-     itens_vendas.`Quantidade` AS itens_vendas_Quantidade,
+     truncate(itens_vendas.`Quantidade`,2) AS itens_vendas_Quantidade,
      itens_vendas.`Subtotal` AS itens_vendas_Subtotal,
      itens_vendas.`Cancelado` AS itens_vendas_Cancelado,
      caixas.`Numero_Caixa` AS caixas_Numero_Caixa,
@@ -254,7 +254,7 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="153" y="0" width="27" height="32" uuid="3760bf11-6ce6-45c0-9291-b820133f49ec"/>
+				<reportElement x="153" y="0" width="30" height="32" uuid="3760bf11-6ce6-45c0-9291-b820133f49ec"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>

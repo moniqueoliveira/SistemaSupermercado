@@ -24,6 +24,7 @@ public class FormListaProdutos extends javax.swing.JDialog {
     ProdutoServico produtoServico;
     
     AtalhoAction acaoF2 = new AtalhoAction("F2");
+    AtalhoAction acaoEnter = new AtalhoAction("ENTER");
     /**
      * Creates new form FormListaProdutos
      */
@@ -150,7 +151,8 @@ public class FormListaProdutos extends javax.swing.JDialog {
 
     private void tblProdutosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdutosKeyPressed
         // TODO add your handling code here:
-        if (KeyStroke.getKeyStrokeForEvent(evt) == KeyStroke.getKeyStroke("F2")) {
+        if (KeyStroke.getKeyStrokeForEvent(evt) == KeyStroke.getKeyStroke("F2") ||
+                KeyStroke.getKeyStrokeForEvent(evt) == KeyStroke.getKeyStroke("ENTER")) {
             setObjetoSelecionado();
             dispose();
         } else if (KeyStroke.getKeyStrokeForEvent(evt) == KeyStroke.getKeyStroke("TAB")) {
@@ -242,10 +244,12 @@ public class FormListaProdutos extends javax.swing.JDialog {
     private void registrarAcoesDosAtalhos() {
         ActionMap actionMapForm = this.rootPane.getActionMap();
         actionMapForm.put("acaof2", acaoF2);
+        actionMapForm.put("acaoEnter", acaoEnter);
         rootPane.setActionMap(actionMapForm);
         
         InputMap imapForm = this.rootPane.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
         imapForm.put(KeyStroke.getKeyStroke("F2"), "acaof2");
+        imapForm.put(KeyStroke.getKeyStroke("ENTER"), "acaoEnter");
     }
 
     private void preencherTabela(String pesquisarPor, String texto) {

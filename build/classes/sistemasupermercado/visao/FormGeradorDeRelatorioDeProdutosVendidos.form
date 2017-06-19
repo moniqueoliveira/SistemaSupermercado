@@ -62,53 +62,51 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cmbFiltro" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnConfirmar" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblMeses" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblano" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lbldia" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="cmbDia" min="-2" pref="293" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="cmbMesMin" min="-2" pref="131" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="lblMes2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="cmbMesMax" min="-2" pref="131" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="cmbAno" alignment="1" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <EmptySpace pref="137" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblProduto" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txtProduto" min="-2" pref="250" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="cmbFiltro" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnConfirmar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblProduto" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="lblCategoria" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbldia" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblano" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblMeses" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cmbCategoria" min="-2" pref="217" max="-2" attributes="0"/>
-                              <Component id="txtProduto" min="-2" pref="250" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                                  <Component id="cmbCategoria" min="-2" pref="217" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="cmbMesMin" min="-2" pref="131" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="lblMes2" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="cmbMesMax" min="-2" pref="131" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="cmbDia" min="-2" pref="293" max="-2" attributes="0"/>
+                                      <Component id="cmbAno" alignment="0" min="-2" pref="293" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace pref="163" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -120,7 +118,7 @@
                       <Component id="cmbFiltro" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnConfirmar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblProduto" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -147,7 +145,7 @@
                       <Component id="cmbAno" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblano" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -291,16 +289,17 @@
         <Component class="javax.swing.JComboBox" name="cmbFiltro">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="9">
+              <StringArray count="10">
                 <StringItem index="0" value="N&#xe3;o utilizar filtros"/>
                 <StringItem index="1" value="Data"/>
-                <StringItem index="2" value="Per&#xed;odo"/>
-                <StringItem index="3" value="Produto"/>
-                <StringItem index="4" value="Produto e data"/>
-                <StringItem index="5" value="Produto e per&#xed;odo"/>
-                <StringItem index="6" value="Categoria"/>
-                <StringItem index="7" value="Categoria e data"/>
-                <StringItem index="8" value="Categoria e per&#xed;odo"/>
+                <StringItem index="2" value="M&#xea;s"/>
+                <StringItem index="3" value="Per&#xed;odo"/>
+                <StringItem index="4" value="Produto"/>
+                <StringItem index="5" value="Produto e data"/>
+                <StringItem index="6" value="Produto e per&#xed;odo"/>
+                <StringItem index="7" value="Categoria"/>
+                <StringItem index="8" value="Categoria e data"/>
+                <StringItem index="9" value="Categoria e per&#xed;odo"/>
               </StringArray>
             </Property>
           </Properties>

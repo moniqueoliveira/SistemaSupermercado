@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDeProdutosRetirados_Estoque" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2c75138c-aa00-45f1-852f-1235c9e76f1d">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="999"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idUnidade" class="java.lang.String"/>
 	<parameter name="idProduto" class="java.lang.String"/>
@@ -10,7 +10,7 @@
 		<![CDATA[SELECT
      estoques.`ID_Unidade` AS estoques_ID_Unidade,
      estoques.`ID_Produto` AS estoques_ID_Produto,
-     estoques.`Quantidade` AS estoques_Quantidade,
+     truncate(estoques.`Quantidade`,2) AS estoques_Quantidade,
      estoques.`Valor_Total` AS estoques_Valor_Total,
      produtos.`ID_Produto` AS produtos_ID_Produto,
      produtos.`Descricao` AS produtos_Descricao,

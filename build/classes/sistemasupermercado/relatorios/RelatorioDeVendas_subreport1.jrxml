@@ -18,7 +18,7 @@
      itens_vendas.`ID_Venda` AS itens_vendas_ID_Venda,
      itens_vendas.`ID_Produto` AS itens_vendas_ID_Produto,
      itens_vendas.`Numero_Item` AS itens_vendas_Numero_Item,
-     itens_vendas.`Quantidade` AS itens_vendas_Quantidade,
+     truncate(itens_vendas.`Quantidade`,2) AS itens_vendas_Quantidade,
      itens_vendas.`Subtotal` AS itens_vendas_Subtotal,
      itens_vendas.`Cancelado` AS itens_vendas_Cancelado,
      sessoes.`ID_Sessao` AS sessoes_ID_Sessao,
@@ -157,7 +157,7 @@ GROUP BY
 				<textElement textAlignment="Center">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{produtos_Descricao_Reduzida}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{produtos_Descricao}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="0" width="1" height="20" forecolor="#3380FF" uuid="992ba730-7c4c-4626-87f8-a368638ddb55"/>

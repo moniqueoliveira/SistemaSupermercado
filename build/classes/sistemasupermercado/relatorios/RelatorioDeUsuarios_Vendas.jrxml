@@ -9,6 +9,7 @@
 	<parameter name="mesMin" class="java.lang.String"/>
 	<parameter name="mesMax" class="java.lang.String"/>
 	<parameter name="ano" class="java.lang.String"/>
+	<parameter name="tipoPesquisa" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      count(*) AS qtd_vendas,
@@ -40,11 +41,11 @@ FROM
      INNER JOIN `unidades` unidades ON usuarios.`ID_Unidade` = unidades.`ID_Unidade`
 WHERE
       vendas.finalizada = 1 and (
-     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and day(vendas.data)=$P{dia} and month(vendas.data)=$P{mesMin} and year(vendas.data)=$P{ano}) or
+     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and day(vendas.data)=$P{dia} and month(vendas.data)=$P{mesMin} and year(vendas.data)=$P{ano} and ($P{tipoPesquisa}=2 or $P{tipoPesquisa}=1)) or
 
-     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and month(vendas.data)>=$P{mesMin} and month(vendas.data)<=$P{mesMax} and year(vendas.data)=$P{ano} and $P{dia}=0) or
+     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and month(vendas.data)>=$P{mesMin} and month(vendas.data)<=$P{mesMax} and year(vendas.data)=$P{ano} and ($P{tipoPesquisa}=3 or $P{tipoPesquisa}=4)) or
 
-     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and $P{dia}=0 and $P{mesMin}=0))
+     (unidades.id_unidade = $P{idUnidade} and usuarios.id_usuario=$P{idUsuario} and ($P{tipoPesquisa}=5 or $P{tipoPesquisa}=6)))
      
 GROUP BY
      vendas.id_venda]]>

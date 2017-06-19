@@ -36,7 +36,7 @@
      produtos.`Imagem` AS produtos_Imagem,
      produtos.`Codigo_De_Barras` AS produtos_Codigo_De_Barras,
      produtos.`Estocavel` AS produtos_Estocavel,
-     sum(entradas_produtos.quantidade) as qtd_comprada
+     truncate(sum(entradas_produtos.quantidade),2) as qtd_comprada
 FROM
      `unidades` unidades INNER JOIN `usuarios` usuarios ON unidades.`ID_Unidade` = usuarios.`ID_Unidade`
      INNER JOIN `sessoes` sessoes ON usuarios.`ID_Usuario` = sessoes.`ID_Usuario`
