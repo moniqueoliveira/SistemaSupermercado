@@ -21,10 +21,6 @@ import sistemasupermercado.exceptions.RetornoDeAlteracaoDeDadosInesperadoExcepti
 import sistemasupermercado.servicos.CaixaServico;
 import sistemasupermercado.servicos.UnidadeServico;
 
-/**
- *
- * @author Monique
- */
 public class FormCadastroCaixa extends javax.swing.JDialog {
 
     Caixa caixa;
